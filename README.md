@@ -1,12 +1,12 @@
 # Project Name
 
-> Pithy project description
+> Dribbble meets GitHub.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Cameron Baughn
+  - __Scrum Master__: Nancy Du
+  - __Development Team Members__: Jacob Goddard, Mike Hughes
 
 ## Table of Contents
 
