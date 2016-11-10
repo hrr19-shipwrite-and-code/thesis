@@ -20,25 +20,26 @@ Once the project moves into development, the press release can be used as a touc
 
 
 ## A New Portfolio ##
-  > Dribbble meets GitHub. A community based portfolio for web developers where employers can view a potential hire’s previous work.
+  > Dribbble meets GitHub. A community based portfolio for web developers where employers can view a potential hire’s previous work in a clean and comprehensive way.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  sushi makes it really pleasant and easy to share your programming projects with anyone. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  GitHub repos are extremely functional for working on projects, but not the greatest way to display your work. 
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  If you want to display the end result of your efforts working on an app, show off your tech chops by letting employers know what tech you used, and let people know what you were actually in charge of, sushi is your new best friend.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > sushi is the best way for you to show off your work, hands down. - Dr. Jacob Goddard IV, PhD, CEO
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  It's super easy to set up your profile, create projects and get started uploading images, defining your tech stack, linking to your GitHub repos, and defining your role on the team.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > I really wanted to display my work in a clean and beautiful way to employers and my fellow engineers, and sushi gives me an easy way to do that. - Andrew Cernek
+  > When hiring new engineers, it's really nice to be able to see all of their work in one place and tell what pieces of the application they were in charge of, rather than digging through their GitHub repos. - Robin Kim
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Join today and show off your work!
