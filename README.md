@@ -7,6 +7,7 @@
   - __Product Owner__: Cameron Baughn
   - __Scrum Master__: Nancy Du
   - __Development Team Members__: Jacob Goddard, Mike Hughes
+  
 ## Table of Contents
 
 1. [Usage](#Usage)
