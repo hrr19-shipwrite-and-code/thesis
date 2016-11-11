@@ -13,6 +13,6 @@ app.use(bodyParser.json());
 
 //require('./config/routes.js')(app, express);
 
-app.listen(port);
-
-console.log('Listening on port: ' + port);
+app.listen(port, () => {
+  console.log('Listening on port: ' + port);
+});
