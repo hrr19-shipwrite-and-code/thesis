@@ -48,11 +48,4 @@ Project.sync()
   });
 
 
-
-
-
-
-
-
-
 module.exports = db;
