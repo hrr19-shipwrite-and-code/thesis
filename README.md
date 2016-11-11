@@ -7,6 +7,7 @@
   - __Product Owner__: Cameron Baughn
   - __Scrum Master__: Nancy Du
   - __Development Team Members__: Jacob Goddard, Mike Hughes
+  
 ## Table of Contents
 
 1. [Usage](#Usage)
@@ -48,7 +49,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/hrr19-shipwrite-and-code/sushi/issues)
 
 
 ## Contributing
