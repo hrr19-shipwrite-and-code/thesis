@@ -3,14 +3,15 @@ const db = new Sequelize('sushi', 'root', '');
 const User = require('./users/userSchema.js');
 const Project = require ('./projects/projectSchema.js');
 const Elsewhere = require('./users/elsewhereSchema.js');
+const Image = require('./projects/imageSchema.js');
 
 //Junction Tables
-const UserProject = db.define('userProject', {});
-const CommentLikes = db.define('commentLikes', {
+const UserProject = db.define('UserProject', {});
+const CommentLikes = db.define('CommentLikes', {
   type: Sequelize.STRING,
   comment: Sequelize.TEXT('long')
 });
-const Tech = db.define('tech', {
+const Tech = db.define('Tech', {
   name: Sequelize.STRING,
   type: Sequelize.STRING,
 }, { timestamps: false });
@@ -23,6 +24,11 @@ User.sync()
   });
 Project.sync()
   .then(() => {
+    //Creates Images table
+    Image.belongsTo(Project);
+    Project.hasMany(Image);
+    Image.sync();
+
     //Creating userProject foreign key
     User.belongsToMany(Project, { through: UserProject });
     Project.belongsToMany(User, { through: UserProject });
