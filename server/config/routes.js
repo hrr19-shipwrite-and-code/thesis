@@ -1,7 +1,10 @@
-var userController = require('../users/userController.js');
-
+const userController = require('../users/userController.js');
+const projectController = require('../projects/projectController.js');
+//const junctionController = require('../junctionController.js');
 
 module.exports = function (app, express) {
+
+  //User Routes
 
   //Signup/Login --Needs Authentication
   app.post('/api/user/create', userController.createUser);
@@ -10,5 +13,6 @@ module.exports = function (app, express) {
   //Edit user profile --Needs authentication
   app.put('/api/user/editBasicInfo', userController.editBasicInfo);
 
-
+  //Project Routes
+  app.post('/api/project/create', projectController.createProject);
 };

@@ -35,8 +35,10 @@ Project.sync()
     UserProject.sync();
 
     //Creating commentLikes foreign key
-    User.belongsToMany(Project, { through: CommentLikes });
-    Project.belongsToMany(User, { through: CommentLikes });
+    User.hasMany(CommentLikes);
+    CommentLikes.belongsTo(User);
+    Project.hasMany(CommentLikes);
+    CommentLikes.belongsTo(Project);
     CommentLikes.sync();
 
     //Creating tech foreign keys
@@ -47,5 +49,7 @@ Project.sync()
     Tech.sync();
   });
 
-
 module.exports = db;
+exports.UserProject = UserProject;
+exports.CommentLikes = CommentLikes;
+exports.Tech = Tech;

@@ -1,6 +1,5 @@
 const User = require('./userSchema.js');
 
-
 module.exports = {
   createUser: function (req, res, next) {
     User.create(req.body)
