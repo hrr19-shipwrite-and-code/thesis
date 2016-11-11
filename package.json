@@ -4,7 +4,11 @@
   "description": "Best website evarrrr! (like fresh sashimi)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -17,9 +21,16 @@
   },
   "homepage": "https://github.com/Nanciee/sushi#readme",
   "dependencies": {
+    "angular2": "^2.0.0-beta.17",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "multer": "^1.2.0",
+    "es6-shim": "^0.33.3",
     "sequelize": "^3.25.0"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.1.0",
+    "typescript": "^1.7.5"
   }
 }
