@@ -25,15 +25,12 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "multer": "^1.2.0",
-<<<<<<< HEAD
     "es6-shim": "^0.33.3",
     "es6-promise": "^3.0.2",
     "systemjs": "0.19.22",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-=======
     "mysql": "^2.12.0",
->>>>>>> 4d6b9ae53d425b791c40f832289b3b23994c2a5f
     "sequelize": "^3.25.0"
   },
   "devDependencies": {
