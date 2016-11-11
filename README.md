@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # sushi
 
 > Dribbble meets GitHub.
@@ -8,18 +7,6 @@
   - __Product Owner__: Cameron Baughn
   - __Scrum Master__: Nancy Du
   - __Development Team Members__: Jacob Goddard, Mike Hughes
-=======
-# Project Name
-
-> Pithy project description
-
-## Team
-
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
->>>>>>> upstream/master
-
 ## Table of Contents
 
 1. [Usage](#Usage)
@@ -36,17 +23,9 @@
 
 ## Requirements
 
-<<<<<<< HEAD
 - Node v6.6.0
 - MySQL
 - Angular 2
-=======
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
->>>>>>> upstream/master
 
 ## Development
 
