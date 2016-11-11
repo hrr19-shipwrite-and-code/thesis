@@ -9,9 +9,11 @@ const userProject = db.define('userProject', {
 User.belongsToMany(Project, { through: userProject });
 Project.belongsToMany(User, { through: userProject });
 
-User.sync();
-Project.sync();
-userProject.sync()
+User.sync()
+  .then(Project.sync())
+  .then(userProject.sync());
+
+
 
 
 
