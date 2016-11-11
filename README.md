@@ -20,12 +20,19 @@
 ## Usage
 
 > Some usage instructions
+1. npm install
+2. In terminal type mysql.server start (Starts the MySQL server in background)
+3. In terminal type mysql -u root -p (Access the MySQL database)
+4. Once inside MySQL terminal type create database sushi (Created the sushi database)
+5. Whenever you run the server it will build out the tables
+
 
 ## Requirements
 
 - Node v6.6.0
 - MySQL
 - Angular 2
+- MySQL 2.12.0
 
 ## Development
 
