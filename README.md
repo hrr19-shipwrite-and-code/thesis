@@ -7,7 +7,7 @@
   - __Product Owner__: Cameron Baughn
   - __Scrum Master__: Nancy Du
   - __Development Team Members__: Jacob Goddard, Mike Hughes
-  
+
 ## Table of Contents
 
 1. [Usage](#Usage)
@@ -26,6 +26,8 @@
 3. In terminal type mysql -u root -p (Access the MySQL database)
 4. Once inside MySQL terminal type create database sushi (Created the sushi database)
 5. Whenever you run the server it will build out the tables
+6. Run `npm start` from the root directory to start the Angular2 server.
+7. Navigate to `http://localhost:3000/`
 
 
 ## Requirements
