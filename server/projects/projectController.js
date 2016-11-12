@@ -1,4 +1,4 @@
-const User = require('../users/userSchema.js');
+const Profile = require('../profiles/profileSchema.js');
 const Project = require('./projectSchema.js');
 const db = require('../db.js');
 
@@ -8,7 +8,7 @@ module.exports = {
     const name = req.body.name;
     const type = req.params.type;
     if (type === 'user') {
-      User.findOne({where: {username: name}})
+      Profile.findOne({where: {username: name}})
         .then((user) => {
           user.createProject({title: req.body.title})
             .then(() => {

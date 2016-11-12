@@ -1,6 +1,5 @@
-const userController = require('../users/userController.js');
+const profileController = require('../profiles/profileController.js');
 const projectController = require('../projects/projectController.js');
-const teamController = require('../teams/teamController.js');
 //const junctionController = require('../junctionController.js');
 
 module.exports = function (app, express) {
@@ -8,20 +7,16 @@ module.exports = function (app, express) {
   //User Routes
 
   //Signup/Login --Needs Authentication
-  app.post('/api/user/create', userController.createUser);
+  app.post('/api/user/create', profileController.createProfile);
+  app.post('/api/team/create', profileController.createTeam);
+  app.post('/api/team/addMember', profileController.addMember);
   //Others to view profiles
-  app.get('/api/user/:username', userController.getUser);
+  app.get('/api/:type/:username', profileController.getProfile);
   //Edit user profile --Needs authentication
-  app.put('/api/user/editBasicInfo', userController.editBasicInfo);
+  app.put('/api/:type/editBasicInfo', profileController.editBasicInfo);
 
   //Project Routes
 
   //Creates project --needs Auth
   app.post('/api/project/:type/create', projectController.createProject);
-
-  //Team Routes
-
-  //Create Team --need auth
-  app.post('/api/team/create', teamController.createTeam);
-
 };
