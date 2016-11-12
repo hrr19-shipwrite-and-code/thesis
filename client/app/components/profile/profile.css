@@ -1,0 +1,38 @@
+
+.container {
+  padding-left: 4vw;
+  padding-right: 4vw;
+
+}
+
+.sidebar {
+  width: 300px;
+  background-color: white;
+  border-radius: 5px;
+
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topInfo {
+  width: 250px;
+  margin-bottom: 40px;
+
+  text-align: center;
+
+  border: 1px solid black;
+}
+
+.bio {
+
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

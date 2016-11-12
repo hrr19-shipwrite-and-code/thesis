@@ -24,7 +24,8 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 ProfileComponent = __decorate([
                     core_1.Component({
                         selector: 'profile',
-                        templateUrl: './client/app/components/profile/profile.html'
+                        templateUrl: './client/app/components/profile/profile.html',
+                        styleUrls: ['./client/app/components/profile/profile.css']
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProfileComponent);
