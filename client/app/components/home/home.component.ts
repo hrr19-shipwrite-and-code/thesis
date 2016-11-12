@@ -1,8 +1,14 @@
 import {Component} from 'angular2/core';
+import {HomeService} from './home.services';
 
 @Component({
   selector: 'home',
-  template: '<h1>Hello World</h1>'
+  templateUrl: './client/app/components/home/home.html'
 })
 
-export class HomeComponent { }
+export class HomeComponent {
+  projects;
+  constructor(homeService: HomeService){
+    this.projects = homeService.getProjects();
+  }
+}

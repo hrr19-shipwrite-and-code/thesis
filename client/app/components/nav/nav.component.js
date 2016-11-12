@@ -1,4 +1,4 @@
-System.register(['angular2/core', './home.services'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,32 +10,32 @@ System.register(['angular2/core', './home.services'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, home_services_1;
-    var HomeComponent;
+    var core_1, router_1;
+    var NavComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (home_services_1_1) {
-                home_services_1 = home_services_1_1;
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
-            HomeComponent = (function () {
-                function HomeComponent(homeService) {
-                    this.projects = homeService.getProjects();
+            NavComponent = (function () {
+                function NavComponent() {
                 }
-                HomeComponent = __decorate([
+                NavComponent = __decorate([
                     core_1.Component({
-                        selector: 'home',
-                        templateUrl: './client/app/components/home/home.html'
+                        selector: 'nav',
+                        templateUrl: './client/app/components/nav/nav.html',
+                        directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [home_services_1.HomeService])
-                ], HomeComponent);
-                return HomeComponent;
+                    __metadata('design:paramtypes', [])
+                ], NavComponent);
+                return NavComponent;
             }());
-            exports_1("HomeComponent", HomeComponent);
+            exports_1("NavComponent", NavComponent);
         }
     }
 });
-//# sourceMappingURL=home.component.js.map
+//# sourceMappingURL=nav.component.js.map
