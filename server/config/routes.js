@@ -1,5 +1,6 @@
 const userController = require('../users/userController.js');
 const projectController = require('../projects/projectController.js');
+const teamController = require('../teams/teamController.js');
 //const junctionController = require('../junctionController.js');
 
 module.exports = function (app, express) {
@@ -17,5 +18,10 @@ module.exports = function (app, express) {
 
   //Creates project --needs Auth
   app.post('/api/project/:type/create', projectController.createProject);
+
+  //Team Routes
+
+  //Create Team --need auth
+  app.post('/api/team/create', teamController.createTeam);
 
 };
