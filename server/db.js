@@ -1,10 +1,9 @@
 const Sequelize = require('sequelize');
 const db = new Sequelize('sushi', 'root', '');
-const User = require('./users/userSchema.js');
+const Profile = require('./profiles/profileSchema.js');
 const Project = require ('./projects/projectSchema.js');
-const Elsewhere = require('./users/elsewhereSchema.js');
+const Elsewhere = require('./profiles/elsewhereSchema.js');
 const Image = require('./projects/imageSchema.js');
-const Team = require('./teams/teamSchema.js');
 
 //Junction Tables
 const TeamUser = db.define('TeamUsers', {});
@@ -17,25 +16,22 @@ const Tech = db.define('Tech', {
   type: Sequelize.STRING,
 }, { timestamps: false });
 
-User.sync()
+Profile.sync()
   .then(() => {
-    Elsewhere.belongsTo(User);
-    User.hasMany(Elsewhere);
+    Elsewhere.belongsTo(Profile);
+    Profile.hasMany(Elsewhere);
     Elsewhere.sync();
   });
 
-//Creates user/team foreign id on project
-Team.hasMany(Project);
-Project.belongsTo(Team);
-User.hasMany(Project);
-Project.belongsTo(User);
+//Creates Profile/team foreign id on project
+Profile.hasMany(Project);
+Project.belongsTo(Profile);
 
-Team.sync()
-  .then(() => {
-    User.belongsToMany(Team, { through: TeamUser });
-    Team.belongsToMany(User, { through: TeamUser });
-    TeamUser.sync();
-  });
+
+Profile.belongsToMany(Profile, {as: 'Member', foreignKey: 'teamId', through: TeamUser });
+Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
+TeamUser.sync();
+
 
 Project.sync()
   .then(() => {
@@ -46,15 +42,15 @@ Project.sync()
     Image.sync();
 
     //Creating commentLikes foreign key
-    User.hasMany(CommentLikes);
-    CommentLikes.belongsTo(User);
+    Profile.hasMany(CommentLikes);
+    CommentLikes.belongsTo(Profile);
     Project.hasMany(CommentLikes);
     CommentLikes.belongsTo(Project);
     CommentLikes.sync();
 
     //Creating tech foreign keys
-    Tech.belongsTo(User);
-    User.hasMany(Tech);
+    Tech.belongsTo(Profile);
+    Profile.hasMany(Tech);
     Tech.belongsTo(Project);
     Project.hasMany(Tech);
     Tech.sync();
