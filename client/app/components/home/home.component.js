@@ -1,4 +1,4 @@
-System.register(['angular2/core', './home.services'], function(exports_1, context_1) {
+System.register(['angular2/core', './home.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,34 @@ System.register(['angular2/core', './home.services'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, home_services_1;
+    var core_1, home_services_js_1;
     var HomeComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (home_services_1_1) {
-                home_services_1 = home_services_1_1;
+            function (home_services_js_1_1) {
+                home_services_js_1 = home_services_js_1_1;
             }],
         execute: function() {
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
                     this.projects = homeService.getProjects();
                 }
+                HomeComponent.prototype.over = function () {
+                    console.log("Mouseover called");
+                };
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',
-                        templateUrl: './client/app/components/home/home.html'
+                        templateUrl: './client/app/components/home/home.html',
+                        providers: [home_services_js_1.HomeService]
                     }), 
-                    __metadata('design:paramtypes', [home_services_1.HomeService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof home_services_js_1.HomeService !== 'undefined' && home_services_js_1.HomeService) === 'function' && _a) || Object])
                 ], HomeComponent);
                 return HomeComponent;
+                var _a;
             }());
             exports_1("HomeComponent", HomeComponent);
         }
