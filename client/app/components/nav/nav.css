@@ -1,0 +1,42 @@
+
+.navBar {
+  width: 100vw;
+  height: 8vh;
+  margin-bottom: 2vh;
+
+  background-color: white;
+
+  padding-left: 4vw;
+  padding-right: 4vw;
+
+  border-bottom: 1px solid #D1D6D9;
+
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+
+  font-family: 'Roboto';
+}
+
+h1, a, p {
+  color: #888B8D;
+}
+
+a:hover {
+  color: salmon;
+}
+
+.navLink {
+  margin-right: 4vw;
+  font-size: 0.9em;
+}
+
+.links {
+  width: auto;
+  height: auto;
+  float: right;
+}
+
+a {
+  text-decoration: none;
+}
