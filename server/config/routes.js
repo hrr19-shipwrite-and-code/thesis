@@ -7,11 +7,14 @@ module.exports = function (app, express) {
   //User Routes
 
   //Signup/Login --Needs Authentication
-  app.post('/api/user/create', profileController.createProfile);
+  app.post('/api/user/create', profileController.createUser);
   app.post('/api/team/create', profileController.createTeam);
+  app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember', profileController.addMember);
+  app.delete('/api/team/removeMember', profileController.removeMember);
   //Others to view profiles
-  app.get('/api/profile/:type/:username', profileController.getProfile);
+
+  app.get('/api/:type/:username', profileController.getUser);
   //Edit user profile --Needs authentication
   app.put('/api/:type/editBasicInfo', profileController.editBasicInfo);
 

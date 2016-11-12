@@ -9,7 +9,8 @@ const Profile = db.define('Profile', {
   authId: { type: Sequelize.INTEGER, unique: true },
   location: Sequelize.STRING,
   bio: Sequelize.TEXT('long'),
-  type: Sequelize.STRING
+  type: Sequelize.STRING,
+  owner: Sequelize.STRING //ToDo: this needs to be worked on
 });
 
 module.exports = Profile;
