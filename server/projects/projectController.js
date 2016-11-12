@@ -23,30 +23,9 @@ module.exports = {
               res.sendStatus(200);
             });
         });
+    } else {
+      res.sendStatus(400);
     }
   }
 
 };
-
-
-    // post: function (req, res) {
-    //   db.User.findOrCreate({where: {username: req.body.username}})
-    //     // findOrCreate returns multiple resutls in an array
-    //     // use spread to assign the array to function arguments
-    //     .spread(function(user, created) {
-    //       db.Message.create({
-    //         userid: user.get('id'),
-    //         text: req.body.message,
-    //         roomname: req.body.roomname
-    //       }).then(function(message) {
-    //         res.sendStatus(201);
-    //       });
-    //     });
-    // }
-
-    // Message.belongsTo(User);
-    // User.hasMany(Message);
-
-
-// jan.addProject(homework, { started: false }) // The homework project is not started yet
-// jan.setProjects([makedinner, doshopping], { started: true}) // Both shopping and dinner have been started
