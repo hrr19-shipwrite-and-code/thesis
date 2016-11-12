@@ -16,6 +16,6 @@ module.exports = function (app, express) {
   //Project Routes
 
   //Creates project --needs Auth
-  app.post('/api/project/create', projectController.createProject);
+  app.post('/api/project/:type/create', projectController.createProject);
 
 };
