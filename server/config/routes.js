@@ -14,5 +14,8 @@ module.exports = function (app, express) {
   app.put('/api/user/editBasicInfo', userController.editBasicInfo);
 
   //Project Routes
+
+  //Creates project --needs Auth
   app.post('/api/project/create', projectController.createProject);
+
 };

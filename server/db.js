@@ -4,9 +4,10 @@ const User = require('./users/userSchema.js');
 const Project = require ('./projects/projectSchema.js');
 const Elsewhere = require('./users/elsewhereSchema.js');
 const Image = require('./projects/imageSchema.js');
+const Team = require('./teams/teamSchema.js');
 
 //Junction Tables
-const UserProject = db.define('UserProject', {});
+const TeamUser = db.define('TeamUsers', {});
 const CommentLikes = db.define('CommentLikes', {
   type: Sequelize.STRING,
   comment: Sequelize.TEXT('long')
@@ -22,17 +23,27 @@ User.sync()
     User.hasMany(Elsewhere);
     Elsewhere.sync();
   });
+
+//Creates user/team foreign id on project
+Team.hasMany(Project);
+Project.belongsTo(Team);
+User.hasMany(Project);
+Project.belongsTo(User);
+
+Team.sync()
+  .then(() => {
+    User.belongsToMany(Team, { through: TeamUser });
+    Team.belongsToMany(User, { through: TeamUser });
+    TeamUser.sync();
+  });
+
 Project.sync()
   .then(() => {
+
     //Creates Images table
     Image.belongsTo(Project);
     Project.hasMany(Image);
     Image.sync();
-
-    //Creating userProject foreign key
-    User.belongsToMany(Project, { through: UserProject });
-    Project.belongsToMany(User, { through: UserProject });
-    UserProject.sync();
 
     //Creating commentLikes foreign key
     User.hasMany(CommentLikes);
@@ -49,7 +60,8 @@ Project.sync()
     Tech.sync();
   });
 
+
 module.exports = db;
-exports.UserProject = UserProject;
+exports.TeamUser = TeamUser;
 exports.CommentLikes = CommentLikes;
 exports.Tech = Tech;
