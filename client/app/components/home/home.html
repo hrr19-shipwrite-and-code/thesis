@@ -1,0 +1,10 @@
+<h1>sushi</h1>
+
+<div *ngFor="let project of projects" class="project-thumbnail">
+  <img class="project-thumbnail-img" src="{{project.imgUrl}}">
+  <div class="project-thumbnail-views">
+    <img class="project-thumbnail-view-icon" src="http://atrium.lib.uoguelph.ca:8080/xmlui/themes/UofG/images/Crystal_Clear_action_lock3_64px.png">
+    <span>{{project.views}}</span>
+  </div>
+  <!--<div on-mouseover='over()' style="height:100px; width:100px; background:#e2e2e2">hello mouseover</div>-->
+</div>
