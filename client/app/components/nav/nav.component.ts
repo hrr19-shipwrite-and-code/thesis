@@ -9,11 +9,12 @@ import {ProfileComponent} from '../profile/profile.component.js';
 @Component({
   selector: 'nav',
   templateUrl: './client/app/components/nav/nav.html',
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES],
+  styleUrls: ['./client/app/components/nav/nav.css']
 })
 // @RouteConfig([
 //   {path: '/', name: 'Home', component: HomeComponent},
-//   {path: '/', name: 'Profile', component: ProfileComponent}  
+//   {path: '/', name: 'Profile', component: ProfileComponent}
 // ])
 
 export class NavComponent { }

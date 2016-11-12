@@ -13,7 +13,7 @@ import {ProfileComponent} from '../profile/profile.component.js';
 
 @RouteConfig([
   {path: '/', name: 'Home', component: HomeComponent},
-  {path: '/profile', name: 'Profile', component: ProfileComponent}  
+  {path: '/profile', name: 'Profile', component: ProfileComponent}
 ])
 
 export class AppComponent { }

@@ -28,7 +28,8 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                     core_1.Component({
                         selector: 'nav',
                         templateUrl: './client/app/components/nav/nav.html',
-                        directives: [router_1.ROUTER_DIRECTIVES]
+                        directives: [router_1.ROUTER_DIRECTIVES],
+                        styleUrls: ['./client/app/components/nav/nav.css']
                     }), 
                     __metadata('design:paramtypes', [])
                 ], NavComponent);
