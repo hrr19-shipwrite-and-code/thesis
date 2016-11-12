@@ -9,6 +9,7 @@ module.exports = function (app, express) {
   //Signup/Login --Needs Authentication
   app.post('/api/user/create', profileController.createUser);
   app.post('/api/team/create', profileController.createTeam);
+  app.put('/api/team/edit', profileController.editTeamInfo);
   app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);

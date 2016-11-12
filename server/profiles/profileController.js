@@ -37,9 +37,14 @@ module.exports = {
 
   createTeam: (req, res, next) => {
     const name = req.body.username;
+    const teamInfo = {
+      teamname: req.body.teamname,
+      owner: name,
+      email: req.body.email
+    }
     Profile.findOne({where: {username: name}})
       .then((user) => {
-        user.createTeam({teamname: req.body.teamname, owner: name})
+        user.createTeam(teamInfo)
           .then(() => {
             res.sendStatus(201);
           })
@@ -47,6 +52,21 @@ module.exports = {
             res.sendStatus(404);
           });
       });
+  },
+
+  editTeamInfo: (req, res, next) => {
+    const name = req.body.teamname;
+    Profile.findOne({where: {teamname: name}})
+      .then((team) => {
+        team.update({email: req.body.email})
+          .then(() => {
+            res.sendStatus(201);
+          })
+          .catch((err) => {
+            console.log(err)
+            res.sendStatus(404);
+          })
+      })
   },
 
   deleteTeam: (req, res,next) => {
