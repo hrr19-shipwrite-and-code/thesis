@@ -3,6 +3,8 @@ const db = new Sequelize('sushi', 'root', '');
 const Profile = require('./profiles/profileSchema.js');
 const Project = require ('./projects/projectSchema.js');
 const Image = require('./projects/imageSchema.js');
+const Comment = require('./comments/commentSchema.js');
+const Like = require('./likes/likeSchema.js');
 const Tech = require('./tech/techSchema.js').Tech;
 const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
@@ -14,11 +16,12 @@ const CommentLikes = db.define('CommentLikes', {
   comment: Sequelize.TEXT('long')
 });
 
+//Creates Profile/team foreign id on project
+Profile.hasMany(Project);
+Project.belongsTo(Profile);
+
 Profile.sync()
   .then(() => {
-    //Creates Profile/team foreign id on project
-    Profile.hasMany(Project);
-    Project.belongsTo(Profile);
 
     Profile.belongsToMany(Profile, {as: 'Member', foreignKey: 'teamId', through: TeamUser });
     Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
@@ -35,12 +38,19 @@ Tech.sync()
         Project.hasMany(Image);
         Image.sync();
 
-        //Creating commentLikes foreign key
-        Profile.hasMany(CommentLikes);
-        CommentLikes.belongsTo(Profile);
-        Project.hasMany(CommentLikes);
-        CommentLikes.belongsTo(Project);
-        CommentLikes.sync();
+        //Creates Comment table
+        Profile.hasMany(Comment);
+        Comment.belongsTo(Profile);
+        Project.hasMany(Comment);
+        Comment.belongsTo(Project);
+        Comment.sync();
+
+        //Creates Like table
+        Profile.hasMany(Like);
+        Like.belongsTo(Profile);
+        Project.hasMany(Like);
+        Like.belongsTo(Project);
+        Like.sync();
 
         //Creating tech/profile foreign keys for ProfileTech table
         Tech.belongsToMany(Profile, {through: ProfileTech});

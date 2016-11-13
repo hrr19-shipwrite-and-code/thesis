@@ -3,13 +3,15 @@ const Project = require('./projectSchema.js');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
+const Tech = require('../tech/techSchema.js');
 const db = require('../db.js');
 
 module.exports = {
 
+  //Projects
   createProject: (req, res, next) => {
-    const id = req.body.id;
-      Profile.findById(id)
+    const name = req.body.username;
+      Profile.findOne({where: {username: name}})
         .then((user) => {
           user.createProject({title: req.body.title, views: 0})
             .then(() => {
@@ -72,6 +74,7 @@ module.exports = {
       });
   },
 
+  //Project Images
   uploadProjectImage: (req, res, next) => {
     const id = req.params.projectId;
     mkdirp('./client/uploads/' + id, (err) => {
