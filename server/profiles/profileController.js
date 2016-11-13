@@ -39,7 +39,7 @@ module.exports = {
     const name = req.body.username;
     Profile.findOne({where: {username: name}})
       .then((user) => {
-        user.createTeam({teamname: req.body.teamname})
+        user.createTeam(req.body.team)
           .then(() => {
             res.sendStatus(201);
           })
