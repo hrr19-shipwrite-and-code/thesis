@@ -9,7 +9,16 @@ const Profile = db.define('Profile', {
   authId: { type: Sequelize.INTEGER, unique: true },
   location: Sequelize.STRING,
   bio: Sequelize.TEXT('long'),
-  type: Sequelize.STRING
+  type: Sequelize.STRING,
+  owner: Sequelize.STRING, //ToDo: this needs to be worked on
+
+  //elsewhere
+  facebook: Sequelize.STRING,
+  twitter: Sequelize.STRING,
+  personal: Sequelize.STRING,
+  blog: Sequelize.STRING,
+  github: Sequelize.STRING,
+  linkedin: Sequelize.STRING
 });
 
 module.exports = Profile;

@@ -1,19 +1,26 @@
 const profileController = require('../profiles/profileController.js');
 const projectController = require('../projects/projectController.js');
-//const junctionController = require('../junctionController.js');
+const techController = require('../tech/techController.js');
 
 module.exports = function (app, express) {
 
   //User Routes
 
   //Signup/Login --Needs Authentication
-  app.post('/api/user/create', profileController.createProfile);
+  app.post('/api/user/create', profileController.createUser);
   app.post('/api/team/create', profileController.createTeam);
+  app.put('/api/team/edit', profileController.editTeamInfo);
+  app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember', profileController.addMember);
+  app.delete('/api/team/removeMember', profileController.removeMember);
   //Others to view profiles
-  app.get('/api/profile/:type/:username', profileController.getProfile);
+  app.get('/api/profile/:profileId', profileController.getProfile);
   //Edit user profile --Needs authentication
-  app.put('/api/:type/editBasicInfo', profileController.editBasicInfo);
+  app.put('/api/user/edit', profileController.editUserInfo);
+
+  //Tech Routes
+  app.post('/api/profile/addTech', techController.profileAddTech);
+  app.post('/api/project/addTech', techController.projectAddTech);
 
   //Project Routes
 
