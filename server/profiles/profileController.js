@@ -12,11 +12,11 @@ module.exports = {
       })
   },
 
-  getUser: (req, res, next) => {
-    const username = req.params.username;
-    Profile.findOne({ where: {username: username}})
-      .then((user) => {
-        res.json(user);
+  getProfile: (req, res, next) => {
+    const id = req.params.profileId;
+    Profile.findOne({ where: {id: id}})
+      .then((profile) => {
+        res.json(profile);
       })
       .catch(err => {
         console.log(err);
@@ -24,7 +24,7 @@ module.exports = {
       });
   },
 
-  editBasicInfo: (req, res, next) => {
+  editUserInfo: (req, res, next) => {
     //Username needs to be changed to authId
     Profile.update(req.body, {where: {username: req.body.username}})
       .then((user, se) => {

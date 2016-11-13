@@ -14,10 +14,9 @@ module.exports = function (app, express) {
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);
   //Others to view profiles
-
-  app.get('/api/:type/:username', profileController.getUser);
+  app.get('/api/profile/:profileId', profileController.getProfile);
   //Edit user profile --Needs authentication
-  app.put('/api/:type/editBasicInfo', profileController.editBasicInfo);
+  app.put('/api/:type/editUserInfo', profileController.editUserInfo);
 
   //Project Routes
 
