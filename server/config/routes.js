@@ -1,6 +1,8 @@
 const profileController = require('../profiles/profileController.js');
 const projectController = require('../projects/projectController.js');
 const techController = require('../tech/techController.js');
+const likeController = require('../likes/likeController.js');
+const commentController = require('../comments/commentController.js');
 
 module.exports = function (app, express) {
 
@@ -32,6 +34,10 @@ module.exports = function (app, express) {
   app.put('/api/project/edit', projectController.editProject);
   app.delete('/api/project/delete', projectController.deleteProject);
 
-  //Comment/Likes Routes
-  app.post('/api/comment/add/:projectId', projectController.addCommentToProject);
+  //Comment Routes
+  app.post('/api/comment/create/:projectId', commentController.addCommentToProject);
+  app.delete('/api/comment/delete/:commentId', commentController.removeComment);
+
+  //Like routes
+  app.post('/api/like/:projectId', likeController.likeProject);
 };
