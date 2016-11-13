@@ -2,13 +2,13 @@ const express = require('express');
 const sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const db = require('./db.js');
+const db = require('./db.js').db;
 
 const app = express();
 
 const port = 3000;
 
-app.use(express.static('../client'));
+app.use(express.static('./client'));
 app.use(bodyParser.json());
 
 require('./config/routes.js')(app, express);

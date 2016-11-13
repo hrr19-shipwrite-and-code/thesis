@@ -57,7 +57,12 @@ Project.sync()
   });
 
 
-module.exports = db;
-exports.TeamUser = TeamUser;
-exports.CommentLikes = CommentLikes;
-exports.Tech = Tech;
+module.exports = {
+  db: db,
+  TeamUser: TeamUser,
+  CommentLikes: CommentLikes,
+  Tech: Tech
+};
+// exports.TeamUser = TeamUser;
+// exports.CommentLikes = CommentLikes;
+// exports.Tech = Tech;
