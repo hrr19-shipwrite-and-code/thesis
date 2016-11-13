@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const db = new Sequelize('sushi', 'root', '');
 const Profile = require('./profiles/profileSchema.js');
 const Project = require ('./projects/projectSchema.js');
-const Elsewhere = require('./profiles/elsewhereSchema.js');
 const Image = require('./projects/imageSchema.js');
 
 //Junction Tables
@@ -17,11 +16,6 @@ const Tech = db.define('Tech', {
 }, { timestamps: false });
 
 Profile.sync()
-  .then(() => {
-    Elsewhere.belongsTo(Profile);
-    Profile.hasMany(Elsewhere);
-    Elsewhere.sync();
-  });
 
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);
