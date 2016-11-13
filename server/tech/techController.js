@@ -26,7 +26,23 @@ module.exports = {
   },
 
   projectAddTech: (req, res, next) => {
-
+    const id = req.body.id;
+    const techName = req.body.tech
+    Tech.findOrCreate({where: {name: techName}})
+      .spread((tech) => {
+        Project.findOne({where: {id: id}})
+          .then((project) => {
+            console.log(tech)
+            project.addTech(tech)
+              .then(() => {
+                res.sendStatus(201);
+              })
+              .catch((err) => {
+                console.log(err)
+                res.sendStatus(404);
+              });
+          });
+      });
   }
 }
 

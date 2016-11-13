@@ -20,6 +20,7 @@ module.exports = function (app, express) {
 
   //Tech Routes
   app.post('/api/profile/addTech', techController.profileAddTech);
+  app.post('/api/project/addTech', techController.projectAddTech);
 
   //Project Routes
 
