@@ -17,7 +17,6 @@ module.exports = function (app, express) {
 
   //Project Routes
 
-  //Creates project --needs Auth
   app.post('/api/project/create', projectController.createProject);
   app.post('/api/project/upload/:projectId', projectController.uploadProjectImage);
   app.post('/api/project/thumbnail/:projectId', projectController.uploadProjectThumbnail);
@@ -26,4 +25,6 @@ module.exports = function (app, express) {
   app.put('/api/project/edit', projectController.editProject);
   app.delete('/api/project/delete', projectController.deleteProject);
 
+  //Comment/Likes Routes
+  app.post('/api/comment/add/:projectId', projectController.addCommentToProject);
 };
