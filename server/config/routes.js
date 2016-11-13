@@ -1,6 +1,6 @@
 const profileController = require('../profiles/profileController.js');
 const projectController = require('../projects/projectController.js');
-//const junctionController = require('../junctionController.js');
+const techController = require('../tech/techController.js');
 
 module.exports = function (app, express) {
 
@@ -16,7 +16,10 @@ module.exports = function (app, express) {
   //Others to view profiles
   app.get('/api/profile/:profileId', profileController.getProfile);
   //Edit user profile --Needs authentication
-  app.put('/api/:type/editUserInfo', profileController.editUserInfo);
+  app.put('/api/user/edit', profileController.editUserInfo);
+
+  //Tech Routes
+  app.post('/api/profile/addTech', techController.profileAddTech);
 
   //Project Routes
 
