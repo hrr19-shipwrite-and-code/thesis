@@ -1,4 +1,5 @@
 const Profile = require('./profileSchema.js');
+const Tech = require('../tech/techSchema.js').Tech;
 
 module.exports = {
   createUser: (req, res, next) => {
@@ -14,7 +15,26 @@ module.exports = {
 
   getProfile: (req, res, next) => {
     const id = req.params.profileId;
-    Profile.findOne({ where: {id: id}})
+    Profile.findOne({
+      where: {id: id},
+      include:[{
+        model: Tech,
+        attributes: ['id', 'name'],
+        through: {attributes: []}
+      },
+      {
+        model: Profile,
+        as: 'Team',
+        attributes: ['id', 'teamname'],
+        through: {attributes: []}
+      },
+      {
+        model: Profile,
+        as: 'Member',
+        attributes: ['id', 'teamname'],
+        through: {attributes: []}
+      }]
+    })
       .then((profile) => {
         res.json(profile);
       })
