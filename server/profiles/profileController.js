@@ -56,30 +56,24 @@ module.exports = {
 
   editTeamInfo: (req, res, next) => {
     const name = req.body.teamname;
-    Profile.findOne({where: {teamname: name}})
-      .then((team) => {
-        team.update({email: req.body.email})
-          .then(() => {
-            res.sendStatus(201);
-          })
-          .catch((err) => {
-            console.log(err)
-            res.sendStatus(404);
-          })
+    Profile.update({email: req.body.email}, {where: {teamname: name}})
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(404);
       })
   },
 
   deleteTeam: (req, res,next) => {
     const name = req.body.teamname;
-    Profile.findOne({where: {teamname: name}})
-      .then((team) => {
-        team.destroy()
-          .then(() => {
-            res.sendStatus(200)
-          })
-          .catch(() => {
-            res.sendStatus(404)
-          })
+    Profile.destroy({where: {teamname: name}})
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .catch(() => {
+        res.sendStatus(404)
       })
   },
 

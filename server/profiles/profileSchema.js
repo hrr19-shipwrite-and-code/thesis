@@ -14,7 +14,7 @@ const Profile = db.define('Profile', {
 
   //elsewhere
   facebook: Sequelize.STRING,
-  twitter: sequelize.STRING,
+  twitter: Sequelize.STRING,
   personal: Sequelize.STRING,
   blog: Sequelize.STRING,
   github: Sequelize.STRING,
