@@ -15,6 +15,25 @@
   position: relative
 }
 
+.project-thumbnail-hover {
+  background-color: rgba(25, 25, 25, .7);
+  border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: all 500ms ease;
+}
+
+.project-thumbnail-hover .project-name {
+  text-align: center;
+  margin: 10 0;
+  color: white;
+}
+
+.hide {
+  opacity: 0;
+}
+
 .project-thumbnail .project-thumbnail-img {
   margin: 15px auto;
   max-width: 88%;
