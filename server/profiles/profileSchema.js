@@ -15,12 +15,14 @@ const Profile = db.define('Profile', {
     allowNull: false,
     validate: {
       isEmail: true
-    }
+    },
+    noUpdate: true
   },
   picture: Sequelize.STRING,
   authId: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    noUpdate: true
   },
   location: Sequelize.STRING,
   bio: Sequelize.TEXT('long'),
@@ -31,7 +33,8 @@ const Profile = db.define('Profile', {
   type: {
     type: Sequelize.ENUM,
     allowNull: false,
-    values: ['Team', 'Member']
+    values: ['Team', 'Member'],
+    noUpdate: true
   },
 
   //elsewhere
