@@ -13,8 +13,8 @@ module.exports = {
 
   //Projects
   createProject: (req, res, next) => {
-    const name = req.body.username;
-      Profile.findOne({where: {username: name}})
+    const name = req.body.name;
+      Profile.findOne({where: {name: name}})
         .then((user) => {
           user.createProject({title: req.body.title, views: 0})
             .then(() => {
@@ -29,9 +29,9 @@ module.exports = {
   getProject: (req, res, next) => {
     const id = req.params.projectId;
     Project.findById(id, { 
-      include: [{model: Profile, attributes: ['teamname', 'username']},
+      include: [{model: Profile, attributes: ['name']},
        {model: Image},
-       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['username']}] },
+       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name']}] },
        {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]})
       .then((project) => {
@@ -74,7 +74,7 @@ module.exports = {
 
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
-    Project.findAll({ offset: 1, limit: 3, include: [{model: Profile, attributes: ['teamname', 'username']}]})
+    Project.findAll({ offset: 1, limit: 3, include: [{model: Profile, attributes: ['name']}]})
       .then((projects) => {
         res.json(projects);
       })
