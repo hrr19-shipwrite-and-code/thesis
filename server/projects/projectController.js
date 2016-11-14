@@ -38,9 +38,9 @@ module.exports = {
         project.increment('views');
         project = project.toJSON();
         project.views += 1;
-        Like.findAndCountAll({where: {ProjectId: id}})
-          .then((like) => {
-            project.likes = like.count;
+        Like.count({where: {ProjectId: id}})
+          .then((likes) => {
+            project.likes = likes;
             res.send(project);
           });
       })
