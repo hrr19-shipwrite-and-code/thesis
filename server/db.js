@@ -10,10 +10,23 @@ const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
 const TeamUser = require('./profiles/TeamUserSchema.js')
 
+<<<<<<< d40d407b7af5add36208821cc89b84320c1103da
+=======
+//Junction Tables
+const TeamUser = db.define('TeamUsers', {});
+>>>>>>> Updated Project Controllers, Comment, Like
 
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);
 Project.belongsTo(Profile);
+
+//Creating tech/project foreign keys for ProjectTech table
+Tech.belongsToMany(Project, {through: ProjectTech});
+Project.belongsToMany(Tech, {through: ProjectTech});
+
+//Creating tech/profile foreign keys for ProfileTech table
+Tech.belongsToMany(Profile, {through: ProfileTech});
+Profile.belongsToMany(Tech, {through: ProfileTech});
 
 Profile.sync()
   .then(() => {
@@ -47,15 +60,8 @@ Tech.sync()
         Like.belongsTo(Project);
         Like.sync();
 
-        //Creating tech/profile foreign keys for ProfileTech table
-        Tech.belongsToMany(Profile, {through: ProfileTech});
-        Profile.belongsToMany(Tech, {through: ProfileTech});
-        ProfileTech.sync();
-
-        //Creating tech/project foreign keys for ProjectTech table
-        Tech.belongsToMany(Project, {through: ProjectTech});
-        Project.belongsToMany(Tech, {through: ProjectTech});
         ProjectTech.sync();
+        ProfileTech.sync();
       });
   })
 
@@ -63,6 +69,14 @@ Tech.sync()
 
 module.exports = {
   db: db,
+<<<<<<< d40d407b7af5add36208821cc89b84320c1103da
   TeamUser: TeamUser,
   Tech: Tech
 };
+=======
+  TeamUser: TeamUser
+};
+// exports.TeamUser = TeamUser;
+// exports.CommentLikes = CommentLikes;
+// exports.Tech = Tech;
+>>>>>>> Updated Project Controllers, Comment, Like

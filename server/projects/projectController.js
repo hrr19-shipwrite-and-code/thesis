@@ -1,9 +1,12 @@
 const Profile = require('../profiles/profileSchema.js');
 const Project = require('./projectSchema.js');
+const Comment = require('../comments/commentSchema');
+const Like = require('../likes/likeSchema.js');
 const multer = require('multer');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
-const Tech = require('../tech/techSchema.js');
+const Tech = require('../tech/techSchema.js').Tech;
+const ProjectTech = require('../tech/techSchema.js').ProjectTech;
 const db = require('../db.js');
 
 module.exports = {
@@ -25,18 +28,24 @@ module.exports = {
 
   getProject: (req, res, next) => {
     const id = req.params.projectId;
-    Project.findById(id, { include: [{model: Profile, attributes: ['teamname', 'username']}] })
+    Project.findById(id, { 
+      include: [{model: Profile, attributes: ['teamname', 'username']},
+       {model: Image},
+       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['username']}] },
+       {model: Tech, attributes: ['name'], through: {attributes: []}}
+       ]})
       .then((project) => {
         project.increment('views');
         project = project.toJSON();
-        Image.findAll({where: {ProjectId: id}, attributes: ['url']})
-          .then((image) => {
-            project.views += 1;
-            project.image = image;
+        project.views += 1;
+        Like.findAndCountAll({where: {ProjectId: id}})
+          .then((like) => {
+            project.likes = like.count;
             res.send(project);
           });
       })
       .catch((err) =>{ 
+        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -70,7 +79,7 @@ module.exports = {
         res.json(projects);
       })
       .catch((err) =>{
-        res.send(404)
+        res.send(404);
       });
   },
 
@@ -79,7 +88,7 @@ module.exports = {
     const id = req.params.projectId;
     mkdirp('./client/uploads/' + id, (err) => {
       if (err) console.log(err)
-    })
+    });
     const storage = multer.diskStorage({
       destination: function (req, file, callback) {
         callback(null, './client/uploads/' + id);
@@ -105,8 +114,8 @@ module.exports = {
   uploadProjectThumbnail: (req, res, next) => {
     const id = req.params.projectId;
     mkdirp('./client/uploads/' + id, (err) => {
-      if (err) console.log(err)
-    })
+      if (err) console.log(err);
+    });
     const storage = multer.diskStorage({
       destination: function (req, file, callback) {
         callback(null, './client/uploads/' + id);
@@ -125,7 +134,7 @@ module.exports = {
         })
         .catch((err) => {
           res.sendStatus(404);
-        })
+        });
     });
   }
 
