@@ -3,7 +3,8 @@ const db = new Sequelize('sushi', 'root', '');
 
 module.exports = {
   Tech: db.define('Tech', {
-    name: Sequelize.STRING
+    name: Sequelize.STRING,
+    count: Sequelize.INTEGER
   }),
 
   ProfileTech: db.define('ProfileTech', {}),
