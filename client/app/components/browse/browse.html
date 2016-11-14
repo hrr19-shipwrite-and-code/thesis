@@ -1,0 +1,12 @@
+<h1>Browse</h1>
+
+<div class="browse-sidebar">
+  <h1>filter</h1>
+  <div *ngFor="let tech of techs" class="tech-container" (click)="addTechToSearch(tech)" hoverTech>
+    <span>{{tech}}</span>
+  </div>
+</div>
+
+<div class="browse-body">
+  <h1>body</h1>
+</div>
