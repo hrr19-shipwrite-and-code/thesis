@@ -4,7 +4,14 @@ const Project = require('../projects/projectSchema.js');
 
 module.exports = {
   createUser: (req, res, next) => {
-    Profile.create(req.body)
+    const userInfo = {
+      url: req.body.url,
+      name: req.body.name,
+      type: 'member',
+      email: req.body.email
+    }
+
+    Profile.create(userInfo)
       .then(() => {
         res.sendStatus(201);
       })

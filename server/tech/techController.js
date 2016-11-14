@@ -45,6 +45,16 @@ module.exports = {
       });
   },
 
+  getAllTech: (req, res, next) => {
+    Tech.findAll({attributes: ["id", "name"]})
+      .then((tech) => {
+        res.json(tech);
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
+  }
+
   //Search by tech name and keep count of search
 }
 
