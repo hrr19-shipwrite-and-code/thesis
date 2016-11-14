@@ -2,7 +2,7 @@ const Tech = require('./techSchema.js').Tech;
 const ProfileTech = require('./techSchema.js').ProfileTech;
 const ProjectTech = require('./techSchema.js').ProjectTech;
 const Profile = require('../profiles/profileSchema.js');
-const Project = require('../Projects/projectSchema.js');
+const Project = require('../projects/projectSchema.js');
 
 module.exports = {
   profileAddTech: (req, res, next) => {
@@ -45,7 +45,7 @@ module.exports = {
 
   projectAddTech: (req, res, next) => {
     const id = req.body.id;
-    const techName = req.body.tech
+    const techName = req.body.tech;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Project.findOne({where: {id: id}})
