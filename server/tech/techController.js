@@ -25,6 +25,24 @@ module.exports = {
       });
   },
 
+  profileRemoveTech: (req, res, next) => {
+    const id = req.body.id;
+    const techName = req.body.tech;
+    Tech.findOne({where: {name: techName}})
+      .then((tech) => {
+        Profile.findOne({where: {id: id}})
+          .then((profile) => {
+            profile.removeTech(tech)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                res.sendStatus(401);
+              })
+          })
+      })
+  },
+
   projectAddTech: (req, res, next) => {
     const id = req.body.id;
     const techName = req.body.tech
@@ -43,6 +61,24 @@ module.exports = {
               });
           });
       });
+  },
+
+  projectRemoveTech: (req, res, next) => {
+    const id = req.body.id;
+    const techName = req.body.tech;
+    Tech.findOne({where: {name: techName}})
+      .then((tech) => {
+        Project.findOne({where: {id: id}})
+          .then((project) => {
+            project.removeTech(tech)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                res.sendStatus(401);
+              })
+          })
+      })
   },
 
   getAllTech: (req, res, next) => {
