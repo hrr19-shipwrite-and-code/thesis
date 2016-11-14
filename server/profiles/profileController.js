@@ -1,8 +1,18 @@
 const Profile = require('./profileSchema.js');
+const Tech = require('../tech/techSchema.js').Tech;
+const Project = require('../projects/projectSchema.js');
+const multer = require('multer');
 
 module.exports = {
-  createProfile: (req, res, next) => {
-    Profile.create(req.body)
+  createUser: (req, res, next) => {
+    const userInfo = {
+      url: req.body.url,
+      name: req.body.name,
+      type: 'member',
+      email: req.body.email
+    }
+
+    Profile.create(userInfo)
       .then(() => {
         res.sendStatus(201);
       })
@@ -13,10 +23,33 @@ module.exports = {
   },
 
   getProfile: (req, res, next) => {
-    const username = req.params.username;
-    Profile.findOne({ where: {username: username}})
-      .then((user) => {
-        res.json(user);
+    const id = req.params.profileId;
+
+    Profile.findOne({
+      where: {id: id},
+      include:[{
+        model: Tech,
+        attributes: ['id', 'name'],
+        through: {attributes: []}
+      },
+      {
+        model: Profile,
+        as: 'Member',
+        attributes: ['id', 'name', 'url'],
+        through: {attributes: []}
+      },
+      {
+        model: Profile,
+        as: 'Team',
+        attributes: ['id', 'name', 'url'],
+        through: {attributes: []}
+      },
+      {
+        model: Project
+      }]
+    })
+      .then((profile) => {
+        res.json(profile);
       })
       .catch(err => {
         console.log(err);
@@ -24,9 +57,9 @@ module.exports = {
       });
   },
 
-  editBasicInfo: (req, res, next) => {
+  editUserInfo: (req, res, next) => {
     //Username needs to be changed to authId
-    Profile.update(req.body, {where: {username: req.body.username}})
+    Profile.update(req.body, {where: {url: req.body.url}})
       .then((user, se) => {
         res.sendStatus(200);
       })
@@ -36,10 +69,17 @@ module.exports = {
   },
 
   createTeam: (req, res, next) => {
-    const name = req.body.username;
-    Profile.findOne({where: {username: name}})
+    const user = req.body.user;
+    const team = req.body.team;
+    const teamInfo = {
+      name: req.body.name,
+      url: team,
+      email: req.body.email,
+      type: 'team'
+    }
+    Profile.findOne({where: {url: user}})
       .then((user) => {
-        user.createTeam({teamname: req.body.teamname})
+        user.createTeam(teamInfo)
           .then(() => {
             res.sendStatus(201);
           })
@@ -49,12 +89,35 @@ module.exports = {
       });
   },
 
+  editTeamInfo: (req, res, next) => {
+    const url = req.body.url;
+    Profile.update({email: req.body.email}, {where: {url: url}})
+      .then(() => {
+        res.sendStatus(201);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(404);
+      })
+  },
+
+  deleteTeam: (req, res,next) => {
+    const url = req.body.url;
+    Profile.destroy({where: {url: url}})
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .catch(() => {
+        res.sendStatus(404)
+      })
+  },
+
   addMember: (req, res, next) => {
-    const name = req.body.teamname;
-    const username = req.body.username;
-    Profile.findOne({where: {username: username}})
+    const team = req.body.team;
+    const user = req.body.user;
+    Profile.findOne({where: {url: user}})
       .then((user) => {
-        Profile.findOne({where: {teamname: name}})
+        Profile.findOne({where: {url: team}})
           .then((team) => {
             team.addMember(user)
               .then(() => {
@@ -62,18 +125,50 @@ module.exports = {
               })
               .catch((err) => {
                 res.sendStatus(400);
-              })
+              });
           });
       });
+  },
+
+  removeMember: (req, res, next) => {
+    const team = req.body.team;
+    const user = req.body.user;
+    Profile.findOne({where: {url: user}})
+      .then((user) => {
+        Profile.findOne({where: {url: team}})
+          .then((team) => {
+            team.removeMember(user)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                res.sendStatus(400);
+              });
+          })
+      })
+  },
+
+  addPicture: (req, res, next) => {
+    const id = req.body.id;
+    const storage = multer.diskStorage({
+      destination: function (req, file, callback) {
+        callback(null, './client/uploads/profile');
+      },
+      filename: function (req, file, callback) {
+        callback(null, 'profilePhoto-' + id);
+      }
+    });
+    const upload = multer({storage: storage}).single('profilePhoto');
+    upload(req, res, (err) => {
+      if (err) res.end('Error Uploading File');
+      const URL = '/uploads/profile/profilePhoto-' + id;
+      Profile.findById(id)
+        .then((profile) => {
+          profile.update({ picture: URL})
+            .then(() => {
+              res.sendStatus(200);
+            });
+        });
+    });
   }
 };
-
-
-
-// Profile.findOne({where: {username: name}})
-//   .then((user) => {
-//     user.createProject({title: req.body.title})
-//       .then(() => {
-//         res.sendStatus(200);
-//       });
-//   });
