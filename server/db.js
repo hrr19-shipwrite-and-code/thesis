@@ -10,12 +10,6 @@ const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
 const TeamUser = require('./profiles/TeamUserSchema.js')
 
-<<<<<<< d40d407b7af5add36208821cc89b84320c1103da
-=======
-//Junction Tables
-const TeamUser = db.define('TeamUsers', {});
->>>>>>> Updated Project Controllers, Comment, Like
-
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);
 Project.belongsTo(Profile);
@@ -69,14 +63,6 @@ Tech.sync()
 
 module.exports = {
   db: db,
-<<<<<<< d40d407b7af5add36208821cc89b84320c1103da
   TeamUser: TeamUser,
   Tech: Tech
 };
-=======
-  TeamUser: TeamUser
-};
-// exports.TeamUser = TeamUser;
-// exports.CommentLikes = CommentLikes;
-// exports.Tech = Tech;
->>>>>>> Updated Project Controllers, Comment, Like
