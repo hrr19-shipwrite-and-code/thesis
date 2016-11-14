@@ -15,6 +15,7 @@ module.exports = function (app, express) {
   app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);
+  app.post('/api/user/addPicture', profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileId', profileController.getProfile);
   //Edit user profile --Needs authentication
@@ -22,7 +23,10 @@ module.exports = function (app, express) {
 
   //Tech Routes
   app.post('/api/profile/addTech', techController.profileAddTech);
+  app.delete('/api/profile/removeTech', techController.profileRemoveTech);
   app.post('/api/project/addTech', techController.projectAddTech);
+  app.delete('/api/project/removeTech', techController.projectRemoveTech);
+  app.get('/api/tech', techController.getAllTech);
 
   //Project Routes
 
