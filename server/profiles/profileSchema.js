@@ -2,15 +2,33 @@ const Sequelize = require('sequelize');
 const db = new Sequelize('sushi', 'root', '');
 
 const Profile = db.define('Profile', {
-  username: { type: Sequelize.STRING, unique: true },
-  teamname: { type: Sequelize.STRING, unique: true },
-  email: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  url: {
+    type: Sequelize.STRING,
+    unique: true
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
+  },
   displayPicture: Sequelize.STRING,
-  authId: { type: Sequelize.INTEGER, unique: true },
+  authId: {
+    type: Sequelize.STRING,
+    unique: true
+  },
   location: Sequelize.STRING,
   bio: Sequelize.TEXT('long'),
-  type: Sequelize.STRING,
-  owner: Sequelize.STRING, //ToDo: this needs to be worked on
+  type: {
+    type: Sequelize.ENUM,
+    allowNull: false,
+    values: ['Team', 'Member']
+  },
 
   //elsewhere
   facebook: Sequelize.STRING,

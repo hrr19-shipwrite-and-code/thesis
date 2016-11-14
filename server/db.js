@@ -10,11 +10,10 @@ const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
 
 //Junction Tables
-const TeamUser = db.define('TeamUsers', {});
-const CommentLikes = db.define('CommentLikes', {
-  type: Sequelize.STRING,
-  comment: Sequelize.TEXT('long')
+const TeamUser = db.define('TeamUsers', {
+  auth: Sequelize.BOOLEAN
 });
+
 
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);
@@ -69,9 +68,5 @@ Tech.sync()
 module.exports = {
   db: db,
   TeamUser: TeamUser,
-  CommentLikes: CommentLikes,
   Tech: Tech
 };
-// exports.TeamUser = TeamUser;
-// exports.CommentLikes = CommentLikes;
-// exports.Tech = Tech;

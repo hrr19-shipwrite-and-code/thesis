@@ -43,6 +43,8 @@ module.exports = {
               });
           });
       });
-  }
+  },
+
+  //Search by tech name and keep count of search
 }
 
