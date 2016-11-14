@@ -1,6 +1,7 @@
 const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const Project = require('../projects/projectSchema.js');
+const multer = require('multer');
 
 module.exports = {
   createUser: (req, res, next) => {
@@ -145,5 +146,29 @@ module.exports = {
               });
           })
       })
+  },
+
+  addPicture: (req, res, next) => {
+    const id = req.body.id;
+    const storage = multer.diskStorage({
+      destination: function (req, file, callback) {
+        callback(null, './client/uploads/profile');
+      },
+      filename: function (req, file, callback) {
+        callback(null, 'profilePhoto-' + id);
+      }
+    });
+    const upload = multer({storage: storage}).single('profilePhoto');
+    upload(req, res, (err) => {
+      if (err) res.end('Error Uploading File');
+      const URL = '/uploads/profile/profilePhoto-' + id;
+      Profile.findById(id)
+        .then((profile) => {
+          profile.update({ picture: URL})
+            .then(() => {
+              res.sendStatus(200);
+            });
+        });
+    });
   }
 };

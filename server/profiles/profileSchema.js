@@ -17,7 +17,7 @@ const Profile = db.define('Profile', {
       isEmail: true
     }
   },
-  displayPicture: Sequelize.STRING,
+  picture: Sequelize.STRING,
   authId: {
     type: Sequelize.STRING,
     unique: true
