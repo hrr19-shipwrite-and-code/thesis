@@ -2,11 +2,13 @@ import {Component} from 'angular2/core';
 import {HomeService} from './home.services.js';
 import {HoverDirective} from '../../directives/thumbnail-hover.directive.js';
 
+import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.component.js';
+
 @Component({
   selector: 'home',
   templateUrl: './client/app/components/home/home.html',
   providers: [HomeService],
-  directives: [HoverDirective]
+  directives: [HoverDirective, ProjectThumbnailComponent]
 })
 
 export class HomeComponent {
@@ -15,14 +17,4 @@ export class HomeComponent {
   constructor(homeService: HomeService){
     this.projects = homeService.getProjects();
   }
-
-  // hover(){
-  //   console.log("Mouseover called");
-  //   this.hoverShow = true;
-  // }
-
-  // hoverStop(){
-  //   console.log("Mouseover called");
-  //   this.hoverShow = false;
-  // }
 }

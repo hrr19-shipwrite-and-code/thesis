@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../nav/nav.component.js', '../home/home.component.js', '../profile/profile.component.js'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../nav/nav.component.js', '../home/home.component.js', '../profile/profile.component.js', '../browse/browse.component.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../nav/nav.component.js', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, nav_component_js_1, home_component_js_1, profile_component_js_1;
+    var core_1, router_1, nav_component_js_1, home_component_js_1, profile_component_js_1, browse_component_js_1;
     var AppComponent;
     return {
         setters:[
@@ -28,6 +28,9 @@ System.register(['angular2/core', 'angular2/router', '../nav/nav.component.js', 
             },
             function (profile_component_js_1_1) {
                 profile_component_js_1 = profile_component_js_1_1;
+            },
+            function (browse_component_js_1_1) {
+                browse_component_js_1 = browse_component_js_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -41,7 +44,8 @@ System.register(['angular2/core', 'angular2/router', '../nav/nav.component.js', 
                     }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Home', component: home_component_js_1.HomeComponent },
-                        { path: '/profile', name: 'Profile', component: profile_component_js_1.ProfileComponent }
+                        { path: '/profile', name: 'Profile', component: profile_component_js_1.ProfileComponent },
+                        { path: '/browse', name: 'Browse', component: browse_component_js_1.BrowseComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

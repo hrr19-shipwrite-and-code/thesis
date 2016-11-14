@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Renderer} from 'angular2/core';
 
 @Directive({
-  selector: '[hover]',
+  selector: '[hoverTech]',
   host: {
     '(mouseover)': 'hover()',
     '(mouseleave)': 'hoverStop()'
@@ -9,16 +9,16 @@ import {Directive, ElementRef, Renderer} from 'angular2/core';
 
 })
 
-export class HoverDirective {
+export class TechHoverDirective {
   constructor(private el: ElementRef, private renderer: Renderer) {
 
   }
 
   hover(){
-    this.renderer.setElementClass(this.el.nativeElement, 'hide', false)
+    this.renderer.setElementClass(this.el.nativeElement, 'highlight', true)
   }
 
   hoverStop(){ 
-    this.renderer.setElementClass(this.el.nativeElement, 'hide', true)
+    this.renderer.setElementClass(this.el.nativeElement, 'highlight', false)    
   }
 }
