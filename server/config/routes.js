@@ -43,5 +43,7 @@ module.exports = function (app, express) {
   app.delete('/api/comment/delete/:commentId', commentController.removeComment);
 
   //Like routes
-  app.post('/api/like/:projectId', likeController.likeProject);
+  app.post('/api/like/project/:projectId', likeController.likeProject);
+  //Once Auth will get GET
+  app.post('/api/like/user/:projectId', likeController.doesUserLike)
 };
