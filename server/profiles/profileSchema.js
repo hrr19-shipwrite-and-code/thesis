@@ -24,6 +24,10 @@ const Profile = db.define('Profile', {
   },
   location: Sequelize.STRING,
   bio: Sequelize.TEXT('long'),
+  hire: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   type: {
     type: Sequelize.ENUM,
     allowNull: false,

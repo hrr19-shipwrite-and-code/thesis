@@ -1,5 +1,6 @@
 const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
+const Project = require('../projects/projectSchema.js');
 
 module.exports = {
   createUser: (req, res, next) => {
@@ -34,6 +35,9 @@ module.exports = {
         as: 'Team',
         attributes: ['id', 'name', 'url'],
         through: {attributes: []}
+      },
+      {
+        model: Project
       }]
     })
       .then((profile) => {

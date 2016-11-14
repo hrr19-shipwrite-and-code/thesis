@@ -8,11 +8,7 @@ const Like = require('./likes/likeSchema.js');
 const Tech = require('./tech/techSchema.js').Tech;
 const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
-
-//Junction Tables
-const TeamUser = db.define('TeamUsers', {
-  auth: Sequelize.BOOLEAN
-});
+const TeamUser = require('./profiles/TeamUserSchema.js')
 
 
 //Creates Profile/team foreign id on project
