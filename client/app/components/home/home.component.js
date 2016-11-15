@@ -36,6 +36,7 @@ System.register(['angular2/core', './home.services.js', '../../directives/thumbn
                     core_1.Component({
                         selector: 'home',
                         templateUrl: './client/app/components/home/home.html',
+                        styleUrls: ['./client/app/components/home/home.css'],
                         providers: [home_services_js_1.HomeService],
                         directives: [thumbnail_hover_directive_js_1.HoverDirective, project_thumbnail_component_js_1.ProjectThumbnailComponent]
                     }), 

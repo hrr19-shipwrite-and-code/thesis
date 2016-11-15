@@ -32,6 +32,7 @@ System.register(['angular2/core', '../../directives/thumbnail-hover.directive.js
                     core_1.Component({
                         selector: 'project-thumbnail',
                         templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html',
+                        styleUrls: ['./client/app/components/projectThumbnail/projectThumbnail.css'],
                         directives: [thumbnail_hover_directive_js_1.HoverDirective]
                     }), 
                     __metadata('design:paramtypes', [])
