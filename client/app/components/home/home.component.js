@@ -1,4 +1,4 @@
-System.register(['angular2/core', './home.services.js', '../../directives/thumbnail-hover.directive.js', '../projectThumbnail/project-thumbnail.component.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './home.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './home.services.js', '../../directives/thumbn
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, home_services_js_1, thumbnail_hover_directive_js_1, project_thumbnail_component_js_1;
+    var core_1, home_services_js_1;
     var HomeComponent;
     return {
         setters:[
@@ -19,25 +19,17 @@ System.register(['angular2/core', './home.services.js', '../../directives/thumbn
             },
             function (home_services_js_1_1) {
                 home_services_js_1 = home_services_js_1_1;
-            },
-            function (thumbnail_hover_directive_js_1_1) {
-                thumbnail_hover_directive_js_1 = thumbnail_hover_directive_js_1_1;
-            },
-            function (project_thumbnail_component_js_1_1) {
-                project_thumbnail_component_js_1 = project_thumbnail_component_js_1_1;
             }],
         execute: function() {
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
-                    this.hoverShow = true;
                     this.projects = homeService.getProjects();
                 }
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',
                         templateUrl: './client/app/components/home/home.html',
-                        providers: [home_services_js_1.HomeService],
-                        directives: [thumbnail_hover_directive_js_1.HoverDirective, project_thumbnail_component_js_1.ProjectThumbnailComponent]
+                        providers: [home_services_js_1.HomeService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof home_services_js_1.HomeService !== 'undefined' && home_services_js_1.HomeService) === 'function' && _a) || Object])
                 ], HomeComponent);

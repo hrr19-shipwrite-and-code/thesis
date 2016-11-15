@@ -1,13 +1,10 @@
-import {Component, ElementRef, Renderer} from 'angular2/core';
+import {Component, ElementRef, Renderer} from '@angular/core';
 import {BrowseService} from './browse.services.js';
-import {TechHoverDirective} from '../../directives/tech-hover.directive.js';
-
 
 @Component({
   selector: 'browse',
   templateUrl: './client/app/components/browse/browse.html',
-  providers: [BrowseService],
-  directives: [TechHoverDirective]
+  providers: [BrowseService]
 })
 
 export class BrowseComponent {

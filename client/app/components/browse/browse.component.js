@@ -1,4 +1,4 @@
-System.register(['angular2/core', './browse.services.js', '../../directives/tech-hover.directive.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './browse.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './browse.services.js', '../../directives/tech
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, browse_services_js_1, tech_hover_directive_js_1;
+    var core_1, browse_services_js_1;
     var BrowseComponent;
     return {
         setters:[
@@ -19,9 +19,6 @@ System.register(['angular2/core', './browse.services.js', '../../directives/tech
             },
             function (browse_services_js_1_1) {
                 browse_services_js_1 = browse_services_js_1_1;
-            },
-            function (tech_hover_directive_js_1_1) {
-                tech_hover_directive_js_1 = tech_hover_directive_js_1_1;
             }],
         execute: function() {
             BrowseComponent = (function () {
@@ -47,8 +44,7 @@ System.register(['angular2/core', './browse.services.js', '../../directives/tech
                     core_1.Component({
                         selector: 'browse',
                         templateUrl: './client/app/components/browse/browse.html',
-                        providers: [browse_services_js_1.BrowseService],
-                        directives: [tech_hover_directive_js_1.TechHoverDirective]
+                        providers: [browse_services_js_1.BrowseService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof browse_services_js_1.BrowseService !== 'undefined' && browse_services_js_1.BrowseService) === 'function' && _a) || Object, core_1.ElementRef, core_1.Renderer])
                 ], BrowseComponent);
