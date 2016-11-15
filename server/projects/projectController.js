@@ -72,8 +72,8 @@ module.exports = {
 
   deleteProject: (req, res, next) => {
     const id = req.body.id;
-    const name = req.body.name;
-    Profile.findOne({where: {name: name}})
+    const authId = req.sub.id;
+    Profile.findOne({where: {authId: authId}})
       .then((user) => {
         Project.destroy({where: {id: id, ProfileId: user.id}})
           .then(() => {
