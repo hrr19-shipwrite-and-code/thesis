@@ -5,9 +5,11 @@ const multer = require('multer');
 
 module.exports = {
   createUser: (req, res, next) => {
+    const authId = req.user.sub;
     const userInfo = {
       url: req.body.url,
       name: req.body.name,
+      authId: authId,
       type: 'member',
       email: req.body.email
     }
@@ -58,9 +60,9 @@ module.exports = {
   },
 
   editUserInfo: (req, res, next) => {
-    //Username needs to be changed to authId
-    Profile.update(req.body, {where: {url: req.body.url}})
-      .then((user, se) => {
+    const authId = req.user.sub;
+    Profile.update(req.body, {where: {authId: authId}})
+      .then((user) => {
         res.sendStatus(200);
       })
       .catch((err) => {
@@ -149,6 +151,7 @@ module.exports = {
   },
 
   addPicture: (req, res, next) => {
+    //auth should be checked before upload
     const id = req.body.id;
     const storage = multer.diskStorage({
       destination: function (req, file, callback) {
@@ -171,4 +174,6 @@ module.exports = {
         });
     });
   }
+
+  //delete picture function
 };

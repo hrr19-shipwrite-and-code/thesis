@@ -6,11 +6,11 @@ const Project = require('../projects/projectSchema.js');
 
 module.exports = {
   profileAddTech: (req, res, next) => {
-    const id = req.body.id;
+    const authId = req.user.sub;
     const techName = req.body.tech
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
-        Profile.findOne({where: {id: id}})
+        Profile.findOne({where: {authId: authId}})
           .then((profile) => {
             console.log(tech)
             profile.addTech(tech)
@@ -26,11 +26,11 @@ module.exports = {
   },
 
   profileRemoveTech: (req, res, next) => {
-    const id = req.body.id;
+    const authId = req.user.sub;
     const techName = req.body.tech;
     Tech.findOne({where: {name: techName}})
       .then((tech) => {
-        Profile.findOne({where: {id: id}})
+        Profile.findOne({where: {authId: authId}})
           .then((profile) => {
             profile.removeTech(tech)
               .then(() => {
@@ -44,6 +44,7 @@ module.exports = {
   },
 
   projectAddTech: (req, res, next) => {
+    //auth check before allowing user to edit project
     const id = req.body.id;
     const techName = req.body.tech;
     Tech.findOrCreate({where: {name: techName}})
@@ -64,6 +65,7 @@ module.exports = {
   },
 
   projectRemoveTech: (req, res, next) => {
+    //auth check before allowing user to edit project
     const id = req.body.id;
     const techName = req.body.tech;
     Tech.findOne({where: {name: techName}})
