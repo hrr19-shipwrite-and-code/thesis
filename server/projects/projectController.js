@@ -90,6 +90,7 @@ module.exports = {
 
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
+    //Also can add different filters, etc.
     Project.findAll({ offset: 1, limit: 3, include: [{model: Profile, attributes: ['name']}]})
       .then((projects) => {
         res.json(projects);

@@ -38,20 +38,20 @@ module.exports = function (app, express) {
 
   //Project Routes
 
-  app.post('/api/project/create', projectController.createProject);
-  app.post('/api/project/upload/:projectId', projectController.uploadProjectImage);
-  app.post('/api/project/thumbnail/:projectId', projectController.uploadProjectThumbnail);
+  app.post('/api/project/create', authCheck,  projectController.createProject);
+  app.post('/api/project/upload/:projectId', authCheck, projectController.uploadProjectImage);
+  app.post('/api/project/thumbnail/:projectId', authCheck, projectController.uploadProjectThumbnail);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.get('/api/project/getAll', projectController.getAllProjects);
-  app.put('/api/project/edit/:projectId', projectController.editProject);
-  app.delete('/api/project/delete', projectController.deleteProject);
+  app.put('/api/project/edit/:projectId', authCheck, projectController.editProject);
+  app.delete('/api/project/delete', authCheck, projectController.deleteProject);
 
   //Comment Routes
-  app.post('/api/comment/create/:projectId', commentController.addCommentToProject);
-  app.delete('/api/comment/delete/:commentId', commentController.removeComment);
+  app.post('/api/comment/create/:projectId', authCheck, commentController.addCommentToProject);
+  app.delete('/api/comment/delete/:commentId', authCheck, commentController.removeComment);
 
   //Like routes
-  app.post('/api/like/project/:projectId', likeController.likeProject);
+  app.post('/api/like/project/:projectId', authCheck, likeController.likeProject);
   //Once Auth will get GET
-  app.post('/api/like/user/:projectId', likeController.doesUserLike)
+  app.post('/api/like/user/:projectId', authCheck, likeController.doesUserLike)
 };
