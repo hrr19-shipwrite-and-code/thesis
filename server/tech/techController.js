@@ -45,6 +45,7 @@ module.exports = {
 
   projectAddTech: (req, res, next) => {
     //auth check before allowing user to edit project
+    const authId = req.user.sub;
     const id = req.body.id;
     const techName = req.body.tech;
     Tech.findOrCreate({where: {name: techName}})
@@ -66,6 +67,7 @@ module.exports = {
 
   projectRemoveTech: (req, res, next) => {
     //auth check before allowing user to edit project
+    const authId = req.user.sub;
     const id = req.body.id;
     const techName = req.body.tech;
     Tech.findOne({where: {name: techName}})

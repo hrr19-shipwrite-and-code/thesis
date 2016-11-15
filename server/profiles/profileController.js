@@ -1,6 +1,7 @@
 const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const Project = require('../projects/projectSchema.js');
+const TeamUser = require('./teamUserSchema.js');
 const multer = require('multer');
 
 module.exports = {
@@ -81,11 +82,12 @@ module.exports = {
     }
     Profile.findOne({where: {url: user}})
       .then((user) => {
-        user.createTeam(teamInfo)
+        user.createTeam(teamInfo, {admin: true})
           .then(() => {
             res.sendStatus(201);
           })
           .catch((err) => {
+            console.log(err)
             res.sendStatus(404);
           });
       });
@@ -148,6 +150,23 @@ module.exports = {
               });
           })
       })
+  },
+
+  promoteMember: (req, res, next) => {
+    const user = req.body.user;
+    const team = req.body.team;
+    TeamUser.findOne({where: {userId: user, teamId: team, admin: true}, attributes: ['userId', 'teamId', "admin"]})
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
+      })
+  },
+
+  demoteMember: (req, res, next) => {
+
   },
 
   addPicture: (req, res, next) => {

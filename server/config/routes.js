@@ -23,6 +23,7 @@ module.exports = function (app, express) {
   app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);
+  app.put('/api/team/promoteMember', profileController.promoteMember);
   app.post('/api/user/addPicture', authCheck, profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileId', profileController.getProfile);

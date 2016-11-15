@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = new Sequelize('sushi', 'root', '');
 
 module.exports = db.define('TeamUsers', {
-  auth: {
+  admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
