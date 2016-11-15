@@ -29,6 +29,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     core_1.Component({
                         selector: 'home',
                         templateUrl: './client/app/components/home/home.html',
+                        styleUrls: ['./client/app/components/home/home.css'],
                         providers: [home_services_js_1.HomeService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof home_services_js_1.HomeService !== 'undefined' && home_services_js_1.HomeService) === 'function' && _a) || Object])

@@ -1,0 +1,38 @@
+/* A couple of utility classes for re-use */
+.horizontalCenter {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
+  -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
+  box-shadow: 0 5px 6px -6px #bdc3c7;
+}
+
+.project-thumbnail {
+  border-radius: 3px;
+  background-color: white;
+
+  width: 225px;
+  height: 225px;
+}
+
+.project-thumbnail-hover {
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  width: 225px;
+  height: 225px;
+}
+
+.project-name {
+  margin-top: 20px;
+  color: #444444;
+}
+
+.project-thumbnail-views {
+  margin-right: 15px;
+}

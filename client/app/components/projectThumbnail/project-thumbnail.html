@@ -1,9 +1,11 @@
-<div *ngFor="let project of projects | slice:0:15; let i = index" class="project-thumbnail">
+<div *ngFor="let project of projects | slice:0:15; let i = index" class="project-thumbnail shadow">
   <div class="project-thumbnail-hover hide" hover>
     <h4 class="project-name">{{project.projectName}}</h4>
   </div>
-  
-  <img class="project-thumbnail-img" src="{{project.imgUrl}}">
+
+  <div class="project-thumbnail-img-viewport">
+    <img class="project-thumbnail-img" src="{{project.imgUrl}}">
+  </div>
   <div class="project-thumbnail-views">
     <img class="project-thumbnail-view-icon" src="http://atrium.lib.uoguelph.ca:8080/xmlui/themes/UofG/images/Crystal_Clear_action_lock3_64px.png">
     <span>{{project.views}}</span>

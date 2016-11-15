@@ -28,7 +28,8 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 ProjectThumbnailComponent = __decorate([
                     core_1.Component({
                         selector: 'project-thumbnail',
-                        templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html'
+                        templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html',
+                        styleUrls: ['./client/app/components/projectThumbnail/projectThumbnail.css'],
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProjectThumbnailComponent);

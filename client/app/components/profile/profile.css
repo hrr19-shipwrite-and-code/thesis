@@ -1,22 +1,41 @@
+/* A couple of utility classes for re-use */
+.horizontalCenter {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
+.shadow {
+  -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
+  -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
+  box-shadow: 0 5px 6px -6px #bdc3c7;
+}
+
+/* whole page container */
 .container {
   padding-left: 6vw;
   padding-right: 6vw;
+
+  display: -webkit-flex;
+  display: flex;
+
+  justify-content: space-around;
+  flex-direction: row;
 }
+
 
 /* sidebar as a whole */
 .sidebar {
-  width: 300px;
+  min-width: 300px;
+  max-height: 400px;
   background-color: white;
   border-radius: 5px;
 
   padding-top: 30px;
   padding-bottom: 30px;
 
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  flex: none;
 }
 
 /* top info: photo, username, bio, and follow button */
@@ -26,11 +45,6 @@
 
   text-align: center;
 
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  /*border: 1px solid black;*/
 }
 
 .profilePhoto {
@@ -42,9 +56,6 @@
 
   color: #F4F4F4;
 
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -62,8 +73,6 @@
   color: white;
   font-size: 0.9em;
 
-  /*height: 30px;
-  width: 60px;*/
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 7px;
@@ -74,11 +83,6 @@
   border: none;
 
   cursor: pointer;
-/*
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  justify-content: center;*/
 }
 
 .follow:focus {
@@ -124,4 +128,14 @@ hr {
 
   border: none;
   background-color: #F4F4F4;
+}
+
+
+
+
+/* thumbnails */
+
+.thumbnails {
+  margin-left: 20px;
+  /*border: 1px solid black;*/
 }

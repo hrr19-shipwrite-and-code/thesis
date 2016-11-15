@@ -7,12 +7,13 @@ import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.c
 @Component({
   selector: 'home',
   templateUrl: './client/app/components/home/home.html',
+  styleUrls: ['./client/app/components/home/home.css'],
   providers: [HomeService]
 })
 
 export class HomeComponent {
   projects;
-  constructor(homeService: HomeService){
+  constructor(homeService: HomeService) {
     this.projects = homeService.getProjects();
   }
 }
