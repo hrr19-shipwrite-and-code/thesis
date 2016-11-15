@@ -43,7 +43,7 @@ module.exports = function (app, express) {
   app.post('/api/project/thumbnail/:projectId', projectController.uploadProjectThumbnail);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.get('/api/project/getAll', projectController.getAllProjects);
-  app.put('/api/project/edit', projectController.editProject);
+  app.put('/api/project/edit/:projectId', projectController.editProject);
   app.delete('/api/project/delete', projectController.deleteProject);
 
   //Comment Routes
