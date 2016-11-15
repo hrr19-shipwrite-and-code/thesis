@@ -1,10 +1,9 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
 
-import { NavModule } from '../nav/nav.module';
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
@@ -36,7 +35,10 @@ import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
     HoverDirective,
     TechHoverDirective
     ],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ AppComponent ],
+  providers: [
+    AUTH_PROVIDERS
+  ]
 })
 
 export class AppModule { }
