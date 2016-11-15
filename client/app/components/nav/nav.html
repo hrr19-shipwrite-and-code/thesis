@@ -1,9 +1,11 @@
 <div class="navBar">
   <img class="nav-logo" src="./client/app/assets/sushi.png">
-  <h1 class='brand'><a [routerLink]="['/Home']" class="navLink">sushi</a></h1>
+  <h1 class='brand'><a routerLink="/" class="navLink">sushi</a></h1>
   <div class='links'>
-    <a [routerLink]="['/Home']" class="navLink">Home</a>
-    <a [routerLink]="['/Browse']" class="navLink">Browse</a>
-    <a [routerLink]="['/Profile']" class="navLink">Profile</a>
+    <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
+    <a routerLink="/browse" routerLinkActive="active" class="navLink">Browse</a>
+    <a routerLink="/profile" routerLinkActive="active" class="navLink">Profile</a>
   </div>
+  <a *ngIf="!auth.authenticated()" class="navLink" (click)="auth.login()">Sign In</a>
+  <a *ngIf="auth.authenticated()" class="navLink" (click)="auth.logout()">Logout</a>  
 </div>

@@ -1,4 +1,4 @@
-System.register(['angular2/core', './profile.services.js', '../../directives/thumbnail-hover.directive.js', '../projectThumbnail/project-thumbnail.component.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './profile.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './profile.services.js', '../../directives/thu
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, profile_services_js_1, thumbnail_hover_directive_js_1, project_thumbnail_component_js_1;
+    var core_1, profile_services_js_1;
     var ProfileComponent;
     return {
         setters:[
@@ -19,17 +19,10 @@ System.register(['angular2/core', './profile.services.js', '../../directives/thu
             },
             function (profile_services_js_1_1) {
                 profile_services_js_1 = profile_services_js_1_1;
-            },
-            function (thumbnail_hover_directive_js_1_1) {
-                thumbnail_hover_directive_js_1 = thumbnail_hover_directive_js_1_1;
-            },
-            function (project_thumbnail_component_js_1_1) {
-                project_thumbnail_component_js_1 = project_thumbnail_component_js_1_1;
             }],
         execute: function() {
             ProfileComponent = (function () {
                 function ProfileComponent(profileService) {
-                    this.hoverShow = true;
                     this.projects = profileService.getProjects();
                 }
                 ProfileComponent = __decorate([
@@ -38,7 +31,6 @@ System.register(['angular2/core', './profile.services.js', '../../directives/thu
                         templateUrl: './client/app/components/profile/profile.html',
                         styleUrls: ['./client/app/components/profile/profile.css'],
                         providers: [profile_services_js_1.ProfileService],
-                        directives: [thumbnail_hover_directive_js_1.HoverDirective, project_thumbnail_component_js_1.ProjectThumbnailComponent]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _a) || Object])
                 ], ProfileComponent);

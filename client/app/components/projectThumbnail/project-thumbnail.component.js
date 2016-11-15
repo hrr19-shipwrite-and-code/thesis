@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../directives/thumbnail-hover.directive.js'], function(exports_1, context_1) {
+System.register(['@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,12 @@ System.register(['angular2/core', '../../directives/thumbnail-hover.directive.js
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, thumbnail_hover_directive_js_1;
+    var core_1;
     var ProjectThumbnailComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (thumbnail_hover_directive_js_1_1) {
-                thumbnail_hover_directive_js_1 = thumbnail_hover_directive_js_1_1;
             }],
         execute: function() {
             ProjectThumbnailComponent = (function () {
@@ -33,7 +30,6 @@ System.register(['angular2/core', '../../directives/thumbnail-hover.directive.js
                         selector: 'project-thumbnail',
                         templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html',
                         styleUrls: ['./client/app/components/projectThumbnail/projectThumbnail.css'],
-                        directives: [thumbnail_hover_directive_js_1.HoverDirective]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProjectThumbnailComponent);
