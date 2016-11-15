@@ -7,6 +7,7 @@ import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.c
 @Component({
   selector: 'home',
   templateUrl: './client/app/components/home/home.html',
+  styleUrls: ['./client/app/components/home/home.css'],
   providers: [HomeService],
   directives: [HoverDirective, ProjectThumbnailComponent]
 })
@@ -14,7 +15,7 @@ import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.c
 export class HomeComponent {
   projects;
   hoverShow = true;
-  constructor(homeService: HomeService){
+  constructor(homeService: HomeService) {
     this.projects = homeService.getProjects();
   }
 }
