@@ -3,6 +3,13 @@ const projectController = require('../projects/projectController.js');
 const techController = require('../tech/techController.js');
 const likeController = require('../likes/likeController.js');
 const commentController = require('../comments/commentController.js');
+const jwt = require('express-jwt');
+
+//Checks the token for authentication when attatched to route
+const authCheck = jwt({
+  secret: new Buffer('', 'base64'),
+  audience: ''
+});
 
 module.exports = function (app, express) {
 
