@@ -18,8 +18,8 @@ module.exports = {
     }
 
     Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
-      .spread(() => {
-        res.sendStatus(201);
+      .spread((profile) => {
+        res.send(profile.url);
       })
       .catch((err) => {
         console.log(err)

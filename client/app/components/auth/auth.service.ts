@@ -11,11 +11,9 @@ export class AuthService {
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com');
 
   //Store profile object in auth class
-  userProfile: Object;
 
   constructor(private authHttp: AuthHttp) {
-    // Set userProfile attribute of already saved profile
-    this.userProfile = JSON.parse(localStorage.getItem('profile'));
+    this.url = localStorage.getItem('url');
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
@@ -36,9 +34,9 @@ export class AuthService {
 
  findOrCreateUser(profile) {
    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile))
-    .map(res => res)
+    .map(res => res._body)
     .subscribe(
-      data => data,
+      data => localStorage.setItem('url', data)
       )
  }
 
@@ -56,9 +54,14 @@ export class AuthService {
 
  logout() {
    localStorage.removeItem('id_token');
+   localStorage.removeItem('url');
  }
 
  authenticated() {
     return tokenNotExpired();
   };
+
+  checkUrl() {
+    return localStorage.getItem('url');
+  }
 }
