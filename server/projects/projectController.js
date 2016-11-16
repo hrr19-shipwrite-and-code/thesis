@@ -31,7 +31,7 @@ module.exports = {
     Project.findById(id, {
       include: [{model: Profile, attributes: ['name']},
        {model: Image},
-       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name']}] },
+       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name', 'url']}] },
        {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]})
       .then((project) => {

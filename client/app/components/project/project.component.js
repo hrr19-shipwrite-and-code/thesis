@@ -1,4 +1,4 @@
-System.register(['@angular/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './project.services.js', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,31 +10,47 @@ System.register(['@angular/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, project_services_js_1, router_1;
     var ProjectComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (project_services_js_1_1) {
+                project_services_js_1 = project_services_js_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             ProjectComponent = (function () {
-                function ProjectComponent() {
-                    this.title = 'Working Title';
-                    this.date = '11-13-2016';
-                    this.user = 'User Name';
-                    this.likes = 5;
-                    this.views = 3;
+                function ProjectComponent(projectService, route) {
+                    this.projectService = projectService;
+                    this.route = route;
                 }
+                //Runs this function everytime route accessed
+                ProjectComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.sub = this.route.params.subscribe(function (params) {
+                        _this.id = params['id'];
+                    });
+                    //Uncomment below for Dummy Data
+                    this.project = this.projectService.getProject(this.id);
+                    //Uncomment below Actual API Call
+                    //this.getProject(this.id);
+                };
                 ProjectComponent = __decorate([
                     core_1.Component({
                         selector: 'project',
                         templateUrl: './client/app/components/project/project.html',
                         styleUrls: ['./client/app/components/project/project.css'],
+                        providers: [project_services_js_1.ProjectService]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof project_services_js_1.ProjectService !== 'undefined' && project_services_js_1.ProjectService) === 'function' && _a) || Object, router_1.ActivatedRoute])
                 ], ProjectComponent);
                 return ProjectComponent;
+                var _a;
             }());
             exports_1("ProjectComponent", ProjectComponent);
         }

@@ -11,7 +11,7 @@ import { HomeComponent }   from '../home/home.component.js';
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
-  { path: 'project', component: ProjectComponent },
+  { path: 'project/:id', component: ProjectComponent },
   { path: 'profile/:id', component: ProfileComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];
