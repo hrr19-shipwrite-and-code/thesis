@@ -5,7 +5,10 @@ const Project = db.define('Project', {
   title: Sequelize.STRING,
   description: Sequelize.TEXT('long'),
   views: Sequelize.INTEGER,
-  thumbnail: Sequelize.STRING,
+  thumbnail: {
+    type: Sequelize.STRING,
+    default: ''
+  },
   deploy: Sequelize.STRING,
   github: Sequelize.STRING,
   contribute: Sequelize.BOOLEAN,
