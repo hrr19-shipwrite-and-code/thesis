@@ -13,7 +13,7 @@ module.exports = {
 
   //Projects
   createProject: (req, res, next) => {
-    const authId = req.sub.id;
+    const authId = req.user.sub;
       Profile.findOne({where: {authId: authId}})
         .then((user) => {
           user.createProject({title: req.body.title, views: 0})
@@ -28,7 +28,7 @@ module.exports = {
 
   getProject: (req, res, next) => {
     const id = req.params.projectId;
-    Project.findById(id, { 
+    Project.findById(id, {
       include: [{model: Profile, attributes: ['name']},
        {model: Image},
        {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name']}] },
@@ -44,7 +44,7 @@ module.exports = {
             res.send(project);
           });
       })
-      .catch((err) =>{ 
+      .catch((err) =>{
         console.log(err);
         res.sendStatus(404);
       });
@@ -52,7 +52,7 @@ module.exports = {
 
   editProject: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     console.log(id);
     Profile.findOne({ where: { authId: authId}})
       .then((user) => {
@@ -72,7 +72,7 @@ module.exports = {
 
   deleteProject: (req, res, next) => {
     const id = req.body.id;
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     Profile.findOne({where: {authId: authId}})
       .then((user) => {
         Project.destroy({where: {id: id, ProfileId: user.id}})
@@ -103,7 +103,7 @@ module.exports = {
   //Project Images
   uploadProjectImage: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     Profile.find({where: {authId: authId}})
       .then((profile) =>{
         mkdirp('./client/uploads/' + id, (err) => {
@@ -128,7 +128,7 @@ module.exports = {
                   res.sendStatus(200);
                 });
             });
-        });        
+        });
       })
       .catch((err) => {
         res.sendStatus(401);
@@ -137,7 +137,7 @@ module.exports = {
 
   uploadProjectThumbnail: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     Profile.find({where: {authId: authId}})
       .then((profile) => {
         mkdirp('./client/uploads/' + id, (err) => {

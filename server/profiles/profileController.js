@@ -1,21 +1,24 @@
 const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const Project = require('../projects/projectSchema.js');
+const TeamUser = require('./teamUserSchema.js');
 const multer = require('multer');
 
 module.exports = {
   createUser: (req, res, next) => {
     const authId = req.user.sub;
     const userInfo = {
-      url: req.body.url,
+      url: req.body.nickname,
       name: req.body.name,
       authId: authId,
       type: 'member',
-      email: req.body.email
+      email: req.body.email,
+      picture: req.body.picture,
+      hire: req.body.hireable || false
     }
 
-    Profile.create(userInfo)
-      .then(() => {
+    Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
+      .spread(() => {
         res.sendStatus(201);
       })
       .catch((err) => {
@@ -81,11 +84,12 @@ module.exports = {
     }
     Profile.findOne({where: {url: user}})
       .then((user) => {
-        user.createTeam(teamInfo)
+        user.createTeam(teamInfo, {admin: true})
           .then(() => {
             res.sendStatus(201);
           })
           .catch((err) => {
+            console.log(err)
             res.sendStatus(404);
           });
       });
@@ -148,6 +152,23 @@ module.exports = {
               });
           })
       })
+  },
+
+  promoteMember: (req, res, next) => {
+    const user = req.body.user;
+    const team = req.body.team;
+    TeamUser.findOne({where: {userId: user, teamId: team, admin: true}, attributes: ['userId', 'teamId', "admin"]})
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(400)
+      })
+  },
+
+  demoteMember: (req, res, next) => {
+
   },
 
   addPicture: (req, res, next) => {
