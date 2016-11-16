@@ -9,16 +9,6 @@ import { AuthService } from '../auth/auth.service';
 })
 
 export class NavComponent {
-  // loggedIn = this.auth.loggedIn();
-
   constructor(private auth: AuthService) {}
-
-  // login() {
-  //   this.auth.login();
-  // }
-
-  // logout() {
-  //   console.log('=-=-=-=-=-=-=-=')
-  //   this.auth.logout();
-  // }
+  
 }
