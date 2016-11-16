@@ -14,6 +14,11 @@ import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.c
 export class HomeComponent {
   projects;
   constructor(homeService: HomeService) {
+    // homeService.getProjects()
+    //   .subscribe(
+    //     data => this.projects = data,
+    //     error => alert(error)
+    //   )
     this.projects = homeService.getProjects();
   }
 }

@@ -7,7 +7,7 @@ const Project = db.define('Project', {
   views: Sequelize.INTEGER,
   thumbnail: {
     type: Sequelize.STRING,
-    default: ''
+    default: './client/app/assets/thumbnail.png'
   },
   deploy: Sequelize.STRING,
   github: Sequelize.STRING,
