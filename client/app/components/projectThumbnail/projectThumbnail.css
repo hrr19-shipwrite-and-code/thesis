@@ -30,7 +30,7 @@
   height: 150px;
 }
 
-.project-name {
+h4.project-name {
   margin-top: 20px;
   color: #444444;
 }
