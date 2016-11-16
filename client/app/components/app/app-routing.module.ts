@@ -5,12 +5,14 @@ import { ProfileComponent } from '../profile/profile.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
+import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
 
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'addproject', component: ProjectAddComponent}
   // { path: '**', component: PageNotFoundComponent }
 ];
 

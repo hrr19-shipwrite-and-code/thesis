@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '../profile/profile.component.js', '../browse/browse.component.js', '../home/home.component.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../profile/profile.component.js', '../browse/browse.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, profile_component_js_1, browse_component_js_1, home_component_js_1;
+    var core_1, router_1, profile_component_js_1, browse_component_js_1, home_component_js_1, projectAdd_component_js_1;
     var appRoutes, AppRoutingModule;
     return {
         setters:[
@@ -28,12 +28,16 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
             },
             function (home_component_js_1_1) {
                 home_component_js_1 = home_component_js_1_1;
+            },
+            function (projectAdd_component_js_1_1) {
+                projectAdd_component_js_1 = projectAdd_component_js_1_1;
             }],
         execute: function() {
             appRoutes = [
                 { path: '', component: home_component_js_1.HomeComponent },
                 { path: 'browse', component: browse_component_js_1.BrowseComponent },
                 { path: 'profile', component: profile_component_js_1.ProfileComponent },
+                { path: 'addproject', component: projectAdd_component_js_1.ProjectAddComponent }
             ];
             AppRoutingModule = (function () {
                 function AppRoutingModule() {
