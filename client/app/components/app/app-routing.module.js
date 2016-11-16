@@ -36,8 +36,8 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
             appRoutes = [
                 { path: '', component: home_component_js_1.HomeComponent },
                 { path: 'browse', component: browse_component_js_1.BrowseComponent },
-                { path: 'profile', component: profile_component_js_1.ProfileComponent },
                 { path: 'project', component: project_component_js_1.ProjectComponent },
+                { path: 'profile/:id', component: profile_component_js_1.ProfileComponent },
             ];
             AppRoutingModule = (function () {
                 function AppRoutingModule() {
