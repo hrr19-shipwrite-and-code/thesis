@@ -8,7 +8,16 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class AuthService {
-  lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com');
+  options = {
+    socialButtonStyle: 'big',
+    additionalSignUpFields: [{
+      name: "Name",
+      placeholder: "enter your full name",
+      // The following properties are optional
+      icon: ""
+    }]
+  }
+  lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
 
   //Store profile object in auth class
 
