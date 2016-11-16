@@ -27,7 +27,8 @@
 4. Once inside MySQL terminal type create database sushi (Created the sushi database)
 5. Whenever you run the server it will build out the tables
 6. Run `npm start` from the root directory to start the Angular2 server.
-7. Navigate to `http://localhost:3000/`
+7. In another terminal tab run node server/server.js to run the API server.
+8. Navigate to `http://localhost:3000/`
 
 
 ## Requirements
