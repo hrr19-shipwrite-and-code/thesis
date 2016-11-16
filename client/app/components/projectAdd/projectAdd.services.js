@@ -8,8 +8,8 @@ System.register([], function(exports_1, context_1) {
             ProjectAddService = (function () {
                 function ProjectAddService() {
                 }
-                ProjectAddService.prototype.postProject = function (data) {
-                    console.log(data); // data is an obj with title, description, and status
+                ProjectAddService.prototype.postProject = function (data, cb) {
+                    console.log(data); // data is an obj with title, description, status, deploy, github, and openSource
                 };
                 return ProjectAddService;
             }());

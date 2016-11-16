@@ -1,4 +1,4 @@
-System.register(['@angular/core', './projectAdd.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', './projectAdd.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,30 +10,37 @@ System.register(['@angular/core', './projectAdd.services.js'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, projectAdd_services_js_1;
+    var core_1, router_1, projectAdd_services_js_1;
     var ProjectAddComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (projectAdd_services_js_1_1) {
                 projectAdd_services_js_1 = projectAdd_services_js_1_1;
             }],
         execute: function() {
             ProjectAddComponent = (function () {
-                function ProjectAddComponent(post) {
+                function ProjectAddComponent(post, router) {
                     this.post = post;
+                    this.router = router;
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
-                    this.post.postProject(data);
+                    this.post.postProject(data, this.edit);
+                };
+                ProjectAddComponent.prototype.edit = function (data) {
+                    // this.router.navigate("/");
                 };
                 ProjectAddComponent = __decorate([
                     core_1.Component({
                         selector: 'project-add',
                         templateUrl: './client/app/components/projectAdd/projectAdd.html'
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof projectAdd_services_js_1.ProjectAddService !== 'undefined' && projectAdd_services_js_1.ProjectAddService) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof projectAdd_services_js_1.ProjectAddService !== 'undefined' && projectAdd_services_js_1.ProjectAddService) === 'function' && _a) || Object, router_1.Router])
                 ], ProjectAddComponent);
                 return ProjectAddComponent;
                 var _a;
