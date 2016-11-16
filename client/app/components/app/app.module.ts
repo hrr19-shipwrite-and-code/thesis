@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
+import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
@@ -30,6 +31,7 @@ import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
     HomeComponent,
     NavComponent,
     ProfileComponent,
+    ProjectComponent,
     BrowseComponent,
 
     ProjectThumbnailComponent,

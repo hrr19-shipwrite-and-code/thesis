@@ -1,0 +1,41 @@
+<div class="container horizontal-center">
+
+  <div class="main-card shadow">
+      <!-- Header -->
+      <div class='header'>
+        <h3 class='title'>{{title}}</h3>
+        <p class='subhead'>
+          by <a class='user-name navLink' [routerLink]="['/Profile']">{{user}}</a> on <span class='date'>{{date}}</span>
+        </p>
+      </div>
+
+
+      <div class="main-content">
+        <!-- Main Image -->
+        <div class="main-img-viewport">
+          <img src="https://d13yacurqjgara.cloudfront.net/users/684814/screenshots/3091594/creative_agency_-_landing_apge.jpg" alt="main-img" class='main-img' />
+        </div>
+
+        <!-- Info -->
+        <div class="info">
+          <p class='description'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare imperdiet risus vitae elementum. Maecenas non sapien in metus mollis accumsan.
+          </p>
+
+          <hr>
+          <div class="social">
+            <p class='likes'> <i class="fa fa-heart" aria-hidden="true"></i> {{likes}}</p>
+            <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{views}}</p>
+          </div>
+
+          <hr>
+
+          <p class='tech'>
+            Lorem, Ipsum.js, dolor, sit-amet, consectetur
+          </p>
+
+        </div> <!-- Info -->
+      </div> <!-- main-content -->
+
+  </div> <!-- main-card -->
+</div>
