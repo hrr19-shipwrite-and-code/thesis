@@ -1,4 +1,17 @@
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+
+@Injectable()
 export class HomeService {
+
+  constructor (private http: Http) {}
+  // //Working API to get ALL
+  // getProjects() {
+  //   return this.http.get('http://localhost:1337/api/project/getAll')
+  //     .map(res => res.json())
+  // }
+
   getProjects(){
     return [
       {projectName: 'Some Project Name', userName: 'Jacob', views: 0, imgUrl: 'http://blog.teamtreehouse.com/wp-content/uploads/2013/10/test.png'},

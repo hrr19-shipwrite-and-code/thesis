@@ -31,7 +31,7 @@ module.exports = {
     Project.findById(id, {
       include: [{model: Profile, attributes: ['name']},
        {model: Image},
-       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name']}] },
+       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name', 'url']}] },
        {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]})
       .then((project) => {
@@ -91,7 +91,7 @@ module.exports = {
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
     //Also can add different filters, etc.
-    Project.findAll({ offset: 1, limit: 3, include: [{model: Profile, attributes: ['name']}]})
+    Project.findAll({include: [{model: Profile, attributes: ['name']}]})
       .then((projects) => {
         res.json(projects);
       })
