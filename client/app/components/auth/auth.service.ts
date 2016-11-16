@@ -13,7 +13,6 @@ export class AuthService {
   //Store profile object in auth class
 
   constructor(private authHttp: AuthHttp) {
-    this.url = localStorage.getItem('url');
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {

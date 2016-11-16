@@ -29,7 +29,6 @@ System.register(['@angular/core', 'angular2-jwt', 'rxjs/add/operator/map'], func
                     var _this = this;
                     this.authHttp = authHttp;
                     this.lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com');
-                    this.url = localStorage.getItem('url');
                     // Add callback for the Lock `authenticated` event
                     this.lock.on("authenticated", function (authResult) {
                         localStorage.setItem('id_token', authResult.idToken);

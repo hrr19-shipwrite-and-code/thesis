@@ -28,10 +28,10 @@ module.exports = {
   },
 
   getProfile: (req, res, next) => {
-    const id = req.params.profileId;
+    const url = req.params.profileUrl;
 
     Profile.findOne({
-      where: {id: id},
+      where: {url: url},
       include:[{
         model: Tech,
         attributes: ['id', 'name'],
