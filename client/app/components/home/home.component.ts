@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {HomeService} from './home.services.js';
-import {HoverDirective} from '../../directives/thumbnail-hover.directive.js';
+import { Component } from '@angular/core';
+import { HomeService } from './home.services.js';
+import { HoverDirective } from '../../directives/thumbnail-hover.directive.js';
 
-import {ProjectThumbnailComponent} from '../projectThumbnail/project-thumbnail.component.js';
+import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail.component.js';
 
 @Component({
   selector: 'home',
