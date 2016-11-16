@@ -22,7 +22,6 @@ System.register(['@angular/core', '../auth/auth.service'], function(exports_1, c
             }],
         execute: function() {
             NavComponent = (function () {
-                // loggedIn = this.auth.loggedIn();
                 function NavComponent(auth) {
                     this.auth = auth;
                 }

@@ -49,9 +49,9 @@
 
 .profilePhoto {
   width: 70px;
-  height: 70px;
+  /*height: 70px;*/
   border-radius: 100%;
-  background-color: #888B8D;
+  /*background-color: #888B8D;*/
   margin-bottom: 15px;
 
   color: #F4F4F4;

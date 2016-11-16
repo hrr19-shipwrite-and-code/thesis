@@ -1,4 +1,30 @@
+import { AuthHttp } from 'angular2-jwt';
+import 'rxjs/add/operator/map';
+import {Injectable} from '@angular/core';
+
+
+@Injectable()
 export class ProfileService {
+  constructor(private authHttp: AuthHttp) {}
+
+  getProfileInfo(url, profileInfo){
+    this.authHttp.get('http://localhost:1337/api/profile/' + url)
+    .map(res => res.json())
+    .subscribe(
+      data => {
+        profileInfo.picture = data.picture;
+        profileInfo.name = data.name;
+        profileInfo.location = data.location;
+        profileInfo.bio = data.bio;
+        profileInfo.hire = data.hire;
+        profileInfo.type = data.type;
+        profileInfo.tech = data.Teches;
+        profileInfo.team = data.Team;
+        profileInfo.member = data.Member;
+        console.log(data)
+      })
+  }
+
   getProjects(){
     return [
       {projectName: 'Some Project Name', userName: 'Jacob', views: 0, imgUrl: 'http://blog.teamtreehouse.com/wp-content/uploads/2013/10/test.png'},

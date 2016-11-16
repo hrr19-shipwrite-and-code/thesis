@@ -3,21 +3,52 @@
   <div class='sidebar horizontalCenter shadow'>
 
     <div class='topInfo horizontalCenter'>
-      <div class='profilePhoto horizontalCenter'><i class="fa fa-user fa-3x" aria-hidden="true"></i></div>
-      <h2 class='userName'>User Name</h2>
+      <div class='profilePhoto horizontalCenter'><img class="profilePhoto" src="{{profileInfo.picture}}"/></div>
+      <h2 class='userName'>{{profileInfo.name}}</h2>
+      <p>{{profileInfo.location}}</p>
       <p class='bio'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae ligula neque. Praesent posuere non dolor ac venenatis. Nunc id gravida massa. Aenean iaculis neque quis mi accumsan ultrices.
+        {{profileInfo.bio}}
       </p>
-      <button class='follow'>Follow</button>
+      <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
+      <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
     </div> <!-- topInfo -->
 
     <hr>
 
-    <div class='connect'>
+    <div *ngIf="profileInfo.tech.length">
+      <h4>SKILLS</h4>
+      <ul>
+        <li *ngFor="let tech of techs">{{tech.name}}</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <div *ngIf="profileInfo.team.length">
+      <h4>TEAMS</h4>
+      <ul>
+        <li *ngFor="let team of profileInfo.team">{{team.name}}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="profileInfo.member.length">
+      <h4>MEMBERS</h4>
+      <ul>
+        <li *ngFor="let member of profileInfo.member">{{member.name}}</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin">
       <h4>CONNECT</h4>
       <ul class='urls'>
-        <li><a href='https://github.com/'>github.com</a></li>
-        <li><a href='https://linkedin.com/'>linkedin.com</a></li>
+        <li *ngIf="profileInfo.personal"><a href='{{profileInfo.personal}}'>personal</a></li>
+        <li *ngIf="profileInfo.blog"><a href='{{profileInfo.blog}}'>blog</a></li>
+        <li *ngIf="profileInfo.github"><a href='{{profileInfo.github}}'>github</a></li>
+        <li *ngIf="profileInfo.linkedin"><a href='{{profileInfo.linkedin}}'>linkedin</a></li>
+        <li *ngIf="profileInfo.twitter"><a href='{{profileInfo.twitter}}'>twitter</a></li>
+        <li *ngIf="profileInfo.facebook"><a href='{{profileInfo.facebook}}'>facebook</a></li>
       </ul>
     </div> <!-- connect -->
   </div> <!-- sidebar -->
