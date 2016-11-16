@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpModule } from '@angular/http';
 
 import { NavComponent } from '../nav/nav.component.js';
 
@@ -19,12 +20,13 @@ import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
 
 
 @NgModule({
-  imports:      [ 
-    BrowserModule, 
-    AppRoutingModule
+  imports:      [
+    BrowserModule,
+    AppRoutingModule,
+    HttpModule
     ],
-  declarations: [ 
-    AppComponent, 
+  declarations: [
+    AppComponent,
     HomeComponent,
     NavComponent,
     ProfileComponent,

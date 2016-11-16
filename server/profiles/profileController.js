@@ -8,15 +8,17 @@ module.exports = {
   createUser: (req, res, next) => {
     const authId = req.user.sub;
     const userInfo = {
-      url: req.body.url,
+      url: req.body.nickname,
       name: req.body.name,
       authId: authId,
       type: 'member',
-      email: req.body.email
+      email: req.body.email,
+      picture: req.body.picture,
+      hire: req.body.hireable || false
     }
 
-    Profile.create(userInfo)
-      .then(() => {
+    Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
+      .spread(() => {
         res.sendStatus(201);
       })
       .catch((err) => {

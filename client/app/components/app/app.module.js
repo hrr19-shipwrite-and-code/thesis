@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/platform-browser', 'angular2-jwt', './app-routing.module', '../nav/nav.component.js', '../profile/profile.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/platform-browser', 'angular2-jwt', './app-routing.module', '@angular/http', '../nav/nav.component.js', '../profile/profile.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/platform-browser', 'angular2-jwt', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, platform_browser_1, angular2_jwt_1, app_routing_module_1, nav_component_js_1, profile_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1;
+    var core_1, platform_browser_1, angular2_jwt_1, app_routing_module_1, http_1, nav_component_js_1, profile_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1;
     var AppModule;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(['@angular/core', '@angular/platform-browser', 'angular2-jwt', '
             },
             function (app_routing_module_1_1) {
                 app_routing_module_1 = app_routing_module_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (nav_component_js_1_1) {
                 nav_component_js_1 = nav_component_js_1_1;
@@ -58,7 +61,8 @@ System.register(['@angular/core', '@angular/platform-browser', 'angular2-jwt', '
                     core_1.NgModule({
                         imports: [
                             platform_browser_1.BrowserModule,
-                            app_routing_module_1.AppRoutingModule
+                            app_routing_module_1.AppRoutingModule,
+                            http_1.HttpModule
                         ],
                         declarations: [
                             app_component_js_1.AppComponent,

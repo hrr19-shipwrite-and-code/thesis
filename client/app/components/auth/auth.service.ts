@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {tokenNotExpired} from 'angular2-jwt';
+import { Headers, Http } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
+import 'rxjs/add/operator/map';
 
 declare var Auth0Lock: any;
 
@@ -7,12 +10,37 @@ declare var Auth0Lock: any;
 export class AuthService {
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com');
 
-  constructor() {
-    // Add callback for lock `authenticated` event
+  //Store profile object in auth class
+  userProfile: Object;
+
+  constructor(private authHttp: AuthHttp) {
+    // Set userProfile attribute of already saved profile
+    this.userProfile = JSON.parse(localStorage.getItem('profile'));
+
+    // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+
+      // Fetch profile information
+      this.lock.getProfile(authResult.idToken, (error, profile) => {
+        if (error) {
+          // Handle error
+          alert(error);
+          return;
+        }
+        console.log(profile);
+        this.findOrCreateUser(profile)
+      });
     });
-  }
+  };
+
+ findOrCreateUser(profile) {
+   this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile))
+    .map(res => res)
+    .subscribe(
+      data => data,
+      )
+ }
 
  login() {
    this.lock.show((error: string, profile: Object, id_token: string) => {
@@ -27,7 +55,6 @@ export class AuthService {
  }
 
  logout() {
-  //  localStorage.removeItem('profile');
    localStorage.removeItem('id_token');
  }
 
