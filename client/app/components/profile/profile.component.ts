@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ProfileService} from './profile.services.js';
+import { Component } from '@angular/core';
+import { ProfileService } from './profile.services.js';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
