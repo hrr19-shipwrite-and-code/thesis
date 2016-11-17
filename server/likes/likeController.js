@@ -39,10 +39,14 @@ module.exports = {
     Profile.find({where: {authId: authId},
      include: [{model: Like, where: {ProjectId: id}}] })
       .then((profile) => {
-        res.json({ like: true} );
+        if (profile.Likes.length > 0) {
+          res.send({ like: true} );
+        } else {
+          res.send({ like: false });
+        }
       })
       .catch((err) => {
-        res.json({ like: false });
+        res.send({ like: false });
       });
   }
 };
