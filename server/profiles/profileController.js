@@ -6,25 +6,32 @@ const multer = require('multer');
 
 module.exports = {
   createUser: (req, res, next) => {
-    const authId = req.user.sub;
-    const userInfo = {
-      url: req.body.nickname,
-      name: req.body.name,
-      authId: authId,
-      type: 'member',
-      email: req.body.email,
-      picture: req.body.picture,
-      hire: req.body.hireable || false
-    }
+    const name = req.body.user_metadata ? req.body.user_metadata.name : req.body.name;
+    Profile.count()
+      .then((count) => {
+        const authId = req.user.sub;
+        const userInfo = {
+          url: req.body.nickname + count,
+          name: name,
+          authId: authId,
+          type: 'member',
+          email: req.body.email,
+          picture: req.body.picture,
+          hire: req.body.hireable || false,
+          github: req.body.html_url || null,
+          linkedin: req.body.publicProfileUrl || null
+        }
 
-    Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
-      .spread((profile) => {
-        res.send(profile.url);
+        Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
+          .spread((profile) => {
+            res.send(profile.url);
+          })
+          .catch((err) => {
+            console.log(err)
+            res.sendStatus(400);
+          })
       })
-      .catch((err) => {
-        console.log(err)
-        res.sendStatus(400);
-      })
+
   },
 
   getProfile: (req, res, next) => {

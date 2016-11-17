@@ -28,14 +28,18 @@ System.register(['@angular/core', './profile.services.js', '@angular/router'], f
                 function ProfileComponent(profileService, route) {
                     this.profileService = profileService;
                     this.route = route;
-                    this.profileInfo = { tech: [], team: [], member: [] };
+                    this.profileInfo = { Teches: [], Team: [], Member: [] };
                     this.projects = profileService.getProjects();
                     this.getUserInfo();
                 }
                 ProfileComponent.prototype.getUserInfo = function () {
                     var _this = this;
                     this.route.params.subscribe(function (params) {
-                        _this.profileService.getProfileInfo(params['id'], _this.profileInfo);
+                        _this.profileService.getProfileInfo(params['id'])
+                            .subscribe(function (data) {
+                            _this.profileInfo = data;
+                            console.log(data);
+                        });
                     });
                 };
                 ProfileComponent = __decorate([

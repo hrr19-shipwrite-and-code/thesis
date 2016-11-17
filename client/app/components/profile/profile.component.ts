@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 export class ProfileComponent {
   projects;
-  profileInfo = {tech: [], team: [], member: []};
+  profileInfo = {Teches: [], Team: [], Member: []};
 
   constructor(private profileService: ProfileService, private route: ActivatedRoute) {
     this.projects = profileService.getProjects();
@@ -20,7 +20,12 @@ export class ProfileComponent {
 
   getUserInfo() {
     this.route.params.subscribe((params) => {
-      this.profileService.getProfileInfo(params['id'], this.profileInfo)
+      this.profileService.getProfileInfo(params['id'])
+      .subscribe( data => {
+        this.profileInfo = data;
+        console.log(data)
+      })
     })
+
   }
 }
