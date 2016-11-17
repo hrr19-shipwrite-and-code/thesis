@@ -46,6 +46,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router'], f
                     this.projectService.getProject(id)
                         .subscribe(function (data) { return _this.project = data; }, function (err) { return _this.error = true; });
                 };
+                ProjectComponent.prototype.likeProject = function (id) {
+                    console.log(this.project.likes);
+                    this.project.likes++;
+                    this.projectService.likeProject(id);
+                };
                 ProjectComponent = __decorate([
                     core_1.Component({
                         selector: 'project',

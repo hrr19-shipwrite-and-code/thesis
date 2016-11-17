@@ -31,6 +31,8 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                     return this.http.get('http://localhost:1337/api/project/id/' + id)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectService.prototype.likeProject = function (id) {
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])

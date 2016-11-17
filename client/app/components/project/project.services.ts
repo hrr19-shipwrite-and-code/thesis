@@ -12,6 +12,10 @@ export class ProjectService {
       .map(res => res.json())
   }
 
+  likeProject(id) {
+    
+  }
+
   // getProject(id){
   //   return {
   //     "id": 1,
