@@ -7,22 +7,9 @@ import {Injectable} from '@angular/core';
 export class ProfileService {
   constructor(private authHttp: AuthHttp) {}
 
-  getProfileInfo(url, profileInfo){
-    this.authHttp.get('http://localhost:1337/api/profile/' + url)
+  getProfileInfo(url){
+    return this.authHttp.get('http://localhost:1337/api/profile/' + url)
     .map(res => res.json())
-    .subscribe(
-      data => {
-        profileInfo.picture = data.picture;
-        profileInfo.name = data.name;
-        profileInfo.location = data.location;
-        profileInfo.bio = data.bio;
-        profileInfo.hire = data.hire;
-        profileInfo.type = data.type;
-        profileInfo.tech = data.Teches;
-        profileInfo.team = data.Team;
-        profileInfo.member = data.Member;
-        console.log(data)
-      })
   }
 
   getProjects(){

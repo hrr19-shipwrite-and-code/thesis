@@ -26,21 +26,9 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core'], func
                 function ProfileService(authHttp) {
                     this.authHttp = authHttp;
                 }
-                ProfileService.prototype.getProfileInfo = function (url, profileInfo) {
-                    this.authHttp.get('http://localhost:1337/api/profile/' + url)
-                        .map(function (res) { return res.json(); })
-                        .subscribe(function (data) {
-                        profileInfo.picture = data.picture;
-                        profileInfo.name = data.name;
-                        profileInfo.location = data.location;
-                        profileInfo.bio = data.bio;
-                        profileInfo.hire = data.hire;
-                        profileInfo.type = data.type;
-                        profileInfo.tech = data.Teches;
-                        profileInfo.team = data.Team;
-                        profileInfo.member = data.Member;
-                        console.log(data);
-                    });
+                ProfileService.prototype.getProfileInfo = function (url) {
+                    return this.authHttp.get('http://localhost:1337/api/profile/' + url)
+                        .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.getProjects = function () {
                     return [

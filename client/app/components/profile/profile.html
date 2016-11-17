@@ -15,26 +15,26 @@
 
     <hr>
 
-    <div *ngIf="profileInfo.tech.length">
+    <div *ngIf="profileInfo.Teches.length">
       <h4>SKILLS</h4>
       <ul>
-        <li *ngFor="let tech of techs">{{tech.name}}</li>
+        <li *ngFor="let tech of profileInfo.Teches">{{tech.name}}</li>
       </ul>
     </div>
 
     <hr>
 
-    <div *ngIf="profileInfo.team.length">
+    <div *ngIf="profileInfo.Team.length">
       <h4>TEAMS</h4>
       <ul>
-        <li *ngFor="let team of profileInfo.team">{{team.name}}</li>
+        <li *ngFor="let team of profileInfo.Team">{{team.name}}</li>
       </ul>
     </div>
 
-    <div *ngIf="profileInfo.member.length">
+    <div *ngIf="profileInfo.Member.length">
       <h4>MEMBERS</h4>
       <ul>
-        <li *ngFor="let member of profileInfo.member">{{member.name}}</li>
+        <li *ngFor="let member of profileInfo.Member">{{member.name}}</li>
       </ul>
     </div>
 
