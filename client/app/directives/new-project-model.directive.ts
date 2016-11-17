@@ -1,15 +1,11 @@
 import { Directive, ElementRef, Renderer } from '@angular/core';
 
 @Directive({
-  selector: '[hoverTech]',
-  host: {
-    '(mouseover)': 'hover()',
-    '(mouseleave)': 'hoverStop()'
-  },
+  selector: '[addProductModel]'
 
 })
 
-export class TechHoverDirective {
+export class AddProductModelDirective {
   constructor(private el: ElementRef, private renderer: Renderer) {
 
   }

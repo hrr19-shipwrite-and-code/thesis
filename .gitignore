@@ -31,11 +31,8 @@ dist/
 node_modules/
 bower_components/
 
-<<<<<<< HEAD
-api.config.js
-=======
 .DS_Store
 
 # API keys and secrets
 secret/
->>>>>>> upstream
+

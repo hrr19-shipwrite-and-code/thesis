@@ -1,5 +1,5 @@
-import {Component, ElementRef, Renderer} from '@angular/core';
-import {BrowseService} from './browse.services.js';
+import { Component, ElementRef, Renderer } from '@angular/core';
+import { BrowseService } from './browse.services.js';
 
 @Component({
   selector: 'browse',

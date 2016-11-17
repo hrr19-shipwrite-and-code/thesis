@@ -1,0 +1,30 @@
+
+<form #form="ngForm" (ngSubmit)="addProject(form.value)">
+  <h2>Add Project</h2>
+  <span>*</span><label>Title:</label>
+  <input type="text" name="title" ngModel required>
+  <br>
+  <span>*</span><label>Description:</label>
+  <textarea rows="4" cols="50" name="description" ngModel required></textarea>
+  <br>
+  <label>Github:</label>
+  <input type="text" name="github" ngModel>
+  <br>
+  <label>Deploy:</label>
+  <input type="text" name="deploy" ngModel>
+  <br>
+  <span>*</span><label>Status:</label>
+  <select name="status" ngModel required>
+    <option value="Completed">Completed</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Abandonded">Abandonded</option>
+  </select>
+  <br>
+  <label>Open Source</label>
+  <label class="switch">
+    <input type="checkbox" name="openSource" ngModel>
+    <div class="slider round"></div>
+  </label>
+  <br>
+  <button type="submit">Submit</button>
+</form>
