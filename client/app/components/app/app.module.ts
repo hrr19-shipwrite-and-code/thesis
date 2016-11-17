@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
+import { EditProfileComponent } from '../editProfile/editProfile.component.js';
 import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
@@ -36,6 +37,7 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     HomeComponent,
     NavComponent,
     ProfileComponent,
+    EditProfileComponent,
     ProjectComponent,
     BrowseComponent,
     ProjectAddComponent,

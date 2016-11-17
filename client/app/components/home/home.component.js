@@ -23,13 +23,14 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
         execute: function() {
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
-                    // homeService.getProjects()
-                    //   .subscribe(
-                    //     data => this.projects = data,
-                    //     error => alert(error)
-                    //   )
-                    this.projects = homeService.getProjects();
+                    this.homeService = homeService;
+                    //this.projects = homeService.getProjects();
                 }
+                HomeComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.homeService.getProjects()
+                        .subscribe(function (data) { return _this.projects = data; }, function (error) { return alert(error); });
+                };
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',

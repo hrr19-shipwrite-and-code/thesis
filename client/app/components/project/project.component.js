@@ -36,9 +36,15 @@ System.register(['@angular/core', './project.services.js', '@angular/router'], f
                         _this.id = params['id'];
                     });
                     //Uncomment below for Dummy Data
-                    this.project = this.projectService.getProject(this.id);
+                    //this.project = this.projectService.getProject(this.id)
                     //Uncomment below Actual API Call
-                    //this.getProject(this.id);
+                    this.getProject(this.id);
+                };
+                //Service function to get the project by the route params Id
+                ProjectComponent.prototype.getProject = function (id) {
+                    var _this = this;
+                    this.projectService.getProject(id)
+                        .subscribe(function (data) { return _this.project = data; }, function (err) { return _this.error = true; });
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

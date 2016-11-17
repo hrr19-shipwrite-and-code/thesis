@@ -1,0 +1,44 @@
+/* A couple of utility classes for re-use */
+.horizontal-center {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
+  -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
+  box-shadow: 0 5px 6px -6px #bdc3c7;
+}
+
+.container {
+  color: #444444;
+}
+
+.main-content {
+  width: 75vw;
+  background-color: white;
+  border-radius: 5px;
+
+  padding: 30px;
+
+  /*display: flex;
+  justify-content: space-around;
+  flex-direction: column;*/
+}
+
+form {
+  width: 40vw;
+  margin-top: 20px;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+.btn, .btn:active {
+  background-color: salmon;
+  border: none;
+  outline: none;
+}

@@ -25,12 +25,13 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
             }],
         execute: function() {
             ProjectAddComponent = (function () {
-                function ProjectAddComponent(post, router) {
-                    this.post = post;
+                function ProjectAddComponent(projectService, router) {
+                    this.projectService = projectService;
                     this.router = router;
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
-                    this.post.postProject(data, this.edit);
+                    this.projectService.createProject(data);
+                    //console.log(data);
                 };
                 ProjectAddComponent.prototype.edit = function (data) {
                     // this.router.navigate("/");
