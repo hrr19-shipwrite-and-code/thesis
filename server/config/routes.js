@@ -27,6 +27,7 @@ module.exports = function (app, express) {
   app.post('/api/user/addPicture', authCheck, profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileUrl', profileController.getProfile);
+  app.get('/api/editUserInfo', authCheck, profileController.getEditUserInfo);
   //Edit user profile --Needs authentication
   app.put('/api/user/edit', authCheck, profileController.editUserInfo);
 
