@@ -13,13 +13,12 @@ import { ProjectAddService } from './projectAdd.services.js';
 })
 
 export class ProjectAddComponent {
-  constructor(private projectService: ProjectAddService, private router: Router) {
-
-  }
+  userInfo = localStorage.getItem('url');
+  constructor(private projectService: ProjectAddService, private router: Router) {}
 
   addProject(data) {
     this.projectService.createProject(data);
-    //console.log(data);
+    this.router.navigateByUrl('/profile/' + this.userInfo)
   }
 
   edit(data) {
