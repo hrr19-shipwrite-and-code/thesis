@@ -196,7 +196,7 @@ module.exports = {
     //Also can add different filters, etc.
     Project.findAll({
       include: [
-      {model: Profile, attributes: ['name', 'url']},
+      {model: Profile, attributes: ['name', 'url', 'picture']},
       {model: Like}
       ]})
       .then((projects) => {
