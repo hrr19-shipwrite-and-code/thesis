@@ -1,4 +1,4 @@
-System.register(['@angular/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './editProfile.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,30 +10,49 @@ System.register(['@angular/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, editProfile_services_js_1;
     var EditProfileComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (editProfile_services_js_1_1) {
+                editProfile_services_js_1 = editProfile_services_js_1_1;
             }],
         execute: function() {
             EditProfileComponent = (function () {
-                function EditProfileComponent() {
-                    this.name = 'Yoda';
-                    this.email = 'yoda@aol.com';
-                    this.location = 'Dagobah';
-                    this.bio = "Size matters not. Look at me. Judge me by my size, do you? Hmm? No. And well you should not. For my ally is the Force, and a powerful ally it is.";
+                function EditProfileComponent(editProfileService) {
+                    this.editProfileService = editProfileService;
+                    this.userInfo = {};
+                    this.getUserInfo();
                 }
+                EditProfileComponent.prototype.getUserInfo = function () {
+                    var _this = this;
+                    this.editProfileService.getUserInfo()
+                        .subscribe(function (data) {
+                        _this.userInfo = data;
+                        console.log(data);
+                    });
+                };
+                EditProfileComponent.prototype.editUserInfo = function (userInfo) {
+                    this.editProfileService.editUserInfo(userInfo)
+                        .subscribe(function (data) {
+                        console.log(data);
+                    });
+                    localStorage.setItem("url", userInfo.url);
+                };
                 EditProfileComponent = __decorate([
                     core_1.Component({
                         selector: 'editProfile',
                         templateUrl: './client/app/components/editProfile/editProfile.html',
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
+                        providers: [editProfile_services_js_1.EditProfileService],
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object])
                 ], EditProfileComponent);
                 return EditProfileComponent;
+                var _a;
             }());
             exports_1("EditProfileComponent", EditProfileComponent);
         }
