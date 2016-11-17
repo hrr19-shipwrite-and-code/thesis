@@ -20,6 +20,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             EditProfileComponent = (function () {
                 function EditProfileComponent() {
+                    this.name = 'Yoda';
+                    this.email = 'yoda@aol.com';
+                    this.location = 'Dagobah';
+                    this.bio = "Size matters not. Look at me. Judge me by my size, do you? Hmm? No. And well you should not. For my ally is the Force, and a powerful ally it is.";
                 }
                 EditProfileComponent = __decorate([
                     core_1.Component({

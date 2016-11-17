@@ -1,2 +1,35 @@
 
-<h1>Hello I am profile editor</h1>
+<div class="container horizontal-center">
+
+
+  <div class="main-content shadow horizontal-center">
+    <h4>Edit Profile</h4>
+
+    <form>
+      <div class="form-group">
+        <p class='name-label'>Name:</p>
+        <input type="text" class="form-control" placeholder="Enter your name" value="{{name}}">
+      </div>
+
+      <div class="form-group">
+        <p class='email-label'>Email:</p>
+        <input type="email" class="form-control" placeholder="Enter new email" value="{{email}}">
+      </div>
+
+      <div class="form-group">
+        <p class='location-label'>Location:</p>
+        <input type="text" class="form-control" placeholder="Enter your location" value="{{location}}">
+      </div>
+
+      <div class="form-group">
+        <p class='bio-label'>Bio:</p>
+        <textarea class="form-control" rows="3" placeholder="Enter your bio" value="{{bio}}"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+  </div>
+
+
+</div> <!-- container -->
