@@ -4,7 +4,7 @@ const Like = require('./likeSchema.js');
 
 module.exports = {
   likeProject: (req, res, next) => {
-    const authId = req.sub.id; 
+    const authId = req.user.sub; 
     const id = req.params.projectId;
     Project.findById(id)
       .then((project) => {
@@ -14,7 +14,7 @@ module.exports = {
               .then((like) => {
                 Like.destroy({where: {id: like.id}})
                   .then(() => {
-                    res.sendStatus(200);
+                    res.send({ like: false });
                   })
               })
               .catch((err) => {
@@ -22,7 +22,7 @@ module.exports = {
                   .then((like) => {
                     user.addLike(like);
                     project.addLike(like);
-                    res.sendStatus(201);
+                    res.send({ like: true });
                   });
               });   
           })
@@ -34,15 +34,15 @@ module.exports = {
 
   //Once Auth will get GET
   doesUserLike: (req, res, next) => {
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     const id = req.params.projectId;
     Profile.find({where: {authId: authId},
      include: [{model: Like, where: {ProjectId: id}}] })
       .then((profile) => {
-        res.send('true');
+        res.json({ like: true} );
       })
       .catch((err) => {
-        res.send('false');
+        res.json({ like: false });
       });
   }
 };
