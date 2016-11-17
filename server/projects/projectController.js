@@ -18,7 +18,14 @@ module.exports = {
     const authId = req.user.sub;
       Profile.findOne({where: {authId: authId}})
         .then((user) => {
-          user.createProject({title: req.body.title, views: 0})
+          user.createProject({
+            title: req.body.title,
+            description: req.body.description,
+            github: req.body.github,
+            deploy: req.body.deploy,
+            progress: req.body.status,
+            contribute: req.body.openSourse,
+            views: 0})
             .then(() => {
               res.sendStatus(200);
             });

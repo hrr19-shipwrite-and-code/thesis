@@ -1,4 +1,4 @@
-System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,25 +10,35 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var http_1, core_1;
+    var http_1, angular2_jwt_1, core_1;
     var ProjectAddService;
     return {
         setters:[
             function (http_1_1) {
                 http_1 = http_1_1;
             },
+            function (angular2_jwt_1_1) {
+                angular2_jwt_1 = angular2_jwt_1_1;
+            },
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (_1) {}],
+            }],
         execute: function() {
             ProjectAddService = (function () {
-                function ProjectAddService(http) {
-                    this.http = http;
+                function ProjectAddService(authHttp) {
+                    this.authHttp = authHttp;
                 }
+                ProjectAddService.prototype.createProject = function (project) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    var url = 'http://localhost:1337/api/project/create';
+                    return this.authHttp.post(url, JSON.stringify(project), options)
+                        .map(function (res) { return res; })
+                        .subscribe(function (data) { return data; }, function (err) { return console.log(err); });
+                };
                 ProjectAddService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
                 ], ProjectAddService);
                 return ProjectAddService;
             }());
