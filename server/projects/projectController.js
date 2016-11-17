@@ -176,6 +176,21 @@ module.exports = {
    * Multiple Projects 
    ******************************************/
   
+  getUserProjects: (req, res, next) => {
+    const id = req.params.id;
+    Project.findAll({where: { ProfileId: id}, include: [Like]})
+      .then((projects) => {
+        projects = JSON.parse(JSON.stringify(projects));
+        for (let project of projects) {
+          project.Likes = project.Likes.length;
+        }
+        res.send(projects);
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
+  },
+
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
     //Also can add different filters, etc.

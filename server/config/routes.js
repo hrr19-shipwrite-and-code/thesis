@@ -27,6 +27,7 @@ module.exports = function (app, express) {
   app.post('/api/user/addPicture', authCheck, profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileUrl', profileController.getProfile);
+  app.get('/api/editUserInfo', authCheck, profileController.getEditUserInfo);
   //Edit user profile --Needs authentication
   app.put('/api/user/edit', authCheck, profileController.editUserInfo);
 
@@ -44,6 +45,7 @@ module.exports = function (app, express) {
   app.post('/api/project/thumbnail/:projectId', authCheck, projectController.uploadProjectThumbnail);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.get('/api/project/getAll', projectController.getAllProjects);
+  app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', authCheck, projectController.editProject);
   app.delete('/api/project/delete', authCheck, projectController.deleteProject);
 

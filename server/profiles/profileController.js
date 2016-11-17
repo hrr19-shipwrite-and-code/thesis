@@ -69,6 +69,14 @@ module.exports = {
       });
   },
 
+  getEditUserInfo: (req, res, next) => {
+    const authId = req.user.sub;
+    Profile.findOne({where: {authId: authId}})
+      .then((user) => {
+        res.json(user);
+      })
+  },
+
   editUserInfo: (req, res, next) => {
     const authId = req.user.sub;
     Profile.update(req.body, {where: {authId: authId}})
