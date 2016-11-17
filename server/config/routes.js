@@ -44,6 +44,7 @@ module.exports = function (app, express) {
   app.post('/api/project/thumbnail/:projectId', authCheck, projectController.uploadProjectThumbnail);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.get('/api/project/getAll', projectController.getAllProjects);
+  app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', authCheck, projectController.editProject);
   app.delete('/api/project/delete', authCheck, projectController.deleteProject);
 
