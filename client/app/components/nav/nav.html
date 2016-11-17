@@ -4,7 +4,6 @@
   <div class='links'>
     <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
     <a routerLink="/browse" routerLinkActive="active" class="navLink">Browse</a>
-    <a routerLink="/project/1" routerLinkActive="active" class="navLink">Project</a>
   </div>
 
   <a *ngIf="!auth.authenticated()" class="navLink" (click)="auth.login()">Sign In</a>
