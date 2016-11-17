@@ -5,43 +5,49 @@
   <div class="main-content shadow horizontal-center">
     <h4>Edit Profile</h4>
 
-    <form>
+    <form #form="ngForm" (ngSubmit)="editUserInfo(form.value)">
       <div class="form-group">
         <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your full name" value="{{name}}">
+        <input type="text" class="form-control" placeholder="Enter your full name" [(ngModel)]="userInfo.name" name="name">
       </div>
 
       <div class="form-group">
         <p class='email-label'>URL:</p>
-        <input type="email" class="form-control" placeholder="Enter new URL" value="{{email}}">
+        <input type="text" class="form-control" placeholder="Enter new URL" [(ngModel)]="userInfo.url" name="url">
       </div>
 
       <div class="form-group">
         <p class='location-label'>Location:</p>
-        <input type="text" class="form-control" placeholder="Enter your location" value="{{location}}">
+        <input type="text" class="form-control" placeholder="Enter your location" [(ngModel)]="userInfo.location" name="location">
       </div>
 
       <div class="form-group">
         <p class='location-label'>Hire:</p>
         <label class="switch">
-          <input type="checkbox" name="openSource" ngModel>
+          <input type="checkbox" [(ngModel)]="userInfo.hire" name="hire">
           <div class="slider round"></div>
         </label>
       </div>
 
       <div class="form-group">
         <p class='bio-label'>Bio:</p>
-        <textarea class="form-control" rows="3" placeholder="Enter your bio" value="{{bio}}"></textarea>
+        <textarea class="form-control" rows="3" placeholder="Enter your bio" [(ngModel)]="userInfo.bio" name="bio"></textarea>
       </div>
 
       <div class="form-group">
         <p class='location-label'>Connect:</p>
-        Personal: <input type="text" class="form-control" placeholder="Enter your personal website url">
-        Blog: <input type="text" class="form-control" placeholder="Enter your personal website url">
-        Github: <input type="text" class="form-control" placeholder="Enter your personal website url">
-        LinkedIn: <input type="text" class="form-control" placeholder="Enter your personal website url">
-        Twitter: <input type="text" class="form-control" placeholder="Enter your personal website url">
-        Facebook: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        Personal:
+        <input type="text" class="form-control" placeholder="Enter your personal website url" [(ngModel)]="userInfo.personal" name="personal">
+        Blog:
+        <input type="text" class="form-control" placeholder="Enter your blog url" [(ngModel)]="userInfo.blog" name="blog">
+        Github:
+        <input type="text" class="form-control" placeholder="Enter your github url" [(ngModel)]="userInfo.github" name="github">
+        LinkedIn:
+        <input type="text" class="form-control" placeholder="Enter your linkedin website url" [(ngModel)]="userInfo.linkedin" name="linkedin">
+        Twitter:
+        <input type="text" class="form-control" placeholder="Enter your twitter url" [(ngModel)]="userInfo.twitter" name="twitter">
+        Facebook:
+        <input type="text" class="form-control" placeholder="Enter your facebook website url" [(ngModel)]="userInfo.facebook" name="facebook">
       </div>
 
       <button type="submit" class="btn btn-primary">Save</button>
