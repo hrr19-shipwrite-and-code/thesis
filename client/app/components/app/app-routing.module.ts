@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'addproject', component: ProjectAddComponent}
+  { path: 'addproject', component: ProjectAddComponent},
   { path: 'project/:id', component: ProjectComponent },
   { path: 'profile/:id', component: ProfileComponent },
   // { path: '**', component: PageNotFoundComponent }
