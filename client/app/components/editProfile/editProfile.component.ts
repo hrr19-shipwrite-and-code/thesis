@@ -29,5 +29,6 @@ export class EditProfileComponent {
       .subscribe( data => {
           console.log(data)
         });
+    localStorage.setItem("url", userInfo.url);
   }
 }

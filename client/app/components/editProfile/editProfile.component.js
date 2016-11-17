@@ -40,6 +40,7 @@ System.register(['@angular/core', './editProfile.services.js'], function(exports
                         .subscribe(function (data) {
                         console.log(data);
                     });
+                    localStorage.setItem("url", userInfo.url);
                 };
                 EditProfileComponent = __decorate([
                     core_1.Component({
