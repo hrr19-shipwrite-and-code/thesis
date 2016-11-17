@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { EditProfileService } from './editProfile.services.js'
+import { EditProfileService } from './editProfile.services.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'editProfile',
@@ -12,7 +13,7 @@ export class EditProfileComponent {
 
   userInfo = {};
 
-  constructor(private editProfileService: EditProfileService) {
+  constructor(private editProfileService: EditProfileService, private router: Router) {
     this.getUserInfo();
   }
 
@@ -30,5 +31,6 @@ export class EditProfileComponent {
           console.log(data)
         });
     localStorage.setItem("url", userInfo.url);
+    this.router.navigateByUrl('/profile/' + userInfo.url)
   }
 }

@@ -79,8 +79,8 @@ module.exports = {
       include: [
         {model: Profile, attributes: ['name']},
         {model: Image},
-        {model: Comment, attributes:['comment', 'createdAt'], 
-          include: [{model: Profile, attributes: ['name', 'url']}] 
+        {model: Comment, attributes:['comment', 'createdAt'],
+          include: [{model: Profile, attributes: ['name', 'url']}]
         },
        {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]})
@@ -101,7 +101,7 @@ module.exports = {
   },
 
   /******************************************
-   * Project Images 
+   * Project Images
    ******************************************/
 
   uploadProjectImage: (req, res, next) => {
@@ -173,9 +173,9 @@ module.exports = {
   },
 
   /******************************************
-   * Multiple Projects 
+   * Multiple Projects
    ******************************************/
-  
+
   getUserProjects: (req, res, next) => {
     const id = req.params.id;
     Project.findAll({where: { ProfileId: id}, include: [Like]})
