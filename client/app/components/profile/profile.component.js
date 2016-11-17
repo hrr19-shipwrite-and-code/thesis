@@ -29,7 +29,6 @@ System.register(['@angular/core', './profile.services.js', '@angular/router'], f
                     this.profileService = profileService;
                     this.route = route;
                     this.profileInfo = { Teches: [], Team: [], Member: [] };
-                    this.projects = profileService.getProjects();
                     this.getUserInfo();
                 }
                 ProfileComponent.prototype.getUserInfo = function () {
@@ -38,8 +37,15 @@ System.register(['@angular/core', './profile.services.js', '@angular/router'], f
                         _this.profileService.getProfileInfo(params['id'])
                             .subscribe(function (data) {
                             _this.profileInfo = data;
-                            console.log(data);
+                            _this.getUserProjects(data.id);
                         });
+                    });
+                };
+                ProfileComponent.prototype.getUserProjects = function (userId) {
+                    var _this = this;
+                    this.profileService.getProjects(userId)
+                        .subscribe(function (data) {
+                        _this.projects = data;
                     });
                 };
                 ProfileComponent = __decorate([
