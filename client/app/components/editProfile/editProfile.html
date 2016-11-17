@@ -8,12 +8,12 @@
     <form>
       <div class="form-group">
         <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your name" value="{{name}}">
+        <input type="text" class="form-control" placeholder="Enter your full name" value="{{name}}">
       </div>
 
       <div class="form-group">
-        <p class='email-label'>Email:</p>
-        <input type="email" class="form-control" placeholder="Enter new email" value="{{email}}">
+        <p class='email-label'>URL:</p>
+        <input type="email" class="form-control" placeholder="Enter new URL" value="{{email}}">
       </div>
 
       <div class="form-group">
@@ -22,8 +22,26 @@
       </div>
 
       <div class="form-group">
+        <p class='location-label'>Hire:</p>
+        <label class="switch">
+          <input type="checkbox" name="openSource" ngModel>
+          <div class="slider round"></div>
+        </label>
+      </div>
+
+      <div class="form-group">
         <p class='bio-label'>Bio:</p>
         <textarea class="form-control" rows="3" placeholder="Enter your bio" value="{{bio}}"></textarea>
+      </div>
+
+      <div class="form-group">
+        <p class='location-label'>Connect:</p>
+        Personal: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        Blog: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        Github: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        LinkedIn: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        Twitter: <input type="text" class="form-control" placeholder="Enter your personal website url">
+        Facebook: <input type="text" class="form-control" placeholder="Enter your personal website url">
       </div>
 
       <button type="submit" class="btn btn-primary">Save</button>
