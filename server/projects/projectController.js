@@ -6,12 +6,14 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
-const ProjectTech = require('../tech/techSchema.js').ProjectTech;
-const db = require('../db.js');
+const sequelize = require('sequelize');
 
 module.exports = {
 
-  //Projects
+  /*****************************************
+   * Single Project
+   *****************************************/
+
   createProject: (req, res, next) => {
     const authId = req.user.sub;
       Profile.findOne({where: {authId: authId}})
@@ -26,28 +28,22 @@ module.exports = {
         });
   },
 
-  getProject: (req, res, next) => {
-    const id = req.params.projectId;
-    Project.findById(id, {
-      include: [{model: Profile, attributes: ['name']},
-       {model: Image},
-       {model: Comment, attributes:['comment', 'createdAt'], include: [{model: Profile, attributes: ['name', 'url']}] },
-       {model: Tech, attributes: ['name'], through: {attributes: []}}
-       ]})
-      .then((project) => {
-        project.increment('views');
-        project = project.toJSON();
-        project.views += 1;
-        Like.count({where: {ProjectId: id}})
-          .then((likes) => {
-            project.likes = likes;
-            res.send(project);
+  deleteProject: (req, res, next) => {
+    const id = req.body.id;
+    const authId = req.user.sub;
+    Profile.findOne({where: {authId: authId}})
+      .then((user) => {
+        Project.destroy({where: {id: id, ProfileId: user.id}})
+          .then(() => {
+            res.sendStatus(200);
+          })
+          .catch(() => {
+            res.sendStatus(404);
           });
       })
-      .catch((err) =>{
-        console.log(err);
-        res.sendStatus(404);
-      });
+      .catch((err) => {
+        res.sendStatus(401);
+      })
   },
 
   editProject: (req, res, next) => {
@@ -70,37 +66,37 @@ module.exports = {
       });
   },
 
-  deleteProject: (req, res, next) => {
-    const id = req.body.id;
-    const authId = req.user.sub;
-    Profile.findOne({where: {authId: authId}})
-      .then((user) => {
-        Project.destroy({where: {id: id, ProfileId: user.id}})
-          .then(() => {
-            res.sendStatus(200);
-          })
-          .catch(() => {
-            res.sendStatus(404);
+  getProject: (req, res, next) => {
+    const id = req.params.projectId;
+    Project.findById(id, {
+      include: [
+        {model: Profile, attributes: ['name']},
+        {model: Image},
+        {model: Comment, attributes:['comment', 'createdAt'], 
+          include: [{model: Profile, attributes: ['name', 'url']}] 
+        },
+       {model: Tech, attributes: ['name'], through: {attributes: []}}
+       ]})
+      .then((project) => {
+        project.increment('views');
+        project = project.toJSON();
+        project.views += 1;
+        Like.count({where: {ProjectId: id}})
+          .then((likes) => {
+            project.likes = likes;
+            res.send(project);
           });
       })
-      .catch((err) => {
-        res.sendStatus(401);
-      })
-  },
-
-  getAllProjects: (req, res, next) => {
-    //Adjust offset and limit later this was for testing
-    //Also can add different filters, etc.
-    Project.findAll({include: [{model: Profile, attributes: ['name']}]})
-      .then((projects) => {
-        res.json(projects);
-      })
       .catch((err) =>{
-        res.send(404);
+        console.log(err);
+        res.sendStatus(404);
       });
   },
 
-  //Project Images
+  /******************************************
+   * Project Images 
+   ******************************************/
+
   uploadProjectImage: (req, res, next) => {
     const id = req.params.projectId;
     const authId = req.user.sub;
@@ -167,6 +163,30 @@ module.exports = {
       .catch((err) => {
         res.sendStatus(401);
       });
-  }
+  },
 
+  /******************************************
+   * Multiple Projects 
+   ******************************************/
+  
+  getAllProjects: (req, res, next) => {
+    //Adjust offset and limit later this was for testing
+    //Also can add different filters, etc.
+    Project.findAll({
+      include: [
+      {model: Profile, attributes: ['name', 'url']},
+      {model: Like}
+      ]})
+      .then((projects) => {
+        projects = JSON.parse(JSON.stringify(projects));
+        for (let project of projects) {
+          project.Likes = project.Likes.length;
+        }
+        res.send(projects);
+      })
+      .catch((err) =>{
+        console.log(err)
+        res.sendStatus(404);
+      });
+  },
 };
