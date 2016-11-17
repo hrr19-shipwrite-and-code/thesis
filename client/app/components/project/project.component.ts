@@ -39,6 +39,7 @@ export class ProjectComponent {
   }
 
   likeProject(id) {
+    this.project.likes++;
     this.projectService.likeProject(id)
   }
 
