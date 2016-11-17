@@ -1,5 +1,12 @@
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+@Injectable()
 export class ProjectAddService {
-  postProject(data, cb) {
-    console.log(data) // data is an obj with title, description, status, deploy, github, and openSource
-  }
+  postProject
+  constructor (private http: Http) {}
+
+
 }

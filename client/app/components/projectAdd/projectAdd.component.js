@@ -30,7 +30,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                     this.router = router;
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
-                    this.post.postProject(data, this.edit);
+                    console.log(data);
                 };
                 ProjectAddComponent.prototype.edit = function (data) {
                     // this.router.navigate("/");

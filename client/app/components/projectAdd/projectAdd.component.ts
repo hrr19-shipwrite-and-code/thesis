@@ -17,7 +17,7 @@ export class ProjectAddComponent {
   }
 
   addProject(data) {
-    this.post.postProject(data, this.edit)
+    console.log(data)
   }
 
   edit(data) {

@@ -13,12 +13,15 @@ import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail
 
 export class HomeComponent {
   projects;
-  constructor(homeService: HomeService) {
-    // homeService.getProjects()
-    //   .subscribe(
-    //     data => this.projects = data,
-    //     error => alert(error)
-    //   )
-    this.projects = homeService.getProjects();
+  constructor(private homeService: HomeService) {
+    //this.projects = homeService.getProjects();
+  }
+
+  ngOnInit() {
+    this.homeService.getProjects()
+      .subscribe(
+        data => this.projects = data,
+        error => alert(error)
+      )
   }
 }
