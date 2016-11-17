@@ -8,7 +8,8 @@ import { ProjectAddService } from './projectAdd.services.js';
 
 @Component({
   selector: 'project-add',
-  templateUrl: './client/app/components/projectAdd/projectAdd.html'
+  templateUrl: './client/app/components/projectAdd/projectAdd.html',
+  styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
 })
 
 export class ProjectAddComponent {

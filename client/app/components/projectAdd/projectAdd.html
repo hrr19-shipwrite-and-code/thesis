@@ -1,30 +1,53 @@
 
-<form #form="ngForm" (ngSubmit)="addProject(form.value)">
-  <h2>Add Project</h2>
-  <span>*</span><label>Title:</label>
-  <input type="text" name="title" ngModel required>
-  <br>
-  <span>*</span><label>Description:</label>
-  <textarea rows="4" cols="50" name="description" ngModel required></textarea>
-  <br>
-  <label>Github:</label>
-  <input type="text" name="github" ngModel>
-  <br>
-  <label>Deploy:</label>
-  <input type="text" name="deploy" ngModel>
-  <br>
-  <span>*</span><label>Status:</label>
-  <select name="status" ngModel required>
-    <option value="Completed">Completed</option>
-    <option value="In Progress">In Progress</option>
-    <option value="Abandonded">Abandonded</option>
-  </select>
-  <br>
-  <label>Open Source</label>
-  <label class="switch">
-    <input type="checkbox" name="openSource" ngModel>
-    <div class="slider round"></div>
-  </label>
-  <br>
-  <button type="submit">Submit</button>
-</form>
+<div class="container horizontal-center">
+
+  <div class="main-content shadow horizontal-center">
+    <h4>Add Project</h4>
+
+    <form #form="ngForm" (ngSubmit)="addProject(form.value)">
+
+      <div class="form-group">
+        <p class='title-label'>Title:</p>
+        <input type="text" name="title" class='form-control' placeholder='Enter your project title' ngModel required>
+      </div>
+
+      <div class="form-group">
+        <p class='description-label'>Description:</p>
+        <textarea rows="4" class='form-control' name="description" ngModel required></textarea>
+      </div>
+
+      <div class="form-group">
+        <p class='github-label'>Github:</p>
+        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' ngModel>
+      </div>
+
+      <div class="form-group">
+        <p class='deploy-label'>Deployed App:</p>
+        <input type="text" name="deploy" class='form-control' placeholder='mysuperawesomeapp.com' ngModel>
+      </div>
+
+      <div class="form-group">
+        <label for="status-select">Status:</label>
+        <select class="form-control" id="status-select">
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Abandonded">Abandonded</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <p class='deploy-label'>Open Source:</p>
+        <label class="switch">
+          <input type="checkbox" name="openSource" ngModel>
+          <div class="slider round"></div>
+        </label>
+      </div>
+
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+  </div> <!-- main content -->
+
+</div> <!-- container -->

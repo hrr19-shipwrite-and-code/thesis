@@ -1,6 +1,6 @@
 <div class="navBar">
   <img class="nav-logo" src="./client/app/assets/sushi.png">
-  <h1 class='brand'><a routerLink="/" class="navLink">sushi</a></h1>
+  <h3 class='sushi-brand'><a routerLink="/" class="navLink">sushi</a></h3>
   <div class='links'>
     <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
     <a routerLink="/browse" routerLinkActive="active" class="navLink">Browse</a>
@@ -9,10 +9,10 @@
 
   <a *ngIf="!auth.authenticated()" class="navLink" (click)="auth.login()">Sign In</a>
   <div *ngIf="auth.authenticated()">
-    <a routerLink="/profile/{{auth.checkUrl()}}" routerLinkActive="active" class="navLink">Profile</a>    
+    <a routerLink="/profile/{{auth.checkUrl()}}" routerLinkActive="active" class="navLink">Profile</a>
     <a routerLink="/editprofile" routerLinkActive="active" class="navLink">Edit Profile</a>
     <a routerLink="/addproject" class="navLink">Add Project</a>
     <a class="navLink" (click)="auth.logout()">Logout</a>
-  </div>  
-  
+  </div>
+
 </div>

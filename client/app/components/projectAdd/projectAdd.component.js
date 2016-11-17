@@ -39,7 +39,8 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                 ProjectAddComponent = __decorate([
                     core_1.Component({
                         selector: 'project-add',
-                        templateUrl: './client/app/components/projectAdd/projectAdd.html'
+                        templateUrl: './client/app/components/projectAdd/projectAdd.html',
+                        styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof projectAdd_services_js_1.ProjectAddService !== 'undefined' && projectAdd_services_js_1.ProjectAddService) === 'function' && _a) || Object, router_1.Router])
                 ], ProjectAddComponent);
