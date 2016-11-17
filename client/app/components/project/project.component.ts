@@ -38,4 +38,8 @@ export class ProjectComponent {
     )
   }
 
+  likeProject(id) {
+    this.projectService.likeProject(id)
+  }
+
 }
