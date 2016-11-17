@@ -9,7 +9,7 @@
           by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
         </p>
       </div>
-
+      <a (click)="isOwner()">test</a>
 
       <div class="main-content">
         <!-- Main Image -->
@@ -43,3 +43,7 @@
 <div *ngIf="error">
   No such project!
 </div>
+
+<!--<div *ngIf="projectOwner()">
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+</div>-->

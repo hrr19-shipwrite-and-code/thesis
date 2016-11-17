@@ -52,4 +52,11 @@ export class ProjectComponent {
       )
   }
 
+  isOwner(){ 
+    console.log(this.project.Profile)
+    // this.project.Profile.unique
+    let test = localStorage.getItem('id_token')
+    console.log(test)
+  }
+
 }

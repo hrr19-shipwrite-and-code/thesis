@@ -41,6 +41,16 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.authHttp.post('http://localhost:1337/api/like/project/' + id, {}, options)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectService.prototype.getTech = function () {
+                    return [
+                        { name: 'React' },
+                        { name: 'JavaScript' },
+                        { name: 'TypeScript' },
+                        { name: 'Angular' },
+                        { name: 'Angular 2' },
+                        { name: 'Redux' }
+                    ];
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])

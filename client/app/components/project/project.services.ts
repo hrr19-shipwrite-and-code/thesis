@@ -20,6 +20,17 @@ export class ProjectService {
       .map(res => res.json())
   }
 
+  getTech(){
+    return [
+      {name: 'React'},
+      {name: 'JavaScript'},
+      {name: 'TypeScript'},
+      {name: 'Angular'},
+      {name: 'Angular 2'},
+      {name: 'Redux'}
+    ]
+  }
+
   // getProject(id){
   //   return {
   //     "id": 1,

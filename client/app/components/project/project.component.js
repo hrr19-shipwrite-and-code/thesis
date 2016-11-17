@@ -61,6 +61,12 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
+                ProjectComponent.prototype.isOwner = function () {
+                    console.log(this.project.Profile);
+                    // this.project.Profile.unique
+                    var test = localStorage.getItem('id_token');
+                    console.log(test);
+                };
                 ProjectComponent = __decorate([
                     core_1.Component({
                         selector: 'project',
