@@ -77,10 +77,11 @@ module.exports = {
     const id = req.params.projectId;
     Project.findById(id, {
       include: [
-        {model: Profile, attributes: ['name', 'url']},
+        {model: Profile, attributes: ['name', 'url', 'authId']},
         {model: Image},
         {model: Comment, attributes:['comment', 'createdAt'],
-          include: [{model: Profile, attributes: ['name', 'url']}]
+          include: [
+            {model: Profile, attributes: ['name', 'url']}, ]
         },
        {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]})
