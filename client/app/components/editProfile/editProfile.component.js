@@ -1,4 +1,4 @@
-System.register(['@angular/core', './editProfile.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './editProfile.services.js', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './editProfile.services.js'], function(exports
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, editProfile_services_js_1;
+    var core_1, editProfile_services_js_1, router_1;
     var EditProfileComponent;
     return {
         setters:[
@@ -19,11 +19,15 @@ System.register(['@angular/core', './editProfile.services.js'], function(exports
             },
             function (editProfile_services_js_1_1) {
                 editProfile_services_js_1 = editProfile_services_js_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             EditProfileComponent = (function () {
-                function EditProfileComponent(editProfileService) {
+                function EditProfileComponent(editProfileService, router) {
                     this.editProfileService = editProfileService;
+                    this.router = router;
                     this.userInfo = {};
                     this.getUserInfo();
                 }
@@ -41,6 +45,7 @@ System.register(['@angular/core', './editProfile.services.js'], function(exports
                         console.log(data);
                     });
                     localStorage.setItem("url", userInfo.url);
+                    this.router.navigateByUrl('/profile/' + userInfo.url);
                 };
                 EditProfileComponent = __decorate([
                     core_1.Component({
@@ -49,7 +54,7 @@ System.register(['@angular/core', './editProfile.services.js'], function(exports
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
                         providers: [editProfile_services_js_1.EditProfileService],
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router])
                 ], EditProfileComponent);
                 return EditProfileComponent;
                 var _a;
