@@ -28,10 +28,11 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                 function ProjectAddComponent(projectService, router) {
                     this.projectService = projectService;
                     this.router = router;
+                    this.userInfo = localStorage.getItem('url');
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
                     this.projectService.createProject(data);
-                    //console.log(data);
+                    this.router.navigateByUrl('/profile/' + this.userInfo);
                 };
                 ProjectAddComponent.prototype.edit = function (data) {
                     // this.router.navigate("/");
