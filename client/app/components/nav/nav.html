@@ -8,6 +8,9 @@
     <a routerLink="/project/1" routerLinkActive="active" class="navLink">Project</a>
     <a routerLink="/editprofile" routerLinkActive="active" class="navLink">Edit Profile</a>
   </div>
-  <a *ngIf="!auth.authenticated()" class="navLink" (click)="auth.login()">Sign In</a>
-  <a *ngIf="auth.authenticated()" class="navLink" (click)="auth.logout()">Logout</a>
+  <div>
+    <a routerLink="/addproject" class="navLink">Add Project</a>
+    <a *ngIf="!auth.authenticated()" class="navLink" (click)="auth.login()">Sign In</a>
+    <a *ngIf="auth.authenticated()" class="navLink" (click)="auth.logout()">Logout</a>
+  </div>  
 </div>

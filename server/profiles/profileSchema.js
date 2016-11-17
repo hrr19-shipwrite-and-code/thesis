@@ -8,7 +8,8 @@ const Profile = db.define('Profile', {
   },
   url: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    allowNull: false
   },
   email: {
     type: Sequelize.STRING,
@@ -21,7 +22,7 @@ const Profile = db.define('Profile', {
   picture: Sequelize.STRING,
   authId: {
     type: Sequelize.STRING,
-    //allowNull: false,
+    allowNull: false,
     unique: true,
     noUpdate: true
   },

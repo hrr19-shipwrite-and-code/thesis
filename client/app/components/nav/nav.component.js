@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../auth/auth.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '../auth/auth.service', '../projectAdd/projectAdd.component.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../auth/auth.service'], function(exports_1, c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, auth_service_1;
+    var core_1, auth_service_1, projectAdd_component_js_1;
     var NavComponent;
     return {
         setters:[
@@ -19,22 +19,27 @@ System.register(['@angular/core', '../auth/auth.service'], function(exports_1, c
             },
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
+            },
+            function (projectAdd_component_js_1_1) {
+                projectAdd_component_js_1 = projectAdd_component_js_1_1;
             }],
         execute: function() {
             NavComponent = (function () {
-                function NavComponent(auth) {
+                function NavComponent(auth, add) {
                     this.auth = auth;
+                    this.add = add;
                 }
                 NavComponent = __decorate([
                     core_1.Component({
                         selector: 'nav',
                         templateUrl: './client/app/components/nav/nav.html',
                         styleUrls: ['./client/app/components/nav/nav.css'],
-                        providers: [auth_service_1.AuthService]
+                        providers: [auth_service_1.AuthService, projectAdd_component_js_1.ProjectAddComponent]
                     }), 
-                    __metadata('design:paramtypes', [auth_service_1.AuthService])
+                    __metadata('design:paramtypes', [auth_service_1.AuthService, (typeof (_a = typeof projectAdd_component_js_1.ProjectAddComponent !== 'undefined' && projectAdd_component_js_1.ProjectAddComponent) === 'function' && _a) || Object])
                 ], NavComponent);
                 return NavComponent;
+                var _a;
             }());
             exports_1("NavComponent", NavComponent);
         }
