@@ -5,7 +5,7 @@ const Comment = require('./commentSchema.js');
 module.exports = {
   addCommentToProject: (req, res, next) => {
     const projectId = req.params.projectId;
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     const comment = req.body.comment;
     Comment.create({comment: comment})
       .then((comment) => {
@@ -33,7 +33,7 @@ module.exports = {
 
   removeComment: (req, res, next) => {
     //Needs auth check
-    const authId = req.sub.id;
+    const authId = req.user.sub;
     const id = req.params.commentId;
     Comment.findById(id)
       .then((comment) => {

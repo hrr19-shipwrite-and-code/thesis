@@ -56,5 +56,5 @@ module.exports = function (app, express) {
   //Like routes
   app.post('/api/like/project/:projectId', authCheck, likeController.likeProject);
   //Once Auth will get GET
-  app.post('/api/like/user/:projectId', authCheck, likeController.doesUserLike)
+  app.get('/api/like/user/:projectId', authCheck, likeController.doesUserLike)
 };

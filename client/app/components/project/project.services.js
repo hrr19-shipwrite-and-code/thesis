@@ -51,6 +51,10 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                         { name: 'Redux' }
                     ];
                 };
+                ProjectService.prototype.doesUserLike = function (id) {
+                    return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
+                        .map(function (res) { return res.json(); });
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])

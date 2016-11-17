@@ -31,6 +31,11 @@ export class ProjectService {
     ]
   }
 
+  doesUserLike(id) {
+    return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
+      .map(res => res.json())
+  }
+
   // getProject(id){
   //   return {
   //     "id": 1,

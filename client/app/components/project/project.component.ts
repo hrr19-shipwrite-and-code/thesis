@@ -12,7 +12,8 @@ import { AuthService } from '../auth/auth.service';
 })
 
 export class ProjectComponent {
-  color = 'blue';
+  color = '#888B8D';
+  like = { color: this.color};
   project: Object;
   private sub: any;
   id: String;
@@ -26,15 +27,27 @@ export class ProjectComponent {
       this.id = params['id'];
     });
     this.getProject(this.id);
+    this.doesUserLike(this.id);
   }
 
   //Service function to get the project by the route params Id
   getProject(id) {
     this.projectService.getProject(id)
-    .subscribe(
-      data => this.project = data,
-      err => this.error = true
-    )
+      .subscribe(
+        data => this.project = data,
+        err => this.error = true
+      )
+  }
+
+  //Checks if the user already likes this project
+  doesUserLike(id) {
+    this.projectService.doesUserLike(id)
+      .subscribe(
+        data => {
+          if (data.like) this.like.color = 'red'
+        },
+        err => err
+      )
   }
 
   //Service for liking/unliking a project
@@ -44,8 +57,10 @@ export class ProjectComponent {
         data => {
           if (data.like) {
             this.project.likes++;
+            this.like.color = 'red';
           } else {
             this.project.likes--;
+            this.like.color = '#888B8D';
           }
         },
         err => this.authService.login()

@@ -32,7 +32,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.projectService = projectService;
                     this.route = route;
                     this.authService = authService;
-                    this.color = 'blue';
+                    this.color = '#888B8D';
+                    this.like = { color: this.color };
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -41,12 +42,22 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.id = params['id'];
                     });
                     this.getProject(this.id);
+                    this.doesUserLike(this.id);
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
                     var _this = this;
                     this.projectService.getProject(id)
                         .subscribe(function (data) { return _this.project = data; }, function (err) { return _this.error = true; });
+                };
+                //Checks if the user already likes this project
+                ProjectComponent.prototype.doesUserLike = function (id) {
+                    var _this = this;
+                    this.projectService.doesUserLike(id)
+                        .subscribe(function (data) {
+                        if (data.like)
+                            _this.like.color = 'red';
+                    }, function (err) { return err; });
                 };
                 //Service for liking/unliking a project
                 ProjectComponent.prototype.likeProject = function (id) {
@@ -55,9 +66,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         .subscribe(function (data) {
                         if (data.like) {
                             _this.project.likes++;
+                            _this.like.color = 'red';
                         }
                         else {
                             _this.project.likes--;
+                            _this.like.color = '#888B8D';
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
