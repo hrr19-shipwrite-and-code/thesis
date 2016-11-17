@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {tokenNotExpired} from 'angular2-jwt';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 
@@ -9,15 +9,13 @@ declare var Auth0Lock: any;
 @Injectable()
 export class AuthService {
   options = {
-    socialButtonStyle: 'big',
     additionalSignUpFields: [{
-      name: "Name",
-      placeholder: "enter your full name",
-      // The following properties are optional
-      icon: ""
+      name: "name",
+      placeholder: "Enter full name",
     }]
   }
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
+
 
   //Store profile object in auth class
 
@@ -41,7 +39,9 @@ export class AuthService {
   };
 
  findOrCreateUser(profile) {
-   this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile))
+   let headers = new Headers({ 'Content-Type': 'application/json' });
+   let options = new RequestOptions({ headers: headers });
+   this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
     .map(res => res._body)
     .subscribe(
       data => localStorage.setItem('url', data)
