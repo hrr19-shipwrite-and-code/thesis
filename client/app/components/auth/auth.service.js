@@ -1,4 +1,4 @@
-System.register(['@angular/core', 'angular2-jwt'], function(exports_1, context_1) {
+System.register(['@angular/core', 'angular2-jwt', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', 'angular2-jwt'], function(exports_1, context_1
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, angular2_jwt_1;
+    var core_1, angular2_jwt_1, angular2_jwt_2;
     var AuthService;
     return {
         setters:[
@@ -19,16 +19,46 @@ System.register(['@angular/core', 'angular2-jwt'], function(exports_1, context_1
             },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
-            }],
+                angular2_jwt_2 = angular2_jwt_1_1;
+            },
+            function (_1) {}],
         execute: function() {
             AuthService = (function () {
-                function AuthService() {
-                    this.lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com');
-                    // Add callback for lock `authenticated` event
+                //Store profile object in auth class
+                function AuthService(authHttp) {
+                    var _this = this;
+                    this.authHttp = authHttp;
+                    this.options = {
+                        socialButtonStyle: 'big',
+                        additionalSignUpFields: [{
+                                name: "Name",
+                                placeholder: "enter your full name",
+                                // The following properties are optional
+                                icon: ""
+                            }]
+                    };
+                    this.lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
+                    // Add callback for the Lock `authenticated` event
                     this.lock.on("authenticated", function (authResult) {
                         localStorage.setItem('id_token', authResult.idToken);
+                        // Fetch profile information
+                        _this.lock.getProfile(authResult.idToken, function (error, profile) {
+                            if (error) {
+                                // Handle error
+                                alert(error);
+                                return;
+                            }
+                            console.log(profile);
+                            _this.findOrCreateUser(profile);
+                        });
                     });
                 }
+                ;
+                AuthService.prototype.findOrCreateUser = function (profile) {
+                    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile))
+                        .map(function (res) { return res._body; })
+                        .subscribe(function (data) { return localStorage.setItem('url', data); });
+                };
                 AuthService.prototype.login = function () {
                     this.lock.show(function (error, profile, id_token) {
                         if (error) {
@@ -41,16 +71,19 @@ System.register(['@angular/core', 'angular2-jwt'], function(exports_1, context_1
                     console.log(this.authenticated());
                 };
                 AuthService.prototype.logout = function () {
-                    //  localStorage.removeItem('profile');
                     localStorage.removeItem('id_token');
+                    localStorage.removeItem('url');
                 };
                 AuthService.prototype.authenticated = function () {
                     return angular2_jwt_1.tokenNotExpired();
                 };
                 ;
+                AuthService.prototype.checkUrl = function () {
+                    return localStorage.getItem('url');
+                };
                 AuthService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])
                 ], AuthService);
                 return AuthService;
             }());

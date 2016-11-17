@@ -23,6 +23,11 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
         execute: function() {
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
+                    // homeService.getProjects()
+                    //   .subscribe(
+                    //     data => this.projects = data,
+                    //     error => alert(error)
+                    //   )
                     this.projects = homeService.getProjects();
                 }
                 HomeComponent = __decorate([

@@ -4,10 +4,12 @@ import { FormsModule }   from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpModule } from '@angular/http';
 
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
+import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
@@ -23,16 +25,18 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
 
 
 @NgModule({
-  imports:      [ 
-    BrowserModule, 
+  imports:      [
+    BrowserModule,
     AppRoutingModule,
+    HttpModule,
     FormsModule
     ],
-  declarations: [ 
-    AppComponent, 
+  declarations: [
+    AppComponent,
     HomeComponent,
     NavComponent,
     ProfileComponent,
+    ProjectComponent,
     BrowseComponent,
     ProjectAddComponent,
 

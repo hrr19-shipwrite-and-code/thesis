@@ -1,0 +1,164 @@
+/* A couple of utility classes for re-use */
+.horizontal-center {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
+  -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
+  box-shadow: 0 5px 6px -6px #bdc3c7;
+}
+
+.container {
+  color: #444444;
+}
+
+/* whole card */
+.main-card {
+  width: 75vw;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+
+  display: inline-block;
+}
+
+/* header section */
+
+.header {
+  min-width: 40vw;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  margin-bottom: 10px;
+
+  color: #444444;
+}
+
+.title {
+  margin-bottom: 3px;
+}
+
+.subhead {
+  font-size: 0.9em;
+}
+
+.user-name, .user-name:visited {
+  color: #444444;
+  text-decoration: none;
+}
+
+.user-name:hover, .user-name:focus {
+  color: salmon;
+}
+
+.date {
+  color: #888B8D;
+}
+
+/* main content */
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* main image */
+
+.main-img-viewport {
+  min-width: 50vw;
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+.main-img {
+  width: 100%;
+}
+
+/* Info sidebar */
+.info {
+  /*display: flex;
+  flex-direction: column;
+  justify-content: space-around;*/
+
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  /*border: 1px solid black;*/
+}
+
+.tech {
+  color: #888B8D;
+  font-size: 0.9em;
+}
+
+/* Icons and Like/View data */
+.social {
+  color: #888B8D;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.social > p {
+  margin-right: 20px;
+}
+
+.social .fa {
+  font-size: 1.3em;
+  margin-right: 5px;
+}
+
+.fa-heart {
+  cursor: pointer;
+}
+
+hr {
+  width: 100%;
+  height: 2px;
+
+  border: none;
+  background-color: #F4F4F4;
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* Kind of backwards, but this media query handles the screen being larger
+(defaults above are for smaller screens)
+TODO: refactor to be the opposite, more intuitive approach
+*/
+
+@media screen and (min-width: 1000px) {
+    .main-card {
+        background-color: white;
+    }
+
+    .main-img-viewport {
+      max-width: 50vw;
+      max-height: 70vh;
+      margin-left: 20px;
+    }
+
+    /*.main-img {
+      width: 100%
+    }*/
+
+    .main-content {
+      flex-wrap: nowrap;
+    }
+
+    .info {
+      margin-left: 20px;
+      margin-right: 10px;
+      margin-top: 25px;
+    }
+}

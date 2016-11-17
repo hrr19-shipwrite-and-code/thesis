@@ -1,13 +1,47 @@
-System.register([], function(exports_1, context_1) {
+System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var angular2_jwt_1, core_1;
     var ProfileService;
     return {
-        setters:[],
+        setters:[
+            function (angular2_jwt_1_1) {
+                angular2_jwt_1 = angular2_jwt_1_1;
+            },
+            function (_1) {},
+            function (core_1_1) {
+                core_1 = core_1_1;
+            }],
         execute: function() {
             ProfileService = (function () {
-                function ProfileService() {
+                function ProfileService(authHttp) {
+                    this.authHttp = authHttp;
                 }
+                ProfileService.prototype.getProfileInfo = function (url, profileInfo) {
+                    this.authHttp.get('http://localhost:1337/api/profile/' + url)
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) {
+                        profileInfo.picture = data.picture;
+                        profileInfo.name = data.name;
+                        profileInfo.location = data.location;
+                        profileInfo.bio = data.bio;
+                        profileInfo.hire = data.hire;
+                        profileInfo.type = data.type;
+                        profileInfo.tech = data.Teches;
+                        profileInfo.team = data.Team;
+                        profileInfo.member = data.Member;
+                        console.log(data);
+                    });
+                };
                 ProfileService.prototype.getProjects = function () {
                     return [
                         { projectName: 'Some Project Name', userName: 'Jacob', views: 0, imgUrl: 'http://blog.teamtreehouse.com/wp-content/uploads/2013/10/test.png' },
@@ -21,6 +55,10 @@ System.register([], function(exports_1, context_1) {
                         { projectName: 'Some Project Name', userName: 'Jacob', views: 0, imgUrl: 'https://daks2k3a4ib2z.cloudfront.net/img/site-placeholder@2x.png' }
                     ];
                 };
+                ProfileService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                ], ProfileService);
                 return ProfileService;
             }());
             exports_1("ProfileService", ProfileService);

@@ -1,0 +1,45 @@
+<div *ngIf="project" class="container horizontal-center">
+
+  <div class="main-card shadow">
+      <!-- Header -->
+      <div class='header'>
+        <h3 class='title'>{{project.title}}</h3>
+        <p class='subhead'>
+          <!-- Attatch the project.Profile.url when your profile has it!! -->
+          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
+        </p>
+      </div>
+
+
+      <div class="main-content">
+        <!-- Main Image -->
+        <div class="main-img-viewport">
+          <img src={{project.Images[0]}} alt="main-img" class='main-img' />
+        </div>
+
+        <!-- Info -->
+        <div class="info">
+          <p class='description'>
+            {{project.description}}
+          </p>
+
+          <hr>
+          <div class="social">
+            <p class='likes'> <i class="fa fa-heart" aria-hidden="true"></i> {{project.likes}}</p>
+            <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{project.views}}</p>
+          </div>
+
+          <hr>
+
+          <p *ngIf="project.Teches.length > 0" class='tech'>
+            {{project.Teches[0].name}}
+          </p>
+
+        </div> <!-- Info -->
+      </div> <!-- main-content -->
+
+  </div> <!-- main-card -->
+</div>
+<div *ngIf="error">
+  No such project!
+</div>

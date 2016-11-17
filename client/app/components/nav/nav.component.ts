@@ -12,4 +12,5 @@ import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
 export class NavComponent {
   constructor(private auth: AuthService, private add: ProjectAddComponent) {}
 
+  url;
 }

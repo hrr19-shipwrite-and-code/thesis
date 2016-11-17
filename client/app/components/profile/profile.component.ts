@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProfileService } from './profile.services.js';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'profile',
@@ -10,7 +11,16 @@ import { ProfileService } from './profile.services.js';
 
 export class ProfileComponent {
   projects;
-  constructor(profileService: ProfileService) {
+  profileInfo = {tech: [], team: [], member: []};
+
+  constructor(private profileService: ProfileService, private route: ActivatedRoute) {
     this.projects = profileService.getProjects();
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
+    this.route.params.subscribe((params) => {
+      this.profileService.getProfileInfo(params['id'], this.profileInfo)
+    })
   }
 }

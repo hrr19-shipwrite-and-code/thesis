@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/platform-browser', '@angular/forms', 'angular2-jwt', './app-routing.module', '../nav/nav.component.js', '../profile/profile.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js', '../../directives/new-project-model.directive.js', '../projectAdd/projectAdd.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/platform-browser', '@angular/forms', 'angular2-jwt', './app-routing.module', '@angular/http', '../nav/nav.component.js', '../profile/profile.component.js', '../project/project.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js', '../../directives/new-project-model.directive.js', '../projectAdd/projectAdd.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, platform_browser_1, forms_1, angular2_jwt_1, app_routing_module_1, nav_component_js_1, profile_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, projectAdd_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1, new_project_model_directive_js_1, projectAdd_services_js_1;
+    var core_1, platform_browser_1, forms_1, angular2_jwt_1, app_routing_module_1, http_1, nav_component_js_1, profile_component_js_1, project_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, projectAdd_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1, new_project_model_directive_js_1, projectAdd_services_js_1;
     var AppModule;
     return {
         setters:[
@@ -29,11 +29,17 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
             function (app_routing_module_1_1) {
                 app_routing_module_1 = app_routing_module_1_1;
             },
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
             function (nav_component_js_1_1) {
                 nav_component_js_1 = nav_component_js_1_1;
             },
             function (profile_component_js_1_1) {
                 profile_component_js_1 = profile_component_js_1_1;
+            },
+            function (project_component_js_1_1) {
+                project_component_js_1 = project_component_js_1_1;
             },
             function (browse_component_js_1_1) {
                 browse_component_js_1 = browse_component_js_1_1;
@@ -71,6 +77,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
                         imports: [
                             platform_browser_1.BrowserModule,
                             app_routing_module_1.AppRoutingModule,
+                            http_1.HttpModule,
                             forms_1.FormsModule
                         ],
                         declarations: [
@@ -78,6 +85,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
                             home_component_js_1.HomeComponent,
                             nav_component_js_1.NavComponent,
                             profile_component_js_1.ProfileComponent,
+                            project_component_js_1.ProjectComponent,
                             browse_component_js_1.BrowseComponent,
                             projectAdd_component_js_1.ProjectAddComponent,
                             project_thumbnail_component_js_1.ProjectThumbnailComponent,

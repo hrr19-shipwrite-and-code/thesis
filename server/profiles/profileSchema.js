@@ -21,7 +21,7 @@ const Profile = db.define('Profile', {
   picture: Sequelize.STRING,
   authId: {
     type: Sequelize.STRING,
-    allowNull: false,
+    //allowNull: false,
     unique: true,
     noUpdate: true
   },

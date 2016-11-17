@@ -1,6 +1,15 @@
 <html>
   <head>
     <title>sushi</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
+    <script src="https://cdn.auth0.com/js/lock/10.5/lock.min.js"></script>
+  </head>
+  <body>
+    <base href="/">
+    <sushi>Loading...</sushi>
+
+    <link href="index.css" rel="stylesheet">
+    <link rel="stylesheet" href="./client/app/assets/style.css">
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
@@ -9,19 +18,10 @@
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="https://cdn.auth0.com/js/lock/10.5/lock.min.js"></script>
     <script src="./systemjs.config.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
-    <link href="index.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="./client/app/assets/style.css">
     <script>
       System.import('app')
             .then(null, console.error.bind(console));
     </script>
-  </head>
-  <body>
-    <base href="/">
-    <sushi>Loading...</sushi>
   </body>
 </html>
