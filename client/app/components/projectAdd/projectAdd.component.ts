@@ -12,12 +12,13 @@ import { ProjectAddService } from './projectAdd.services.js';
 })
 
 export class ProjectAddComponent {
-  constructor(private post: ProjectAddService, private router: Router) {
+  constructor(private projectService: ProjectAddService, private router: Router) {
 
   }
 
   addProject(data) {
-    this.post.postProject(data, this.edit)
+    this.projectService.createProject(data);
+    //console.log(data);
   }
 
   edit(data) {
