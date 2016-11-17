@@ -1,11 +1,11 @@
 
 <form #form="ngForm" (ngSubmit)="addProject(form.value)">
   <h2>Add Project</h2>
-  <label>Title:</label>
-  <input type="text" name="title" ngModel>
+  <span>*</span><label>Title:</label>
+  <input type="text" name="title" ngModel required>
   <br>
-  <label>Description:</label>
-  <textarea rows="4" cols="50" name="description" ngModel></textarea>
+  <span>*</span><label>Description:</label>
+  <textarea rows="4" cols="50" name="description" ngModel required></textarea>
   <br>
   <label>Github:</label>
   <input type="text" name="github" ngModel>
@@ -13,8 +13,8 @@
   <label>Deploy:</label>
   <input type="text" name="deploy" ngModel>
   <br>
-  <label>Status:</label>
-  <select name="status" ngModel>
+  <span>*</span><label>Status:</label>
+  <select name="status" ngModel required>
     <option value="Completed">Completed</option>
     <option value="In Progress">In Progress</option>
     <option value="Abandonded">Abandonded</option>
