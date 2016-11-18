@@ -40,20 +40,9 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                     };
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
-                    this.projectService.createProject(data);
-                    this.router.navigateByUrl('/profile/' + this.userInfo);
-                };
-                ProjectAddComponent.prototype.handleUpload = function (data) {
-                    if (data && data.response) {
-                        data = data.response;
-                        this.uploadFile = data;
-                    }
-                };
-                ProjectAddComponent.prototype.fileOverBase = function (e) {
-                    this.hasBaseDropZoneOver = e;
-                };
-                ProjectAddComponent.prototype.edit = function (data) {
-                    // this.router.navigate("/");
+                    var _this = this;
+                    this.projectService.createProject(data)
+                        .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
                 };
                 ProjectAddComponent = __decorate([
                     core_1.Component({

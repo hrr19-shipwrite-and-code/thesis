@@ -2,12 +2,11 @@ const Profile = require('../profiles/profileSchema.js');
 const Project = require('./projectSchema.js');
 const Comment = require('../comments/commentSchema');
 const Like = require('../likes/likeSchema.js');
-const multer = require('multer');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
-const sequelize = require('sequelize');
 const fs = require('fs');
+const fse = require('fs-extra');
 
 module.exports = {
 
@@ -31,7 +30,7 @@ module.exports = {
               console.log(project);
               mkdirp('./client/uploads/' + project.id, (err) => {
                 if (err) console.log(err);
-                res.sendStatus(200);
+                res.json({id: project.id});
               });
             });
         })
@@ -40,22 +39,28 @@ module.exports = {
         });
   },
 
+  //Uncomment the auth stuff when access to edit profile
   deleteProject: (req, res, next) => {
-    const id = req.body.id;
-    const authId = req.user.sub;
-    Profile.findOne({where: {authId: authId}})
-      .then((user) => {
-        Project.destroy({where: {id: id, ProfileId: user.id}})
-          .then(() => {
-            res.sendStatus(200);
-          })
-          .catch(() => {
-            res.sendStatus(404);
-          });
-      })
-      .catch((err) => {
-        res.sendStatus(401);
-      })
+    const id = req.params.projectId;
+    const user = req.body.userId;
+    //const authId = req.user.sub;
+    fse.remove('client/uploads/' + id, (err) => {
+      console.log(err)
+      //Profile.findOne({where: {authId: authId}})
+      Profile.findOne({where: {id: user}})
+        .then((user) => {
+          Project.destroy({where: {id: id, ProfileId: user.id}})
+            .then(() => {
+              res.sendStatus(200);
+            })
+            .catch(() => {
+              res.sendStatus(404);
+            });
+        })
+        .catch((err) => {
+          res.sendStatus(401);
+        })
+    })
   },
 
   editProject: (req, res, next) => {

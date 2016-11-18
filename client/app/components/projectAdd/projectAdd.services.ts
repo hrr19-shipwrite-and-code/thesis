@@ -12,11 +12,7 @@ export class ProjectAddService {
    let options = new RequestOptions({ headers: headers });
    const url = 'http://localhost:1337/api/project/create'
    return this.authHttp.post(url, JSON.stringify(project), options)
-    .map(res => res)
-    .subscribe(
-      data => data,
-      err => console.log(err)
-    )
+    .map(res => res.json())
   }
 
 }

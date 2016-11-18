@@ -27,23 +27,22 @@ export class ProjectAddComponent {
   constructor(private projectService: ProjectAddService, private router: Router) {}
 
   addProject(data) {
-    this.projectService.createProject(data);
-    this.router.navigateByUrl('/profile/' + this.userInfo)
+    this.projectService.createProject(data)
+      .subscribe(
+        data => this.router.navigateByUrl('/project/' + data.id),
+        err => console.log(err)
+      )
   }
 
+  //Move to edit project when completed
+  // handleUpload(data): void {
+  //   if (data && data.response) {
+  //     data = data.response;
+  //     this.uploadFile = data;
+  //   }
+  // }
 
-    handleUpload(data): void {
-    if (data && data.response) {
-      data = data.response;
-      this.uploadFile = data;
-    }
-  }
-
-  fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  edit(data) {
-    // this.router.navigate("/");
-  }
+  // fileOverBase(e:any):void {
+  //   this.hasBaseDropZoneOver = e;
+  // }
 }
