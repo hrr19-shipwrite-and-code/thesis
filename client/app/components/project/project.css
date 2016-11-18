@@ -20,8 +20,10 @@
 .main-card {
   width: 75vw;
   background-color: white;
-  padding: 10px;
+  padding: 30px;
   border-radius: 5px;
+
+  margin-bottom: 40px;
 
   display: inline-block;
 }
@@ -30,7 +32,6 @@
 
 .header {
   min-width: 40vw;
-  padding-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 
@@ -45,15 +46,6 @@
 
 .subhead {
   font-size: 0.9em;
-}
-
-.user-name, .user-name:visited {
-  color: #444444;
-  text-decoration: none;
-}
-
-.user-name:hover, .user-name:focus {
-  color: salmon;
 }
 
 .date {
@@ -121,6 +113,44 @@
   cursor: pointer;
 }
 
+
+/* Comments */
+
+.comments {
+  margin-top: 20px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+form {
+  max-width: 600px;
+}
+
+.btn, .btn:active {
+  background-color: salmon;
+  border: none;
+  outline: none;
+}
+
+.comment-author {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Global Tag Styles */
+
+a, a:visited {
+  color: #444444;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: salmon;
+}
+
 hr {
   width: 100%;
   height: 2px;
@@ -131,6 +161,7 @@ hr {
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
 
 /* Kind of backwards, but this media query handles the screen being larger
 (defaults above are for smaller screens)

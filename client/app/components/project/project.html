@@ -24,19 +24,49 @@
           </p>
 
           <hr>
+
           <div class="social">
             <p class='likes' (click)="likeProject(project.id)"> <i [ngStyle]="like" class="fa fa-heart" aria-hidden="true"></i> {{project.likes}}</p>
             <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{project.views}}</p>
+            <p class='views'> <i class="fa fa-comment" aria-hidden="true"></i> {{project.comments}}</p>
           </div>
 
           <hr>
 
+          <!-- Is the pelling of "Teches" below correct? -->
           <p *ngIf="project.Teches.length > 0" class='tech'>
             {{project.Teches[0].name}}
           </p>
 
         </div> <!-- Info -->
       </div> <!-- main-content -->
+
+      <div class="comments">
+
+        <form class="comment-form">
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Write your comment"  name="comment"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button>
+
+          <!-- not sure how you're loading the data, but this can be the parent div of all the comments -->
+          <div class='comments-list'>
+
+            <!-- Template for each comment -->
+            <div class="single-comment">
+              <hr>
+              <p class='comment-author'>
+                <a href="#">Author Name</a>
+              </p>
+              <p class='comment-body'>
+                Comment body goes here. Commenty comment.
+              </p>
+            </div> <!-- single-comment -->
+
+          </div> <!-- comments-list -->
+        </form>
+
+      </div> <!-- comments -->
 
   </div> <!-- main-card -->
 </div>
