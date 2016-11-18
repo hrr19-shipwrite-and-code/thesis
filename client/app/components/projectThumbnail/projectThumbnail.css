@@ -43,8 +43,11 @@ h4.project-name {
   justify-content: space-around;
 }
 
+.fa {
+  margin-left: 15px;
+}
+
 .likes {
   padding-bottom: 5px;
-  margin-right: 15px;
   cursor: pointer;
 }

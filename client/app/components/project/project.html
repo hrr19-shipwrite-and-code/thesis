@@ -24,19 +24,39 @@
           </p>
 
           <hr>
+
           <div class="social">
             <p class='likes'> <i class="fa fa-heart" aria-hidden="true"></i> {{project.likes}}</p>
             <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{project.views}}</p>
+            <p class='views'> <i class="fa fa-comment" aria-hidden="true"></i> {{project.comments}}</p>
           </div>
 
           <hr>
 
+          <!-- Is the pelling of "Teches" below correct? -->
           <p *ngIf="project.Teches.length > 0" class='tech'>
             {{project.Teches[0].name}}
           </p>
 
         </div> <!-- Info -->
       </div> <!-- main-content -->
+
+      <div class="comments horizontal-center">
+
+        <form class="comment-form">
+          <div class="form-group">
+            <textarea class="form-control" rows="3" placeholder="Write your comment"  name="comment"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button>
+
+          <div class="single-comment">
+            <p>
+              <a href="#">Author Name</a>
+            </p>
+          </div>
+        </form>
+
+      </div> <!-- comments -->
 
   </div> <!-- main-card -->
 </div>

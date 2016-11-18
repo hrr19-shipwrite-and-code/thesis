@@ -23,6 +23,8 @@
   padding: 10px;
   border-radius: 5px;
 
+  margin-bottom: 40px;
+
   display: inline-block;
 }
 
@@ -130,6 +132,22 @@ hr {
 
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+/* Comments */
+
+.comments {
+  margin-top: 20px;
+}
+
+form {
+  width: 90%;
+}
+
+.btn, .btn:active {
+  background-color: salmon;
+  border: none;
+  outline: none;
 }
 
 /* Kind of backwards, but this media query handles the screen being larger
