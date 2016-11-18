@@ -58,6 +58,9 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                 ProjectService.prototype.addTech = function (tech) {
                     console.log(tech); //{name: "tech here"}
                 };
+                ProjectService.prototype.editDescription = function (description) {
+                    console.log(description); //string
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])

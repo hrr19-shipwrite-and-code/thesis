@@ -14,17 +14,30 @@
         <!-- Main Image -->
         <div class="main-img-viewport">
           <img src={{project.thumbnail}} alt="main-img" class='main-img' />
-          <span *ngIf="isOwner(project.Profile.authId)">Add Image</span>
+          <div *ngIf="isOwner(project.Profile.authId)">
+            <span>Add Image</span>
+          </div>
         </div>
         
 
         <!-- Info -->
         <div class="info">
           <div>
-            <p class='description'>
+            <p class='description' id="project-description">
               {{project.description}}
             </p>
-            <span *ngIf="isOwner(project.Profile.authId)">Edit Description</span>
+
+            <!--Edit Discription-->
+            <div *ngIf="isOwner(project.Profile.authId)">
+              <div id="project-description-input" class="display-none">
+                <form #editDescriptionInput="ngForm" (ngSubmit)="editDescriptionPost($event, editDescriptionInput.value)">
+                  <input type="text" name="description" [(ngModel)]="project.description">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+              <span (click)="editDescription()">Edit Description</span>
+            </div>
+
           </div>
           <hr>
 

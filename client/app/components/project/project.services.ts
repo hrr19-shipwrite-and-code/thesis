@@ -40,6 +40,10 @@ export class ProjectService {
     console.log(tech) //{name: "tech here"}
   }
 
+  editDescription(description) {
+    console.log(description) //string
+  }
+
   // getProject(id){
   //   return {
   //     "id": 1,

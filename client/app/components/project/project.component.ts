@@ -75,6 +75,7 @@ export class ProjectComponent {
     return currentUser === projectOwner ? true : false;
   }
 
+  //Add tech to project
   addTech(event, tech) {
     event.preventDefault();
     
@@ -91,6 +92,21 @@ export class ProjectComponent {
         return;
       }
     }
+  }
+
+
+  editDescription(){
+    document.getElementById('project-description').className += ' display-none'
+    document.getElementById('project-description-input').className = ''
+  }
+
+  editDescriptionPost(event, input){
+    event.preventDefault();
+    this.project.descripiton = input.descripiton;
+    document.getElementById('project-description').className = 'description';
+    document.getElementById('project-description-input').className = 'display-none';
+    
+    this.projectService.editDescription(input.description)
   }
 
 }
