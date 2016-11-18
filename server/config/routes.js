@@ -3,16 +3,8 @@ const projectController = require('../projects/projectController.js');
 const techController = require('../tech/techController.js');
 const likeController = require('../likes/likeController.js');
 const commentController = require('../comments/commentController.js');
-// const jwt = require('express-jwt');
-// const auth = require('../../secret/auth.js');
 const middleware = require('./middleware.js');
-//const multer = require('multer');
 
-// //Checks the token for authentication when attatched to route
-// const authCheck = jwt({
-//   secret: new Buffer(auth.clientSecret, 'base64'),
-//   audience: auth.clientId
-// });
 
 module.exports = function (app, express) {
 
@@ -44,7 +36,8 @@ module.exports = function (app, express) {
   app.get('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', middleware.authCheck, projectController.editProject);
-  app.delete('/api/project/delete', middleware.authCheck, projectController.deleteProject);
+  //When done toying add auth!
+  app.delete('/api/project/delete/:projectId', projectController.deleteProject);
 
   //Project Images
   app.post('/api/project/upload/:projectId', middleware.authCheck, middleware.uploadProjectPicture.any(), projectController.uploadProjectImage);
