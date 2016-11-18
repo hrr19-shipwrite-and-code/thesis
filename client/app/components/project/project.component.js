@@ -106,16 +106,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     document.getElementById('project-description').className = 'description';
                     document.getElementById('project-description-input').className = 'display-none';
                     this.projectService.editDescription(input.description);
-                    //Post comment and add comment to view
-                    postComment(comment);
-                    {
-                        console.log(comment, this.id);
-                        this.projectService.postComment(comment, this.id)
-                            .subscribe(function (data) {
-                            console.log(data);
-                        });
-                        this.comment = '';
-                    }
+                };
+                //Post comment and add comment to view
+                ProjectComponent.prototype.postComment = function (comment) {
+                    this.projectService.postComment(comment, this.id)
+                        .subscribe(function (data) {
+                        console.log(data);
+                    });
+                    this.newComment = '';
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

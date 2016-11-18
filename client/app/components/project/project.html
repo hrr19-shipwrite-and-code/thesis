@@ -72,7 +72,7 @@
 
         <form #form="ngForm" (ngSubmit)="postComment(form.value)" class="comment-form">
           <div class="form-group">
-            <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="comment" required></textarea>
+            <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="newComment" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
 
@@ -80,13 +80,13 @@
           <div class='comments-list'>
 
             <!-- Template for each comment -->
-            <div class="single-comment">
+            <div class="single-comment" *ngFor="let comment of project.Comments">
               <hr>
               <p class='comment-author'>
-                <a href="#">Author Name</a>
+                <a routerLink="/profile/{{comment.Profile.url}}">{{comment.Profile.name}}</a>
               </p>
               <p class='comment-body'>
-                Comment body goes here. Commenty comment.
+                {{comment.comment}}
               </p>
             </div> <!-- single-comment -->
 

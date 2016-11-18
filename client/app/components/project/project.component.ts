@@ -18,7 +18,7 @@ export class ProjectComponent {
   private sub: any;
   id: String;
   error: Boolean;
-  comment: '';
+  newComment: '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
   techs;
@@ -108,15 +108,14 @@ export class ProjectComponent {
     document.getElementById('project-description-input').className = 'display-none';
 
     this.projectService.editDescription(input.description)
+  }
 
   //Post comment and add comment to view
   postComment(comment){
-    console.log(comment, this.idg
     this.projectService.postComment(comment, this.id)
       .subscribe( data => {
         console.log(data)
       })
-    this.comment = '';
+    this.newComment = '';
   }
-
 }
