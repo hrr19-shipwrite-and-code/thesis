@@ -25,7 +25,7 @@ module.exports = {
             deploy: req.body.deploy,
             progress: req.body.status,
             contribute: req.body.openSourse,
-            views: 0})
+            })
             .then((project) => {
               console.log(project);
               mkdirp('./client/uploads/' + project.id, (err) => {
