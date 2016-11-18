@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class EditProfileComponent {
 
   userInfo = {};
-  uploadFile: any;
+  picture: any = '';
   options: Object = {
     url: 'http://localhost:1337/api/user/addPicture',
     filterExtensions: true,
@@ -32,6 +32,7 @@ export class EditProfileComponent {
     this.editProfileService.getUserInfo()
       .subscribe( data => {
           this.userInfo = data;
+          this.picture = this.userInfo.picture
           console.log(data)
         });
   }
@@ -49,7 +50,20 @@ export class EditProfileComponent {
   handleUpload(data): void {
     if (data && data.response) {
       data = data.response;
-      this.uploadFile = data;
     }
+  }
+
+  handleChange(input) {
+    let img = document.createElement("img");
+    img.src = window.URL.createObjectURL(input.files[0]);
+
+    const reader = new FileReader();
+    const that = this;
+
+    reader.addEventListener("load", (event) => {
+      that.picture = event.target.result;
+    }, false);
+
+    reader.readAsDataURL(input.files[0]);
   }
 }

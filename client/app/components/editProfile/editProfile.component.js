@@ -29,6 +29,7 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService = editProfileService;
                     this.router = router;
                     this.userInfo = {};
+                    this.picture = '';
                     this.options = {
                         url: 'http://localhost:1337/api/user/addPicture',
                         filterExtensions: true,
@@ -44,6 +45,7 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService.getUserInfo()
                         .subscribe(function (data) {
                         _this.userInfo = data;
+                        _this.picture = _this.userInfo.picture;
                         console.log(data);
                     });
                 };
@@ -58,8 +60,17 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                 EditProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
                         data = data.response;
-                        this.uploadFile = data;
                     }
+                };
+                EditProfileComponent.prototype.handleChange = function (input) {
+                    var img = document.createElement("img");
+                    img.src = window.URL.createObjectURL(input.files[0]);
+                    var reader = new FileReader();
+                    var that = this;
+                    reader.addEventListener("load", function (event) {
+                        that.picture = event.target.result;
+                    }, false);
+                    reader.readAsDataURL(input.files[0]);
                 };
                 EditProfileComponent = __decorate([
                     core_1.Component({
