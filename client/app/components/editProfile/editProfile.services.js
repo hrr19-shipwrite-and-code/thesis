@@ -26,8 +26,9 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
             }],
         execute: function() {
             EditProfileService = (function () {
-                function EditProfileService(authHttp) {
+                function EditProfileService(authHttp, http) {
                     this.authHttp = authHttp;
+                    this.http = http;
                 }
                 EditProfileService.prototype.getUserInfo = function () {
                     return this.authHttp.get('http://localhost:1337/api/editUserInfo')
@@ -41,7 +42,7 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                 };
                 EditProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
                 ], EditProfileService);
                 return EditProfileService;
             }());

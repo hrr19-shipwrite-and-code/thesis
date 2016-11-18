@@ -6,7 +6,7 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class EditProfileService {
-  constructor(private authHttp: AuthHttp) {}
+  constructor(private authHttp: AuthHttp, private http: Http) {}
 
   getUserInfo(){
     return this.authHttp.get('http://localhost:1337/api/editUserInfo')

@@ -8,12 +8,23 @@
     <form #form="ngForm" (ngSubmit)="editUserInfo(form.value)">
       <div class="form-group">
         <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your full name" [(ngModel)]="userInfo.name" name="name">
+        <input type="text" class="form-control" placeholder="Enter your full name" [(ngModel)]="userInfo.name" name="name" required>
       </div>
 
       <div class="form-group">
         <p class='email-label'>URL:</p>
-        <input type="text" class="form-control" placeholder="Enter new URL" [(ngModel)]="userInfo.url" name="url">
+        <input type="text" class="form-control" placeholder="Enter new URL" [(ngModel)]="userInfo.url" name="url" required>
+      </div>
+
+      <div class="form-group">
+        <p class='email-label'>Profile Picture:</p>
+        <img src={{picture}} />
+        <form>
+          <input type="file"
+            ngFileSelect
+            [options]="options"
+            (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
+        </form>
       </div>
 
       <div class="form-group">
