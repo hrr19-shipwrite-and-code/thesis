@@ -43,6 +43,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     });
                     this.getProject(this.id);
                     this.doesUserLike(this.id);
+                    this.techs = this.projectService.getTech();
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -74,11 +75,23 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
-                ProjectComponent.prototype.isOwner = function () {
-                    console.log(this.project.Profile);
-                    // this.project.Profile.unique
-                    var test = localStorage.getItem('id_token');
-                    console.log(test);
+                //Verify current user is owner of the project
+                ProjectComponent.prototype.isOwner = function (projectOwner) {
+                    var currentUser = localStorage.getItem('authId');
+                    return currentUser === projectOwner ? true : false;
+                };
+                ProjectComponent.prototype.addTech = function (event, tech) {
+                    event.preventDefault();
+                    for (var i = 0; i <= this.project.Teches.length; i++) {
+                        if (i === this.project.Teches.length) {
+                            this.project.Teches.push({
+                                name: tech.tech
+                            });
+                        }
+                        if (this.project.Teches[i].name === tech.tech) {
+                            return;
+                        }
+                    }
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

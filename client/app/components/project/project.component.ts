@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ProjectService } from './project.services.js';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -20,6 +20,7 @@ export class ProjectComponent {
   error: Boolean;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
+  techs;
 
   //Runs this function everytime route accessed
   ngOnInit () {
@@ -28,6 +29,7 @@ export class ProjectComponent {
     });
     this.getProject(this.id);
     this.doesUserLike(this.id);
+    this.techs = this.projectService.getTech()
   }
 
   //Service function to get the project by the route params Id
@@ -67,11 +69,26 @@ export class ProjectComponent {
       )
   }
 
-  isOwner(){ 
-    console.log(this.project.Profile)
-    // this.project.Profile.unique
-    let test = localStorage.getItem('id_token')
-    console.log(test)
+  //Verify current user is owner of the project
+  isOwner(projectOwner){ 
+    let currentUser = localStorage.getItem('authId')
+    return currentUser === projectOwner ? true : false;
+  }
+
+  addTech(event, tech) {
+    event.preventDefault();
+    
+    for(let i = 0; i <= this.project.Teches.length; i++){
+      if(i === this.project.Teches.length) {
+        this.project.Teches.push({
+          name: tech.tech
+        })
+      }
+
+      if(this.project.Teches[i].name === tech.tech) {
+        return;
+      }
+    }
   }
 
 }
