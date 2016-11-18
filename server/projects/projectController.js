@@ -89,7 +89,7 @@ module.exports = {
       include: [
         {model: Profile, attributes: ['name', 'url', 'authId']},
         {model: Image},
-        {model: Comment, attributes:['comment', 'createdAt'],
+        {model: Comment, attributes:['id', 'comment', 'createdAt'],
           include: [
             {model: Profile, attributes: ['name', 'url']}, ]
         },

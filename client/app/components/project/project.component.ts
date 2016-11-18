@@ -123,4 +123,12 @@ export class ProjectComponent {
   checkUser(url) {
     return localStorage.getItem('url') === url;
   }
+
+  //author of comment can delete their comment
+  deleteComment(event) {
+    this.projectService.deleteComment(event.target.id)
+      .subscribe( data => {
+        console.log(data);
+      })
+  }
 }

@@ -50,4 +50,9 @@ export class ProjectService {
     return this.authHttp.post('http://localhost:1337/api/comment/create/' + projectId, JSON.stringify(comment), options)
       .map(res => res.json());
   }
+
+  deleteComment(commentId) {
+    return this.authHttp.delete('http://localhost:1337/api/comment/delete/' + commentId)
+      .map(res => res);
+  }
 }
