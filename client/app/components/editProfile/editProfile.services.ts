@@ -19,11 +19,4 @@ export class EditProfileService {
     return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
       .map(res => res);
   }
-
-  editUserPicture(picture) {
-    // let headers = new Headers({ 'Content-Type': 'multipart/form-data' });
-    // let options = new RequestOptions({ headers: headers });
-    return this.http.post('http://localhost:1337/api/user/addPicture', picture)
-      .map(res => res);
-  }
 }

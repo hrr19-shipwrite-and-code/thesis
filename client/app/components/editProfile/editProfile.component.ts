@@ -14,10 +14,15 @@ export class EditProfileComponent {
 
   userInfo = {};
   uploadFile: any;
-  hasBaseDropZoneOver: boolean = false;
   options: Object = {
-    url: 'http://localhost:1337/api/user/addPicture'
+    url: 'http://localhost:1337/api/user/addPicture',
+    filterExtensions: true,
+    allowedExtensions: ['image/png', 'image/jpg'],
+    calculateSpeed: true,
+    authToken: localStorage.getItem('id_token'),
+    authTokenPrefix: 'Bearer'
   };
+
 
   constructor(private editProfileService: EditProfileService, private router: Router) {
     this.getUserInfo();
@@ -47,9 +52,4 @@ export class EditProfileComponent {
       this.uploadFile = data;
     }
   }
-
-  fileOverBase(e:any):void {
-    this.hasBaseDropZoneOver = e;
-  }
-}
 }

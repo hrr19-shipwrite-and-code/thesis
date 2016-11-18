@@ -19,7 +19,7 @@ const uploadProfilePicture = multer({
       cb(null, './client/uploads/profile');
     },
     filename: (req, file, cb) => {
-      let ext = 'test';
+      let ext = req.user.sub;
       cb(null, ext);
     }
   })
@@ -37,7 +37,7 @@ module.exports = function (app, express) {
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);
   app.put('/api/team/promoteMember', profileController.promoteMember);
-  app.post('/api/user/addPicture', uploadProfilePicture.any(), profileController.addPicture);
+  app.post('/api/user/addPicture', authCheck, uploadProfilePicture.any(), profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileUrl', profileController.getProfile);
   app.get('/api/editUserInfo', authCheck, profileController.getEditUserInfo);

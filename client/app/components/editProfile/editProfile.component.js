@@ -29,9 +29,13 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService = editProfileService;
                     this.router = router;
                     this.userInfo = {};
-                    this.hasBaseDropZoneOver = false;
                     this.options = {
-                        url: 'http://localhost:1337/api/user/addPicture'
+                        url: 'http://localhost:1337/api/user/addPicture',
+                        filterExtensions: true,
+                        allowedExtensions: ['image/png', 'image/jpg'],
+                        calculateSpeed: true,
+                        authToken: localStorage.getItem('id_token'),
+                        authTokenPrefix: 'Bearer'
                     };
                     this.getUserInfo();
                 }
@@ -56,9 +60,6 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         data = data.response;
                         this.uploadFile = data;
                     }
-                };
-                EditProfileComponent.prototype.fileOverBase = function (e) {
-                    this.hasBaseDropZoneOver = e;
                 };
                 EditProfileComponent = __decorate([
                     core_1.Component({

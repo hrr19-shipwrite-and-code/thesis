@@ -188,9 +188,9 @@ module.exports = {
 
   addPicture: (req, res, next) => {
     //auth should be checked before upload
-    const authId = 1//req.user.sub;
-    const URL = './uploads/profile/profilePhoto-' + authId;
-      Profile.findOne({where: {id: authId}})
+    const authId = req.user.sub
+    const URL = './client/uploads/profile/' + authId;
+      Profile.findOne({where: {authId: authId}})
         .then((profile) => {
           profile.update({ picture: URL})
             .then(() => {
