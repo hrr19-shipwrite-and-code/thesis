@@ -34,6 +34,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.authService = authService;
                     this.color = '#888B8D';
                     this.like = { color: this.color };
+                    this.newComment = '';
+                    this.comments = [];
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -42,6 +44,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.id = params['id'];
                     });
                     this.getProject(this.id);
+                    this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.techs = this.projectService.getTech();
                 };
@@ -118,6 +121,21 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 //check if the comment is by the logged in user
                 ProjectComponent.prototype.checkUser = function (url) {
                     return localStorage.getItem('url') === url;
+                };
+                //author of comment can delete their comment
+                ProjectComponent.prototype.deleteComment = function (event) {
+                    this.projectService.deleteComment(event.target.id)
+                        .subscribe(function (data) {
+                        console.log(data);
+                    });
+                };
+                ProjectComponent.prototype.getComment = function (id) {
+                    var _this = this;
+                    this.projectService.getComment(id)
+                        .subscribe(function (data) {
+                        console.log(data);
+                        _this.comments = data;
+                    });
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

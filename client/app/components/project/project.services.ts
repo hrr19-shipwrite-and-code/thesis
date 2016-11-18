@@ -44,6 +44,11 @@ export class ProjectService {
     console.log(description) //string
   }
 
+  getComment(id) {
+    return this.http.get('http://localhost:1337/api/comment/' + id)
+      .map(res => res.json());
+  }
+
   postComment(comment, projectId) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

@@ -81,7 +81,7 @@
           <div class='comments-list'>
 
             <!-- Template for each comment -->
-            <div class="single-comment" *ngFor="let comment of project.Comments">
+            <div class="single-comment" *ngFor="let comment of comments">
               <hr>
               <p class='comment-author'>
                 <a routerLink="/profile/{{comment.Profile.url}}">{{comment.Profile.name}}</a>

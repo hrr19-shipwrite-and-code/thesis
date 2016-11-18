@@ -18,7 +18,8 @@ export class ProjectComponent {
   private sub: any;
   id: String;
   error: Boolean;
-  newComment: '';
+  newComment = '';
+  comments = [];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
   techs;
@@ -29,6 +30,7 @@ export class ProjectComponent {
       this.id = params['id'];
     });
     this.getProject(this.id);
+    this.getComment(this.id);
     this.doesUserLike(this.id);
     this.techs = this.projectService.getTech()
   }
@@ -129,6 +131,14 @@ export class ProjectComponent {
     this.projectService.deleteComment(event.target.id)
       .subscribe( data => {
         console.log(data);
+      })
+  }
+
+  getComment(id) {
+    this.projectService.getComment(id)
+      .subscribe( data => {
+        console.log(data);
+        this.comments = data;
       })
   }
 }

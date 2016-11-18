@@ -60,5 +60,20 @@ module.exports = {
       .catch((err) => {
         res.sendStatus(404);
       })
+  },
+
+  getCommentByProjectId: (req, res, next) => {
+    const projectId = req.params.projectId
+    Comment.findAll({
+      where:{ProjectId: projectId},
+      include: {model: Profile, attributes: ['picture', 'name', 'url']},
+      order: [['id', 'DESC']]
+    })
+      .then((comments) => {
+        res.json(comments);
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      })
   }
 };
