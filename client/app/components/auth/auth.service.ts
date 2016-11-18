@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {tokenNotExpired} from 'angular2-jwt';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 declare var Auth0Lock: any;
@@ -19,7 +20,7 @@ export class AuthService {
 
   //Store profile object in auth class
 
-  constructor(private authHttp: AuthHttp) {
+  constructor(private authHttp: AuthHttp, private router: Router) {
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
@@ -65,6 +66,7 @@ export class AuthService {
    localStorage.removeItem('id_token');
    localStorage.removeItem('url');
    localStorage.removeItem('authId');
+   this.router.navigateByUrl('/');
  }
 
  authenticated() {
