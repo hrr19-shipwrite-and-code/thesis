@@ -8,6 +8,7 @@ import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
+import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDevelopers.component.js';
 
 
 const appRoutes: Routes = [
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
   { path: 'project/:id', component: ProjectComponent },
   { path: 'profile/:id', component: ProfileComponent },
   { path: 'editprofile', component: EditProfileComponent },
+  { path: 'developers', component: SearchDevelopersComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];
 

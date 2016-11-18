@@ -18,12 +18,13 @@
   font-family: 'Roboto';
 }
 
-h4, a, p {
+h4, a, p, a.navLink {
   color: #888B8D;
 }
 
-a:hover {
+a:hover, a.navLink:hover {
   color: salmon;
+  cursor: pointer;
 }
 
 .navLink {
