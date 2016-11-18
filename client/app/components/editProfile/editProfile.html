@@ -17,6 +17,17 @@
       </div>
 
       <div class="form-group">
+        <p class='email-label'>Profile Picture:</p>
+        <img src={{userInfo.picture}} />
+        <form>
+        <input type="file"
+          ngFileSelect
+          [options]="options"
+          (onUpload)="handleUpload($event)" name="profilePhoto">
+          </form>
+      </div>
+
+      <div class="form-group">
         <p class='location-label'>Location:</p>
         <input type="text" class="form-control" placeholder="Enter your location" [(ngModel)]="userInfo.location" name="location">
       </div>

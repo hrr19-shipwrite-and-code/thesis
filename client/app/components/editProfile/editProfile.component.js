@@ -29,6 +29,10 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService = editProfileService;
                     this.router = router;
                     this.userInfo = {};
+                    this.hasBaseDropZoneOver = false;
+                    this.options = {
+                        url: 'http://localhost:1337/api/user/addPicture'
+                    };
                     this.getUserInfo();
                 }
                 EditProfileComponent.prototype.getUserInfo = function () {
@@ -47,12 +51,21 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     localStorage.setItem("url", userInfo.url);
                     this.router.navigateByUrl('/profile/' + userInfo.url);
                 };
+                EditProfileComponent.prototype.handleUpload = function (data) {
+                    if (data && data.response) {
+                        data = data.response;
+                        this.uploadFile = data;
+                    }
+                };
+                EditProfileComponent.prototype.fileOverBase = function (e) {
+                    this.hasBaseDropZoneOver = e;
+                };
                 EditProfileComponent = __decorate([
                     core_1.Component({
                         selector: 'editProfile',
                         templateUrl: './client/app/components/editProfile/editProfile.html',
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
-                        providers: [editProfile_services_js_1.EditProfileService],
+                        providers: [editProfile_services_js_1.EditProfileService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router])
                 ], EditProfileComponent);

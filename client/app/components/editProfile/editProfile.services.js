@@ -26,8 +26,9 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
             }],
         execute: function() {
             EditProfileService = (function () {
-                function EditProfileService(authHttp) {
+                function EditProfileService(authHttp, http) {
                     this.authHttp = authHttp;
+                    this.http = http;
                 }
                 EditProfileService.prototype.getUserInfo = function () {
                     return this.authHttp.get('http://localhost:1337/api/editUserInfo')
@@ -39,9 +40,15 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                     return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
                         .map(function (res) { return res; });
                 };
+                EditProfileService.prototype.editUserPicture = function (picture) {
+                    // let headers = new Headers({ 'Content-Type': 'multipart/form-data' });
+                    // let options = new RequestOptions({ headers: headers });
+                    return this.http.post('http://localhost:1337/api/user/addPicture', picture)
+                        .map(function (res) { return res; });
+                };
                 EditProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
                 ], EditProfileService);
                 return EditProfileService;
             }());

@@ -6,7 +6,7 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class EditProfileService {
-  constructor(private authHttp: AuthHttp) {}
+  constructor(private authHttp: AuthHttp, private http: Http) {}
 
   getUserInfo(){
     return this.authHttp.get('http://localhost:1337/api/editUserInfo')
@@ -17,6 +17,13 @@ export class EditProfileService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
+      .map(res => res);
+  }
+
+  editUserPicture(picture) {
+    // let headers = new Headers({ 'Content-Type': 'multipart/form-data' });
+    // let options = new RequestOptions({ headers: headers });
+    return this.http.post('http://localhost:1337/api/user/addPicture', picture)
       .map(res => res);
   }
 }

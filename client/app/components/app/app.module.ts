@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
+import { UPLOAD_DIRECTIVES } from 'ng2-uploader/ng2-uploader';
 
 import { NavComponent } from '../nav/nav.component.js';
 
@@ -43,7 +44,7 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     ProjectAddComponent,
 
     ProjectThumbnailComponent,
-
+    UPLOAD_DIRECTIVES,
     HoverDirective,
     TechHoverDirective,
     AddProductModelDirective
