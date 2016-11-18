@@ -44,29 +44,10 @@ export class ProjectService {
     console.log(description) //string
   }
 
-  // getProject(id){
-  //   return {
-  //     "id": 1,
-  //     "title": "blah",
-  //     "description": null,
-  //     "views": 3,
-  //     "thumbnail": null,
-  //     "deploy": null,
-  //     "github": null,
-  //     "contribute": null,
-  //     "progress": null,
-  //     "createdAt": "2016-11-14T20:09:17.000Z",
-  //     "updatedAt": "2016-11-16T05:22:39.000Z",
-  //     "ProfileId": 1,
-  //     "Profile": {
-  //       "name": "Mike",
-  //       "url": "mike"
-  //     },
-  //     "Images": ["https://d13yacurqjgara.cloudfront.net/users/684814/screenshots/3091594/creative_agency_-_landing_apge.jpg"],
-  //     "Comments": [],
-  //     "Teches": [{name: 'React'}],
-  //     "likes": 1
-  //   }
-  // }
-
+  postComment(comment, projectId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/comment/create/' + projectId, JSON.stringify(comment), options)
+      .map(res => res.json());
+  }
 }

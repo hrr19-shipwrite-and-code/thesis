@@ -61,6 +61,12 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                 ProjectService.prototype.editDescription = function (description) {
                     console.log(description); //string
                 };
+                ProjectService.prototype.postComment = function (comment, projectId) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/comment/create/' + projectId, JSON.stringify(comment), options)
+                        .map(function (res) { return res.json(); });
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])

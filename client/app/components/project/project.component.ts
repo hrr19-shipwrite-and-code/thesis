@@ -70,7 +70,7 @@ export class ProjectComponent {
   }
 
   //Verify current user is owner of the project
-  isOwner(projectOwner){ 
+  isOwner(projectOwner){
     let currentUser = localStorage.getItem('authId')
     return currentUser === projectOwner ? true : false;
   }
@@ -78,7 +78,7 @@ export class ProjectComponent {
   //Add tech to project
   addTech(event, tech) {
     event.preventDefault();
-    
+
     for(let i = 0; i <= this.project.Teches.length; i++){
       if(i === this.project.Teches.length) {
         let temp = {
@@ -105,8 +105,16 @@ export class ProjectComponent {
     this.project.descripiton = input.descripiton;
     document.getElementById('project-description').className = 'description';
     document.getElementById('project-description-input').className = 'display-none';
-    
+
     this.projectService.editDescription(input.description)
+
+  //Post comment and add comment to view
+  postComment(comment){
+    console.log(comment, this.id)
+    this.projectService.postComment(comment, this.id)
+      .subscribe( data => {
+        console.log(data)
+      })
   }
 
 }
