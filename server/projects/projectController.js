@@ -45,7 +45,7 @@ module.exports = {
     const user = req.body.userId;
     //const authId = req.user.sub;
     fse.remove('client/uploads/' + id, (err) => {
-      console.log(err)
+      if (err) res.sendStatus(404);
       //Profile.findOne({where: {authId: authId}})
       Profile.findOne({where: {id: user}})
         .then((user) => {
@@ -59,8 +59,8 @@ module.exports = {
         })
         .catch((err) => {
           res.sendStatus(401);
-        })
-    })
+        });
+    });
   },
 
   editProject: (req, res, next) => {
