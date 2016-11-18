@@ -41,7 +41,7 @@
         </div> <!-- Info -->
       </div> <!-- main-content -->
 
-      <div class="comments horizontal-center">
+      <div class="comments">
 
         <form class="comment-form">
           <div class="form-group">
@@ -49,15 +49,21 @@
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
 
-          <div class="single-comment">
-            <hr>
-            <p class='comment-author'>
-              <a href="#">Author Name</a>
-            </p>
-            <p class='comment-body'>
-              Comment body goes here. Commenty comment.
-            </p>
-          </div> <!-- single-comment -->
+          <!-- not sure how you're loading the data, but this can be the parent div of all the comments -->
+          <div class='comments-list'>
+
+            <!-- Template for each comment -->
+            <div class="single-comment">
+              <hr>
+              <p class='comment-author'>
+                <a href="#">Author Name</a>
+              </p>
+              <p class='comment-body'>
+                Comment body goes here. Commenty comment.
+              </p>
+            </div> <!-- single-comment -->
+
+          </div> <!-- comments-list -->
         </form>
 
       </div> <!-- comments -->
