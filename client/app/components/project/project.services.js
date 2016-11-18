@@ -56,7 +56,7 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                         .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.addTech = function (tech) {
-                    console.log(tech);
+                    console.log(tech); //{name: "tech here"}
                 };
                 ProjectService = __decorate([
                     core_1.Injectable(), 

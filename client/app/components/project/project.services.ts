@@ -37,7 +37,7 @@ export class ProjectService {
   }
 
   addTech(tech) {
-    console.log(tech)
+    console.log(tech) //{name: "tech here"}
   }
 
   // getProject(id){
