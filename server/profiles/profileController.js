@@ -187,28 +187,15 @@ module.exports = {
   },
 
   addPicture: (req, res, next) => {
-    //auth should be checked before upload
-    const id = req.body.id;
-    const storage = multer.diskStorage({
-      destination: function (req, file, callback) {
-        callback(null, './client/uploads/profile');
-      },
-      filename: function (req, file, callback) {
-        callback(null, 'profilePhoto-' + id);
-      }
-    });
-    const upload = multer({storage: storage}).single('profilePhoto');
-    upload(req, res, (err) => {
-      if (err) res.end('Error Uploading File');
-      const URL = '/uploads/profile/profilePhoto-' + id;
-      Profile.findById(id)
-        .then((profile) => {
-          profile.update({ picture: URL})
-            .then(() => {
-              res.sendStatus(200);
-            });
-        });
-    });
+    const authId = req.user.sub
+    const URL = './client/uploads/profile/' + authId;
+    Profile.findOne({where: {authId: authId}})
+      .then((profile) => {
+        profile.update({ picture: URL})
+          .then(() => {
+            res.sendStatus(200);
+          });
+      });
   }
 
   //delete picture function

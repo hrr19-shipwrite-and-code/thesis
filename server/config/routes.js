@@ -5,11 +5,24 @@ const likeController = require('../likes/likeController.js');
 const commentController = require('../comments/commentController.js');
 const jwt = require('express-jwt');
 const auth = require('../../secret/auth.js');
+const multer = require('multer');
 
 //Checks the token for authentication when attatched to route
 const authCheck = jwt({
   secret: new Buffer(auth.clientSecret, 'base64'),
   audience: auth.clientId
+});
+
+const uploadProfilePicture = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './client/uploads/profile');
+    },
+    filename: (req, file, cb) => {
+      let ext = req.user.sub;
+      cb(null, ext);
+    }
+  })
 });
 
 module.exports = function (app, express) {
@@ -24,7 +37,7 @@ module.exports = function (app, express) {
   app.post('/api/team/addMember', profileController.addMember);
   app.delete('/api/team/removeMember', profileController.removeMember);
   app.put('/api/team/promoteMember', profileController.promoteMember);
-  app.post('/api/user/addPicture', authCheck, profileController.addPicture);
+  app.post('/api/user/addPicture', authCheck, uploadProfilePicture.any(), profileController.addPicture);
   //Others to view profiles
   app.get('/api/profile/:profileUrl', profileController.getProfile);
   app.get('/api/editUserInfo', authCheck, profileController.getEditUserInfo);

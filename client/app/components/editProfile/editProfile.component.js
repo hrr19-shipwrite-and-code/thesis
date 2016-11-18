@@ -29,6 +29,15 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService = editProfileService;
                     this.router = router;
                     this.userInfo = {};
+                    this.picture = '';
+                    this.options = {
+                        url: 'http://localhost:1337/api/user/addPicture',
+                        filterExtensions: true,
+                        allowedExtensions: ['image/png', 'image/jpg'],
+                        calculateSpeed: true,
+                        authToken: localStorage.getItem('id_token'),
+                        authTokenPrefix: 'Bearer'
+                    };
                     this.getUserInfo();
                 }
                 EditProfileComponent.prototype.getUserInfo = function () {
@@ -36,6 +45,7 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     this.editProfileService.getUserInfo()
                         .subscribe(function (data) {
                         _this.userInfo = data;
+                        _this.picture = _this.userInfo.picture;
                         console.log(data);
                     });
                 };
@@ -47,12 +57,27 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     localStorage.setItem("url", userInfo.url);
                     this.router.navigateByUrl('/profile/' + userInfo.url);
                 };
+                EditProfileComponent.prototype.handleUpload = function (data) {
+                    if (data && data.response) {
+                        data = data.response;
+                    }
+                };
+                EditProfileComponent.prototype.handleChange = function (input) {
+                    var img = document.createElement("img");
+                    img.src = window.URL.createObjectURL(input.files[0]);
+                    var reader = new FileReader();
+                    var that = this;
+                    reader.addEventListener("load", function (event) {
+                        that.picture = event.target.result;
+                    }, false);
+                    reader.readAsDataURL(input.files[0]);
+                };
                 EditProfileComponent = __decorate([
                     core_1.Component({
                         selector: 'editProfile',
                         templateUrl: './client/app/components/editProfile/editProfile.html',
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
-                        providers: [editProfile_services_js_1.EditProfileService],
+                        providers: [editProfile_services_js_1.EditProfileService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router])
                 ], EditProfileComponent);

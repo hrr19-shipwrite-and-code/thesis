@@ -24,9 +24,9 @@
 
 >1. npm install
 
->2. In terminal type mysql.server start (Starts the MySQL server in background)
+>2. In terminal type `mysql.server start` (Starts the MySQL server in background)
 
->3. In terminal type mysql -u root -p (Access the MySQL database)
+>3. In terminal type `mysql -u root -p` (Access the MySQL database)
 
 >4. Once inside MySQL terminal type create database sushi (Created the sushi database)
 
@@ -34,7 +34,7 @@
 
 >6. Run `npm start` from the root directory to start the Angular2 server.
 
->7. In another terminal tab run node server/server.js to run the API server.
+>7. In another terminal tab run `node server/server.js` to run the API server.
 
 >8. Navigate to `http://localhost:3000/`
 
