@@ -114,6 +114,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             .subscribe(function (data) {
                             console.log(data);
                         });
+                        this.comment = '';
                     }
                 };
                 ProjectComponent = __decorate([
