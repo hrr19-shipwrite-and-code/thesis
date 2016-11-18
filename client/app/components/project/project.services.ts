@@ -20,10 +20,30 @@ export class ProjectService {
       .map(res => res.json())
   }
 
+  getTech() {
+    return [
+      {name: 'React'},
+      {name: 'JavaScript'},
+      {name: 'TypeScript'},
+      {name: 'Angular'},
+      {name: 'Angular 2'},
+      {name: 'Redux'}
+    ]
+  }
+
   doesUserLike(id) {
     return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
       .map(res => res.json())
   }
+
+  addTech(tech) {
+    console.log(tech) //{name: "tech here"}
+  }
+
+  editDescription(description) {
+    console.log(description) //string
+  }
+
   // getProject(id){
   //   return {
   //     "id": 1,

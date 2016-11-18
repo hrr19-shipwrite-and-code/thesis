@@ -10,19 +10,35 @@
         </p>
       </div>
 
-
       <div class="main-content">
         <!-- Main Image -->
         <div class="main-img-viewport">
           <img src={{project.thumbnail}} alt="main-img" class='main-img' />
+          <div *ngIf="isOwner(project.Profile.authId)">
+            <span>Add Image</span>
+          </div>
         </div>
+        
 
         <!-- Info -->
         <div class="info">
-          <p class='description'>
-            {{project.description}}
-          </p>
+          <div>
+            <p class='description' id="project-description">
+              {{project.description}}
+            </p>
 
+            <!--Edit Discription-->
+            <div *ngIf="isOwner(project.Profile.authId)">
+              <div id="project-description-input" class="display-none">
+                <form #editDescriptionInput="ngForm" (ngSubmit)="editDescriptionPost($event, editDescriptionInput.value)">
+                  <input type="text" name="description" [(ngModel)]="project.description">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+              <span (click)="editDescription()">Edit Description</span>
+            </div>
+
+          </div>
           <hr>
 
           <div class="social">
@@ -33,10 +49,21 @@
 
           <hr>
 
-          <!-- Is the pelling of "Teches" below correct? -->
-          <p *ngIf="project.Teches.length > 0" class='tech'>
-            {{project.Teches[0].name}}
+          <p *ngFor="let tech of project.Teches" class='tech'>
+            {{tech.name}}
           </p>
+
+          
+          <!--Add to tech stack-->
+          <div *ngIf="isOwner(project.Profile.authId)">
+            <datalist id="techs">
+              <option *ngFor="let tech of techs" [value]="tech.name">
+            </datalist>
+            <form #add="ngForm" (ngSubmit)="addTech($event, add.value)">
+              <input type="text" list="techs" name="tech" id="techInput" ngModel>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+          </div>
 
         </div> <!-- Info -->
       </div> <!-- main-content -->

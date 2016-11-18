@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ProjectService } from './project.services.js';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -20,6 +20,7 @@ export class ProjectComponent {
   error: Boolean;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
+  techs;
 
   //Runs this function everytime route accessed
   ngOnInit () {
@@ -28,6 +29,7 @@ export class ProjectComponent {
     });
     this.getProject(this.id);
     this.doesUserLike(this.id);
+    this.techs = this.projectService.getTech()
   }
 
   //Service function to get the project by the route params Id
@@ -65,6 +67,46 @@ export class ProjectComponent {
         },
         err => this.authService.login()
       )
+  }
+
+  //Verify current user is owner of the project
+  isOwner(projectOwner){ 
+    let currentUser = localStorage.getItem('authId')
+    return currentUser === projectOwner ? true : false;
+  }
+
+  //Add tech to project
+  addTech(event, tech) {
+    event.preventDefault();
+    
+    for(let i = 0; i <= this.project.Teches.length; i++){
+      if(i === this.project.Teches.length) {
+        let temp = {
+          name: tech.tech
+        }
+        this.project.Teches.push(temp)
+        this.projectService.addTech(temp)
+      }
+
+      if(this.project.Teches[i].name === tech.tech) {
+        return;
+      }
+    }
+  }
+
+
+  editDescription(){
+    document.getElementById('project-description').className += ' display-none'
+    document.getElementById('project-description-input').className = ''
+  }
+
+  editDescriptionPost(event, input){
+    event.preventDefault();
+    this.project.descripiton = input.descripiton;
+    document.getElementById('project-description').className = 'description';
+    document.getElementById('project-description-input').className = 'display-none';
+    
+    this.projectService.editDescription(input.description)
   }
 
 }

@@ -32,6 +32,7 @@ export class AuthService {
           alert(error);
           return;
         }
+        localStorage.setItem('authId', profile.user_id);
         console.log(profile);
         this.findOrCreateUser(profile)
       });
@@ -63,6 +64,7 @@ export class AuthService {
  logout() {
    localStorage.removeItem('id_token');
    localStorage.removeItem('url');
+   localStorage.removeItem('authId');
  }
 
  authenticated() {

@@ -43,6 +43,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     });
                     this.getProject(this.id);
                     this.doesUserLike(this.id);
+                    this.techs = this.projectService.getTech();
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -73,6 +74,38 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             _this.like.color = '#888B8D';
                         }
                     }, function (err) { return _this.authService.login(); });
+                };
+                //Verify current user is owner of the project
+                ProjectComponent.prototype.isOwner = function (projectOwner) {
+                    var currentUser = localStorage.getItem('authId');
+                    return currentUser === projectOwner ? true : false;
+                };
+                //Add tech to project
+                ProjectComponent.prototype.addTech = function (event, tech) {
+                    event.preventDefault();
+                    for (var i = 0; i <= this.project.Teches.length; i++) {
+                        if (i === this.project.Teches.length) {
+                            var temp = {
+                                name: tech.tech
+                            };
+                            this.project.Teches.push(temp);
+                            this.projectService.addTech(temp);
+                        }
+                        if (this.project.Teches[i].name === tech.tech) {
+                            return;
+                        }
+                    }
+                };
+                ProjectComponent.prototype.editDescription = function () {
+                    document.getElementById('project-description').className += ' display-none';
+                    document.getElementById('project-description-input').className = '';
+                };
+                ProjectComponent.prototype.editDescriptionPost = function (event, input) {
+                    event.preventDefault();
+                    this.project.descripiton = input.descripiton;
+                    document.getElementById('project-description').className = 'description';
+                    document.getElementById('project-description-input').className = 'display-none';
+                    this.projectService.editDescription(input.description);
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({
