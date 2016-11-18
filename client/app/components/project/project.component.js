@@ -84,9 +84,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     event.preventDefault();
                     for (var i = 0; i <= this.project.Teches.length; i++) {
                         if (i === this.project.Teches.length) {
-                            this.project.Teches.push({
+                            var temp = {
                                 name: tech.tech
-                            });
+                            };
+                            this.project.Teches.push(temp);
+                            this.projectService.addTech(temp);
                         }
                         if (this.project.Teches[i].name === tech.tech) {
                             return;

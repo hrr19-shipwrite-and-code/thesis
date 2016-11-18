@@ -80,9 +80,11 @@ export class ProjectComponent {
     
     for(let i = 0; i <= this.project.Teches.length; i++){
       if(i === this.project.Teches.length) {
-        this.project.Teches.push({
+        let temp = {
           name: tech.tech
-        })
+        }
+        this.project.Teches.push(temp)
+        this.projectService.addTech(temp)
       }
 
       if(this.project.Teches[i].name === tech.tech) {
