@@ -115,6 +115,10 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     });
                     this.newComment = '';
                 };
+                //check if the comment is by the logged in user
+                ProjectComponent.prototype.checkUser = function (url) {
+                    return localStorage.getItem('url') === url;
+                };
                 ProjectComponent = __decorate([
                     core_1.Component({
                         selector: 'project',

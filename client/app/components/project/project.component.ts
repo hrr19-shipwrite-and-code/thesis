@@ -118,4 +118,9 @@ export class ProjectComponent {
       })
     this.newComment = '';
   }
+
+  //check if the comment is by the logged in user
+  checkUser(url) {
+    return localStorage.getItem('url') === url;
+  }
 }
