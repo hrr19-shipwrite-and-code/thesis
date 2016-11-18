@@ -7,6 +7,7 @@ const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const sequelize = require('sequelize');
+const fs = require('fs');
 
 module.exports = {
 
@@ -26,8 +27,12 @@ module.exports = {
             progress: req.body.status,
             contribute: req.body.openSourse,
             views: 0})
-            .then(() => {
-              res.sendStatus(200);
+            .then((project) => {
+              console.log(project);
+              mkdirp('./client/uploads/' + project.id, (err) => {
+                if (err) console.log(err);
+                res.sendStatus(200);
+              });
             });
         })
         .catch((err) => {
@@ -110,66 +115,53 @@ module.exports = {
     const authId = req.user.sub;
     Profile.find({where: {authId: authId}})
       .then((profile) =>{
-        mkdirp('./client/uploads/' + id, (err) => {
-          if (err) console.log(err);
-        });
-        const storage = multer.diskStorage({
-          destination: function (req, file, callback) {
-            callback(null, './client/uploads/' + id);
-          },
-          filename: function (req, file, callback) {
-            callback(null, 'projectPhoto-' + Date.now());
-          }
-        });
-        const upload = multer({storage: storage}).single('projectPhoto');
-        upload(req, res, (err) => {
-          if (err) res.end('Error Uploading File');
-          const URL = '/uploads/' + id + '/' + 'projectPhoto-' + Date.now();
-          Project.find({where: {id: id, ProfileId:profile.id}})
-            .then((project) => {
-              project.createImage({ url: URL})
-                .then(() => {
-                  res.sendStatus(200);
-                });
-            });
-        });
+        const URL = '/uploads/' + id + '/' + req.files[0].filename;
+        Project.find({where: {id: id, ProfileId: profile.id}})
+          .then((project) => {
+            project.createImage({ url: URL})
+              .then(() => {
+                res.sendStatus(200);
+              });
+          });
       })
       .catch((err) => {
         res.sendStatus(401);
-      })
+      });
   },
 
-  uploadProjectThumbnail: (req, res, next) => {
+  //Attatch authentication when can access edit profile
+  updateProjectThumbnail: (req, res, next) => {
+    const thumb = req.body.url;
     const id = req.params.projectId;
-    const authId = req.user.sub;
-    Profile.find({where: {authId: authId}})
-      .then((profile) => {
-        mkdirp('./client/uploads/' + id, (err) => {
-          if (err) console.log(err);
-        });
-        const storage = multer.diskStorage({
-          destination: function (req, file, callback) {
-            callback(null, './client/uploads/' + id);
-          },
-          filename: function (req, file, callback) {
-            callback(null, 'thumbnailPhoto-' + Date.now());
-          }
-        });
-        const upload = multer({storage: storage}).single('thumbnailPhoto');
-        upload(req, res, (err) => {
-          if (err) res.end('Error Uploading File');
-          const URL = '/uploads/' + id + '/' + 'thumbnailPhoto-' + Date.now();
-          Project.update({ thumbnail: URL }, {where: { id: id, ProfileId: profile.id }})
+    const userId = req.body.userId
+    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['id']}]})
+      .then((project) => {
+        if (project.Profile.id === userId) {
+          Project.update({thumbnail: thumb}, {where: {id: id}})
             .then(() => {
               res.sendStatus(200);
             })
             .catch((err) => {
               res.sendStatus(404);
             });
+        }
+      });
+  },
+
+  deleteProjectImage: (req, res, next ) => {
+    const id = req.params.projectId;
+    Image.findById(id)
+      .then((image) => {
+        let url = 'client/' + image.url;
+        fs.unlink(url, () => {
+          Image.destroy({where: {id: id}})
+            .then(() => {
+              res.sendStatus(200);
+            })
+            .catch(() => {
+              res.sendStatus(404);
+            });
         });
-      })
-      .catch((err) => {
-        res.sendStatus(401);
       });
   },
 

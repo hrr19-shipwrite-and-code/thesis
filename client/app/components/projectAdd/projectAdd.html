@@ -4,6 +4,16 @@
   <div class="main-content shadow horizontal-center">
     <h4>Add Project</h4>
 
+<style>
+  .file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+</style>
+<div ngFileDrop
+     [options]="options"
+     (onUpload)="handleUpload($event)"
+     [ngClass]="{'file-over': hasBaseDropZoneOver}"
+     (onFileOver)="fileOverBase($event)">DROP HERE
+</div>
+
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
       <div class="form-group">
