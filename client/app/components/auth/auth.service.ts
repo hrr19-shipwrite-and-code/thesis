@@ -64,7 +64,7 @@ export class AuthService {
     localStorage.removeItem('picture');
     localStorage.removeItem('authId');
     this.router.navigateByUrl('/');
- }
+  }
 
  authenticated() {
     return tokenNotExpired();
