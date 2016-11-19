@@ -1,55 +1,58 @@
 
 <div class='container'>
-  <div class='sidebar horizontalCenter shadow'>
+  <div class="sidebar-container">
+    <div class='sidebar horizontalCenter shadow'>
 
-    <div class='topInfo horizontalCenter'>
-      <div class='profilePhoto horizontalCenter'><img class="profilePhoto" src="{{profileInfo.picture}}"/></div>
-      <h2 class='userName'>{{profileInfo.name}}</h2>
-      <p>{{profileInfo.location}}</p>
-      <p class='bio'>
-        {{profileInfo.bio}}
-      </p>
-      <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
-      <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
-    </div> <!-- topInfo -->
+      <div class='topInfo horizontalCenter'>
+        <div class='profilePhoto horizontalCenter'><img class="profilePhoto" src="{{profileInfo.picture}}"/></div>
+        <h2 class='userName'>{{profileInfo.name}}</h2>
+        <p>{{profileInfo.location}}</p>
+        <p class='bio'>
+          {{profileInfo.bio}}
+        </p>
+        <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
+        <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
+      </div> <!-- topInfo -->
 
-    <hr>
+      <hr>
 
-    <div *ngIf="profileInfo.Teches.length">
-      <h4>SKILLS</h4>
-      <ul>
-        <li *ngFor="let tech of profileInfo.Teches">{{tech.name}}</li>
-      </ul>
-    </div>
+      <div *ngIf="profileInfo.Teches.length">
+        <h4>SKILLS</h4>
+        <ul>
+          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}}</li>
+        </ul>
+      </div>
 
-    <div *ngIf="profileInfo.Team.length">
-      <h4>TEAMS</h4>
-      <ul>
-        <li *ngFor="let team of profileInfo.Team">{{team.name}}</li>
-      </ul>
-    </div>
+      <div *ngIf="profileInfo.Team.length">
+        <h4>TEAMS</h4>
+        <ul>
+          <li *ngFor="let team of profileInfo.Team">{{team.name}}</li>
+        </ul>
+      </div>
 
-    <div *ngIf="profileInfo.Member.length">
-      <h4>MEMBERS</h4>
-      <ul>
-        <li *ngFor="let member of profileInfo.Member">{{member.name}}</li>
-      </ul>
-    </div>
+      <div *ngIf="profileInfo.Member.length">
+        <h4>MEMBERS</h4>
+        <ul>
+          <li *ngFor="let member of profileInfo.Member">{{member.name}}</li>
+        </ul>
+      </div>
 
-    <hr>
+      <hr>
 
-    <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin">
-      <h4>CONNECT</h4>
-      <ul class='urls'>
-        <li *ngIf="profileInfo.personal"><a href='{{profileInfo.personal}}'>personal</a></li>
-        <li *ngIf="profileInfo.blog"><a href='{{profileInfo.blog}}'>blog</a></li>
-        <li *ngIf="profileInfo.github"><a href='{{profileInfo.github}}'>github</a></li>
-        <li *ngIf="profileInfo.linkedin"><a href='{{profileInfo.linkedin}}'>linkedin</a></li>
-        <li *ngIf="profileInfo.twitter"><a href='{{profileInfo.twitter}}'>twitter</a></li>
-        <li *ngIf="profileInfo.facebook"><a href='{{profileInfo.facebook}}'>facebook</a></li>
-      </ul>
-    </div> <!-- connect -->
-  </div> <!-- sidebar -->
+      <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin">
+        <h4>CONNECT</h4>
+        <ul class='urls'>
+          <li *ngIf="profileInfo.personal"><a href='{{profileInfo.personal}}'>personal</a></li>
+          <li *ngIf="profileInfo.blog"><a href='{{profileInfo.blog}}'>blog</a></li>
+          <li *ngIf="profileInfo.github"><a href='{{profileInfo.github}}'>github</a></li>
+          <li *ngIf="profileInfo.linkedin"><a href='{{profileInfo.linkedin}}'>linkedin</a></li>
+          <li *ngIf="profileInfo.twitter"><a href='{{profileInfo.twitter}}'>twitter</a></li>
+          <li *ngIf="profileInfo.facebook"><a href='{{profileInfo.facebook}}'>facebook</a></li>
+        </ul>
+      </div> <!-- connect -->
+    </div> <!-- sidebar -->
+
+  </div> <!-- sidebar-container -->
 
 
   <!-- projects -->
