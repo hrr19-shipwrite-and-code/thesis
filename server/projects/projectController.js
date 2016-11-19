@@ -42,12 +42,10 @@ module.exports = {
   //Uncomment the auth stuff when access to edit profile
   deleteProject: (req, res, next) => {
     const id = req.params.projectId;
-    const user = req.body.userId;
-    //const authId = req.user.sub;
+    const authId = req.user.sub;
     fse.remove('client/uploads/' + id, (err) => {
       if (err) res.sendStatus(404);
-      //Profile.findOne({where: {authId: authId}})
-      Profile.findOne({where: {id: user}})
+      Profile.findOne({where: {authId: authId}})
         .then((user) => {
           Project.destroy({where: {id: id, ProfileId: user.id}})
             .then(() => {
@@ -69,7 +67,7 @@ module.exports = {
     console.log(id);
     Profile.findOne({ where: { authId: authId}})
       .then((user) => {
-        Project.update({title: req.body.title}, {where: {id: id, ProfileId:user.id}})
+        Project.update(req.body, {where: {id: id, ProfileId:user.id}})
           .then(() => {
             res.sendStatus(200);
           })
@@ -88,7 +86,7 @@ module.exports = {
     Project.findById(id, {
       include: [
         {model: Profile, attributes: ['name', 'url', 'authId']},
-        {model: Image},
+        {model: Image, attributes: ['id', 'url']},
         {model: Tech, attributes: ['name'], through: {attributes: []}}
        ]
     })
@@ -121,12 +119,12 @@ module.exports = {
     const authId = req.user.sub;
     Profile.find({where: {authId: authId}})
       .then((profile) =>{
-        const URL = '/uploads/' + id + '/' + req.files[0].filename;
+        const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
-              .then(() => {
-                res.sendStatus(200);
+              .then((image) => {
+                res.send(image);
               });
           });
       })
@@ -139,10 +137,10 @@ module.exports = {
   updateProjectThumbnail: (req, res, next) => {
     const thumb = req.body.url;
     const id = req.params.projectId;
-    const userId = req.body.userId
-    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['id']}]})
+    const userId = req.user.sub
+    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['authId']}]})
       .then((project) => {
-        if (project.Profile.id === userId) {
+        if (project.Profile.authId === userId) {
           Project.update({thumbnail: thumb}, {where: {id: id}})
             .then(() => {
               res.sendStatus(200);
@@ -155,10 +153,10 @@ module.exports = {
   },
 
   deleteProjectImage: (req, res, next ) => {
-    const id = req.params.projectId;
+    const id = req.params.imageId;
     Image.findById(id)
       .then((image) => {
-        let url = 'client/' + image.url;
+        let url = image.url;
         fs.unlink(url, () => {
           Image.destroy({where: {id: id}})
             .then(() => {

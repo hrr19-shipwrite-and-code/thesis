@@ -36,14 +36,12 @@ module.exports = function (app, express) {
   app.get('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', middleware.authCheck, projectController.editProject);
-  //When done toying add auth!
-  app.delete('/api/project/delete/:projectId', projectController.deleteProject);
+  app.delete('/api/project/delete/:projectId', middleware.authCheck, projectController.deleteProject);
 
   //Project Images
   app.post('/api/project/upload/:projectId', middleware.authCheck, middleware.uploadProjectPicture.any(), projectController.uploadProjectImage);
-  //Attatch authentication when access to edit profile
-  app.put('/api/project/thumbnail/:projectId', projectController.updateProjectThumbnail);
-  app.delete('/api/project/image/:projectId', projectController.deleteProjectImage);
+  app.put('/api/project/thumbnail/:projectId', middleware.authCheck, projectController.updateProjectThumbnail);
+  app.delete('/api/project/image/:imageId', middleware.authCheck, projectController.deleteProjectImage);
 
 
   //Comment Routes
