@@ -69,9 +69,9 @@ module.exports = {
   projectRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
     const id = req.params.projectId;
-    const techName = req.params.techName;
+    const techId = req.params.techId;
     Tech.findOne({
-      where: {name: techName},
+      where: {id: techId},
       include: [{
         model: Project,
         include: [{model: Profile, where: {authId: authId}}]
@@ -92,7 +92,7 @@ module.exports = {
   },
 
   getAllTech: (req, res, next) => {
-    Tech.findAll({attributes: ["name"]})
+    Tech.findAll({attributes: ["id", "name"]})
       .then((tech) => {
         res.json(tech);
       })

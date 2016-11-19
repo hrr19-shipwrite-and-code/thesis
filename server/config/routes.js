@@ -27,7 +27,7 @@ module.exports = function (app, express) {
   app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
   app.delete('/api/profile/removeTech/:techName', middleware.authCheck, techController.profileRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
-  app.delete('/api/project/removeTech/:projectId/:techName', middleware.authCheck, techController.projectRemoveTech);
+  app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);
 
   //Project Routes

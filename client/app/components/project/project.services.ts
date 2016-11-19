@@ -44,8 +44,8 @@ export class ProjectService {
       .map(res => res.json());
   }
 
-  deleteTech(tech, projectId) {
-    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + tech)
+  deleteTech(techId, projectId) {
+    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
       .map(res => res);
   }
 
@@ -84,6 +84,6 @@ export class ProjectService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
-      .map(res => res)  
+      .map(res => res)
   }
 }
