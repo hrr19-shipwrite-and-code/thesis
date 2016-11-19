@@ -20,9 +20,10 @@ export class ProjectComponent {
   error: Boolean;
   newComment = '';
   comments = [];
+  techs = [];
+  newTech = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
-  techs;
 
   //Runs this function everytime route accessed
   ngOnInit () {
@@ -32,7 +33,7 @@ export class ProjectComponent {
     this.getProject(this.id);
     this.getComment(this.id);
     this.doesUserLike(this.id);
-    this.techs = this.projectService.getTech()
+    this.getAllTech();
   }
 
   //Service function to get the project by the route params Id
@@ -72,29 +73,37 @@ export class ProjectComponent {
       )
   }
 
-  //Verify current user is owner of the project
-  isOwner(projectOwner){
-    let currentUser = localStorage.getItem('authId')
-    return currentUser === projectOwner ? true : false;
+  getAllTech() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
   }
 
   //Add tech to project
-  addTech(event, tech) {
-    event.preventDefault();
-
-    for(let i = 0; i <= this.project.Teches.length; i++){
-      if(i === this.project.Teches.length) {
-        let temp = {
-          name: tech.tech
-        }
-        this.project.Teches.push(temp)
-        this.projectService.addTech(temp)
-      }
-
-      if(this.project.Teches[i].name === tech.tech) {
-        return;
+  addTech() {
+    for(let value of this.project.Teches){
+      if(value.name === this.newTech) {
+        return this.newTech = '';
       }
     }
+
+    let newTech = { name: this.newTech, id: this.project.id };
+    this.project.Teches.push(newTech);
+    this.projectService.addTech(newTech)
+      .subscribe(data => {});
+    this.newTech = '';
+  }
+
+  deleteTech(event) {
+    this.projectService.deleteTech(event.target.id, this.project.id)
+      .subscribe(data => {});
+
+    for(let i = 0; i < this.project.Teches.length; i++){
+      if(this.project.Teches[i].name === event.target.id) {
+        return this.project.Teches.splice(i, 1);
+      };
+    };
   }
 
 
@@ -113,15 +122,16 @@ export class ProjectComponent {
   }
 
   //Post comment and add comment to view
-  postComment(comment){
-    this.projectService.postComment(comment, this.id)
+  postComment(){
+    this.projectService.postComment({comment: this.newComment}, this.id)
       .subscribe( data => {
         data.Profile = {
           name: localStorage.getItem('name'),
           url: localStorage.getItem('url'),
           picture: localStorage.getItem('picture')
         };
-        this.comments.unshift(data)
+        this.comments.unshift(data);
+        this.project.comments ++;
       })
     this.newComment = '';
   }
@@ -137,6 +147,7 @@ export class ProjectComponent {
       .subscribe( data => {})
     const commentIndex = this.comments.indexOf(comment);
     this.comments.splice(commentIndex, 1);
+    this.project.comments --;
   }
 
   getComment(id) {

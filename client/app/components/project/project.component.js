@@ -36,6 +36,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.like = { color: this.color };
                     this.newComment = '';
                     this.comments = [];
+                    this.techs = [];
+                    this.newTech = '';
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -46,7 +48,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getProject(this.id);
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
-                    this.techs = this.projectService.getTech();
+                    this.getAllTech();
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -78,26 +80,37 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
-                //Verify current user is owner of the project
-                ProjectComponent.prototype.isOwner = function (projectOwner) {
-                    var currentUser = localStorage.getItem('authId');
-                    return currentUser === projectOwner ? true : false;
+                ProjectComponent.prototype.getAllTech = function () {
+                    var _this = this;
+                    this.projectService.getTech()
+                        .subscribe(function (data) {
+                        _this.techs = data;
+                    });
                 };
                 //Add tech to project
-                ProjectComponent.prototype.addTech = function (event, tech) {
-                    event.preventDefault();
-                    for (var i = 0; i <= this.project.Teches.length; i++) {
-                        if (i === this.project.Teches.length) {
-                            var temp = {
-                                name: tech.tech
-                            };
-                            this.project.Teches.push(temp);
-                            this.projectService.addTech(temp);
-                        }
-                        if (this.project.Teches[i].name === tech.tech) {
-                            return;
+                ProjectComponent.prototype.addTech = function () {
+                    for (var _i = 0, _a = this.project.Teches; _i < _a.length; _i++) {
+                        var value = _a[_i];
+                        if (value.name === this.newTech) {
+                            return this.newTech = '';
                         }
                     }
+                    var newTech = { name: this.newTech, id: this.project.id };
+                    this.project.Teches.push(newTech);
+                    this.projectService.addTech(newTech)
+                        .subscribe(function (data) { });
+                    this.newTech = '';
+                };
+                ProjectComponent.prototype.deleteTech = function (event) {
+                    this.projectService.deleteTech(event.target.id, this.project.id)
+                        .subscribe(function (data) { });
+                    for (var i = 0; i < this.project.Teches.length; i++) {
+                        if (this.project.Teches[i].name === event.target.id) {
+                            return this.project.Teches.splice(i, 1);
+                        }
+                        ;
+                    }
+                    ;
                 };
                 ProjectComponent.prototype.editDescription = function () {
                     document.getElementById('project-description').className += ' display-none';
@@ -111,9 +124,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.projectService.editDescription(input.description);
                 };
                 //Post comment and add comment to view
-                ProjectComponent.prototype.postComment = function (comment) {
+                ProjectComponent.prototype.postComment = function () {
                     var _this = this;
-                    this.projectService.postComment(comment, this.id)
+                    this.projectService.postComment({ comment: this.newComment }, this.id)
                         .subscribe(function (data) {
                         data.Profile = {
                             name: localStorage.getItem('name'),
@@ -121,6 +134,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             picture: localStorage.getItem('picture')
                         };
                         _this.comments.unshift(data);
+                        _this.project.comments++;
                     });
                     this.newComment = '';
                 };
@@ -134,6 +148,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         .subscribe(function (data) { });
                     var commentIndex = this.comments.indexOf(comment);
                     this.comments.splice(commentIndex, 1);
+                    this.project.comments--;
                 };
                 ProjectComponent.prototype.getComment = function (id) {
                     var _this = this;

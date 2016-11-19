@@ -42,21 +42,22 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                         .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.getTech = function () {
-                    return [
-                        { name: 'React' },
-                        { name: 'JavaScript' },
-                        { name: 'TypeScript' },
-                        { name: 'Angular' },
-                        { name: 'Angular 2' },
-                        { name: 'Redux' }
-                    ];
+                    return this.http.get('http://localhost:1337/api/tech')
+                        .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.doesUserLike = function (id) {
                     return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
                         .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.addTech = function (tech) {
-                    console.log(tech); //{name: "tech here"}
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProjectService.prototype.deleteTech = function (tech, projectId) {
+                    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + tech)
+                        .map(function (res) { return res; });
                 };
                 ProjectService.prototype.editDescription = function (description) {
                     console.log(description); //string

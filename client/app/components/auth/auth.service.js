@@ -52,7 +52,6 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                                 alert(error);
                                 return;
                             }
-                            localStorage.setItem('authId', profile.user_id);
                             console.log(profile);
                             _this.findOrCreateUser(profile);
                         });
@@ -79,7 +78,6 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                     localStorage.removeItem('url');
                     localStorage.removeItem('name');
                     localStorage.removeItem('picture');
-                    localStorage.removeItem('authId');
                     this.router.navigateByUrl('/');
                 };
                 AuthService.prototype.authenticated = function () {

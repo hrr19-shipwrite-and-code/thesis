@@ -21,14 +21,8 @@ export class ProjectService {
   }
 
   getTech() {
-    return [
-      {name: 'React'},
-      {name: 'JavaScript'},
-      {name: 'TypeScript'},
-      {name: 'Angular'},
-      {name: 'Angular 2'},
-      {name: 'Redux'}
-    ]
+    return this.http.get('http://localhost:1337/api/tech')
+      .map(res => res.json());
   }
 
   doesUserLike(id) {
@@ -37,7 +31,15 @@ export class ProjectService {
   }
 
   addTech(tech) {
-    console.log(tech) //{name: "tech here"}
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+      .map(res => res.json());
+  }
+
+  deleteTech(tech, projectId) {
+    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + tech)
+      .map(res => res);
   }
 
   editDescription(description) {
