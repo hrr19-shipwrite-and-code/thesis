@@ -175,6 +175,7 @@ input:checked + .slider:before {
   height: 50px;
   margin-top: -20px;
   transition: all 500ms ease;
+  padding: 0 5px;
 }
 
 .filter-bar-hide {
@@ -201,6 +202,11 @@ input:checked + .slider:before {
 }
 
 .filter-bar-input {
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: 5px;
+  display: inline-block;
+  max-width: 18%;
+}
+
+.filter-bar select {
+  height: 38px;
 }

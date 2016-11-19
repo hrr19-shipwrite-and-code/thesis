@@ -31,6 +31,15 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                     return this.http.get('http://localhost:1337/api/project/getAll')
                         .map(function (res) { return res.json(); });
                 };
+                HomeService.prototype.filter = function (req) {
+                    // req => {
+                    //   tech: Array[3], 
+                    //   title: "Sushi", 
+                    //   user: "JGoD", 
+                    //   status: "In Progress", 
+                    //   openSource: "false"
+                    // }
+                };
                 HomeService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])

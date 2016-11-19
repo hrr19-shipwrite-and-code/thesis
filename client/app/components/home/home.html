@@ -1,6 +1,23 @@
 <div class="container">
   <div class="filter-bar filter-bar-hide" id="filter-bar">
-    <input type="text" placeholder="Filter by tech">
+    <form #form="ngForm" (ngSubmit)="filter($event, form.value)">
+      <input type="text" name="tech" placeholder="Filter by tech" class="filter-bar-input form-control" ngModel>
+      <input type="text" name="title" placeholder="Filter by title" class="filter-bar-input form-control" ngModel>
+      <input type="text" name="user" placeholder="Filter by user" class="filter-bar-input form-control" ngModel>
+      <select class="form-control filter-bar-input" name="status" ngModel>
+        <option value="">Status</option>
+        <option value="Completed">Completed</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Abandonded">Abandonded</option>
+      </select>
+      <select class="form-control filter-bar-input" name="openSource" ngModel>
+        <option value="">Open Source</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+      <!--<span>Open source </span><input type="checkbox" class="">-->
+      <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
     <p class="filter-txt">Filter</p>

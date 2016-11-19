@@ -42,6 +42,24 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                         this.filterHidden = !this.filterHidden;
                     }
                 };
+                HomeComponent.prototype.filter = function (e, filter) {
+                    e.preventDefault();
+                    var filterConditions = {};
+                    for (var key in filter) {
+                        if (filter[key]) {
+                            if (key === 'tech') {
+                                filterConditions[key] = filter[key].split(',');
+                                for (var i = 0; i < filterConditions[key].length; i++) {
+                                    filterConditions[key][i] = filterConditions[key][i].trim();
+                                }
+                            }
+                            else {
+                                filterConditions[key] = filter[key];
+                            }
+                        }
+                    }
+                    this.homeService.filter(filterConditions);
+                };
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',
