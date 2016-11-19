@@ -189,11 +189,18 @@ module.exports = {
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
     //Also can add different filters, etc.
+    const techFilter = req.body.tech ? {$in: req.body.tech} : {$notIn: ['']};
     Project.findAll({
       include: [
       {model: Profile, attributes: ['name', 'url', 'picture']},
       {model: Like},
-      {model: Comment}
+      {model: Comment},
+      {
+        model: Tech,
+        where: {
+          name: techFilter
+        }
+      }
       ]})
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
