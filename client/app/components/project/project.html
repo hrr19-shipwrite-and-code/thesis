@@ -51,7 +51,7 @@
 
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
-            <span><i id={{tech.name}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.name}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
           </div>
 
 

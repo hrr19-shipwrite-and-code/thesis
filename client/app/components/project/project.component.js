@@ -102,9 +102,15 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.newTech = '';
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
-                    console.log(event.target.id);
                     this.projectService.deleteTech(event.target.id, this.project.id)
                         .subscribe(function (data) { });
+                    for (var i = 0; i < this.project.Teches.length; i++) {
+                        if (this.project.Teches[i].name === event.target.id) {
+                            return this.project.Teches.splice(i, 1);
+                        }
+                        ;
+                    }
+                    ;
                 };
                 ProjectComponent.prototype.editDescription = function () {
                     document.getElementById('project-description').className += ' display-none';

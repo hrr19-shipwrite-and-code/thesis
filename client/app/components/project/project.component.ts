@@ -96,9 +96,14 @@ export class ProjectComponent {
   }
 
   deleteTech(event) {
-    console.log(event.target.id)
     this.projectService.deleteTech(event.target.id, this.project.id)
       .subscribe(data => {});
+
+    for(let i = 0; i < this.project.Teches.length; i++){
+      if(this.project.Teches[i].name === event.target.id) {
+        return this.project.Teches.splice(i, 1);
+      };
+    };
   }
 
 
