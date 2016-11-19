@@ -117,8 +117,10 @@ export class ProjectComponent {
     this.projectService.postComment(comment, this.id)
       .subscribe( data => {
         data.Profile = {
-
-        }
+          name: localStorage.getItem('name'),
+          url: localStorage.getItem('url'),
+          picture: localStorage.getItem('picture')
+        };
         this.comments.unshift(data)
       })
     this.newComment = '';
