@@ -33,8 +33,7 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exp
                     var options = new http_1.RequestOptions({ headers: headers });
                     var url = 'http://localhost:1337/api/project/create';
                     return this.authHttp.post(url, JSON.stringify(project), options)
-                        .map(function (res) { return res; })
-                        .subscribe(function (data) { return data; }, function (err) { return console.log(err); });
+                        .map(function (res) { return res.json(); });
                 };
                 ProjectAddService = __decorate([
                     core_1.Injectable(), 

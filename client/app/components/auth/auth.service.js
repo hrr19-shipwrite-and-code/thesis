@@ -1,4 +1,4 @@
-System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/router', 'rxjs/add/operator/map'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, angular2_jwt_1, http_1, angular2_jwt_2;
+    var core_1, angular2_jwt_1, http_1, angular2_jwt_2, router_1;
     var AuthService;
     return {
         setters:[
@@ -24,13 +24,17 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
             function (http_1_1) {
                 http_1 = http_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (_1) {}],
         execute: function() {
             AuthService = (function () {
                 //Store profile object in auth class
-                function AuthService(authHttp) {
+                function AuthService(authHttp, router) {
                     var _this = this;
                     this.authHttp = authHttp;
+                    this.router = router;
                     this.options = {
                         additionalSignUpFields: [{
                                 name: "name",
@@ -77,6 +81,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('url');
                     localStorage.removeItem('authId');
+                    this.router.navigateByUrl('/');
                 };
                 AuthService.prototype.authenticated = function () {
                     return angular2_jwt_1.tokenNotExpired();
@@ -87,7 +92,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
                 };
                 AuthService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp, router_1.Router])
                 ], AuthService);
                 return AuthService;
             }());

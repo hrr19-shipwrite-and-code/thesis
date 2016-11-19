@@ -42,7 +42,6 @@
 ## Requirements
 
 - Node v6.6.0
-- MySQL
 - Angular 2
 - MySQL 2.12.0
 
