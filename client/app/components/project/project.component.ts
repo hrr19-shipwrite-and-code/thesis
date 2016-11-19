@@ -95,6 +95,12 @@ export class ProjectComponent {
     this.newTech = '';
   }
 
+  deleteTech(event) {
+    console.log(event.target.id)
+    this.projectService.deleteTech(event.target.id, this.project.id)
+      .subscribe(data => {});
+  }
+
 
   editDescription(){
     document.getElementById('project-description').className += ' display-none'

@@ -37,6 +37,11 @@ export class ProjectService {
       .map(res => res.json());
   }
 
+  deleteTech(tech, projectId) {
+    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + tech)
+      .map(res => res);
+  }
+
   editDescription(description) {
     console.log(description) //string
   }

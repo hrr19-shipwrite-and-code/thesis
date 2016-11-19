@@ -101,6 +101,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         .subscribe(function (data) { });
                     this.newTech = '';
                 };
+                ProjectComponent.prototype.deleteTech = function (event) {
+                    console.log(event.target.id);
+                    this.projectService.deleteTech(event.target.id, this.project.id)
+                        .subscribe(function (data) { });
+                };
                 ProjectComponent.prototype.editDescription = function () {
                     document.getElementById('project-description').className += ' display-none';
                     document.getElementById('project-description-input').className = '';

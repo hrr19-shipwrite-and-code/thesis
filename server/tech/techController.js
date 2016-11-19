@@ -27,7 +27,7 @@ module.exports = {
 
   profileRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
-    const techName = req.body.tech;
+    const techName = req.params.techName;
     Tech.findOne({where: {name: techName}})
       .then((tech) => {
         Profile.findOne({where: {authId: authId}})
@@ -68,8 +68,8 @@ module.exports = {
   projectRemoveTech: (req, res, next) => {
     //auth check before allowing user to edit project
     const authId = req.user.sub;
-    const id = req.body.id;
-    const techName = req.body.tech;
+    const id = req.params.projectId;
+    const techName = req.params.techName;
     Tech.findOne({where: {name: techName}})
       .then((tech) => {
         Project.findOne({where: {id: id}})

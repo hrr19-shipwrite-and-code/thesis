@@ -55,6 +55,10 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectService.prototype.deleteTech = function (tech, projectId) {
+                    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + tech)
+                        .map(function (res) { return res; });
+                };
                 ProjectService.prototype.editDescription = function (description) {
                     console.log(description); //string
                 };
