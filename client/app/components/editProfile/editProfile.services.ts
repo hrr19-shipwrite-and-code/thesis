@@ -17,6 +17,6 @@ export class EditProfileService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
-      .map(res => res);
+      .map(res => res.json);
   }
 }

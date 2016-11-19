@@ -17,7 +17,7 @@ module.exports = {
                   .then((profile) => {
                     profile.addComment(comment)
                       .then(() => {
-                        res.sendStatus(201)
+                        res.json(comment)
                       })
                         .catch((err) => {
                           res.sendStatus(404);

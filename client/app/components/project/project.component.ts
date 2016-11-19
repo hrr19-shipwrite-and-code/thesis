@@ -116,7 +116,10 @@ export class ProjectComponent {
   postComment(comment){
     this.projectService.postComment(comment, this.id)
       .subscribe( data => {
-        console.log(data)
+        data.Profile = {
+
+        }
+        this.comments.unshift(data)
       })
     this.newComment = '';
   }
