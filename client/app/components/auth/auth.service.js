@@ -48,6 +48,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
                                 alert(error);
                                 return;
                             }
+                            localStorage.setItem('authId', profile.user_id);
                             console.log(profile);
                             _this.findOrCreateUser(profile);
                         });
@@ -75,6 +76,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', 'rxjs/add/ope
                 AuthService.prototype.logout = function () {
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('url');
+                    localStorage.removeItem('authId');
                 };
                 AuthService.prototype.authenticated = function () {
                     return angular2_jwt_1.tokenNotExpired();

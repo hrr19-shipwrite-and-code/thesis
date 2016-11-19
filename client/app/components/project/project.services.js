@@ -41,9 +41,25 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.authHttp.post('http://localhost:1337/api/like/project/' + id, {}, options)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectService.prototype.getTech = function () {
+                    return [
+                        { name: 'React' },
+                        { name: 'JavaScript' },
+                        { name: 'TypeScript' },
+                        { name: 'Angular' },
+                        { name: 'Angular 2' },
+                        { name: 'Redux' }
+                    ];
+                };
                 ProjectService.prototype.doesUserLike = function (id) {
                     return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
                         .map(function (res) { return res.json(); });
+                };
+                ProjectService.prototype.addTech = function (tech) {
+                    console.log(tech); //{name: "tech here"}
+                };
+                ProjectService.prototype.editDescription = function (description) {
+                    console.log(description); //string
                 };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
