@@ -5,7 +5,6 @@ const Like = require('../likes/likeSchema.js');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
-const fs = require('fs');
 const fse = require('fs-extra');
 
 module.exports = {
@@ -39,7 +38,6 @@ module.exports = {
         });
   },
 
-  //Uncomment the auth stuff when access to edit profile
   deleteProject: (req, res, next) => {
     const id = req.params.projectId;
     const authId = req.user.sub;
@@ -133,7 +131,6 @@ module.exports = {
       });
   },
 
-  //Attatch authentication when can access edit profile
   updateProjectThumbnail: (req, res, next) => {
     const thumb = req.body.url;
     const id = req.params.projectId;
@@ -157,7 +154,7 @@ module.exports = {
     Image.findById(id)
       .then((image) => {
         let url = image.url;
-        fs.unlink(url, () => {
+        fse.remove(url, () => {
           Image.destroy({where: {id: id}})
             .then(() => {
               res.sendStatus(200);
