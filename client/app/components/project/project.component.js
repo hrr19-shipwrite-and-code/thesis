@@ -113,6 +113,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 };
                 //Add tech to project
                 ProjectComponent.prototype.addTech = function () {
+                    var _this = this;
                     for (var _i = 0, _a = this.project.Teches; _i < _a.length; _i++) {
                         var value = _a[_i];
                         if (value.name === this.newTech) {
@@ -120,16 +121,17 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }
                     var newTech = { name: this.newTech, id: this.project.id };
-                    this.project.Teches.push(newTech);
                     this.projectService.addTech(newTech)
-                        .subscribe(function (data) { });
+                        .subscribe(function (data) {
+                        _this.project.Teches.push(data);
+                    });
                     this.newTech = '';
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
                     this.projectService.deleteTech(event.target.id, this.project.id)
                         .subscribe(function (data) { });
                     for (var i = 0; i < this.project.Teches.length; i++) {
-                        if (this.project.Teches[i].name === event.target.id) {
+                        if (this.project.Teches[i].id == Number(event.target.id)) {
                             return this.project.Teches.splice(i, 1);
                         }
                         ;

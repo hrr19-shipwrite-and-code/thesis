@@ -85,7 +85,7 @@ module.exports = {
       include: [
         {model: Profile, attributes: ['name', 'url', 'authId']},
         {model: Image, attributes: ['id', 'url']},
-        {model: Tech, attributes: ['name'], through: {attributes: []}}
+        {model: Tech, attributes: ['id', 'name'], through: {attributes: []}}
        ]
     })
       .then((project) => {

@@ -23,7 +23,7 @@
             <button *ngIf="checkForImages()" (click)="updateThumbnail()">Set as display picture</button>
             <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)">Delete picture</button>
             <div>
-              <input type="file" 
+              <input type="file"
                 ngFileSelect
                 [options]="options"
                 (onUpload)="handleUpload($event)">
@@ -63,7 +63,7 @@
 
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
-            <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.name}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
           </div>
 
 
