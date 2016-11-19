@@ -12,6 +12,11 @@
   box-shadow: 0 5px 6px -6px #bdc3c7;
 }
 
+/* Full-Page Container */
+.container {
+
+}
+
 /* Header */
 .header-container {
   width: 100%;
@@ -19,6 +24,15 @@
   margin-bottom: 20px;
 
   border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+}
+
+/* Main Content */
+.main-content {
+  border: 2px solid lightgreen;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* Sidebar as a whole */

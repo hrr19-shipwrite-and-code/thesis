@@ -1,0 +1,79 @@
+/* Utility */
+.horizontal-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-preview-container {
+  width: 800px;
+  height: 250px;
+  border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+  border-top: 1px solid rgba(68, 68, 68, 0.1);
+
+  /*background-color: white;*/
+  margin-top: 20px;
+  margin-bottom: 100px;
+  padding: 20px;
+
+  overflow: hidden;
+
+}
+
+/* Profile Picture and Text Details */
+
+.profile-details {
+  color: #444444;
+  font-size: 0.95em;
+
+  text-align: center;
+  width: 250px;
+  margin-right: 40px;
+}
+
+.profile-picture-viewport {
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  overflow: hidden;
+
+  margin: 0 auto;
+  margin-bottom: 7px;
+
+  /*display: flex;
+  align-items: center;
+  justify-content: center;*/
+}
+
+.profile-picture {
+  width: 100%;
+  height: auto;
+}
+
+.tech {
+  font-size: 0.9em;
+  color: #888B8D;
+}
+
+/* Thumbnail Scrolling */
+
+.thumbnails-container {
+
+}
+
+.thumbnail-placeholder {
+
+}
+
+
+/* Global Styles */
+
+p {
+  margin-bottom: 5px;
+}
