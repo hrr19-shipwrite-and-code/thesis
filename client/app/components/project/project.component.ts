@@ -72,12 +72,6 @@ export class ProjectComponent {
       )
   }
 
-  //Verify current user is owner of the project
-  isOwner(projectOwner){
-    let currentUser = localStorage.getItem('authId')
-    return currentUser === projectOwner ? true : false;
-  }
-
   //Add tech to project
   addTech(event, tech) {
     event.preventDefault();

@@ -33,7 +33,6 @@ export class AuthService {
           alert(error);
           return;
         }
-        localStorage.setItem('authId', profile.user_id);
         console.log(profile);
         this.findOrCreateUser(profile)
       });
@@ -62,11 +61,10 @@ export class AuthService {
     localStorage.removeItem('url');
     localStorage.removeItem('name');
     localStorage.removeItem('picture');
-    localStorage.removeItem('authId');
     this.router.navigateByUrl('/');
   }
 
- authenticated() {
+  authenticated() {
     return tokenNotExpired();
   };
 

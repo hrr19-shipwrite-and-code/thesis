@@ -14,11 +14,11 @@
         <!-- Main Image -->
         <div class="main-img-viewport">
           <img src={{project.thumbnail}} alt="main-img" class='main-img' />
-          <div *ngIf="isOwner(project.Profile.authId)">
+          <div *ngIf="checkUser(project.Profile.url)">
             <span>Add Image</span>
           </div>
         </div>
-        
+
 
         <!-- Info -->
         <div class="info">
@@ -28,7 +28,7 @@
             </p>
 
             <!--Edit Discription-->
-            <div *ngIf="isOwner(project.Profile.authId)">
+            <div *ngIf="checkUser(project.Profile.url)">
               <div id="project-description-input" class="display-none">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editDescriptionPost($event, editDescriptionInput.value)">
                   <input type="text" name="description" [(ngModel)]="project.description">
@@ -53,9 +53,9 @@
             {{tech.name}}
           </p>
 
-          
+
           <!--Add to tech stack-->
-          <div *ngIf="isOwner(project.Profile.authId)">
+          <div *ngIf="checkUser(project.Profile.url)">
             <datalist id="techs">
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>

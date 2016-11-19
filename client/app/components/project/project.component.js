@@ -78,11 +78,6 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
-                //Verify current user is owner of the project
-                ProjectComponent.prototype.isOwner = function (projectOwner) {
-                    var currentUser = localStorage.getItem('authId');
-                    return currentUser === projectOwner ? true : false;
-                };
                 //Add tech to project
                 ProjectComponent.prototype.addTech = function (event, tech) {
                     event.preventDefault();
