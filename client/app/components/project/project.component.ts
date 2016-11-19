@@ -106,7 +106,7 @@ export class ProjectComponent {
     document.getElementById('project-description').className = 'description';
     document.getElementById('project-description-input').className = 'display-none';
     
-    this.projectService.editDescription(input.description)
+    this.projectService.editDescription(input.description);
   }
 
 }
