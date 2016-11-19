@@ -20,10 +20,14 @@ const Project = db.define('Project', {
   },
   deploy: Sequelize.STRING,
   github: Sequelize.STRING,
-  contribute: Sequelize.BOOLEAN,
+  contribute: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   progress: {
     type: Sequelize.ENUM,
-    values: ['Completed', 'In Progress', 'Abandonded']
+    values: ['Completed', 'In Progress', 'Abandonded'],
+    defaultValue: 'In Progress'
   }
 });
 

@@ -22,6 +22,7 @@ export class ProjectComponent {
   comments = [];
   techs = [];
   newTech = '';
+  private openSource: String;
   private picture: Object = {url: '/client/app/assets/thumbnail.png'}
   private uploadFile: any;
   private options: Object = {
@@ -31,6 +32,13 @@ export class ProjectComponent {
     authToken: localStorage.getItem('id_token'),
     authTokenPrefix: 'Bearer'
   };
+  private editDescrip = false;
+  private editTitle = false;
+  private editTech = false;
+  private editGithub = false;
+  private editDeploy = false;
+  private editProgress = false;
+  private editSource = false;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
 
@@ -55,10 +63,23 @@ export class ProjectComponent {
             this.picture = data.Images[0];
           }
           data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+          this.determineOpenSource(data.openSource);
           this.project = data
         },
         err => this.error = true
       )
+  }
+
+  gotoUser() {
+    this.router.navigateByUrl('/profile/' + this.project.Profile.url )
+  }
+
+  determineOpenSource(data) {
+    if (data) {
+      this.openSource = "Open source"
+    } else {
+      this.openSource = "Not open source"
+    }
   }
 
   deleteProject() {
@@ -121,6 +142,7 @@ export class ProjectComponent {
         this.project.Teches.push(data);
       });
     this.newTech = '';
+    this.editTech = !this.editTech;
   }
 
   deleteTech(event) {
@@ -133,23 +155,6 @@ export class ProjectComponent {
     };
   }
 
-
-  editDescription(){
-    document.getElementById('project-description').className += ' display-none'
-    document.getElementById('project-description-input').className = ''
-  }
-
-  editDescriptionPost(event, input){
-    event.preventDefault();
-    this.project.descripiton = input.descripiton;
-    document.getElementById('project-description').className = 'description';
-    document.getElementById('project-description-input').className = 'display-none';
-    this.projectService.editDescription(this.id, input)
-      .subscribe(
-        data => data,
-        err => err
-      )
-  }
 
   //Post comment and add comment to view
   postComment(){
@@ -183,6 +188,7 @@ export class ProjectComponent {
   getComment(id) {
     this.projectService.getComment(id)
       .subscribe( data => {
+        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
         this.comments = data;
       })
   }
@@ -235,5 +241,41 @@ export class ProjectComponent {
   //Checks whether to hide certain buttons
   checkForImages() {
     return this.project.Images.length > 0
+  }
+
+
+  editProject(event, input, type){
+    if (type !== 'progress' && type !== 'contribute') {
+      event.preventDefault();
+    }
+    if (type === 'contribute') {
+      this.determineOpenSource(this.project.contribute);
+    }
+    this.project[type] = input[type]
+    //this.project.descripiton = input.descripiton;
+    this.projectService.editDescription(this.id, input)
+      .subscribe(
+        data => this.editingProject(type),
+        err => err
+      )
+  }
+
+
+  editingProject(type) {
+    if (type === 'tech') {
+      return this.editTech = !this.editTech;
+    } else if (type === 'description') {
+      this.editDescrip = !this.editDescrip;
+    } else if (type === 'title') {
+      this.editTitle = !this.editTitle;
+    } else if (type === 'github') {
+      this.editGithub = !this.editGithub
+    } else if (type === 'deploy') {
+      this.editDeploy = !this.editDeploy
+    } else if (type === 'progress') {
+      this.editProgress = !this.editProgress;
+    } else if (type === 'contribute') {
+      this.editSource = !this.editSource;
+    }
   }
 }

@@ -3,7 +3,12 @@
   <div class="main-card shadow">
       <!-- Header -->
       <div class='header'>
-        <h3 class='title'>{{project.title}}</h3>
+        <form #editTitleInput="ngForm" class="title" *ngIf="editTitle" (ngSubmit)="editProject($event, editTitleInput.value, 'title')">
+          <input type="text" name="title" [(ngModel)]="project.title">
+          <button class="btn btn-primary">Edit</button>
+        </form>
+        <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
+        <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('title')" class="fa fa-pencil" aria-hidden="true" title="Edit Project Title"></i>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
           by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span> <button *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
@@ -35,19 +40,19 @@
         <!-- Info -->
         <div class="info">
           <div>
-            <p class='description' id="project-description">
+            <p *ngIf="!editDescrip" id="project-description">
               {{project.description}}
             </p>
 
             <!--Edit Discription-->
             <div *ngIf="checkUser(project.Profile.url)">
-              <div id="project-description-input" class="display-none">
-                <form #editDescriptionInput="ngForm" (ngSubmit)="editDescriptionPost($event, editDescriptionInput.value)">
+              <div *ngIf="editDescrip">
+                <form #editDescriptionInput="ngForm" (ngSubmit)="editProject($event, editDescriptionInput.value, 'description')" >
                   <input type="text" name="description" [(ngModel)]="project.description">
                   <button type="submit" class="btn btn-primary">Save</button>
                 </form>
               </div>
-              <span (click)="editDescription()">Edit Description</span>
+              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('description')" class="fa fa-pencil" aria-hidden="true" title="Edit Description"></i>
             </div>
 
           </div>
@@ -61,10 +66,13 @@
 
           <hr>
 
+          <!-- Displaying Tech and add tech icon -->
+            <div>Technology:</div>          
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
             <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
           </div>
+          <div><i *ngIf='checkUser(project.Profile.url)' class="fa fa-plus" aria-hidden="true" (click)="editingProject('tech')" title="Add Tech"></i></div>
 
 
           <!--Add to tech stack-->
@@ -72,10 +80,61 @@
             <datalist id="techs">
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
-            <form (ngSubmit)="addTech()">
+            <form *ngIf="editTech" (ngSubmit)="addTech()">
               <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
+          </div>
+
+          <hr>
+
+          <!-- Others (Deploy,Github,Progress,OpenSource) -->
+          <div>
+            <div>
+              <!-- Deploy Info/Form -->
+              <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
+              <span *ngIf="checkUser(project.Profile.url) && project.deploy.length === 0">Add deploy link</span>
+              <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
+                <input type="text" name="deploy" [(ngModel)]="project.deploy">
+                <button class="btn btn-primary">Edit</button>
+              </form>
+              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
+            </div>            
+            <div>
+              <!-- GitHub Info/Form -->
+              <span *ngIf="project.github && !editGithub"><a href={{project.github}}>GitHub</a></span>
+              <span *ngIf="checkUser(project.Profile.url) && project.github.length === 0">Add a github</span>
+              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
+              <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
+                <input type="text" name="github" [(ngModel)]="project.github">
+                <button class="btn btn-primary">Edit</button>
+              </form>              
+            </div>
+            <div>
+              <!-- Status Info/DropDown -->
+              <span *ngIf="!editProgress">{{project.progress}}</span>
+              <span *ngIf="editProgress">
+                <select class="form-control" id="status-select" [(ngModel)]="project.progress" (ngModelChange)="editProject($event, {progress: project.progress}, 'progress')">
+                  <option value="Completed">Completed</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Abandonded">Abandonded</option>
+                </select>
+              </span>
+              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>              
+              </div>
+              <div>
+                <!-- Open Source Info/Toggle -->
+                <span *ngIf="!editSource">{{openSource}}</span>
+                <span *ngIf="editSource">
+                  <label class="switch">
+                    <input type="checkbox" name="openSource" [(ngModel)]="project.contribute" (ngModelChange)="editProject($event, {contribute: project.contribute}, 'contribute')">
+                    <div class="slider round"></div>
+                  </label>
+                </span>
+                <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>                  
+              </div>
+            </div>
+            <div>            
           </div>
 
         </div> <!-- Info -->

@@ -47,6 +47,13 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         authToken: localStorage.getItem('id_token'),
                         authTokenPrefix: 'Bearer'
                     };
+                    this.editDescrip = false;
+                    this.editTitle = false;
+                    this.editTech = false;
+                    this.editGithub = false;
+                    this.editDeploy = false;
+                    this.editProgress = false;
+                    this.editSource = false;
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -69,8 +76,20 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             _this.picture = data.Images[0];
                         }
                         data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+                        _this.determineOpenSource(data.openSource);
                         _this.project = data;
                     }, function (err) { return _this.error = true; });
+                };
+                ProjectComponent.prototype.gotoUser = function () {
+                    this.router.navigateByUrl('/profile/' + this.project.Profile.url);
+                };
+                ProjectComponent.prototype.determineOpenSource = function (data) {
+                    if (data) {
+                        this.openSource = "Open source";
+                    }
+                    else {
+                        this.openSource = "Not open source";
+                    }
                 };
                 ProjectComponent.prototype.deleteProject = function () {
                     var _this = this;
@@ -126,6 +145,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.project.Teches.push(data);
                     });
                     this.newTech = '';
+                    this.editTech = !this.editTech;
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
                     this.projectService.deleteTech(event.target.id, this.project.id)
@@ -137,18 +157,6 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         ;
                     }
                     ;
-                };
-                ProjectComponent.prototype.editDescription = function () {
-                    document.getElementById('project-description').className += ' display-none';
-                    document.getElementById('project-description-input').className = '';
-                };
-                ProjectComponent.prototype.editDescriptionPost = function (event, input) {
-                    event.preventDefault();
-                    this.project.descripiton = input.descripiton;
-                    document.getElementById('project-description').className = 'description';
-                    document.getElementById('project-description-input').className = 'display-none';
-                    this.projectService.editDescription(this.id, input)
-                        .subscribe(function (data) { return data; }, function (err) { return err; });
                 };
                 //Post comment and add comment to view
                 ProjectComponent.prototype.postComment = function () {
@@ -181,6 +189,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     this.projectService.getComment(id)
                         .subscribe(function (data) {
+                        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         _this.comments = data;
                     });
                 };
@@ -223,6 +232,42 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 //Checks whether to hide certain buttons
                 ProjectComponent.prototype.checkForImages = function () {
                     return this.project.Images.length > 0;
+                };
+                ProjectComponent.prototype.editProject = function (event, input, type) {
+                    var _this = this;
+                    if (type !== 'progress' && type !== 'contribute') {
+                        event.preventDefault();
+                    }
+                    if (type === 'contribute') {
+                        this.determineOpenSource(this.project.contribute);
+                    }
+                    this.project[type] = input[type];
+                    //this.project.descripiton = input.descripiton;
+                    this.projectService.editDescription(this.id, input)
+                        .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                };
+                ProjectComponent.prototype.editingProject = function (type) {
+                    if (type === 'tech') {
+                        return this.editTech = !this.editTech;
+                    }
+                    else if (type === 'description') {
+                        this.editDescrip = !this.editDescrip;
+                    }
+                    else if (type === 'title') {
+                        this.editTitle = !this.editTitle;
+                    }
+                    else if (type === 'github') {
+                        this.editGithub = !this.editGithub;
+                    }
+                    else if (type === 'deploy') {
+                        this.editDeploy = !this.editDeploy;
+                    }
+                    else if (type === 'progress') {
+                        this.editProgress = !this.editProgress;
+                    }
+                    else if (type === 'contribute') {
+                        this.editSource = !this.editSource;
+                    }
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

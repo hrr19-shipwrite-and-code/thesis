@@ -35,6 +35,12 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.http.get('http://localhost:1337/api/project/id/' + id)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectService.prototype.deleteProject = function (id) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/delete/' + id, options)
+                        .map(function (res) { return res; });
+                };
                 ProjectService.prototype.likeProject = function (id) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
@@ -42,24 +48,28 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                         .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.getTech = function () {
-                    return [
-                        { name: 'React' },
-                        { name: 'JavaScript' },
-                        { name: 'TypeScript' },
-                        { name: 'Angular' },
-                        { name: 'Angular 2' },
-                        { name: 'Redux' }
-                    ];
+                    return this.http.get('http://localhost:1337/api/tech')
+                        .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.doesUserLike = function (id) {
                     return this.authHttp.get('http://localhost:1337/api/like/user/' + id)
                         .map(function (res) { return res.json(); });
                 };
                 ProjectService.prototype.addTech = function (tech) {
-                    console.log(tech); //{name: "tech here"}
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+                        .map(function (res) { return res.json(); });
                 };
-                ProjectService.prototype.editDescription = function (description) {
-                    console.log(description); //string
+                ProjectService.prototype.deleteTech = function (techId, projectId) {
+                    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.editDescription = function (id, description) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.put('http://localhost:1337/api/project/edit/' + id, description, options)
+                        .map(function (res) { return res; });
                 };
                 ProjectService.prototype.getComment = function (id) {
                     return this.http.get('http://localhost:1337/api/comment/' + id)
@@ -73,6 +83,18 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                 };
                 ProjectService.prototype.deleteComment = function (commentId) {
                     return this.authHttp.delete('http://localhost:1337/api/comment/delete/' + commentId)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.setAsThumb = function (id, data) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/' + id, JSON.stringify(data), options)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.deleteImage = function (id) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
                         .map(function (res) { return res; });
                 };
                 ProjectService = __decorate([
