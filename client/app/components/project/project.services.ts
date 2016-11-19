@@ -33,8 +33,8 @@ export class ProjectService {
   addTech(tech) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options);
-    console.log(tech) //{name: "tech here"}
+    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+      .map(res => res.json());
   }
 
   editDescription(description) {

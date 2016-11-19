@@ -37,6 +37,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.newComment = '';
                     this.comments = [];
                     this.techs = [];
+                    this.newTech = '';
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -87,22 +88,18 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     });
                 };
                 //Add tech to project
-                ProjectComponent.prototype.addTech = function (event, tech) {
-                    event.preventDefault();
-                    for (var i = 0; i <= this.project.Teches.length; i++) {
-                        if (i === this.project.Teches.length) {
-                            var temp = {
-                                name: tech.tech
-                            };
-                            this.project.Teches.push(temp);
-                            temp.id = this.project.id;
-                            this.projectService.addTech(temp)
-                                .subscribe(function (data) { });
-                        }
-                        if (this.project.Teches[i].name === tech.tech) {
-                            return;
+                ProjectComponent.prototype.addTech = function () {
+                    for (var _i = 0, _a = this.project.Teches; _i < _a.length; _i++) {
+                        var value = _a[_i];
+                        if (value.name === this.newTech) {
+                            return this.newTech = '';
                         }
                     }
+                    var newTech = { name: this.newTech, id: this.project.id };
+                    this.project.Teches.push(newTech);
+                    this.projectService.addTech(newTech)
+                        .subscribe(function (data) { });
+                    this.newTech = '';
                 };
                 ProjectComponent.prototype.editDescription = function () {
                     document.getElementById('project-description').className += ' display-none';
@@ -116,9 +113,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.projectService.editDescription(input.description);
                 };
                 //Post comment and add comment to view
-                ProjectComponent.prototype.postComment = function (comment) {
+                ProjectComponent.prototype.postComment = function () {
                     var _this = this;
-                    this.projectService.postComment(comment, this.id)
+                    this.projectService.postComment({ comment: this.newComment }, this.id)
                         .subscribe(function (data) {
                         data.Profile = {
                             name: localStorage.getItem('name'),

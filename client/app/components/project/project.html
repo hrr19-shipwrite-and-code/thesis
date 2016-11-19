@@ -59,8 +59,8 @@
             <datalist id="techs">
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
-            <form #add="ngForm" (ngSubmit)="addTech($event, add.value)">
-              <input type="text" list="techs" name="tech" id="techInput" ngModel>
+            <form (ngSubmit)="addTech()">
+              <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech">
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
           </div>
@@ -70,7 +70,7 @@
 
       <div class="comments">
 
-        <form *ngIf="authService.authenticated()" #form="ngForm" (ngSubmit)="postComment(form.value)" class="comment-form">
+        <form *ngIf="authService.authenticated()" (ngSubmit)="postComment()" class="comment-form">
           <div class="form-group">
             <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="newComment" required></textarea>
           </div>

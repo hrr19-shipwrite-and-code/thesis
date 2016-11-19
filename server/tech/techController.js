@@ -55,7 +55,7 @@ module.exports = {
             console.log(tech)
             project.addTech(tech)
               .then(() => {
-                res.sendStatus(201);
+                res.json(tech);
               })
               .catch((err) => {
                 console.log(err)
@@ -86,7 +86,7 @@ module.exports = {
   },
 
   getAllTech: (req, res, next) => {
-    Tech.findAll({attributes: ["id", "name"]})
+    Tech.findAll({attributes: ["name"]})
       .then((tech) => {
         res.json(tech);
       })

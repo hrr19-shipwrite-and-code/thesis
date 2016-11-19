@@ -21,6 +21,7 @@ export class ProjectComponent {
   newComment = '';
   comments = [];
   techs = [];
+  newTech = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
 
@@ -80,24 +81,18 @@ export class ProjectComponent {
   }
 
   //Add tech to project
-  addTech(event, tech) {
-    event.preventDefault();
-
-    for(let i = 0; i <= this.project.Teches.length; i++){
-      if(i === this.project.Teches.length) {
-        let temp = {
-          name: tech.tech
-        }
-        this.project.Teches.push(temp)
-        temp.id = this.project.id;
-        this.projectService.addTech(temp)
-          .subscribe(data => {})
-      }
-
-      if(this.project.Teches[i].name === tech.tech) {
-        return;
+  addTech() {
+    for(let value of this.project.Teches){
+      if(value.name === this.newTech) {
+        return this.newTech = '';
       }
     }
+
+    let newTech = { name: this.newTech, id: this.project.id };
+    this.project.Teches.push(newTech);
+    this.projectService.addTech(newTech)
+      .subscribe(data => {});
+    this.newTech = '';
   }
 
 
@@ -116,15 +111,15 @@ export class ProjectComponent {
   }
 
   //Post comment and add comment to view
-  postComment(comment){
-    this.projectService.postComment(comment, this.id)
+  postComment(){
+    this.projectService.postComment({comment: this.newComment}, this.id)
       .subscribe( data => {
         data.Profile = {
           name: localStorage.getItem('name'),
           url: localStorage.getItem('url'),
           picture: localStorage.getItem('picture')
         };
-        this.comments.unshift(data)
+        this.comments.unshift(data);
         this.project.comments ++;
       })
     this.newComment = '';
