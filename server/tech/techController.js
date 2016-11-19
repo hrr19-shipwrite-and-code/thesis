@@ -47,7 +47,7 @@ module.exports = {
     //auth check before allowing user to edit project
     const authId = req.user.sub;
     const id = req.body.id;
-    const techName = req.body.tech;
+    const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Project.findOne({where: {id: id}})

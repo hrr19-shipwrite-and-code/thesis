@@ -20,9 +20,9 @@ export class ProjectComponent {
   error: Boolean;
   newComment = '';
   comments = [];
+  techs = [];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
-  techs;
 
   //Runs this function everytime route accessed
   ngOnInit () {
@@ -32,7 +32,7 @@ export class ProjectComponent {
     this.getProject(this.id);
     this.getComment(this.id);
     this.doesUserLike(this.id);
-    this.techs = this.projectService.getTech()
+    this.getAllTech();
   }
 
   //Service function to get the project by the route params Id
@@ -72,6 +72,13 @@ export class ProjectComponent {
       )
   }
 
+  getAllTech() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
+  }
+
   //Add tech to project
   addTech(event, tech) {
     event.preventDefault();
@@ -82,7 +89,9 @@ export class ProjectComponent {
           name: tech.tech
         }
         this.project.Teches.push(temp)
+        temp.id = this.project.id;
         this.projectService.addTech(temp)
+          .subscribe(data => {})
       }
 
       if(this.project.Teches[i].name === tech.tech) {

@@ -21,14 +21,8 @@ export class ProjectService {
   }
 
   getTech() {
-    return [
-      {name: 'React'},
-      {name: 'JavaScript'},
-      {name: 'TypeScript'},
-      {name: 'Angular'},
-      {name: 'Angular 2'},
-      {name: 'Redux'}
-    ]
+    return this.http.get('http://localhost:1337/api/tech')
+      .map(res => res.json());
   }
 
   doesUserLike(id) {
@@ -37,6 +31,9 @@ export class ProjectService {
   }
 
   addTech(tech) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options);
     console.log(tech) //{name: "tech here"}
   }
 

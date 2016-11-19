@@ -36,6 +36,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.like = { color: this.color };
                     this.newComment = '';
                     this.comments = [];
+                    this.techs = [];
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -46,7 +47,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getProject(this.id);
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
-                    this.techs = this.projectService.getTech();
+                    this.getAllTech();
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -78,6 +79,13 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }, function (err) { return _this.authService.login(); });
                 };
+                ProjectComponent.prototype.getAllTech = function () {
+                    var _this = this;
+                    this.projectService.getTech()
+                        .subscribe(function (data) {
+                        _this.techs = data;
+                    });
+                };
                 //Add tech to project
                 ProjectComponent.prototype.addTech = function (event, tech) {
                     event.preventDefault();
@@ -87,7 +95,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                                 name: tech.tech
                             };
                             this.project.Teches.push(temp);
-                            this.projectService.addTech(temp);
+                            temp.id = this.project.id;
+                            this.projectService.addTech(temp)
+                                .subscribe(function (data) { });
                         }
                         if (this.project.Teches[i].name === tech.tech) {
                             return;
