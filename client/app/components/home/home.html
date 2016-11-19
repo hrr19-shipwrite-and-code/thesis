@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="filter-bar filter-bar-hide" id="filter-bar">
+    <input type="text" placeholder="Filter by tech">
+  </div>
+  <div class="filter-btn" (click)="filterBar()">
+    <p class="filter-txt">Filter</p>
+  </div>
   <div class="thumbnails">
     <project-thumbnail [projects]="projects"></project-thumbnail>
   </div>

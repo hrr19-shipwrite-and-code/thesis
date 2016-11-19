@@ -24,12 +24,23 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
                     this.homeService = homeService;
+                    this.filterHidden = true;
                     //this.projects = homeService.getProjects();
                 }
                 HomeComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.homeService.getProjects()
                         .subscribe(function (data) { return _this.projects = data; }, function (error) { return alert(error); });
+                };
+                HomeComponent.prototype.filterBar = function () {
+                    if (this.filterHidden) {
+                        document.getElementById('filter-bar').className = 'filter-bar';
+                        this.filterHidden = !this.filterHidden;
+                    }
+                    else {
+                        document.getElementById('filter-bar').className = 'filter-bar filter-bar-hide';
+                        this.filterHidden = !this.filterHidden;
+                    }
                 };
                 HomeComponent = __decorate([
                     core_1.Component({

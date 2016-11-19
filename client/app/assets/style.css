@@ -168,3 +168,39 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.filter-bar {
+  background-color: rgb(250, 128, 114);
+  width: 100%;
+  height: 50px;
+  margin-top: -20px;
+  transition: all 500ms ease;
+}
+
+.filter-bar-hide {
+  margin-top: -70px
+}
+
+.filter-btn {
+  border-top: 25px solid salmon;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	height: 25px;
+	width: 200px;
+  margin: 0 37%;
+  text-align: center;
+  color: white;
+}
+
+.filter-txt {
+  margin-top: -24px;
+}
+
+.thumbnails {
+  margin-top: 30px;
+}
+
+.filter-bar-input {
+  margin-top: 10px;
+  margin-left: 10px;
+}

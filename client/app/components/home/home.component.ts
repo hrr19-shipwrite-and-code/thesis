@@ -12,6 +12,7 @@ import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail
 })
 
 export class HomeComponent {
+  filterHidden = true;
   projects;
   constructor(private homeService: HomeService) {
     //this.projects = homeService.getProjects();
@@ -23,5 +24,15 @@ export class HomeComponent {
         data => this.projects = data,
         error => alert(error)
       )
+  }
+
+  filterBar() {
+    if(this.filterHidden) {
+      document.getElementById('filter-bar').className = 'filter-bar';
+      this.filterHidden = !this.filterHidden
+    } else {
+      document.getElementById('filter-bar').className = 'filter-bar filter-bar-hide';      
+      this.filterHidden = !this.filterHidden      
+    }
   }
 }
