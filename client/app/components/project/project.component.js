@@ -28,16 +28,25 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
             }],
         execute: function() {
             ProjectComponent = (function () {
-                function ProjectComponent(projectService, route, authService) {
+                function ProjectComponent(projectService, route, authService, router) {
                     this.projectService = projectService;
                     this.route = route;
                     this.authService = authService;
+                    this.router = router;
                     this.color = '#888B8D';
                     this.like = { color: this.color };
                     this.newComment = '';
                     this.comments = [];
                     this.techs = [];
                     this.newTech = '';
+                    this.picture = { url: '/client/app/assets/thumbnail.png' };
+                    this.options = {
+                        filterExtensions: true,
+                        allowedExtensions: ['image/png', 'image/jpg'],
+                        calculateSpeed: true,
+                        authToken: localStorage.getItem('id_token'),
+                        authTokenPrefix: 'Bearer'
+                    };
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -49,12 +58,27 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.getAllTech();
+                    this.options.url = 'http://localhost:1337/api/project/upload/' + this.id;
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
                     var _this = this;
                     this.projectService.getProject(id)
-                        .subscribe(function (data) { return _this.project = data; }, function (err) { return _this.error = true; });
+                        .subscribe(function (data) {
+                        if (data.Images.length > 0) {
+                            _this.picture = data.Images[0];
+                        }
+                        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+                        _this.project = data;
+                    }, function (err) { return _this.error = true; });
+                };
+                ProjectComponent.prototype.deleteProject = function () {
+                    var _this = this;
+                    var choice = prompt('Enter the projects the title of the project you wish to delete');
+                    if (choice === this.project.title) {
+                        this.projectService.deleteProject(this.id)
+                            .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                    }
                 };
                 //Checks if the user already likes this project
                 ProjectComponent.prototype.doesUserLike = function (id) {
@@ -121,7 +145,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.project.descripiton = input.descripiton;
                     document.getElementById('project-description').className = 'description';
                     document.getElementById('project-description-input').className = 'display-none';
-                    this.projectService.editDescription(input.description);
+                    this.projectService.editDescription(this.id, input)
+                        .subscribe(function (data) { return data; }, function (err) { return err; });
                 };
                 //Post comment and add comment to view
                 ProjectComponent.prototype.postComment = function () {
@@ -157,6 +182,46 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.comments = data;
                     });
                 };
+                //Image Upload function
+                ProjectComponent.prototype.handleUpload = function (data) {
+                    if (data && data.response) {
+                        data = JSON.parse(data.response);
+                        this.picture = data;
+                        this.project.Images.push(data);
+                        this.uploadFile = data;
+                    }
+                };
+                //Set image as project thumbnail
+                ProjectComponent.prototype.updateThumbnail = function () {
+                    var data = this.picture;
+                    this.projectService.setAsThumb(this.id, data)
+                        .subscribe(function (data) { return data; }, function (err) { return err; });
+                };
+                //Function to make thumbnail the large image
+                ProjectComponent.prototype.setMainImage = function (img) {
+                    this.picture = img;
+                };
+                //Delete image from database and page
+                ProjectComponent.prototype.deleteImage = function (id) {
+                    var _this = this;
+                    this.projectService.deleteImage(id)
+                        .subscribe(function (data) {
+                        for (var i = 0; i < _this.project.Images.length; i++) {
+                            var img = _this.project.Images[i];
+                            if (img.id === id) {
+                                _this.project.Images.splice(i, i + 1);
+                                _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
+                                if (_this.picture.url === '/client/app/assets/thumbnail.png') {
+                                    _this.updateThumbnail();
+                                }
+                            }
+                        }
+                    }, function (err) { return err; });
+                };
+                //Checks whether to hide certain buttons
+                ProjectComponent.prototype.checkForImages = function () {
+                    return this.project.Images.length > 0;
+                };
                 ProjectComponent = __decorate([
                     core_1.Component({
                         selector: 'project',
@@ -164,7 +229,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         styleUrls: ['./client/app/components/project/project.css'],
                         providers: [project_services_js_1.ProjectService, auth_service_1.AuthService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof project_services_js_1.ProjectService !== 'undefined' && project_services_js_1.ProjectService) === 'function' && _a) || Object, router_1.ActivatedRoute, auth_service_1.AuthService])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof project_services_js_1.ProjectService !== 'undefined' && project_services_js_1.ProjectService) === 'function' && _a) || Object, router_1.ActivatedRoute, auth_service_1.AuthService, router_1.Router])
                 ], ProjectComponent);
                 return ProjectComponent;
                 var _a;

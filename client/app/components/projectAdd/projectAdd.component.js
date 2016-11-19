@@ -29,15 +29,6 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                     this.projectService = projectService;
                     this.router = router;
                     this.userInfo = localStorage.getItem('url');
-                    this.hasBaseDropZoneOver = false;
-                    this.options = {
-                        url: 'http://localhost:1337/api/project/upload/5',
-                        filterExtensions: true,
-                        allowedExtensions: ['image/png', 'image/jpg'],
-                        calculateSpeed: true,
-                        authToken: localStorage.getItem('id_token'),
-                        authTokenPrefix: 'Bearer'
-                    };
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
                     var _this = this;

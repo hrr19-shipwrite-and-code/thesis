@@ -6,16 +6,28 @@
         <h3 class='title'>{{project.title}}</h3>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
-          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
+          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span> <button *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
         </p>
       </div>
 
       <div class="main-content">
         <!-- Main Image -->
         <div class="main-img-viewport">
-          <img src={{project.thumbnail}} alt="main-img" class='main-img' />
+          <img src={{picture.url}} alt="main-img" class='main-img' />
+          <div *ngIf="checkForImages()" class="small-images-view">
+            <div class="small-img-cont" *ngFor="let pic of project.Images">
+              <img class="small-img" src="{{pic.url}}" (click)="setMainImage(pic)">
+            </div>
+          </div>
           <div *ngIf="checkUser(project.Profile.url)">
-            <span>Add Image</span>
+            <button *ngIf="checkForImages()" (click)="updateThumbnail()">Set as display picture</button>
+            <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)">Delete picture</button>
+            <div>
+              <input type="file" 
+                ngFileSelect
+                [options]="options"
+                (onUpload)="handleUpload($event)">
+            </div>
           </div>
         </div>
 
