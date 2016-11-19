@@ -132,17 +132,16 @@ export class ProjectComponent {
   }
 
   //author of comment can delete their comment
-  deleteComment(event) {
+  deleteComment(event, comment) {
     this.projectService.deleteComment(event.target.id)
-      .subscribe( data => {
-        console.log(data);
-      })
+      .subscribe( data => {})
+    const commentIndex = this.comments.indexOf(comment);
+    this.comments.splice(commentIndex, 1);
   }
 
   getComment(id) {
     this.projectService.getComment(id)
       .subscribe( data => {
-        console.log(data);
         this.comments = data;
       })
   }

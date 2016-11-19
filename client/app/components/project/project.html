@@ -89,7 +89,7 @@
               <p class='comment-body'>
                 {{comment.comment}}
               </p>
-              <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
+              <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
             </div> <!-- single-comment -->
 
           </div> <!-- comments-list -->

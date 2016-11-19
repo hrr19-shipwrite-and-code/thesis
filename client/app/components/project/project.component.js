@@ -112,6 +112,10 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 };
                 //Post comment and add comment to view
                 ProjectComponent.prototype.postComment = function (comment) {
+<<<<<<< 2ffe92feaf7ad2ef68f32edd17b7ecc7744a6bdd
+=======
+                    var _this = this;
+>>>>>>> Feature: deleting a comment now removes it from the view
                     this.projectService.postComment(comment, this.id)
                         .subscribe(function (data) {
 <<<<<<< 114f8d808db3a78c0ba8786d8f57fc44e424cd4d
@@ -132,17 +136,16 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     return localStorage.getItem('url') === url;
                 };
                 //author of comment can delete their comment
-                ProjectComponent.prototype.deleteComment = function (event) {
+                ProjectComponent.prototype.deleteComment = function (event, comment) {
                     this.projectService.deleteComment(event.target.id)
-                        .subscribe(function (data) {
-                        console.log(data);
-                    });
+                        .subscribe(function (data) { });
+                    var commentIndex = this.comments.indexOf(comment);
+                    this.comments.splice(commentIndex, 1);
                 };
                 ProjectComponent.prototype.getComment = function (id) {
                     var _this = this;
                     this.projectService.getComment(id)
                         .subscribe(function (data) {
-                        console.log(data);
                         _this.comments = data;
                     });
                 };
