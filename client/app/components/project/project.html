@@ -70,28 +70,29 @@
 
       <div class="comments">
 
-        <form class="comment-form">
+        <form *ngIf="authService.authenticated()" #form="ngForm" (ngSubmit)="postComment(form.value)" class="comment-form">
           <div class="form-group">
-            <textarea class="form-control" rows="3" placeholder="Write your comment"  name="comment"></textarea>
+            <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="newComment" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
+        </form>
 
           <!-- not sure how you're loading the data, but this can be the parent div of all the comments -->
           <div class='comments-list'>
 
             <!-- Template for each comment -->
-            <div class="single-comment">
+            <div class="single-comment" *ngFor="let comment of comments">
               <hr>
               <p class='comment-author'>
-                <a href="#">Author Name</a>
+                <a routerLink="/profile/{{comment.Profile.url}}">{{comment.Profile.name}}</a>
               </p>
               <p class='comment-body'>
-                Comment body goes here. Commenty comment.
+                {{comment.comment}}
               </p>
+              <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
             </div> <!-- single-comment -->
 
           </div> <!-- comments-list -->
-        </form>
 
       </div> <!-- comments -->
 

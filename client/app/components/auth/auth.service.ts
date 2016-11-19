@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {tokenNotExpired} from 'angular2-jwt';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 declare var Auth0Lock: any;
@@ -19,7 +20,7 @@ export class AuthService {
 
   //Store profile object in auth class
 
-  constructor(private authHttp: AuthHttp) {
+  constructor(private authHttp: AuthHttp, private router: Router) {
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
@@ -39,33 +40,31 @@ export class AuthService {
     });
   };
 
- findOrCreateUser(profile) {
-   let headers = new Headers({ 'Content-Type': 'application/json' });
-   let options = new RequestOptions({ headers: headers });
-   this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
-    .map(res => res._body)
-    .subscribe(
-      data => localStorage.setItem('url', data)
-      )
- }
+  findOrCreateUser(profile) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
+      .map(res => res.json())
+      .subscribe( data => {
+        console.log(data)
+        localStorage.setItem('url', data.url);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('picture', data.picture);
+      })
+  }
 
- login() {
-   this.lock.show((error: string, profile: Object, id_token: string) => {
-     if (error) {
-       console.log(error);
-     }
-     console.log(id_token)
-    //  localStorage.setItem('profile', JSON.stringify(profile));
-    //  localStorage.setItem('id_token', id_token);
-   });
-   console.log(this.authenticated())
- }
+  login() {
+    this.lock.show();
+  }
 
- logout() {
-   localStorage.removeItem('id_token');
-   localStorage.removeItem('url');
-   localStorage.removeItem('authId');
- }
+  logout() {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('url');
+    localStorage.removeItem('name');
+    localStorage.removeItem('picture');
+    localStorage.removeItem('authId');
+    this.router.navigateByUrl('/');
+  }
 
  authenticated() {
     return tokenNotExpired();

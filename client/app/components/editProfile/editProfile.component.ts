@@ -40,16 +40,17 @@ export class EditProfileComponent {
   editUserInfo(userInfo) {
     this.editProfileService.editUserInfo(userInfo)
       .subscribe( data => {
-          console.log(data)
-        });
-    localStorage.setItem("url", userInfo.url);
-    this.router.navigateByUrl('/profile/' + userInfo.url);
+        this.router.navigateByUrl('/profile/' + userInfo.url);
+       });
+      localStorage.setItem("url", userInfo.url);
+      localStorage.setItem("name", userInfo.name);
   }
 
 
   handleUpload(data): void {
     if (data && data.response) {
       data = data.response;
+      localStorage.setItem("picture", data);
     }
   }
 

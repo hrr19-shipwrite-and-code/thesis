@@ -16,6 +16,7 @@ import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
+import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDevelopers.component.js';
 
 import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail.component.js';
 
@@ -42,6 +43,7 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     ProjectComponent,
     BrowseComponent,
     ProjectAddComponent,
+    SearchDevelopersComponent,
 
     ProjectThumbnailComponent,
     UPLOAD_DIRECTIVES,

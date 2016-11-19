@@ -34,6 +34,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.authService = authService;
                     this.color = '#888B8D';
                     this.like = { color: this.color };
+                    this.newComment = '';
+                    this.comments = [];
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -42,6 +44,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.id = params['id'];
                     });
                     this.getProject(this.id);
+                    this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.techs = this.projectService.getTech();
                 };
@@ -106,6 +109,38 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     document.getElementById('project-description').className = 'description';
                     document.getElementById('project-description-input').className = 'display-none';
                     this.projectService.editDescription(input.description);
+                };
+                //Post comment and add comment to view
+                ProjectComponent.prototype.postComment = function (comment) {
+                    var _this = this;
+                    this.projectService.postComment(comment, this.id)
+                        .subscribe(function (data) {
+                        data.Profile = {
+                            name: localStorage.getItem('name'),
+                            url: localStorage.getItem('url'),
+                            picture: localStorage.getItem('picture')
+                        };
+                        _this.comments.unshift(data);
+                    });
+                    this.newComment = '';
+                };
+                //check if the comment is by the logged in user
+                ProjectComponent.prototype.checkUser = function (url) {
+                    return localStorage.getItem('url') === url;
+                };
+                //author of comment can delete their comment
+                ProjectComponent.prototype.deleteComment = function (event, comment) {
+                    this.projectService.deleteComment(event.target.id)
+                        .subscribe(function (data) { });
+                    var commentIndex = this.comments.indexOf(comment);
+                    this.comments.splice(commentIndex, 1);
+                };
+                ProjectComponent.prototype.getComment = function (id) {
+                    var _this = this;
+                    this.projectService.getComment(id)
+                        .subscribe(function (data) {
+                        _this.comments = data;
+                    });
                 };
                 ProjectComponent = __decorate([
                     core_1.Component({

@@ -24,7 +24,7 @@ module.exports = {
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
           .spread((profile) => {
-            res.send(profile.url);
+            res.send(profile);
           })
           .catch((err) => {
             console.log(err)
@@ -81,7 +81,7 @@ module.exports = {
     const authId = req.user.sub;
     Profile.update(req.body, {where: {authId: authId}})
       .then((user) => {
-        res.sendStatus(200);
+        res.json(user);
       })
       .catch((err) => {
         res.sendStatus(404);

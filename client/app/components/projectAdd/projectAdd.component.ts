@@ -13,15 +13,36 @@ import { ProjectAddService } from './projectAdd.services.js';
 })
 
 export class ProjectAddComponent {
-  userInfo = localStorage.getItem('url');
+  private userInfo = localStorage.getItem('url');
+  private uploadFile: any;
+  private hasBaseDropZoneOver: boolean = false;
+  private options: Object = {
+    url: 'http://localhost:1337/api/project/upload/5',
+    filterExtensions: true,
+    allowedExtensions: ['image/png', 'image/jpg'],
+    calculateSpeed: true,
+    authToken: localStorage.getItem('id_token'),
+    authTokenPrefix: 'Bearer'
+  };
   constructor(private projectService: ProjectAddService, private router: Router) {}
 
   addProject(data) {
-    this.projectService.createProject(data);
-    this.router.navigateByUrl('/profile/' + this.userInfo)
+    this.projectService.createProject(data)
+      .subscribe(
+        data => this.router.navigateByUrl('/project/' + data.id),
+        err => console.log(err)
+      )
   }
 
-  edit(data) {
-    // this.router.navigate("/");
-  }
+  //Move to edit project when completed
+  // handleUpload(data): void {
+  //   if (data && data.response) {
+  //     data = data.response;
+  //     this.uploadFile = data;
+  //   }
+  // }
+
+  // fileOverBase(e:any):void {
+  //   this.hasBaseDropZoneOver = e;
+  // }
 }
