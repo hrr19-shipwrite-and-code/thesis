@@ -27,7 +27,7 @@ module.exports = {
 
   profileRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
-    const techName = req.body.tech;
+    const techName = req.params.techName;
     Tech.findOne({where: {name: techName}})
       .then((tech) => {
         Profile.findOne({where: {authId: authId}})
@@ -44,18 +44,19 @@ module.exports = {
   },
 
   projectAddTech: (req, res, next) => {
-    //auth check before allowing user to edit project
     const authId = req.user.sub;
     const id = req.body.id;
-    const techName = req.body.tech;
+    const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
-        Project.findOne({where: {id: id}})
+        Project.findOne({
+          where: {id: id},
+          include: [{model: Profile, where: {authId: authId}}]
+        })
           .then((project) => {
-            console.log(tech)
             project.addTech(tech)
               .then(() => {
-                res.sendStatus(201);
+                res.json(tech);
               })
               .catch((err) => {
                 console.log(err)
@@ -66,11 +67,16 @@ module.exports = {
   },
 
   projectRemoveTech: (req, res, next) => {
-    //auth check before allowing user to edit project
     const authId = req.user.sub;
-    const id = req.body.id;
-    const techName = req.body.tech;
-    Tech.findOne({where: {name: techName}})
+    const id = req.params.projectId;
+    const techId = req.params.techId;
+    Tech.findOne({
+      where: {id: techId},
+      include: [{
+        model: Project,
+        include: [{model: Profile, where: {authId: authId}}]
+      }]
+    })
       .then((tech) => {
         Project.findOne({where: {id: id}})
           .then((project) => {

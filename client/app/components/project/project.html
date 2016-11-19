@@ -6,19 +6,31 @@
         <h3 class='title'>{{project.title}}</h3>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
-          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
+          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span> <button *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
         </p>
       </div>
 
       <div class="main-content">
         <!-- Main Image -->
         <div class="main-img-viewport">
-          <img src={{project.thumbnail}} alt="main-img" class='main-img' />
-          <div *ngIf="isOwner(project.Profile.authId)">
-            <span>Add Image</span>
+          <img src={{picture.url}} alt="main-img" class='main-img' />
+          <div *ngIf="checkForImages()" class="small-images-view">
+            <div class="small-img-cont" *ngFor="let pic of project.Images">
+              <img class="small-img" src="{{pic.url}}" (click)="setMainImage(pic)">
+            </div>
+          </div>
+          <div *ngIf="checkUser(project.Profile.url)">
+            <button *ngIf="checkForImages()" (click)="updateThumbnail()">Set as display picture</button>
+            <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)">Delete picture</button>
+            <div>
+              <input type="file"
+                ngFileSelect
+                [options]="options"
+                (onUpload)="handleUpload($event)">
+            </div>
           </div>
         </div>
-        
+
 
         <!-- Info -->
         <div class="info">
@@ -28,7 +40,7 @@
             </p>
 
             <!--Edit Discription-->
-            <div *ngIf="isOwner(project.Profile.authId)">
+            <div *ngIf="checkUser(project.Profile.url)">
               <div id="project-description-input" class="display-none">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editDescriptionPost($event, editDescriptionInput.value)">
                   <input type="text" name="description" [(ngModel)]="project.description">
@@ -49,18 +61,19 @@
 
           <hr>
 
-          <p *ngFor="let tech of project.Teches" class='tech'>
+          <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
-          </p>
+            <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
 
-          
+
           <!--Add to tech stack-->
-          <div *ngIf="isOwner(project.Profile.authId)">
+          <div *ngIf="checkUser(project.Profile.url)">
             <datalist id="techs">
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
-            <form #add="ngForm" (ngSubmit)="addTech($event, add.value)">
-              <input type="text" list="techs" name="tech" id="techInput" ngModel>
+            <form (ngSubmit)="addTech()">
+              <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
           </div>
@@ -70,7 +83,7 @@
 
       <div class="comments">
 
-        <form *ngIf="authService.authenticated()" #form="ngForm" (ngSubmit)="postComment(form.value)" class="comment-form">
+        <form *ngIf="authService.authenticated()" (ngSubmit)="postComment()" class="comment-form">
           <div class="form-group">
             <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="newComment" required></textarea>
           </div>

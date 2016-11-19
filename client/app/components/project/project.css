@@ -65,11 +65,20 @@
 .main-img-viewport {
   min-width: 50vw;
   max-height: 60vh;
-  overflow: hidden;
 }
 
 .main-img {
   width: 100%;
+  height: 80%;
+}
+
+.small-img {
+  width: 30%;
+  height: 30%;
+}
+
+.small-img-cont {
+  display: inline;
 }
 
 /* Info sidebar */

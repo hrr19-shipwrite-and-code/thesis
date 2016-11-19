@@ -5,7 +5,6 @@ const Like = require('../likes/likeSchema.js');
 const mkdirp = require('mkdirp');
 const Image = require('./imageSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
-const fs = require('fs');
 const fse = require('fs-extra');
 
 module.exports = {
@@ -39,15 +38,12 @@ module.exports = {
         });
   },
 
-  //Uncomment the auth stuff when access to edit profile
   deleteProject: (req, res, next) => {
     const id = req.params.projectId;
-    const user = req.body.userId;
-    //const authId = req.user.sub;
+    const authId = req.user.sub;
     fse.remove('client/uploads/' + id, (err) => {
       if (err) res.sendStatus(404);
-      //Profile.findOne({where: {authId: authId}})
-      Profile.findOne({where: {id: user}})
+      Profile.findOne({where: {authId: authId}})
         .then((user) => {
           Project.destroy({where: {id: id, ProfileId: user.id}})
             .then(() => {
@@ -69,7 +65,7 @@ module.exports = {
     console.log(id);
     Profile.findOne({ where: { authId: authId}})
       .then((user) => {
-        Project.update({title: req.body.title}, {where: {id: id, ProfileId:user.id}})
+        Project.update(req.body, {where: {id: id, ProfileId:user.id}})
           .then(() => {
             res.sendStatus(200);
           })
@@ -88,8 +84,8 @@ module.exports = {
     Project.findById(id, {
       include: [
         {model: Profile, attributes: ['name', 'url', 'authId']},
-        {model: Image},
-        {model: Tech, attributes: ['name'], through: {attributes: []}}
+        {model: Image, attributes: ['id', 'url']},
+        {model: Tech, attributes: ['id', 'name'], through: {attributes: []}}
        ]
     })
       .then((project) => {
@@ -99,7 +95,11 @@ module.exports = {
         Like.count({where: {ProjectId: id}})
           .then((likes) => {
             project.likes = likes;
-            res.send(project);
+            Comment.count({where: {ProjectId: id}})
+              .then((comments) => {
+                project.comments = comments;
+                res.send(project);
+              })
           });
       })
       .catch((err) =>{
@@ -117,12 +117,12 @@ module.exports = {
     const authId = req.user.sub;
     Profile.find({where: {authId: authId}})
       .then((profile) =>{
-        const URL = '/uploads/' + id + '/' + req.files[0].filename;
+        const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
-              .then(() => {
-                res.sendStatus(200);
+              .then((image) => {
+                res.send(image);
               });
           });
       })
@@ -131,14 +131,13 @@ module.exports = {
       });
   },
 
-  //Attatch authentication when can access edit profile
   updateProjectThumbnail: (req, res, next) => {
     const thumb = req.body.url;
     const id = req.params.projectId;
-    const userId = req.body.userId
-    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['id']}]})
+    const userId = req.user.sub
+    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['authId']}]})
       .then((project) => {
-        if (project.Profile.id === userId) {
+        if (project.Profile.authId === userId) {
           Project.update({thumbnail: thumb}, {where: {id: id}})
             .then(() => {
               res.sendStatus(200);
@@ -151,11 +150,11 @@ module.exports = {
   },
 
   deleteProjectImage: (req, res, next ) => {
-    const id = req.params.projectId;
+    const id = req.params.imageId;
     Image.findById(id)
       .then((image) => {
-        let url = 'client/' + image.url;
-        fs.unlink(url, () => {
+        let url = image.url;
+        fse.remove(url, () => {
           Image.destroy({where: {id: id}})
             .then(() => {
               res.sendStatus(200);
@@ -173,11 +172,12 @@ module.exports = {
 
   getUserProjects: (req, res, next) => {
     const id = req.params.id;
-    Project.findAll({where: { ProfileId: id}, include: [Like]})
+    Project.findAll({where: { ProfileId: id}, include: [Like, Comment]})
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
           project.Likes = project.Likes.length;
+          project.comments = project.Comments.length;
         }
         res.send(projects);
       })
@@ -192,12 +192,14 @@ module.exports = {
     Project.findAll({
       include: [
       {model: Profile, attributes: ['name', 'url', 'picture']},
-      {model: Like}
+      {model: Like},
+      {model: Comment}
       ]})
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
           project.Likes = project.Likes.length;
+          project.comments = project.Comments.length
         }
         res.send(projects);
       })

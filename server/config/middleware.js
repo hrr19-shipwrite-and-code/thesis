@@ -7,6 +7,7 @@ module.exports = {
   uploadProjectPicture: multer({
     storage: multer.diskStorage({
       destination: (req, file, cb) => {
+        console.log(req.params.projectId)
         let dest = req.params.projectId;
         cb(null, './client/uploads/' + dest);
       },
