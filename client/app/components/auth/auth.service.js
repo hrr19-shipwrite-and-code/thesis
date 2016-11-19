@@ -63,23 +63,22 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
-                        .map(function (res) { return res._body; })
-                        .subscribe(function (data) { return localStorage.setItem('url', data); });
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) {
+                        console.log(data);
+                        localStorage.setItem('url', data.url);
+                        localStorage.setItem('name', data.name);
+                        localStorage.setItem('picture', data.picture);
+                    });
                 };
                 AuthService.prototype.login = function () {
-                    this.lock.show(function (error, profile, id_token) {
-                        if (error) {
-                            console.log(error);
-                        }
-                        console.log(id_token);
-                        //  localStorage.setItem('profile', JSON.stringify(profile));
-                        //  localStorage.setItem('id_token', id_token);
-                    });
-                    console.log(this.authenticated());
+                    this.lock.show();
                 };
                 AuthService.prototype.logout = function () {
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('url');
+                    localStorage.removeItem('name');
+                    localStorage.removeItem('picture');
                     localStorage.removeItem('authId');
                     this.router.navigateByUrl('/');
                 };

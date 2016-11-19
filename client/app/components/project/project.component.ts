@@ -18,6 +18,8 @@ export class ProjectComponent {
   private sub: any;
   id: String;
   error: Boolean;
+  newComment = '';
+  comments = [];
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService) { }
   techs;
@@ -28,6 +30,7 @@ export class ProjectComponent {
       this.id = params['id'];
     });
     this.getProject(this.id);
+    this.getComment(this.id);
     this.doesUserLike(this.id);
     this.techs = this.projectService.getTech()
   }
@@ -70,7 +73,7 @@ export class ProjectComponent {
   }
 
   //Verify current user is owner of the project
-  isOwner(projectOwner){ 
+  isOwner(projectOwner){
     let currentUser = localStorage.getItem('authId')
     return currentUser === projectOwner ? true : false;
   }
@@ -78,7 +81,7 @@ export class ProjectComponent {
   //Add tech to project
   addTech(event, tech) {
     event.preventDefault();
-    
+
     for(let i = 0; i <= this.project.Teches.length; i++){
       if(i === this.project.Teches.length) {
         let temp = {
@@ -105,8 +108,41 @@ export class ProjectComponent {
     this.project.descripiton = input.descripiton;
     document.getElementById('project-description').className = 'description';
     document.getElementById('project-description-input').className = 'display-none';
-    
+
     this.projectService.editDescription(input.description)
   }
 
+  //Post comment and add comment to view
+  postComment(comment){
+    this.projectService.postComment(comment, this.id)
+      .subscribe( data => {
+        data.Profile = {
+          name: localStorage.getItem('name'),
+          url: localStorage.getItem('url'),
+          picture: localStorage.getItem('picture')
+        };
+        this.comments.unshift(data)
+      })
+    this.newComment = '';
+  }
+
+  //check if the comment is by the logged in user
+  checkUser(url) {
+    return localStorage.getItem('url') === url;
+  }
+
+  //author of comment can delete their comment
+  deleteComment(event, comment) {
+    this.projectService.deleteComment(event.target.id)
+      .subscribe( data => {})
+    const commentIndex = this.comments.indexOf(comment);
+    this.comments.splice(commentIndex, 1);
+  }
+
+  getComment(id) {
+    this.projectService.getComment(id)
+      .subscribe( data => {
+        this.comments = data;
+      })
+  }
 }

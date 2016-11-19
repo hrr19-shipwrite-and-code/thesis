@@ -38,7 +38,7 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
-                        .map(function (res) { return res; });
+                        .map(function (res) { return res.json; });
                 };
                 EditProfileService = __decorate([
                     core_1.Injectable(), 

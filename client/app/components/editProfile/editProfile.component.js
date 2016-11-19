@@ -50,16 +50,18 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     });
                 };
                 EditProfileComponent.prototype.editUserInfo = function (userInfo) {
+                    var _this = this;
                     this.editProfileService.editUserInfo(userInfo)
                         .subscribe(function (data) {
-                        console.log(data);
+                        _this.router.navigateByUrl('/profile/' + userInfo.url);
                     });
                     localStorage.setItem("url", userInfo.url);
-                    this.router.navigateByUrl('/profile/' + userInfo.url);
+                    localStorage.setItem("name", userInfo.name);
                 };
                 EditProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
                         data = data.response;
+                        localStorage.setItem("picture", data);
                     }
                 };
                 EditProfileComponent.prototype.handleChange = function (input) {

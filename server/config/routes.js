@@ -49,6 +49,7 @@ module.exports = function (app, express) {
   //Comment Routes
   app.post('/api/comment/create/:projectId', middleware.authCheck, commentController.addCommentToProject);
   app.delete('/api/comment/delete/:commentId', middleware.authCheck, commentController.removeComment);
+  app.get('/api/comment/:projectId', commentController.getCommentByProjectId);
 
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
