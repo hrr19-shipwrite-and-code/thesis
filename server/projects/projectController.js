@@ -177,11 +177,12 @@ module.exports = {
 
   getUserProjects: (req, res, next) => {
     const id = req.params.id;
-    Project.findAll({where: { ProfileId: id}, include: [Like]})
+    Project.findAll({where: { ProfileId: id}, include: [Like, Comment]})
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
           project.Likes = project.Likes.length;
+          project.comments = project.Comments.length;
         }
         res.send(projects);
       })
