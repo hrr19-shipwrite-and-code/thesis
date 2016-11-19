@@ -121,6 +121,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             picture: localStorage.getItem('picture')
                         };
                         _this.comments.unshift(data);
+                        _this.project.comments++;
                     });
                     this.newComment = '';
                 };
@@ -134,6 +135,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         .subscribe(function (data) { });
                     var commentIndex = this.comments.indexOf(comment);
                     this.comments.splice(commentIndex, 1);
+                    this.project.comments--;
                 };
                 ProjectComponent.prototype.getComment = function (id) {
                     var _this = this;

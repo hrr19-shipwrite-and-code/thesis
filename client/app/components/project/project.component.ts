@@ -122,6 +122,7 @@ export class ProjectComponent {
           picture: localStorage.getItem('picture')
         };
         this.comments.unshift(data)
+        this.project.comments ++;
       })
     this.newComment = '';
   }
@@ -137,6 +138,7 @@ export class ProjectComponent {
       .subscribe( data => {})
     const commentIndex = this.comments.indexOf(comment);
     this.comments.splice(commentIndex, 1);
+    this.project.comments --;
   }
 
   getComment(id) {

@@ -99,7 +99,11 @@ module.exports = {
         Like.count({where: {ProjectId: id}})
           .then((likes) => {
             project.likes = likes;
-            res.send(project);
+            Comment.count({where: {ProjectId: id}})
+              .then((comments) => {
+                project.comments = comments;
+                res.send(project);
+              })
           });
       })
       .catch((err) =>{
@@ -192,12 +196,14 @@ module.exports = {
     Project.findAll({
       include: [
       {model: Profile, attributes: ['name', 'url', 'picture']},
-      {model: Like}
+      {model: Like},
+      {model: Comment}
       ]})
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
           project.Likes = project.Likes.length;
+          project.comments = project.Comments.length
         }
         res.send(projects);
       })
