@@ -14,6 +14,7 @@ module.exports = {
    *****************************************/
 
   createProject: (req, res, next) => {
+    console.log(req.body)
     const authId = req.user.sub;
       Profile.findOne({where: {authId: authId}})
         .then((user) => {
@@ -203,7 +204,7 @@ module.exports = {
     req.body.title ? filter.where.title = {$like: '%' + req.body.title +'%'} : false;
     req.body.user ? filter.include[0].where = {name: {$like: '%' + req.body.user + '%'}} : false;
     req.body.status ? filter.where.progress = {$eq: req.body.status} : false;
-    req.body.openSource ? filter.where.contribute = {$eq: !!req.body.openSource} : false;
+    req.body.openSource !== undefined ? filter.where.contribute = {$eq: !!Number(req.body.openSource)} : false;
 
     Project.findAll(filter)
       .then((projects) => {
