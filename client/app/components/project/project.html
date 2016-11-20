@@ -5,13 +5,13 @@
       <div class='header'>
         <form #editTitleInput="ngForm" class="title" *ngIf="editTitle" (ngSubmit)="editProject($event, editTitleInput.value, 'title')">
           <input type="text" name="title" [(ngModel)]="project.title">
-          <button class="btn btn-primary">Edit</button>
+          <button class="btn btn-primary btn-sm">Edit</button>
         </form>
         <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
         <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('title')" class="fa fa-pencil" aria-hidden="true" title="Edit Project Title"></i>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
-          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span> <button *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
+          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
         </p>
       </div>
 
@@ -49,7 +49,7 @@
               <div *ngIf="editDescrip">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editProject($event, editDescriptionInput.value, 'description')" >
                   <input type="text" name="description" [(ngModel)]="project.description">
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
               </div>
               <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('description')" class="fa fa-pencil" aria-hidden="true" title="Edit Description"></i>
@@ -82,7 +82,7 @@
             </datalist>
             <form *ngIf="editTech" (ngSubmit)="addTech()">
               <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
-              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
           </div>
 
@@ -90,13 +90,14 @@
 
           <!-- Others (Deploy,Github,Progress,OpenSource) -->
           <div>
+            Additonal Information:
             <div>
               <!-- Deploy Info/Form -->
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
               <span *ngIf="checkUser(project.Profile.url) && project.deploy.length === 0">Add deploy link</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
                 <input type="text" name="deploy" [(ngModel)]="project.deploy">
-                <button class="btn btn-primary">Edit</button>
+                <button class="btn btn-primary btn-sm">Edit</button>
               </form>
               <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
             </div>            
@@ -107,7 +108,7 @@
               <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
                 <input type="text" name="github" [(ngModel)]="project.github">
-                <button class="btn btn-primary">Edit</button>
+                <button class="btn btn-primary btn-sm">Edit</button>
               </form>              
             </div>
             <div>
@@ -133,6 +134,8 @@
                 </span>
                 <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>                  
               </div>
+              <!-- Delete Button -->
+              <button class="btn btn-primary btn-sm" *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
             </div>
             <div>            
           </div>
@@ -146,7 +149,7 @@
           <div class="form-group">
             <textarea class="form-control" rows="3" placeholder="Write your comment" name="comment" [(ngModel)]="newComment" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Post</button>
+          <button type="submit" class="btn btn-primary btn-sm">Post</button>
         </form>
 
           <!-- not sure how you're loading the data, but this can be the parent div of all the comments -->
