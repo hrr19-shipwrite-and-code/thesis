@@ -161,6 +161,7 @@
               <p class='comment-body'>
                 {{comment.comment}}
               </p>
+              {{comment.createdAt}}
               <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
             </div> <!-- single-comment -->
 

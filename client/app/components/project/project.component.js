@@ -163,6 +163,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     this.projectService.postComment({ comment: this.newComment }, this.id)
                         .subscribe(function (data) {
+                        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         data.Profile = {
                             name: localStorage.getItem('name'),
                             url: localStorage.getItem('url'),
@@ -189,7 +190,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     this.projectService.getComment(id)
                         .subscribe(function (data) {
-                        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+                        data.forEach(function (comment) {
+                            comment.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+                        });
                         _this.comments = data;
                     });
                 };

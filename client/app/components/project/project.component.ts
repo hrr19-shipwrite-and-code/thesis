@@ -160,6 +160,7 @@ export class ProjectComponent {
   postComment(){
     this.projectService.postComment({comment: this.newComment}, this.id)
       .subscribe( data => {
+        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
         data.Profile = {
           name: localStorage.getItem('name'),
           url: localStorage.getItem('url'),
@@ -188,7 +189,9 @@ export class ProjectComponent {
   getComment(id) {
     this.projectService.getComment(id)
       .subscribe( data => {
-        data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+        data.forEach(comment =>{
+          comment.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
+        })
         this.comments = data;
       })
   }
