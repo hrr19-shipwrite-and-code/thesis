@@ -52,13 +52,13 @@ export class EditProfileComponent implements OnInit{
         });
   }
 
-  editUserInfo(userInfo) {
-    this.editProfileService.editUserInfo(userInfo)
+  editUserInfo() {
+    this.editProfileService.editUserInfo(this.userInfo)
       .subscribe( data => {
-        this.router.navigateByUrl('/profile/' + userInfo.url);
+        this.router.navigateByUrl('/profile/' + this.userInfo.url);
        });
-      localStorage.setItem("url", userInfo.url);
-      localStorage.setItem("name", userInfo.name);
+      localStorage.setItem("url", this.userInfo.url);
+      localStorage.setItem("name", this.userInfo.name);
   }
 
 

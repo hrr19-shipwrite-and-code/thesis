@@ -68,14 +68,14 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         console.log(data);
                     });
                 };
-                EditProfileComponent.prototype.editUserInfo = function (userInfo) {
+                EditProfileComponent.prototype.editUserInfo = function () {
                     var _this = this;
-                    this.editProfileService.editUserInfo(userInfo)
+                    this.editProfileService.editUserInfo(this.userInfo)
                         .subscribe(function (data) {
-                        _this.router.navigateByUrl('/profile/' + userInfo.url);
+                        _this.router.navigateByUrl('/profile/' + _this.userInfo.url);
                     });
-                    localStorage.setItem("url", userInfo.url);
-                    localStorage.setItem("name", userInfo.name);
+                    localStorage.setItem("url", this.userInfo.url);
+                    localStorage.setItem("name", this.userInfo.name);
                 };
                 EditProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
