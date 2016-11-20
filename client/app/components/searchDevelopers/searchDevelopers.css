@@ -12,14 +12,37 @@
   box-shadow: 0 5px 6px -6px #bdc3c7;
 }
 
+/* Full-Page Container */
+.container {
+  padding-bottom: 100px;
+}
+
+/* Header */
+.header-container {
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+}
+
+/* Main Content */
+.main-content {
+  /*border: 2px solid lightgreen;*/
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 /* Sidebar as a whole */
 .sidebar {
   width: 250px;
   background-color: white;
+  color: #444444;
   border-radius: 5px;
 
-  padding-top: 30px; 
+  padding-top: 30px;
   padding-bottom: 30px;
 }
 

@@ -1,4 +1,12 @@
+/* Utility */
+.horizontal-center {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
+/* NavBar */
 .navBar {
   max-width: 100vw;
   height: 70px;
@@ -14,12 +22,31 @@
   display: -webkit-flex;
   display: flex;
   align-items: center;
+  flex-direction: row;
 
   font-family: 'Roboto';
 }
 
+.sushi-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo {
+  margin-top: -5px;
+  margin-right: 5px;
+  /*transform: scaleX(-1);*/
+}
+
+.sushi-brand {
+  margin-top: 7px;
+}
+
 h4, a, p, a.navLink {
   color: #888B8D;
+  text-decoration: none;
 }
 
 a:hover, a.navLink:hover {
@@ -36,8 +63,4 @@ a:hover, a.navLink:hover {
   width: auto;
   height: auto;
   float: right;
-}
-
-a {
-  text-decoration: none;
 }

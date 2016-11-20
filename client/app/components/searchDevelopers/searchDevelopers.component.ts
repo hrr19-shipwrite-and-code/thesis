@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ProfilePreviewComponent } from '../profilePreview/profilePreview.component.js';
+
 
 
 @Component({

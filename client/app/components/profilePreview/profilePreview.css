@@ -1,0 +1,106 @@
+
+/* Utility */
+.horizontal-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-preview-container {
+  width: 820px;
+  height: 270px;
+  border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Profile Picture and Text Details */
+
+.profile-details {
+  color: #444444;
+  font-size: 0.95em;
+
+  text-align: center;
+  width: 250px;
+  margin-right: 40px;
+}
+
+.profile-picture-viewport {
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  overflow: hidden;
+
+  margin: 0 auto;
+  margin-bottom: 7px;
+}
+
+.profile-picture {
+  width: 100%;
+  height: auto;
+}
+
+.tech {
+  font-size: 0.9em;
+  color: #888B8D;
+}
+
+/* Thumbnail Scrolling */
+
+.thumbnails-container {
+  /*border: 2px solid salmon;*/
+  width: 550px;
+  height: 230px;
+
+  position: relative;
+
+  overflow-x: scroll;
+  overflow-y: hidden;;
+  white-space: nowrap;
+}
+
+.thumbnail-placeholder {
+  display: inline-block;
+  width: 225px;
+  height: 225px;
+  background-color: white;
+  margin-right: 20px;
+}
+
+.left-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30px;
+
+  background: linear-gradient(to right, #F4F4F4 30%, transparent);
+}
+
+.right-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 30px;
+
+  background: linear-gradient(to left, #F4F4F4 30%, transparent);
+}
+
+
+/* Global Styles */
+
+p {
+  margin-bottom: 5px;
+}
