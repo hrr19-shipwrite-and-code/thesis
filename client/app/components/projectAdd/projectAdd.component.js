@@ -29,6 +29,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js']
                     this.projectService = projectService;
                     this.router = router;
                     this.userInfo = localStorage.getItem('url');
+                    this.defaultValue = 'Completed';
                 }
                 ProjectAddComponent.prototype.addProject = function (data) {
                     var _this = this;

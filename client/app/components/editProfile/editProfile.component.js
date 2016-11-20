@@ -1,4 +1,4 @@
-System.register(['@angular/core', './editProfile.services.js', '@angular/router'], function(exports_1, context_1) {
+System.register(['@angular/core', './editProfile.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, editProfile_services_js_1, router_1;
+    var core_1, editProfile_services_js_1, router_1, core_2;
     var EditProfileComponent;
     return {
         setters:[
@@ -22,12 +22,17 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (core_2_1) {
+                core_2 = core_2_1;
             }],
         execute: function() {
             EditProfileComponent = (function () {
-                function EditProfileComponent(editProfileService, router) {
+                function EditProfileComponent(editProfileService, router, mapsAPILoader, zone) {
                     this.editProfileService = editProfileService;
                     this.router = router;
+                    this.mapsAPILoader = mapsAPILoader;
+                    this.zone = zone;
                     this.userInfo = {};
                     this.picture = '';
                     this.options = {
@@ -38,8 +43,22 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         authToken: localStorage.getItem('id_token'),
                         authTokenPrefix: 'Bearer'
                     };
-                    this.getUserInfo();
                 }
+                EditProfileComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.getUserInfo();
+                    this.mapsAPILoader.load().then(function () {
+                        var input = document.getElementById('location');
+                        var autocomplete = new google.maps.places.Autocomplete(input, {
+                            types: ['(cities)']
+                        });
+                        autocomplete.addListener("place_changed", function () {
+                            _this.zone.run(function () {
+                                _this.userInfo.location = autocomplete.getPlace().formatted_address;
+                            });
+                        });
+                    });
+                };
                 EditProfileComponent.prototype.getUserInfo = function () {
                     var _this = this;
                     this.editProfileService.getUserInfo()
@@ -49,14 +68,14 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         console.log(data);
                     });
                 };
-                EditProfileComponent.prototype.editUserInfo = function (userInfo) {
+                EditProfileComponent.prototype.editUserInfo = function () {
                     var _this = this;
-                    this.editProfileService.editUserInfo(userInfo)
+                    this.editProfileService.editUserInfo(this.userInfo)
                         .subscribe(function (data) {
-                        _this.router.navigateByUrl('/profile/' + userInfo.url);
+                        _this.router.navigateByUrl('/profile/' + _this.userInfo.url);
                     });
-                    localStorage.setItem("url", userInfo.url);
-                    localStorage.setItem("name", userInfo.name);
+                    localStorage.setItem("url", this.userInfo.url);
+                    localStorage.setItem("name", this.userInfo.name);
                 };
                 EditProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
@@ -81,7 +100,7 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
                         providers: [editProfile_services_js_1.EditProfileService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone])
                 ], EditProfileComponent);
                 return EditProfileComponent;
                 var _a;

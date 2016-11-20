@@ -3,7 +3,7 @@
 
   <div class="main-content shadow horizontal-center">
     <h4>Add Project</h4>
-    
+
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
       <div class="form-group">
@@ -28,7 +28,7 @@
 
       <div class="form-group">
         <label for="status-select">Status:</label>
-        <select class="form-control" id="status-select">
+        <select class="form-control" id="status-select" name="status" [(ngModel)]="defaultValue">
           <option value="Completed">Completed</option>
           <option value="In Progress">In Progress</option>
           <option value="Abandonded">Abandonded</option>
@@ -38,7 +38,7 @@
       <div class="form-group">
         <p class='deploy-label'>Open Source:</p>
         <label class="switch">
-          <input type="checkbox" name="openSource" ngModel>
+          <input type="checkbox" name="contribute" ngModel>
           <div class="slider round"></div>
         </label>
       </div>
