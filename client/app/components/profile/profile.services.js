@@ -1,4 +1,4 @@
-System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core'], function(exports_1, context_1) {
+System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core'], func
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var angular2_jwt_1, core_1;
+    var angular2_jwt_1, http_1, core_1;
     var ProfileService;
     return {
         setters:[
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (_1) {},
             function (core_1_1) {
@@ -23,20 +26,21 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core'], func
             }],
         execute: function() {
             ProfileService = (function () {
-                function ProfileService(authHttp) {
+                function ProfileService(authHttp, http) {
                     this.authHttp = authHttp;
+                    this.http = http;
                 }
                 ProfileService.prototype.getProfileInfo = function (url) {
-                    return this.authHttp.get('http://localhost:1337/api/profile/' + url)
+                    return this.http.get('http://localhost:1337/api/profile/' + url)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.getProjects = function (userId) {
-                    return this.authHttp.get('http://localhost:1337/api/project/user/' + userId)
+                    return this.http.get('http://localhost:1337/api/project/user/' + userId)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
                 ], ProfileService);
                 return ProfileService;
             }());
