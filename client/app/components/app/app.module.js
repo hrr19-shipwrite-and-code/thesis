@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/platform-browser', '@angular/forms', 'angular2-jwt', './app-routing.module', '@angular/http', 'ng2-uploader/ng2-uploader', '../nav/nav.component.js', '../profile/profile.component.js', '../editProfile/editProfile.component.js', '../project/project.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../SearchDevelopers/SearchDevelopers.component.js', '../profilePreview/profilePreview.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js', '../../directives/new-project-model.directive.js', '../projectAdd/projectAdd.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/platform-browser', '@angular/forms', 'angular2-jwt', './app-routing.module', '@angular/http', 'ng2-uploader/ng2-uploader', "angular2-google-maps/core", '../nav/nav.component.js', '../profile/profile.component.js', '../editProfile/editProfile.component.js', '../project/project.component.js', '../browse/browse.component.js', './app.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../SearchDevelopers/SearchDevelopers.component.js', '../profilePreview/profilePreview.component.js', '../projectThumbnail/project-thumbnail.component.js', '../../directives/thumbnail-hover.directive.js', '../../directives/tech-hover.directive.js', '../../directives/new-project-model.directive.js', '../projectAdd/projectAdd.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, platform_browser_1, forms_1, angular2_jwt_1, app_routing_module_1, http_1, ng2_uploader_1, nav_component_js_1, profile_component_js_1, editProfile_component_js_1, project_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, projectAdd_component_js_1, SearchDevelopers_component_js_1, profilePreview_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1, new_project_model_directive_js_1, projectAdd_services_js_1;
+    var core_1, platform_browser_1, forms_1, angular2_jwt_1, app_routing_module_1, http_1, ng2_uploader_1, core_2, nav_component_js_1, profile_component_js_1, editProfile_component_js_1, project_component_js_1, browse_component_js_1, app_component_js_1, home_component_js_1, projectAdd_component_js_1, SearchDevelopers_component_js_1, profilePreview_component_js_1, project_thumbnail_component_js_1, thumbnail_hover_directive_js_1, tech_hover_directive_js_1, new_project_model_directive_js_1, projectAdd_services_js_1;
     var AppModule;
     return {
         setters:[
@@ -34,6 +34,9 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
             },
             function (ng2_uploader_1_1) {
                 ng2_uploader_1 = ng2_uploader_1_1;
+            },
+            function (core_2_1) {
+                core_2 = core_2_1;
             },
             function (nav_component_js_1_1) {
                 nav_component_js_1 = nav_component_js_1_1;
@@ -87,6 +90,10 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
                 AppModule = __decorate([
                     core_1.NgModule({
                         imports: [
+                            core_2.AgmCoreModule.forRoot({
+                                apiKey: "AIzaSyD9i3fvxLG9D3xsPzt3k8WnB2s1qxZiqM0",
+                                libraries: ["places"]
+                            }),
                             platform_browser_1.BrowserModule,
                             app_routing_module_1.AppRoutingModule,
                             http_1.HttpModule,

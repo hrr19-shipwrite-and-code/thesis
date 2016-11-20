@@ -6,6 +6,7 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { UPLOAD_DIRECTIVES } from 'ng2-uploader/ng2-uploader';
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 import { NavComponent } from '../nav/nav.component.js';
 
@@ -30,6 +31,10 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
 
 @NgModule({
   imports:      [
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyD9i3fvxLG9D3xsPzt3k8WnB2s1qxZiqM0",
+      libraries: ["places"]
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpModule,
