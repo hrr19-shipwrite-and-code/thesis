@@ -189,19 +189,23 @@ module.exports = {
   getAllProjects: (req, res, next) => {
     //Adjust offset and limit later this was for testing
     //Also can add different filters, etc.
-    const techFilter = req.body.tech ? {$in: req.body.tech} : {$notIn: ['']};
-    Project.findAll({
+    let filter = {
       include: [
-      {model: Profile, attributes: ['name', 'url', 'picture']},
-      {model: Like},
-      {model: Comment},
-      {
-        model: Tech,
-        where: {
-          name: techFilter
-        }
-      }
-      ]})
+        {model: Profile, attributes: ['name', 'url', 'picture']},
+        {model: Like},
+        {model: Comment},
+        {model: Tech}
+      ],
+      where: {id: {$notIn: ['']}}
+    }
+
+    req.body.tech ? filter.include[3].where = {name: {$in: req.body.tech}} : false;
+    req.body.title ? filter.where.title = {$like: '%' + req.body.title +'%'} : false;
+    req.body.user ? filter.include[0].where = {name: {$like: '%' + req.body.user + '%'}} : false;
+    req.body.status ? filter.where.progress = {$eq: req.body.status} : false;
+    req.body.openSource ? filter.where.contribute = {$eq: !!req.body.openSource} : false;
+
+    Project.findAll(filter)
       .then((projects) => {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
