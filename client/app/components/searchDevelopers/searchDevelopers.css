@@ -28,7 +28,7 @@
 
 /* Main Content */
 .main-content {
-  border: 2px solid lightgreen;
+  /*border: 2px solid lightgreen;*/
 
   display: flex;
   flex-direction: row;

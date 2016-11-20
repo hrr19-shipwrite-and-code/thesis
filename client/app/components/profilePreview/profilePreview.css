@@ -17,7 +17,6 @@
   height: 270px;
   border-bottom: 1px solid rgba(68, 68, 68, 0.1);
 
-  /*background-color: white;*/
   overflow: hidden;
 
   display: flex;
@@ -45,10 +44,6 @@
 
   margin: 0 auto;
   margin-bottom: 7px;
-
-  /*display: flex;
-  align-items: center;
-  justify-content: center;*/
 }
 
 .profile-picture {
@@ -64,7 +59,7 @@
 /* Thumbnail Scrolling */
 
 .thumbnails-container {
-  border: 2px solid salmon;
+  /*border: 2px solid salmon;*/
   width: 550px;
   height: 230px;
 
