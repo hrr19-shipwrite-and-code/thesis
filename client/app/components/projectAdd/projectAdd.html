@@ -28,7 +28,7 @@
 
       <div class="form-group">
         <label for="status-select">Status:</label>
-        <select class="form-control" id="status-select" name="status" ngModel>
+        <select class="form-control" id="status-select" name="status" [(ngModel)]="defaultValue">
           <option value="Completed">Completed</option>
           <option value="In Progress">In Progress</option>
           <option value="Abandonded">Abandonded</option>

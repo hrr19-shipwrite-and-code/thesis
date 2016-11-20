@@ -14,6 +14,7 @@ import { ProjectAddService } from './projectAdd.services.js';
 
 export class ProjectAddComponent {
   private userInfo = localStorage.getItem('url');
+  private defaultValue = 'Completed'
   constructor(private projectService: ProjectAddService, private router: Router) {}
 
   addProject(data) {
