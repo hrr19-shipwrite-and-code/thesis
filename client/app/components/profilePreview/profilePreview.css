@@ -1,3 +1,4 @@
+
 /* Utility */
 .horizontal-center {
   display: flex;
@@ -13,17 +14,16 @@
 
 .profile-preview-container {
   width: 820px;
-  height: 250px;
+  height: 270px;
   border-bottom: 1px solid rgba(68, 68, 68, 0.1);
-  border-top: 1px solid rgba(68, 68, 68, 0.1);
 
   /*background-color: white;*/
-  margin-top: 20px;
-  margin-bottom: 100px;
-  padding: 20px;
-
   overflow: hidden;
 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Profile Picture and Text Details */
@@ -64,11 +64,43 @@
 /* Thumbnail Scrolling */
 
 .thumbnails-container {
+  border: 2px solid salmon;
+  width: 550px;
+  height: 230px;
 
+  position: relative;
+
+  overflow-x: scroll;
+  overflow-y: hidden;;
+  white-space: nowrap;
 }
 
 .thumbnail-placeholder {
+  display: inline-block;
+  width: 225px;
+  height: 225px;
+  background-color: white;
+  margin-right: 20px;
+}
 
+.left-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30px;
+
+  background: linear-gradient(to right, #F4F4F4 30%, transparent);
+}
+
+.right-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 30px;
+
+  background: linear-gradient(to left, #F4F4F4 30%, transparent);
 }
 
 
