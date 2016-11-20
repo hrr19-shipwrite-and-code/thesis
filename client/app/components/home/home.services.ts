@@ -21,4 +21,8 @@ export class HomeService {
     //   openSource: "false"
     // }
   }
+
+  sortBy(type) {
+    console.log(type) // 'date' or 'likes' or 'views'
+  }
 }

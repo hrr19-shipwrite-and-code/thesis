@@ -40,6 +40,9 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                     //   openSource: "false"
                     // }
                 };
+                HomeService.prototype.sortBy = function (type) {
+                    console.log(type); // 'date' or 'likes' or 'views'
+                };
                 HomeService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])

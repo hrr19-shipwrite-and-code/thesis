@@ -60,6 +60,9 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     }
                     this.homeService.filter(filterConditions);
                 };
+                HomeComponent.prototype.sort = function (sortType) {
+                    this.homeService.sortBy(sortType);
+                };
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',

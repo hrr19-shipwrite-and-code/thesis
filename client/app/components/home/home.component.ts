@@ -54,4 +54,8 @@ export class HomeComponent {
     this.homeService.filter(filterConditions);
   }
 
+  sort(sortType) {
+    this.homeService.sortBy(sortType);
+  }
+
 }

@@ -210,3 +210,12 @@ input:checked + .slider:before {
 .filter-bar select {
   height: 38px;
 }
+
+.sort {
+  color: rgb(136, 139, 141);
+}
+
+.sort span:hover {
+  color: salmon;
+  cursor: pointer;
+}

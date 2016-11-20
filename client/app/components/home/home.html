@@ -21,6 +21,14 @@
   <div class="filter-btn" (click)="filterBar()">
     <p class="filter-txt">Filter</p>
   </div>
+  <div class="sort">
+    <h4>Sort By:</h4>
+    <span (click)="sort('date')">Recent</span>
+     | 
+    <span (click)="sort('likes')">Likes</span>
+     | 
+    <span (click)="sort('views')">Views</span>
+  </div>
   <div class="thumbnails">
     <project-thumbnail [projects]="projects"></project-thumbnail>
   </div>
