@@ -6,18 +6,17 @@ import 'rxjs/add/operator/map';
 export class HomeService {
 
   constructor (private http: Http) {}
-  // //Working API to get ALL
   getProjects() {
-    return this.http.get('http://localhost:1337/api/project/getAll')
+    return this.http.post('http://localhost:1337/api/project/getAll')
       .map(res => res.json())
   }
 
   filter(req) {
     // req => {
-    //   tech: Array[3], 
-    //   title: "Sushi", 
-    //   user: "JGoD", 
-    //   status: "In Progress", 
+    //   tech: Array[3],
+    //   title: "Sushi",
+    //   user: "JGoD",
+    //   status: "In Progress",
     //   openSource: "false"
     // }
   }

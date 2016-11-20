@@ -33,7 +33,7 @@ module.exports = function (app, express) {
   //Project Routes
   app.post('/api/project/create', middleware.authCheck,  projectController.createProject);
   app.get('/api/project/id/:projectId', projectController.getProject);
-  app.get('/api/project/getAll', projectController.getAllProjects);
+  app.post('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', middleware.authCheck, projectController.editProject);
   app.delete('/api/project/delete/:projectId', middleware.authCheck, projectController.deleteProject);

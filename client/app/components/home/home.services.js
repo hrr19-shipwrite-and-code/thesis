@@ -26,17 +26,16 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                 function HomeService(http) {
                     this.http = http;
                 }
-                // //Working API to get ALL
                 HomeService.prototype.getProjects = function () {
-                    return this.http.get('http://localhost:1337/api/project/getAll')
+                    return this.http.post('http://localhost:1337/api/project/getAll')
                         .map(function (res) { return res.json(); });
                 };
                 HomeService.prototype.filter = function (req) {
                     // req => {
-                    //   tech: Array[3], 
-                    //   title: "Sushi", 
-                    //   user: "JGoD", 
-                    //   status: "In Progress", 
+                    //   tech: Array[3],
+                    //   title: "Sushi",
+                    //   user: "JGoD",
+                    //   status: "In Progress",
                     //   openSource: "false"
                     // }
                 };
