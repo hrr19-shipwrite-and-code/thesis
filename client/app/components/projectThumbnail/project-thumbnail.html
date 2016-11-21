@@ -1,9 +1,9 @@
 <div *ngFor="let project of projects | slice:0:15; let i = index" class="project-thumbnail shadow">
 
   <a routerLink="/project/{{project.id}}">
-    <div class="project-thumbnail-hover hide" hover>
+    <div class="project-thumbnail-hover hide horizontal-center" hover>
       <h4 class="project-name">{{project.title}}</h4>
-      <p>{{project.description}}</p>
+      <p class="project-description">{{project.description}}</p>
     </div>
   </a>
 
