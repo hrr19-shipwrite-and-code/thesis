@@ -11,8 +11,10 @@
       <div class="sidebar horizontal-center shadow">
 
 
+
+
         <form class="search-for-devs">
-          <!-- Sort Radio Buttons -->
+          <!--
           <fieldset class="form-group">
             <legend>Sort</legend>
             <div class="form-check">
@@ -20,17 +22,16 @@
                 <input type="radio" class="form-check-input" name="optionsRadios" id="popular-radio" value="popular" checked>
                 Popular
               </label>
-            </div> <!-- form-check -->
+            </div>
 
             <div class="form-check">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" name="optionsRadios" id="recent-radio" value="recent">
                 Recent
               </label>
-            </div> <!-- form-check -->
-          </fieldset> <!-- Sort radios -->
+            </div>
+          </fieldset> -->
 
-          <hr>
 
           <!-- Hire checkbox -->
           <fieldset class="form-check">
@@ -44,8 +45,15 @@
           <hr>
 
           <fieldset class="form-group">
+            <legend>Location</legend>
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="Seattle, San Francisco">
+          </fieldset>
+
+          <hr>
+
+          <fieldset class="form-group">
             <legend>Tech</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTechg" placeholder="React, Node, MongoDB">
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="React, Node, MongoDB">
           </fieldset>
 
           <!-- Search Button -->
