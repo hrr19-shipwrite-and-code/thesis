@@ -227,12 +227,12 @@ module.exports = {
 
   addPicture: (req, res, next) => {
     const authId = req.user.sub
-    const URL = './client/uploads/profile/' + authId;
+    const URL = '/client/uploads/profile/' + authId;
     Profile.findOne({where: {authId: authId}})
       .then((profile) => {
         profile.update({ picture: URL})
-          .then(() => {
-            res.sendStatus(200);
+          .then((update) => {
+            res.send(update);
           });
       });
   }

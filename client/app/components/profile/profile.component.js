@@ -46,7 +46,16 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.editing = {
                         basic: false,
                         tech: false,
-                        contact: false
+                        contact: false,
+                        picture: false
+                    };
+                    this.options = {
+                        url: 'http://localhost:1337/api/user/addPicture',
+                        filterExtensions: true,
+                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
+                        calculateSpeed: true,
+                        authToken: localStorage.getItem('id_token'),
+                        authTokenPrefix: 'Bearer'
                     };
                     this.techs = [];
                 }
@@ -84,7 +93,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.profileInfo.createdAt = moment(_this.profileInfo.createdAt).format('MMMM Do YYYY');
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
-                            console.log(_this.profileInfo);
                         });
                     });
                 };
@@ -113,7 +121,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.clientId = localStorage.getItem('url');
                             _this.urlTaken = false;
                             _this.router.navigateByUrl('/profile/' + input.url);
-                            _this.editForm('basic');
                         }
                         else {
                             _this.editForm(type);
@@ -154,6 +161,23 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         ;
                     }
                     ;
+                };
+                //Image Upload function
+                ProfileComponent.prototype.handleUpload = function (data) {
+                    if (data && data.response) {
+                        data = JSON.parse(data.response);
+                        localStorage.setItem("picture", data);
+                    }
+                };
+                ProfileComponent.prototype.handleChange = function (input) {
+                    var img = document.createElement("img");
+                    img.src = window.URL.createObjectURL(input.files[0]);
+                    var reader = new FileReader();
+                    var that = this;
+                    reader.addEventListener("load", function (event) {
+                        that.profileInfo.picture = event.target.result;
+                    }, false);
+                    reader.readAsDataURL(input.files[0]);
                 };
                 ProfileComponent = __decorate([
                     core_1.Component({

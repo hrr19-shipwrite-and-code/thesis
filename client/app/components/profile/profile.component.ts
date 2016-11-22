@@ -18,11 +18,20 @@ export class ProfileComponent {
   private profileInfo = {Teches: [], Team: [], Member: []};
   private newTech = '';
   private urlTaken = false;
-  private tempURL: string;
+  private tempUrl: string;
   private editing = {
     basic: false,
     tech: false,
-    contact: false
+    contact: false,
+    picture: false
+  };
+  private options: Object = {
+    url: 'http://localhost:1337/api/user/addPicture',
+    filterExtensions: true,
+    allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
+    calculateSpeed: true,
+    authToken: localStorage.getItem('id_token'),
+    authTokenPrefix: 'Bearer'
   };
   techs = [];
 
@@ -62,7 +71,6 @@ export class ProfileComponent {
         this.profileInfo.createdAt = moment(this.profileInfo.createdAt).format('MMMM Do YYYY')
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
-        console.log(this.profileInfo);
       });
     });
   }
@@ -93,7 +101,6 @@ export class ProfileComponent {
             this.clientId = localStorage.getItem('url');
             this.urlTaken = false;
             this.router.navigateByUrl('/profile/' + input.url)
-            this.editForm('basic')
           } else {
           this.editForm(type)
           }
@@ -133,6 +140,25 @@ export class ProfileComponent {
         return this.profileInfo.Teches.splice(i, 1);
       };
     };
+  }
+
+  //Image Upload function
+  handleUpload(data): void {
+    if (data && data.response) {
+      data = JSON.parse(data.response);
+      localStorage.setItem("picture", data);
+    }
+  }
+
+  handleChange(input) {
+    let img = document.createElement("img");
+    img.src = window.URL.createObjectURL(input.files[0]);
+    const reader = new FileReader();
+    const that = this;
+    reader.addEventListener("load", (event) => {
+      that.profileInfo.picture = event.target.result;
+    }, false);
+    reader.readAsDataURL(input.files[0]);
   }
 
 
