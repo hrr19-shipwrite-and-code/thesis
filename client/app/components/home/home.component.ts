@@ -11,6 +11,7 @@ import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail
 })
 
 export class HomeComponent {
+  filterConditions = {};
   filterHidden = true;
   projects;
   constructor(private homeService: HomeService) {}
@@ -48,6 +49,7 @@ export class HomeComponent {
         }
       }
     }
+    this.filterConditions = filterConditions;
     this.homeService.getProjects(filterConditions)
       .subscribe(data => {
         this.projects = data;
@@ -55,7 +57,13 @@ export class HomeComponent {
   }
 
   sort(sortType) {
-    this.homeService.sortBy(sortType);
+    let filterConditions = this.filterConditions;
+    filterConditions.sort = sortType;
+    
+    this.homeService.getProjects(filterConditions)
+      .subscribe(data => {
+        this.projects = data;
+      })
   }
 
 }

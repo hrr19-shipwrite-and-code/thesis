@@ -149,10 +149,10 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
                         styleUrls: ['./client/app/components/profile/profile.css'],
                         providers: [profile_services_js_1.ProfileService],
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _a) || Object, router_1.ActivatedRoute, (typeof (_b = typeof core_2.MapsAPILoader !== 'undefined' && core_2.MapsAPILoader) === 'function' && _b) || Object, core_1.NgZone, router_2.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _a) || Object, router_1.ActivatedRoute, core_2.MapsAPILoader, core_1.NgZone, router_2.Router])
                 ], ProfileComponent);
                 return ProfileComponent;
-                var _a, _b;
+                var _a;
             }());
             exports_1("ProfileComponent", ProfileComponent);
         }

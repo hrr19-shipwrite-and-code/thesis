@@ -24,6 +24,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
             HomeComponent = (function () {
                 function HomeComponent(homeService) {
                     this.homeService = homeService;
+                    this.filterConditions = {};
                     this.filterHidden = true;
                 }
                 HomeComponent.prototype.ngOnInit = function () {
@@ -58,13 +59,20 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                             }
                         }
                     }
+                    this.filterConditions = filterConditions;
                     this.homeService.getProjects(filterConditions)
                         .subscribe(function (data) {
                         _this.projects = data;
                     });
                 };
                 HomeComponent.prototype.sort = function (sortType) {
-                    this.homeService.sortBy(sortType);
+                    var _this = this;
+                    var filterConditions = this.filterConditions;
+                    filterConditions.sort = sortType;
+                    this.homeService.getProjects(filterConditions)
+                        .subscribe(function (data) {
+                        _this.projects = data;
+                    });
                 };
                 HomeComponent = __decorate([
                     core_1.Component({

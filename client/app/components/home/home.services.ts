@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HomeService {
 
-  constructor (private http: Http) {}
-  getProjects(filter) {
+  constructor (private http: Http) {} 
+  getProjects(filter) { // filter.sort ('date', 'likes', 'views')
     console.log(filter)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
