@@ -29,7 +29,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                 }
                 HomeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.homeService.getProjects({})
+                    this.homeService.getProjects({ sort: 'default' })
                         .subscribe(function (data) { return _this.projects = data; }, function (error) { return alert(error); });
                 };
                 HomeComponent.prototype.filterBar = function () {

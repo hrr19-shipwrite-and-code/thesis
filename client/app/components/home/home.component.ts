@@ -17,7 +17,7 @@ export class HomeComponent {
   constructor(private homeService: HomeService) {}
 
   ngOnInit() {
-    this.homeService.getProjects({})
+    this.homeService.getProjects({sort: 'default'})
       .subscribe(
         data => this.projects = data,
         error => alert(error)
