@@ -45,19 +45,18 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     };
                 }
                 EditProfileComponent.prototype.ngOnInit = function () {
-                    var _this = this;
                     this.getUserInfo();
-                    this.mapsAPILoader.load().then(function () {
-                        var input = document.getElementById('location');
-                        var autocomplete = new google.maps.places.Autocomplete(input, {
-                            types: ['(cities)']
-                        });
-                        autocomplete.addListener("place_changed", function () {
-                            _this.zone.run(function () {
-                                _this.userInfo.location = autocomplete.getPlace().formatted_address;
-                            });
-                        });
-                    });
+                    // this.mapsAPILoader.load().then(() => {
+                    //   let input = document.getElementById('location')
+                    //   let autocomplete = new google.maps.places.Autocomplete(input, {
+                    //     types: ['(cities)']
+                    //   });
+                    //   autocomplete.addListener("place_changed", () => {
+                    //     this.zone.run(() => {
+                    //       this.userInfo.location = autocomplete.getPlace().formatted_address
+                    //     });
+                    //   });
+                    // });
                 };
                 EditProfileComponent.prototype.getUserInfo = function () {
                     var _this = this;

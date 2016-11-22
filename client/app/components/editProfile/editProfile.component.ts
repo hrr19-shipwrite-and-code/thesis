@@ -30,17 +30,17 @@ export class EditProfileComponent implements OnInit{
   ngOnInit() {
     this.getUserInfo();
 
-    this.mapsAPILoader.load().then(() => {
-      let input = document.getElementById('location')
-      let autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ['(cities)']
-      });
-      autocomplete.addListener("place_changed", () => {
-        this.zone.run(() => {
-          this.userInfo.location = autocomplete.getPlace().formatted_address
-        });
-      });
-    });
+    // this.mapsAPILoader.load().then(() => {
+    //   let input = document.getElementById('location')
+    //   let autocomplete = new google.maps.places.Autocomplete(input, {
+    //     types: ['(cities)']
+    //   });
+    //   autocomplete.addListener("place_changed", () => {
+    //     this.zone.run(() => {
+    //       this.userInfo.location = autocomplete.getPlace().formatted_address
+    //     });
+    //   });
+    // });
   }
 
   getUserInfo() {
