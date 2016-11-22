@@ -14,13 +14,8 @@
   </div>
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
-  <!--<div *ngIf="auth.authenticated()">
-    <a routerLink="/profile/{{auth.checkUrl()}}" routerLinkActive="active" class="navLink">Profile</a>
-    <a routerLink="/editprofile" routerLinkActive="active" class="navLink">Edit Profile</a>
-    <a routerLink="/addproject" class="navLink">Add Project</a>
-    <a class="navLink" (click)="auth.logout()">Logout</a>
-  </div>-->
 
+  <!--Navbar Dropdown-->
   <div class="nav-dropdown" *ngIf="auth.authenticated()">
     <span>{{ name }}</span>
     <img src="{{ picture }}" class="dropdown-image">
@@ -44,7 +39,6 @@
         <div (click)="auth.logout()" class="navLink">
           <span>Logout</span>
         </div>
-
       </div>
     </div>
   </div>

@@ -28,9 +28,13 @@ System.register(['@angular/core', '../auth/auth.service', '../projectAdd/project
                 function NavComponent(auth, add) {
                     this.auth = auth;
                     this.add = add;
+                }
+                // name = localStorage.getItem('name');
+                // picture = localStorage.getItem('picture');
+                NavComponent.prototype.ngOnInit = function () {
                     this.name = localStorage.getItem('name');
                     this.picture = localStorage.getItem('picture');
-                }
+                };
                 NavComponent = __decorate([
                     core_1.Component({
                         selector: 'nav',
