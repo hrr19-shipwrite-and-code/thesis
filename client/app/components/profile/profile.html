@@ -5,6 +5,8 @@
 
       <div class='topInfo horizontalCenter'>
         <div class='profilePhoto horizontalCenter'><img class="profilePhoto" src="{{profileInfo.picture}}"/></div>
+        <!-- Show Basic Profile Info -->
+        <div *ngIf="!editing.basic">
         <h2 class='userName'>{{profileInfo.name}}</h2>
         <p>{{profileInfo.location}}</p>
         <p class='bio'>
@@ -12,17 +14,55 @@
         </p>
         <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
         <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
+        </div>
+        <!-- Edit basic profile info -->
+        <div *ngIf="editing.basic">
+        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')">
+          <input type="text" name="name" [(ngModel)]="profileInfo.name" placeholder="Full Name" required>
+          <input id="location" (focus)="googleLocation()" [(ngModel)]="profileInfo.location" placeholder="Enter your location" name="location">
+          <input type="text" name="bio" [(ngModel)]="profileInfo.bio" placeholder="Short Bio...">
+          <br>For Hire:<br>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="profileInfo.hire" name="hire">
+            <div class="slider round"></div>
+          </label><br>
+          <button class="btn btn-primary btn-sm">Update</button>
+        </form>
+        Update your sushi url:<br>
+        <span *ngIf="urlTaken">URL Unavailable!</span>
+        <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
+          <input type="text" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL">
+          <button class="btn btn-primary btn-sm">Update</button>
+        </form>
+        </div>
+        <!-- Edit Pencil Icon -->
+        <div class="edit">
+        <i *ngIf='isCurrentUser()' (click)="editForm('basic')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
+        </div>
       </div> <!-- topInfo -->
 
       <hr>
 
-      <div *ngIf="profileInfo.Teches.length">
+      <!-- User Tech skills -->
+      <div class='connect'>
         <h4>SKILLS</h4>
-        <ul>
-          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}}</li>
+        <ul *ngIf="profileInfo.Teches.length">
+          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf="isCurrentUser()" (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
         </ul>
+        <!-- Hidden User Tech Input -->
+        <datalist id="techs">
+          <option *ngFor="let tech of techs" [value]="tech.name">
+        </datalist>
+        <form *ngIf="editing.tech" (ngSubmit)="addTech()">
+          <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
+          <button type="submit" class="btn btn-primary btn-sm">Add</button>
+        </form>
+        <div class="edit">
+        <i *ngIf='isCurrentUser()' (click)="editForm('tech')" class="fa fa-plus" aria-hidden="true" title="Add Skills"></i>
+        </div>
       </div>
 
+      <!-- User Teams if single User -->
       <div *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
         <ul>
@@ -30,6 +70,7 @@
         </ul>
       </div>
 
+      <!-- Teams members if team profile -->
       <div *ngIf="profileInfo.Member.length">
         <h4>MEMBERS</h4>
         <ul>
@@ -39,16 +80,32 @@
 
       <hr>
 
-      <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin">
+      <!-- User/Team Connections -->
+      <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser()">
         <h4>CONNECT</h4>
-        <ul class='urls'>
+        <ul class='urls' *ngIf="!editing.contact">
           <li *ngIf="profileInfo.personal"><a href='{{profileInfo.personal}}'>personal</a></li>
           <li *ngIf="profileInfo.blog"><a href='{{profileInfo.blog}}'>blog</a></li>
           <li *ngIf="profileInfo.github"><a href='{{profileInfo.github}}'>github</a></li>
           <li *ngIf="profileInfo.linkedin"><a href='{{profileInfo.linkedin}}'>linkedin</a></li>
           <li *ngIf="profileInfo.twitter"><a href='{{profileInfo.twitter}}'>twitter</a></li>
           <li *ngIf="profileInfo.facebook"><a href='{{profileInfo.facebook}}'>facebook</a></li>
+          <li *ngIf="profileInfo.createdAt">Member since: {{profileInfo.createdAt}}</li>
         </ul>
+        <div *ngIf="editing.contact">
+          <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'contact')">
+          <input type="text" name="personal" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
+          <input type="text" name="blog" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
+          <input type="text" name="github" [(ngModel)]="profileInfo.github" placeholder="Github url...">  
+          <input type="text" name="linkedin" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
+          <input type="text" name="twitter" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
+          <input type="text" name="facebook" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
+          <button class="btn btn-primary btn-sm">Update</button>
+        </form>
+        </div>
+        <div class="edit">
+        <i *ngIf='isCurrentUser()' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
+        </div>
       </div> <!-- connect -->
     </div> <!-- sidebar -->
 

@@ -60,6 +60,7 @@
 
 .userName {
   margin-bottom: 5px;
+  display: inline;
 }
 
 .bio {
@@ -99,12 +100,15 @@
   color: #888B8D;
 }
 
+.edit {
+  width: 240px;
+  text-align: right;
+}
+
 .urls {
   list-style: none;
-
   margin-top: 5px;
   padding-left: 0;
-
   font-size: 0.9em;
   line-height: 2em;
 
@@ -124,13 +128,9 @@ hr {
   width: 100%;
   height: 0.5px;
   margin-bottom: 20px;
-
   border: none;
   background-color: #F4F4F4;
 }
-
-
-
 
 /* thumbnails */
 
