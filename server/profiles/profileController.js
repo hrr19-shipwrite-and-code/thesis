@@ -74,7 +74,8 @@ module.exports = {
       where: {
         type: {
           $eq: 'Member'
-        }
+        },
+        $and: []
       },
       include: [{
         model: Tech,
@@ -90,12 +91,11 @@ module.exports = {
     //filters
     req.body.name ? filter.where.name = {$like: '%' + req.body.name + '%'} : false;
     req.body.hire === true ? filter.where.hire = {$eq: true} : false;
-    req.body.tech ? filter.include[0].where = {name: {$in: req.body.tech}} : false;
+    req.body.tech ? filter.where.$and.push(['EXISTS( SELECT * FROM ProfileTeches LEFT JOIN Teches on ProfileTeches.TechId=Teches.id WHERE name IN (?) AND ProfileId = Profile.id)', req.body.tech]) : false;
     if(req.body.location){
-      let location = req.body.location.map((value) => {
-        return {location: {$like: '%' + value + '%'}}
+      let location = req.body.location.forEach((value) => {
+        filter.where.$and.push({location: {$like: '%' + value + '%'}});
       });
-      filter.where.$and = location;
     }
 
     Profile.findAll(filter)
