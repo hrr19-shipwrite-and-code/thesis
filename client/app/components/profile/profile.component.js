@@ -168,7 +168,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
                         data = JSON.parse(data.response);
-                        localStorage.setItem("picture", data.picture);
+                        localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
                     }
                 };
                 ProfileComponent.prototype.handleChange = function (input) {

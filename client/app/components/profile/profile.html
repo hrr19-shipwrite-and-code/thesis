@@ -22,12 +22,12 @@
         <p class='bio'>
           {{profileInfo.bio}}
         </p>
-        <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
-        <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button></a>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button></a>
         </div>
         <!-- Edit basic profile info -->
         <div *ngIf="editing.basic">
-        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')">
+        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')" onkeypress="return event.keyCode!=13">
           <input type="text" name="name" class="form-control" [(ngModel)]="profileInfo.name" placeholder="Full Name" required>
           <input id="location" (focus)="googleLocation()" class="form-control" [(ngModel)]="profileInfo.location" placeholder="Enter your location" name="location">
           <input type="text" name="bio" class="form-control" [(ngModel)]="profileInfo.bio" placeholder="Short Bio...">

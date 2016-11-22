@@ -148,7 +148,7 @@ export class ProfileComponent {
   handleUpload(data): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      localStorage.setItem("picture", data.picture);
+      localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
     }
   }
 
