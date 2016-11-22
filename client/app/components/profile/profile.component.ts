@@ -67,8 +67,10 @@ export class ProfileComponent {
     this.route.params.subscribe((params) => {
       this.profileService.getProfileInfo(params['id'])
       .subscribe( data => {
+        console.log(data);
         this.profileInfo = data;
         this.profileInfo.createdAt = moment(this.profileInfo.createdAt).format('MMMM Do YYYY')
+        this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
       });
@@ -146,7 +148,7 @@ export class ProfileComponent {
   handleUpload(data): void {
     if (data && data.response) {
       data = JSON.parse(data.response);
-      localStorage.setItem("picture", data);
+      localStorage.setItem("picture", data.picture);
     }
   }
 

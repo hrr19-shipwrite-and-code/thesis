@@ -89,8 +89,10 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.route.params.subscribe(function (params) {
                         _this.profileService.getProfileInfo(params['id'])
                             .subscribe(function (data) {
+                            console.log(data);
                             _this.profileInfo = data;
                             _this.profileInfo.createdAt = moment(_this.profileInfo.createdAt).format('MMMM Do YYYY');
+                            _this.profileInfo.picture = _this.profileInfo.picture + '?dummy=' + Date.now();
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
                         });
@@ -166,7 +168,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
                         data = JSON.parse(data.response);
-                        localStorage.setItem("picture", data);
+                        localStorage.setItem("picture", data.picture);
                     }
                 };
                 ProfileComponent.prototype.handleChange = function (input) {
