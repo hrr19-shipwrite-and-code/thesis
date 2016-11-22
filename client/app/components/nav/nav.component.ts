@@ -13,4 +13,11 @@ export class NavComponent {
   constructor(private auth: AuthService, private add: ProjectAddComponent) {}
 
   url;
+  name = localStorage.getItem('name');
+  picture = localStorage.getItem('picture');
+
+  // ngOnInit() {
+  //   this.name = localStorage.getItem('name');
+  //   this.picture = localStorage.getItem('picture'); 
+  // }
 }
