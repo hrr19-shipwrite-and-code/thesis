@@ -93,13 +93,8 @@ module.exports = {
     req.body.hire === true ? filter.where.hire = {$eq: true} : false;
     req.body.tech ? filter.where.$and.push(['EXISTS( SELECT * FROM ProfileTeches LEFT JOIN Teches on ProfileTeches.TechId=Teches.id WHERE name IN (?) AND ProfileId = Profile.id)', req.body.tech]) : false;
     if(req.body.location){
-<<<<<<< 003fd96e4ef4674e9f26150296f844a148482983
       let location = req.body.location.forEach((value) => {
         filter.where.$and.push({location: {$like: '%' + value + '%'}});
-=======
-      let location = req.body.location.map((value) => {
-        return {location: {$like: '%' + value + '%'}};
->>>>>>> bug: clean up server code placing semi colons where needed
       });
     }
 
