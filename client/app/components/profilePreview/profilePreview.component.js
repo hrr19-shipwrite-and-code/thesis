@@ -21,6 +21,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             ProfilePreviewComponent = (function () {
                 function ProfilePreviewComponent() {
                 }
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], ProfilePreviewComponent.prototype, "users", void 0);
                 ProfilePreviewComponent = __decorate([
                     core_1.Component({
                         selector: 'profile-preview',
