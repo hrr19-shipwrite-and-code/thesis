@@ -14,8 +14,6 @@
 
 /* whole page container */
 .container {
-  padding-left: 6vw;
-  padding-right: 6vw;
 
   display: -webkit-flex;
   display: flex;
@@ -27,7 +25,7 @@
 
 /* sidebar as a whole */
 .sidebar {
-  min-width: 300px;
+  min-width: 290px;
   background-color: white;
   border-radius: 5px;
 
@@ -135,6 +133,8 @@ hr {
 /* thumbnails */
 
 .thumbnails {
-  margin-left: 20px;
-  /*border: 1px solid black;*/
+  margin-top: 0;
+  padding: 0;
+
+  min-width: 750px;
 }

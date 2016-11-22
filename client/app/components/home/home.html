@@ -20,8 +20,12 @@
   </div>
   <div class="filter-btn" (click)="filterBar()">
     <p class="filter-txt">Filter</p>
-  </div>
-  <div class="thumbnails">
-    <project-thumbnail [projects]="projects"></project-thumbnail>
-  </div>
-</div>
+  </div> <!-- filter button -->
+
+  <div class="thumbnail-wrapper horizontal-center">
+    <div class="thumbnails">
+      <project-thumbnail [projects]="projects"></project-thumbnail>
+    </div>
+  </div> <!-- thumbnail-wrapper -->
+
+</div> <!-- container -->

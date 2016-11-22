@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class='header'>
         <form #editTitleInput="ngForm" class="title" *ngIf="editTitle" (ngSubmit)="editProject($event, editTitleInput.value, 'title')">
-          <input type="text" name="title" [(ngModel)]="project.title">
+          <input type="text" name="title" class="form-control" [(ngModel)]="project.title">
           <button class="btn btn-primary btn-sm">Edit</button>
         </form>
         <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
@@ -27,11 +27,14 @@
           <div *ngIf="checkUser(project.Profile.url)">
             <button *ngIf="checkForImages()" (click)="updateThumbnail()">Set as display picture</button>
             <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)">Delete picture</button>
-            <div>
-              <input type="file"
-                ngFileSelect
-                [options]="options"
-                (onUpload)="handleUpload($event)">
+            <div class="form-group">
+              <label class="btn btn-default btn-file">
+                Add Photo <input type="file"
+                  style="display: none"
+                  ngFileSelect
+                  [options]="options"
+                  (onUpload)="handleUpload($event)">
+                </label>
             </div>
           </div>
         </div>
@@ -48,7 +51,7 @@
             <div *ngIf="checkUser(project.Profile.url)">
               <div *ngIf="editDescrip">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editProject($event, editDescriptionInput.value, 'description')" >
-                  <input type="text" name="description" [(ngModel)]="project.description">
+                  <textarea name="description" rows="4" [(ngModel)]="project.description" class="form-control"></textarea>
                   <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
               </div>
@@ -67,7 +70,7 @@
           <hr>
 
           <!-- Displaying Tech and add tech icon -->
-            <div>Technology:</div>          
+          <div>Technology:</div>
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
             <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
@@ -81,7 +84,7 @@
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
             <form *ngIf="editTech" (ngSubmit)="addTech()">
-              <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
+              <input type="text" list="techs" name="tech" id="techInput" class="form-control" [(ngModel)]="newTech" required>
               <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
           </div>
@@ -96,20 +99,20 @@
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
               <span *ngIf="checkUser(project.Profile.url) && project.deploy.length === 0">Add deploy link</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
-                <input type="text" name="deploy" [(ngModel)]="project.deploy">
+                <input type="text" name="deploy" class="form-control" [(ngModel)]="project.deploy">
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
               <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
-            </div>            
+            </div>
             <div>
               <!-- GitHub Info/Form -->
               <span *ngIf="project.github && !editGithub"><a href={{project.github}}>GitHub</a></span>
               <span *ngIf="checkUser(project.Profile.url) && project.github.length === 0">Add a github</span>
               <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
-                <input type="text" name="github" [(ngModel)]="project.github">
+                <input type="text" name="github" class="form-control" [(ngModel)]="project.github">
                 <button class="btn btn-primary btn-sm">Edit</button>
-              </form>              
+              </form>
             </div>
             <div>
               <!-- Status Info/DropDown -->
@@ -121,7 +124,7 @@
                   <option value="Abandonded">Abandonded</option>
                 </select>
               </span>
-              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>              
+              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>
               </div>
               <div>
                 <!-- Open Source Info/Toggle -->
@@ -132,12 +135,12 @@
                     <div class="slider round"></div>
                   </label>
                 </span>
-                <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>                  
+                <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>
               </div>
               <!-- Delete Button -->
               <button class="btn btn-primary btn-sm" *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
             </div>
-            <div>            
+            <div>
           </div>
 
         </div> <!-- Info -->

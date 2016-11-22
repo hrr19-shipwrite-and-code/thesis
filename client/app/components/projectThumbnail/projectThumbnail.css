@@ -1,5 +1,5 @@
 /* A couple of utility classes for re-use */
-.horizontalCenter {
+.horizontal-center {
   display: -webkit-flex;
   display: flex;
   align-items: center;
@@ -12,6 +12,7 @@
   box-shadow: 0 5px 6px -6px #bdc3c7;
 }
 
+/* Thumbnail card */
 .project-thumbnail {
   border-radius: 3px;
   background-color: white;
@@ -20,6 +21,7 @@
   height: 225px;
 }
 
+/* Hover */
 .project-thumbnail-hover {
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 0.9);
@@ -30,11 +32,21 @@
   height: 150px;
 }
 
+/* Project Details */
 h4.project-name {
   margin-top: 20px;
   color: #444444;
+  font-size: 1.3em;
 }
 
+.project-description {
+  max-width: 95%;
+  font-size: 0.9em;
+  color: #444444;
+  text-align: center;
+}
+
+/* Social */
 .project-thumbnail-views {
 
   color: #888B8D;
