@@ -71,7 +71,7 @@ module.exports = {
             res.sendStatus(200);
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
             res.sendStatus(404);
           });
       })
@@ -218,7 +218,7 @@ module.exports = {
         projects = JSON.parse(JSON.stringify(projects));
         for (let project of projects) {
           project.Likes = project.Likes.length;
-          project.comments = project.Comments.length
+          project.comments = project.Comments.length;
         }
         res.send(projects);
       })

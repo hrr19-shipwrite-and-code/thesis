@@ -93,8 +93,13 @@ module.exports = {
     req.body.hire === true ? filter.where.hire = {$eq: true} : false;
     req.body.tech ? filter.where.$and.push(['EXISTS( SELECT * FROM ProfileTeches LEFT JOIN Teches on ProfileTeches.TechId=Teches.id WHERE name IN (?) AND ProfileId = Profile.id)', req.body.tech]) : false;
     if(req.body.location){
+<<<<<<< 003fd96e4ef4674e9f26150296f844a148482983
       let location = req.body.location.forEach((value) => {
         filter.where.$and.push({location: {$like: '%' + value + '%'}});
+=======
+      let location = req.body.location.map((value) => {
+        return {location: {$like: '%' + value + '%'}};
+>>>>>>> bug: clean up server code placing semi colons where needed
       });
     }
 
@@ -103,7 +108,7 @@ module.exports = {
         res.json(users);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -165,10 +170,10 @@ module.exports = {
     const url = req.body.url;
     Profile.destroy({where: {url: url}})
       .then(() => {
-        res.sendStatus(200)
+        res.sendStatus(200);
       })
       .catch(() => {
-        res.sendStatus(404)
+        res.sendStatus(404);
       })
   },
 
@@ -217,7 +222,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err)
-        res.sendStatus(400)
+        res.sendStatus(400);
       })
   },
 
