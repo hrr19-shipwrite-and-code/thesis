@@ -1,4 +1,4 @@
-System.register(['@angular/core', './profile.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './profile.services.js', '../project/project.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, profile_services_js_1, router_1, router_2, core_2;
+    var core_1, profile_services_js_1, project_services_js_1, router_1, router_2, core_2;
     var ProfileComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
             },
             function (profile_services_js_1_1) {
                 profile_services_js_1 = profile_services_js_1_1;
+            },
+            function (project_services_js_1_1) {
+                project_services_js_1 = project_services_js_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -29,7 +32,8 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
             }],
         execute: function() {
             ProfileComponent = (function () {
-                function ProfileComponent(profileService, route, mapsAPILoader, zone, router) {
+                function ProfileComponent(projectService, profileService, route, mapsAPILoader, zone, router) {
+                    this.projectService = projectService;
                     this.profileService = profileService;
                     this.route = route;
                     this.mapsAPILoader = mapsAPILoader;
@@ -44,9 +48,18 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
                         tech: false,
                         contact: false
                     };
+                    this.techs = [];
                 }
                 ProfileComponent.prototype.ngOnInit = function () {
                     this.getUserInfo();
+                    this.getTechs();
+                };
+                ProfileComponent.prototype.getTechs = function () {
+                    var _this = this;
+                    this.projectService.getTech()
+                        .subscribe(function (data) {
+                        _this.techs = data;
+                    });
                 };
                 ProfileComponent.prototype.googleLocation = function () {
                     var _this = this;
@@ -147,12 +160,12 @@ System.register(['@angular/core', './profile.services.js', '@angular/router', 'a
                         selector: 'profile',
                         templateUrl: './client/app/components/profile/profile.html',
                         styleUrls: ['./client/app/components/profile/profile.css'],
-                        providers: [profile_services_js_1.ProfileService],
+                        providers: [profile_services_js_1.ProfileService, project_services_js_1.ProjectService],
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _a) || Object, router_1.ActivatedRoute, core_2.MapsAPILoader, core_1.NgZone, router_2.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof project_services_js_1.ProjectService !== 'undefined' && project_services_js_1.ProjectService) === 'function' && _a) || Object, (typeof (_b = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _b) || Object, router_1.ActivatedRoute, core_2.MapsAPILoader, core_1.NgZone, router_2.Router])
                 ], ProfileComponent);
                 return ProfileComponent;
-                var _a;
+                var _a, _b;
             }());
             exports_1("ProfileComponent", ProfileComponent);
         }

@@ -1,17 +1,25 @@
 import { Component, ElementRef, Renderer } from '@angular/core';
+import { ProjectService } from '../project/project.services.js';
 import { BrowseService } from './browse.services.js';
 
 @Component({
   selector: 'browse',
   templateUrl: './client/app/components/browse/browse.html',
-  providers: [BrowseService]
+  providers: [BrowseService, ProjectService]
 })
 
 export class BrowseComponent {
-  techs;
+  techs = [];
   filteredTech = [];
-  constructor(browseService: BrowseService, private el: ElementRef, private renderer: Renderer){
-    this.techs = browseService.getTech();
+  constructor(private projectService: ProjectService, browseService: BrowseService, private el: ElementRef, private renderer: Renderer){
+    this.getTechs()
+  }
+
+  getTechs() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
   }
 
   addTechToSearch(tech){
