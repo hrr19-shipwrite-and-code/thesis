@@ -91,6 +91,13 @@ module.exports = {
     req.body.name ? filter.where.name = {$like: '%' + req.body.name + '%'} : false;
     req.body.hire === true ? filter.where.hire = {$eq: true} : false;
     req.body.tech ? filter.include[0].where = {name: {$in: req.body.tech}} : false;
+    if(req.body.location){
+      let location = req.body.location.map((value) => {
+        return {location: {$like: '%' + value + '%'}}
+      });
+      filter.where.$or = location;
+      console.log(location)
+    }
 
     Profile.findAll(filter)
       .then((users) => {
