@@ -27,7 +27,7 @@ export class ProjectComponent {
   private uploadFile: any;
   private options: Object = {
     filterExtensions: true,
-    allowedExtensions: ['image/png', 'image/jpg'],
+    allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
     calculateSpeed: true,
     authToken: localStorage.getItem('id_token'),
     authTokenPrefix: 'Bearer'

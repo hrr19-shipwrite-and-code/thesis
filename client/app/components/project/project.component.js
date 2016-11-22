@@ -42,7 +42,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.picture = { url: '/client/app/assets/thumbnail.png' };
                     this.options = {
                         filterExtensions: true,
-                        allowedExtensions: ['image/png', 'image/jpg'],
+                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
                         calculateSpeed: true,
                         authToken: localStorage.getItem('id_token'),
                         authTokenPrefix: 'Bearer'

@@ -12,13 +12,13 @@ module.exports = {
       .spread((tech) => {
         Profile.findOne({where: {authId: authId}})
           .then((profile) => {
-            console.log(tech)
+            //console.log(tech);
             profile.addTech(tech)
               .then(() => {
                 res.send(tech);
               })
               .catch((err) => {
-                console.log(err)
+                console.log(err);
                 res.sendStatus(404);
               });
           });

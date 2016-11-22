@@ -108,8 +108,7 @@
   margin-top: 5px;
   padding-left: 0;
   font-size: 0.9em;
-  line-height: 2em;
-
+  line-height: 2em
 }
 
 a {
@@ -137,4 +136,9 @@ hr {
   padding: 0;
 
   min-width: 750px;
+}
+
+.userUrl {
+  width: 90px;
+  display: inline-flex;
 }

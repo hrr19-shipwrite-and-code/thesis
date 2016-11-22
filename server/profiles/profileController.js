@@ -103,7 +103,7 @@ module.exports = {
         res.json(users);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -165,10 +165,10 @@ module.exports = {
     const url = req.body.url;
     Profile.destroy({where: {url: url}})
       .then(() => {
-        res.sendStatus(200)
+        res.sendStatus(200);
       })
       .catch(() => {
-        res.sendStatus(404)
+        res.sendStatus(404);
       })
   },
 
@@ -217,7 +217,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err)
-        res.sendStatus(400)
+        res.sendStatus(400);
       })
   },
 
@@ -227,12 +227,12 @@ module.exports = {
 
   addPicture: (req, res, next) => {
     const authId = req.user.sub
-    const URL = './client/uploads/profile/' + authId;
+    const URL = '/client/uploads/profile/' + authId;
     Profile.findOne({where: {authId: authId}})
       .then((profile) => {
         profile.update({ picture: URL})
-          .then(() => {
-            res.sendStatus(200);
+          .then((update) => {
+            res.send(update);
           });
       });
   }

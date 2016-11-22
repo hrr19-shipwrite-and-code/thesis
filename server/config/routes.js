@@ -8,9 +8,7 @@ const middleware = require('./middleware.js');
 
 module.exports = function (app, express) {
 
-  //User Routes
-
-  //Signup/Login --Needs Authentication
+  //Profile Routes
   app.post('/api/user/create', middleware.authCheck, profileController.createUser);
   app.post('/api/team/create', profileController.createTeam);
   app.put('/api/team/edit', profileController.editTeamInfo);
@@ -52,6 +50,5 @@ module.exports = function (app, express) {
 
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
-  //Once Auth will get GET
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike)
 };

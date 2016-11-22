@@ -15,7 +15,7 @@ module.exports = {
                 Like.destroy({where: {id: like.id}})
                   .then(() => {
                     res.send({ like: false });
-                  })
+                  });
               })
               .catch((err) => {
                 Like.create({})

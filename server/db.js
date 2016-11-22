@@ -8,7 +8,7 @@ const Like = require('./likes/likeSchema.js');
 const Tech = require('./tech/techSchema.js').Tech;
 const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
-const TeamUser = require('./profiles/TeamUserSchema.js')
+const TeamUser = require('./profiles/TeamUserSchema.js');
 
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);
@@ -28,7 +28,7 @@ Profile.sync()
     Profile.belongsToMany(Profile, {as: 'Member', foreignKey: 'teamId', through: TeamUser });
     Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
     TeamUser.sync();
-  })
+  });
 
 Tech.sync()
   .then(() => {
@@ -57,7 +57,7 @@ Tech.sync()
         ProjectTech.sync();
         ProfileTech.sync();
       });
-  })
+  });
 
 
 
