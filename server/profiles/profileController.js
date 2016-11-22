@@ -74,7 +74,8 @@ module.exports = {
       where: {
         type: {
           $eq: 'Member'
-        }
+        },
+        $and: []
       },
       include: [{
         model: Tech,
@@ -90,12 +91,11 @@ module.exports = {
     //filters
     req.body.name ? filter.where.name = {$like: '%' + req.body.name + '%'} : false;
     req.body.hire === true ? filter.where.hire = {$eq: true} : false;
-    req.body.tech ? filter.include[0].where = {name: {$in: req.body.tech}} : false;
+    req.body.tech ? filter.where.$and.push(['EXISTS( SELECT * FROM ProfileTeches LEFT JOIN Teches on ProfileTeches.TechId=Teches.id WHERE name IN (?) AND ProfileId = Profile.id)', req.body.tech]) : false;
     if(req.body.location){
-      let location = req.body.location.map((value) => {
-        return {location: {$like: '%' + value + '%'}}
+      let location = req.body.location.forEach((value) => {
+        filter.where.$and.push({location: {$like: '%' + value + '%'}});
       });
-      filter.where.$and = location;
     }
 
     Profile.findAll(filter)
@@ -103,7 +103,7 @@ module.exports = {
         res.json(users);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -165,10 +165,10 @@ module.exports = {
     const url = req.body.url;
     Profile.destroy({where: {url: url}})
       .then(() => {
-        res.sendStatus(200)
+        res.sendStatus(200);
       })
       .catch(() => {
-        res.sendStatus(404)
+        res.sendStatus(404);
       })
   },
 
@@ -217,7 +217,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err)
-        res.sendStatus(400)
+        res.sendStatus(400);
       })
   },
 
@@ -227,12 +227,12 @@ module.exports = {
 
   addPicture: (req, res, next) => {
     const authId = req.user.sub
-    const URL = './client/uploads/profile/' + authId;
+    const URL = '/client/uploads/profile/' + authId;
     Profile.findOne({where: {authId: authId}})
       .then((profile) => {
         profile.update({ picture: URL})
-          .then(() => {
-            res.sendStatus(200);
+          .then((update) => {
+            res.send(update);
           });
       });
   }

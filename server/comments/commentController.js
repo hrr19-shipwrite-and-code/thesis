@@ -17,7 +17,7 @@ module.exports = {
                   .then((profile) => {
                     profile.addComment(comment)
                       .then(() => {
-                        res.json(comment)
+                        res.json(comment);
                       })
                         .catch((err) => {
                           res.sendStatus(404);
@@ -63,7 +63,7 @@ module.exports = {
   },
 
   getCommentByProjectId: (req, res, next) => {
-    const projectId = req.params.projectId
+    const projectId = req.params.projectId;
     Comment.findAll({
       where:{ProjectId: projectId},
       include: {model: Profile, attributes: ['picture', 'name', 'url']},

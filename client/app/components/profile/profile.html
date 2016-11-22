@@ -4,7 +4,17 @@
     <div class='sidebar horizontalCenter shadow'>
 
       <div class='topInfo horizontalCenter'>
-        <div class='profilePhoto horizontalCenter'><img class="profilePhoto" src="{{profileInfo.picture}}"/></div>
+        <div class='profilePhoto horizontalCenter'>
+          <img class="profilePhoto" src="{{profileInfo.picture}}"/>
+        </div>
+          <input type="file"
+            *ngIf="editing.picture"
+            ngFileSelect
+            [options]="options"
+            (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
+        <div class="edit">
+        <i *ngIf='isCurrentUser()' (click)="editForm('picture')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
+        </div>
         <!-- Show Basic Profile Info -->
         <div *ngIf="!editing.basic">
         <h2 class='userName'>{{profileInfo.name}}</h2>
@@ -12,26 +22,20 @@
         <p class='bio'>
           {{profileInfo.bio}}
         </p>
-        <button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button>
-        <button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button></a>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button></a>
         </div>
         <!-- Edit basic profile info -->
         <div *ngIf="editing.basic">
-        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')">
-          <input type="text" name="name" [(ngModel)]="profileInfo.name" placeholder="Full Name" required>
-          <input id="location" (focus)="googleLocation()" [(ngModel)]="profileInfo.location" placeholder="Enter your location" name="location">
-          <input type="text" name="bio" [(ngModel)]="profileInfo.bio" placeholder="Short Bio...">
+        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')" onkeypress="return event.keyCode!=13">
+          <input type="text" name="name" class="form-control" [(ngModel)]="profileInfo.name" placeholder="Full Name" required>
+          <input id="location" (focus)="googleLocation()" class="form-control" [(ngModel)]="profileInfo.location" placeholder="Enter your location" name="location">
+          <input type="text" name="bio" class="form-control" [(ngModel)]="profileInfo.bio" placeholder="Short Bio...">
           <br>For Hire:<br>
           <label class="switch">
             <input type="checkbox" [(ngModel)]="profileInfo.hire" name="hire">
             <div class="slider round"></div>
           </label><br>
-          <button class="btn btn-primary btn-sm">Update</button>
-        </form>
-        Update your sushi url:<br>
-        <span *ngIf="urlTaken">URL Unavailable!</span>
-        <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
-          <input type="text" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL">
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
         </div>
@@ -54,7 +58,7 @@
           <option *ngFor="let tech of techs" [value]="tech.name">
         </datalist>
         <form *ngIf="editing.tech" (ngSubmit)="addTech()">
-          <input type="text" list="techs" name="tech" id="techInput" [(ngModel)]="newTech" required>
+          <input type="text" list="techs" name="tech" id="techInput" class="form-control" [(ngModel)]="newTech" required>
           <button type="submit" class="btn btn-primary btn-sm">Add</button>
         </form>
         <div class="edit">
@@ -92,21 +96,31 @@
           <li *ngIf="profileInfo.facebook"><a href='{{profileInfo.facebook}}'>facebook</a></li>
           <li *ngIf="profileInfo.createdAt">Member since: {{profileInfo.createdAt}}</li>
         </ul>
+        <!-- User/Team Connection edit forms -->
         <div *ngIf="editing.contact">
           <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'contact')">
-          <input type="text" name="personal" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
-          <input type="text" name="blog" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
-          <input type="text" name="github" [(ngModel)]="profileInfo.github" placeholder="Github url...">  
-          <input type="text" name="linkedin" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
-          <input type="text" name="twitter" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
-          <input type="text" name="facebook" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
+          <input type="text" name="personal" class="form-control" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
+          <input type="text" name="blog" class="form-control" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
+          <input type="text" name="github" class="form-control" [(ngModel)]="profileInfo.github" placeholder="Github url...">  
+          <input type="text" name="linkedin" class="form-control" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
+          <input type="text" name="twitter" class="form-control" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
+          <input type="text" name="facebook" class="form-control" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
         </div>
         <div class="edit">
         <i *ngIf='isCurrentUser()' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
         </div>
-      </div> <!-- connect -->
+      </div>
+      <!-- User URL Edit -->
+      <div class="connect" *ngIf='isCurrentUser()'> 
+        <h4>sushi url</h4>
+        <span *ngIf="urlTaken">URL Unavailable!</span>
+        <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
+          http://sushi.com/<input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL"><br>
+          <button class="btn btn-primary btn-sm">Update</button>
+        </form>
+      </div>
     </div> <!-- sidebar -->
 
   </div> <!-- sidebar-container -->

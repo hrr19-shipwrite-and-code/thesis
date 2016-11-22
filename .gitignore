@@ -35,5 +35,6 @@ bower_components/
 
 # API keys and secrets
 secret/
-client/uploads
+uploads/
+
 
