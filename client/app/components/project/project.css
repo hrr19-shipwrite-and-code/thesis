@@ -139,12 +139,6 @@ form {
   max-width: 600px;
 }
 
-.btn, .btn:active {
-  background-color: salmon;
-  border: none;
-  outline: none;
-}
-
 .comment-author {
   margin-bottom: 5px;
   font-weight: bold;
@@ -170,6 +164,47 @@ hr {
 
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+input[name="title"] {
+  max-width: 300px;
+  margin-top: 0;
+}
+
+.fa-pencil {
+  color: #D9D9D9;
+}
+
+.btn-primary, .btn-primary:active {
+  background-color: salmon;
+  border: none;
+  outline: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    color: #888B8D;
+    background-color: white;
+    border: 1px solid #D9D9D9;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+
+    cursor: inherit;
+    display: block;
 }
 
 
