@@ -95,8 +95,7 @@ module.exports = {
       let location = req.body.location.map((value) => {
         return {location: {$like: '%' + value + '%'}}
       });
-      filter.where.$or = location;
-      console.log(location)
+      filter.where.$and = location;
     }
 
     Profile.findAll(filter)

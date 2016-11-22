@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { OnInit, Component, NgZone } from '@angular/core';
 import { ProfilePreviewComponent } from '../profilePreview/profilePreview.component.js';
 import { SearchDevelopersServices } from './searchDevelopers.services.js';
+import { MapsAPILoader } from 'angular2-google-maps/core';
 
 
 
@@ -11,10 +12,25 @@ import { SearchDevelopersServices } from './searchDevelopers.services.js';
   providers: [SearchDevelopersServices]
 })
 
-export class SearchDevelopersComponent {
+export class SearchDevelopersComponent implements OnInit{
   users;
-  constructor(private searchDevelopersServices: SearchDevelopersServices) {
+  location;
+  constructor(private searchDevelopersServices: SearchDevelopersServices, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
+
+  ngOnInit() {
     this.getAllUsers({});
+
+    this.mapsAPILoader.load().then(() => {
+      let input = document.getElementById('location')
+      let autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['(cities)']
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.zone.run(() => {
+          this.location = autocomplete.getPlace().formatted_address
+        });
+      });
+    });
   }
 
   getAllUsers(filter) {

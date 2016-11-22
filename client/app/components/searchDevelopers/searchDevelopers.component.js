@@ -1,4 +1,4 @@
-System.register(['@angular/core', './searchDevelopers.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-google-maps/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './searchDevelopers.services.js'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, searchDevelopers_services_js_1;
+    var core_1, searchDevelopers_services_js_1, core_2;
     var SearchDevelopersComponent;
     return {
         setters:[
@@ -19,13 +19,32 @@ System.register(['@angular/core', './searchDevelopers.services.js'], function(ex
             },
             function (searchDevelopers_services_js_1_1) {
                 searchDevelopers_services_js_1 = searchDevelopers_services_js_1_1;
+            },
+            function (core_2_1) {
+                core_2 = core_2_1;
             }],
         execute: function() {
             SearchDevelopersComponent = (function () {
-                function SearchDevelopersComponent(searchDevelopersServices) {
+                function SearchDevelopersComponent(searchDevelopersServices, mapsAPILoader, zone) {
                     this.searchDevelopersServices = searchDevelopersServices;
-                    this.getAllUsers({});
+                    this.mapsAPILoader = mapsAPILoader;
+                    this.zone = zone;
                 }
+                SearchDevelopersComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.getAllUsers({});
+                    this.mapsAPILoader.load().then(function () {
+                        var input = document.getElementById('location');
+                        var autocomplete = new google.maps.places.Autocomplete(input, {
+                            types: ['(cities)']
+                        });
+                        autocomplete.addListener("place_changed", function () {
+                            _this.zone.run(function () {
+                                _this.location = autocomplete.getPlace().formatted_address;
+                            });
+                        });
+                    });
+                };
                 SearchDevelopersComponent.prototype.getAllUsers = function (filter) {
                     var _this = this;
                     var filterConditions = {};
@@ -55,7 +74,7 @@ System.register(['@angular/core', './searchDevelopers.services.js'], function(ex
                         styleUrls: ['./client/app/components/searchDevelopers/searchDevelopers.css'],
                         providers: [searchDevelopers_services_js_1.SearchDevelopersServices]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone])
                 ], SearchDevelopersComponent);
                 return SearchDevelopersComponent;
                 var _a;
