@@ -74,10 +74,10 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         styleUrls: ['./client/app/components/searchDevelopers/searchDevelopers.css'],
                         providers: [searchDevelopers_services_js_1.SearchDevelopersServices]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, (typeof (_b = typeof core_2.MapsAPILoader !== 'undefined' && core_2.MapsAPILoader) === 'function' && _b) || Object, core_1.NgZone])
                 ], SearchDevelopersComponent);
                 return SearchDevelopersComponent;
-                var _a;
+                var _a, _b;
             }());
             exports_1("SearchDevelopersComponent", SearchDevelopersComponent);
         }

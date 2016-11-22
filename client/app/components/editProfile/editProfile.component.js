@@ -99,10 +99,10 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         styleUrls: ['./client/app/components/editProfile/editProfile.css'],
                         providers: [editProfile_services_js_1.EditProfileService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router, (typeof (_b = typeof core_2.MapsAPILoader !== 'undefined' && core_2.MapsAPILoader) === 'function' && _b) || Object, core_1.NgZone])
                 ], EditProfileComponent);
                 return EditProfileComponent;
-                var _a;
+                var _a, _b;
             }());
             exports_1("EditProfileComponent", EditProfileComponent);
         }
