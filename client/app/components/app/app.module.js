@@ -100,7 +100,8 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
                             platform_browser_1.BrowserModule,
                             app_routing_module_1.AppRoutingModule,
                             http_1.HttpModule,
-                            forms_1.FormsModule
+                            forms_1.FormsModule,
+                            ng2_uploader_1.Ng2UploaderModule
                         ],
                         declarations: [
                             app_component_js_1.AppComponent,
@@ -114,7 +115,7 @@ System.register(['@angular/core', '@angular/platform-browser', '@angular/forms',
                             SearchDevelopers_component_js_1.SearchDevelopersComponent,
                             profilePreview_component_js_1.ProfilePreviewComponent,
                             project_thumbnail_component_js_1.ProjectThumbnailComponent,
-                            ng2_uploader_1.UPLOAD_DIRECTIVES,
+                            //UPLOAD_DIRECTIVES,
                             thumbnail_hover_directive_js_1.HoverDirective,
                             tech_hover_directive_js_1.TechHoverDirective,
                             new_project_model_directive_js_1.AddProductModelDirective,
