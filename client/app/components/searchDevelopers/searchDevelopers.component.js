@@ -1,4 +1,4 @@
-System.register(['@angular/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './searchDevelopers.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,26 +10,41 @@ System.register(['@angular/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, searchDevelopers_services_js_1;
     var SearchDevelopersComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (searchDevelopers_services_js_1_1) {
+                searchDevelopers_services_js_1 = searchDevelopers_services_js_1_1;
             }],
         execute: function() {
             SearchDevelopersComponent = (function () {
-                function SearchDevelopersComponent() {
+                function SearchDevelopersComponent(searchDevelopersServices) {
+                    this.searchDevelopersServices = searchDevelopersServices;
+                    this.getAllUsers();
                 }
+                SearchDevelopersComponent.prototype.getAllUsers = function () {
+                    var _this = this;
+                    this.searchDevelopersServices.getAllUsers({})
+                        .subscribe(function (data) {
+                        console.log(data);
+                        _this.users = data;
+                    });
+                };
                 SearchDevelopersComponent = __decorate([
                     core_1.Component({
                         selector: 'searchDevelopers',
                         templateUrl: './client/app/components/searchDevelopers/searchDevelopers.html',
                         styleUrls: ['./client/app/components/searchDevelopers/searchDevelopers.css'],
+                        providers: [searchDevelopers_services_js_1.SearchDevelopersServices]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object])
                 ], SearchDevelopersComponent);
                 return SearchDevelopersComponent;
+                var _a;
             }());
             exports_1("SearchDevelopersComponent", SearchDevelopersComponent);
         }

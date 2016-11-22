@@ -69,6 +69,38 @@ module.exports = {
       });
   },
 
+  getAllUser: (req, res, next) => {
+    let filter = {
+      where: {
+        type: {
+          $eq: 'Member'
+        }
+      },
+      include: [{
+        model: Tech,
+        attributes: ['id', 'name']
+      },
+      {
+        model: Project,
+        attributes: ['id', 'thumbnail']
+      }
+      ]
+    };
+
+    //filters
+    req.body.name ? filter.where.name = {$like: '%' + req.body.name + '%'} : false;
+    req.body.hire ? filter.where.hire = {$eq: true} : false;
+
+    Profile.findAll(filter)
+      .then((users) => {
+        res.json(users);
+      })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(404);
+      });
+  },
+
   getEditUserInfo: (req, res, next) => {
     const authId = req.user.sub;
     Profile.findOne({where: {authId: authId}})
@@ -197,6 +229,4 @@ module.exports = {
           });
       });
   }
-
-  //delete picture function
 };
