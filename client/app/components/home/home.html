@@ -20,7 +20,15 @@
   </div>
   <div class="filter-btn" (click)="filterBar()">
     <p class="filter-txt">Filter</p>
-  </div> <!-- filter button -->
+
+  </div>
+  <div class="sort">
+    <span (click)="sort('date')">Recent</span>
+     | 
+    <span (click)="sort('likes')">Likes</span>
+     | 
+    <span (click)="sort('views')">Views</span>
+  </div>
 
   <div class="thumbnail-wrapper horizontal-center">
     <div class="thumbnails">
@@ -29,3 +37,4 @@
   </div> <!-- thumbnail-wrapper -->
 
 </div> <!-- container -->
+

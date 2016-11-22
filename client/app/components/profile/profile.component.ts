@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ProfileService } from './profile.services.js';
+import { ProjectService } from '../project/project.services.js';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { MapsAPILoader } from 'angular2-google-maps/core';
@@ -8,7 +9,7 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
   selector: 'profile',
   templateUrl: './client/app/components/profile/profile.html',
   styleUrls: ['./client/app/components/profile/profile.css'],
-  providers: [ProfileService],
+  providers: [ProfileService, ProjectService],
 })
 
 export class ProfileComponent {
@@ -23,11 +24,20 @@ export class ProfileComponent {
     tech: false,
     contact: false
   };
+  techs = [];
 
-  constructor(private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
+  constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
   ngOnInit() {
     this.getUserInfo();
+    this.getTechs();
+  }
+
+  getTechs() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
   }
 
   googleLocation() {

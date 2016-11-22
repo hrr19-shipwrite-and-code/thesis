@@ -23,6 +23,7 @@ import { ProfilePreviewComponent } from '../profilePreview/profilePreview.compon
 import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail.component.js';
 
 import { HoverDirective } from '../../directives/thumbnail-hover.directive.js';
+import { DropdownDirective } from '../../directives/dropdown.directive.js';
 import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
 import { AddProductModelDirective } from '../../directives/new-project-model.directive.js';
 
@@ -56,7 +57,8 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     UPLOAD_DIRECTIVES,
     HoverDirective,
     TechHoverDirective,
-    AddProductModelDirective
+    AddProductModelDirective,
+    DropdownDirective
     ],
   bootstrap:    [ AppComponent ],
   providers: [

@@ -210,3 +210,66 @@ input:checked + .slider:before {
 .filter-bar select {
   height: 38px;
 }
+
+.sort {
+  color: rgb(136, 139, 141);
+}
+
+.sort span:hover {
+  color: salmon;
+  cursor: pointer;
+}
+
+.nav-dropdown {
+  /*margin-right: 0;
+  margin-left: auto;*/
+  position: absolute;
+  right: 10px;
+}
+
+.dropdown-image {
+  max-height: 45px;
+  border-radius: 22.5px;
+  position: relative;
+}
+
+.nav-dropdown-inside {
+  position: absolute;
+  top: -12px;
+  height: 277px;
+}
+
+.nav-dropdown-links {
+  background-color: white;
+  color: rgb(136, 139, 141);
+  border: 1px solid rgb(209, 214, 217);
+}
+
+.nav-dropdown-links div {
+  width: 100%;
+  padding: 15px 5px;
+}
+
+.nav-dropdown-links div:hover {
+  color: salmon;
+  cursor: pointer;
+}
+
+.nav-dropdown-links hr{
+  margin: 0;
+}
+
+.space {
+  height: 69px;
+}
+
+.hide-dropdown {
+  height: 70px;
+  overflow: hidden;  
+  transition: all 750ms linear;  
+}
+
+.signIn {
+  position: absolute;
+  right: 0;
+}
