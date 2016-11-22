@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { OnInit, Component, NgZone } from '@angular/core';
 import { EditProfileService } from './editProfile.services.js';
 import { Router } from '@angular/router';
+import { MapsAPILoader } from 'angular2-google-maps/core';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   providers: [EditProfileService]
 })
 
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit{
 
   userInfo = {};
   picture: any = '';
@@ -24,8 +25,22 @@ export class EditProfileComponent {
   };
 
 
-  constructor(private editProfileService: EditProfileService, private router: Router) {
+  constructor(private editProfileService: EditProfileService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
+
+  ngOnInit() {
     this.getUserInfo();
+
+    // this.mapsAPILoader.load().then(() => {
+    //   let input = document.getElementById('location')
+    //   let autocomplete = new google.maps.places.Autocomplete(input, {
+    //     types: ['(cities)']
+    //   });
+    //   autocomplete.addListener("place_changed", () => {
+    //     this.zone.run(() => {
+    //       this.userInfo.location = autocomplete.getPlace().formatted_address
+    //     });
+    //   });
+    // });
   }
 
   getUserInfo() {
@@ -37,13 +52,13 @@ export class EditProfileComponent {
         });
   }
 
-  editUserInfo(userInfo) {
-    this.editProfileService.editUserInfo(userInfo)
+  editUserInfo() {
+    this.editProfileService.editUserInfo(this.userInfo)
       .subscribe( data => {
-        this.router.navigateByUrl('/profile/' + userInfo.url);
+        this.router.navigateByUrl('/profile/' + this.userInfo.url);
        });
-      localStorage.setItem("url", userInfo.url);
-      localStorage.setItem("name", userInfo.name);
+      localStorage.setItem("url", this.userInfo.url);
+      localStorage.setItem("name", this.userInfo.name);
   }
 
 

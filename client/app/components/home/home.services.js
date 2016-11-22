@@ -26,22 +26,12 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                 function HomeService(http) {
                     this.http = http;
                 }
-                // //Working API to get ALL
-                HomeService.prototype.getProjects = function () {
-                    return this.http.get('http://localhost:1337/api/project/getAll')
+                HomeService.prototype.getProjects = function (filter) {
+                    console.log(filter);
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post('http://localhost:1337/api/project/getAll', filter, options)
                         .map(function (res) { return res.json(); });
-                };
-                HomeService.prototype.filter = function (req) {
-                    // req => {
-                    //   tech: Array[3], 
-                    //   title: "Sushi", 
-                    //   user: "JGoD", 
-                    //   status: "In Progress", 
-                    //   openSource: "false"
-                    // }
-                };
-                HomeService.prototype.sortBy = function (type) {
-                    console.log(type); // 'date' or 'likes' or 'views'
                 };
                 HomeService = __decorate([
                     core_1.Injectable(), 

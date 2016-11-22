@@ -1,17 +1,18 @@
 
-<div class="profile-preview-container">
+<div class="profile-preview-container" *ngFor="let user of users">
 
   <div class="profile-details">
     <div class="profile-picture-viewport horizontal-center vertical-center">
-      <img src="https://s-media-cache-ak0.pinimg.com/736x/b6/02/60/b60260905c633e80e4fbaf5284021cd9.jpg" class='profile-picture' />
+      <a routerLink="/profile/{{user.url}}"><img src="{{user.picture}}" class='profile-picture' /></a>
     </div>
 
-    <h5 class='user-name'>User Name Here</h5>
+    <a routerLink="/profile/{{user.url}}"><h5 class='user-name'>{{user.name}}</h5></a>
+    <p class='user-name'>{{user.location}}</p>
     <p class='description'>
-      Description goes here. It's the best description there ever was.
+      {{user.bio}}
     </p>
     <p class='tech'>
-      React, JavaScript, Angular 2, Node, Express
+      <span *ngFor="let tech of user.Teches"> {{tech.name}}</span>
     </p>
   </div> <!-- profile-details -->
 
@@ -20,17 +21,8 @@
     <div class="thumbnails-container">
       <!-- <div class="left-gradient"></div> -->
 
-      <div class="thumbnail-placeholder">
-        <h5>I am a project</h5>
-      </div>
-      <div class="thumbnail-placeholder">
-        <h5>I am a project</h5>
-      </div>
-      <div class="thumbnail-placeholder">
-        <h5>I am a project</h5>
-      </div>
-      <div class="thumbnail-placeholder">
-        <h5>I am a project</h5>
+      <div class="thumbnail-placeholder" *ngFor="let project of user.Projects">
+        <a routerLink="/project/{{project.id}}"><img src="{{project.thumbnail}}"></a>
       </div>
 
       <!-- <div class="right-gradient"></div> -->

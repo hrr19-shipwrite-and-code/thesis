@@ -20,12 +20,13 @@ module.exports = function (app, express) {
   app.put('/api/team/promoteMember', profileController.promoteMember);
   app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addPicture);
   app.get('/api/profile/:profileUrl', profileController.getProfile);
+  app.post('/api/user/getAll', profileController.getAllUser);
   app.get('/api/editUserInfo', middleware.authCheck, profileController.getEditUserInfo);
   app.put('/api/user/edit', middleware.authCheck, profileController.editUserInfo);
 
   //Tech Routes
   app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
-  app.delete('/api/profile/removeTech/:techName', middleware.authCheck, techController.profileRemoveTech);
+  app.delete('/api/profile/removeTech/:techId', middleware.authCheck, techController.profileRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
   app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);
@@ -33,7 +34,7 @@ module.exports = function (app, express) {
   //Project Routes
   app.post('/api/project/create', middleware.authCheck,  projectController.createProject);
   app.get('/api/project/id/:projectId', projectController.getProject);
-  app.get('/api/project/getAll', projectController.getAllProjects);
+  app.post('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', middleware.authCheck, projectController.editProject);
   app.delete('/api/project/delete/:projectId', middleware.authCheck, projectController.deleteProject);

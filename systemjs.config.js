@@ -19,7 +19,8 @@
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
-      'ng2-uploader': 'npm:ng2-uploader'
+      'ng2-uploader': 'npm:ng2-uploader',
+      'angular2-google-maps/core': 'npm:angular2-google-maps/core/core.umd.js',
     },
 
     packages: {

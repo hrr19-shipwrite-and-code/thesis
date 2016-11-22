@@ -38,6 +38,22 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.http.get('http://localhost:1337/api/project/user/' + userId)
                         .map(function (res) { return res.json(); });
                 };
+                ProfileService.prototype.updateUserProfile = function (data) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.put('http://localhost:1337/api/user/edit', data, options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProfileService.prototype.addTech = function (tech) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/profile/addTech', JSON.stringify(tech), options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProfileService.prototype.deleteTech = function (techId) {
+                    return this.authHttp.delete('http://localhost:1337/api/profile/removeTech/' + techId)
+                        .map(function (res) { return res; });
+                };
                 ProfileService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])

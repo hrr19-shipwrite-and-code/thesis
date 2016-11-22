@@ -25,11 +25,10 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                 function HomeComponent(homeService) {
                     this.homeService = homeService;
                     this.filterHidden = true;
-                    //this.projects = homeService.getProjects();
                 }
                 HomeComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.homeService.getProjects()
+                    this.homeService.getProjects({})
                         .subscribe(function (data) { return _this.projects = data; }, function (error) { return alert(error); });
                 };
                 HomeComponent.prototype.filterBar = function () {
@@ -43,6 +42,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     }
                 };
                 HomeComponent.prototype.filter = function (e, filter) {
+                    var _this = this;
                     e.preventDefault();
                     var filterConditions = {};
                     for (var key in filter) {
@@ -58,7 +58,10 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                             }
                         }
                     }
-                    this.homeService.filter(filterConditions);
+                    this.homeService.getProjects(filterConditions)
+                        .subscribe(function (data) {
+                        _this.projects = data;
+                    });
                 };
                 HomeComponent.prototype.sort = function (sortType) {
                     this.homeService.sortBy(sortType);

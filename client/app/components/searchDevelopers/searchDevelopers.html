@@ -10,9 +10,8 @@
     <div class="sidebar-container">
       <div class="sidebar horizontal-center shadow">
 
-
-        <form class="search-for-devs">
-          <!-- Sort Radio Buttons -->
+        <form class="search-for-devs" #form="ngForm">
+          <!--
           <fieldset class="form-group">
             <legend>Sort</legend>
             <div class="form-check">
@@ -20,23 +19,26 @@
                 <input type="radio" class="form-check-input" name="optionsRadios" id="popular-radio" value="popular" checked>
                 Popular
               </label>
-            </div> <!-- form-check -->
+            </div>
 
             <div class="form-check">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" name="optionsRadios" id="recent-radio" value="recent">
                 Recent
               </label>
-            </div> <!-- form-check -->
-          </fieldset> <!-- Sort radios -->
+            </div>
+          </fieldset> -->
 
-          <hr>
+          <fieldset class="form-group">
+            <legend>Name</legend>
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" ngModel>
+          </fieldset>
 
           <!-- Hire checkbox -->
           <fieldset class="form-check">
             <legend>Hire</legend>
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" class="form-check-input" name="hire" ngModel>
               For Hire
             </label>
           </fieldset> <!-- Hire checkbox -->
@@ -44,21 +46,26 @@
           <hr>
 
           <fieldset class="form-group">
+            <legend>Location</legend>
+            <input type="text" class="form-control" id="location" aria-describedby="searchByTech" placeholder="e.g. San Francisco, CA" name="location" [(ngModel)]="location">
+          </fieldset>
+
+          <hr>
+
+          <fieldset class="form-group">
             <legend>Tech</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTechg" placeholder="React, Node, MongoDB">
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. React, Node, MongoDB" name="tech" ngModel>
           </fieldset>
 
           <!-- Search Button -->
-          <button type="submit" class="btn btn-primary">Search</button>
-
         </form>
+        <button type="submit" class="btn btn-primary" (click)="getAllUsers(form.value)">Search</button>
       </div> <!-- sidebar -->
 
     </div> <!-- sidebar-container -->
 
     <div class="previews">
-      <profile-preview></profile-preview>
-      <profile-preview></profile-preview>
+      <profile-preview [users]="users"></profile-preview>
     </div>
 
   </div> <!-- main-content -->

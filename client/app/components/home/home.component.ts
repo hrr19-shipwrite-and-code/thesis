@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HomeService } from './home.services.js';
 import { HoverDirective } from '../../directives/thumbnail-hover.directive.js';
-
 import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail.component.js';
 
 @Component({
@@ -14,12 +13,10 @@ import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail
 export class HomeComponent {
   filterHidden = true;
   projects;
-  constructor(private homeService: HomeService) {
-    //this.projects = homeService.getProjects();
-  }
+  constructor(private homeService: HomeService) {}
 
   ngOnInit() {
-    this.homeService.getProjects()
+    this.homeService.getProjects({})
       .subscribe(
         data => this.projects = data,
         error => alert(error)
@@ -31,8 +28,8 @@ export class HomeComponent {
       document.getElementById('filter-bar').className = 'filter-bar';
       this.filterHidden = !this.filterHidden
     } else {
-      document.getElementById('filter-bar').className = 'filter-bar filter-bar-hide';      
-      this.filterHidden = !this.filterHidden      
+      document.getElementById('filter-bar').className = 'filter-bar filter-bar-hide';
+      this.filterHidden = !this.filterHidden
     }
   }
 
@@ -51,7 +48,10 @@ export class HomeComponent {
         }
       }
     }
-    this.homeService.filter(filterConditions);
+    this.homeService.getProjects(filterConditions)
+      .subscribe(data => {
+        this.projects = data;
+      })
   }
 
   sort(sortType) {
