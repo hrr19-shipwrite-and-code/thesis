@@ -24,11 +24,25 @@ System.register(['@angular/core', './searchDevelopers.services.js'], function(ex
             SearchDevelopersComponent = (function () {
                 function SearchDevelopersComponent(searchDevelopersServices) {
                     this.searchDevelopersServices = searchDevelopersServices;
-                    this.getAllUsers();
+                    this.getAllUsers({});
                 }
-                SearchDevelopersComponent.prototype.getAllUsers = function () {
+                SearchDevelopersComponent.prototype.getAllUsers = function (filter) {
                     var _this = this;
-                    this.searchDevelopersServices.getAllUsers({})
+                    var filterConditions = {};
+                    for (var key in filter) {
+                        if (filter[key]) {
+                            if (key === 'tech' || key === 'location') {
+                                filterConditions[key] = filter[key].split(',');
+                                for (var i = 0; i < filterConditions[key].length; i++) {
+                                    filterConditions[key][i] = filterConditions[key][i].trim();
+                                }
+                            }
+                            else {
+                                filterConditions[key] = filter[key];
+                            }
+                        }
+                    }
+                    this.searchDevelopersServices.getAllUsers(filterConditions)
                         .subscribe(function (data) {
                         console.log(data);
                         _this.users = data;

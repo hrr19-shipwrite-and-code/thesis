@@ -10,10 +10,7 @@
     <div class="sidebar-container">
       <div class="sidebar horizontal-center shadow">
 
-
-
-
-        <form class="search-for-devs">
+        <form class="search-for-devs" #form="ngForm">
           <!--
           <fieldset class="form-group">
             <legend>Sort</legend>
@@ -34,14 +31,14 @@
 
           <fieldset class="form-group">
             <legend>Name</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes">
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" ngModel>
           </fieldset>
 
           <!-- Hire checkbox -->
           <fieldset class="form-check">
             <legend>Hire</legend>
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" class="form-check-input" name="hire" ngModel>
               For Hire
             </label>
           </fieldset> <!-- Hire checkbox -->
@@ -50,20 +47,19 @@
 
           <fieldset class="form-group">
             <legend>Location</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. San Francisco, CA">
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. San Francisco, CA" name="location" ngModel>
           </fieldset>
 
           <hr>
 
           <fieldset class="form-group">
             <legend>Tech</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. React, Node, MongoDB">
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. React, Node, MongoDB" name="tech" ngModel>
           </fieldset>
 
           <!-- Search Button -->
-          <button type="submit" class="btn btn-primary">Search</button>
-
         </form>
+        <button type="submit" class="btn btn-primary" (click)="getAllUsers(form.value)">Search</button>
       </div> <!-- sidebar -->
 
     </div> <!-- sidebar-container -->

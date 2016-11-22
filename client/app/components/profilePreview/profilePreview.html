@@ -7,11 +7,12 @@
     </div>
 
     <a routerLink="/profile/{{user.url}}"><h5 class='user-name'>{{user.name}}</h5></a>
+    <p class='user-name'>{{user.location}}</p>
     <p class='description'>
       {{user.bio}}
     </p>
     <p class='tech'>
-      <span *ngFor="let tech of user.Teches">{{tech.name}}</span>
+      <span *ngFor="let tech of user.Teches"> {{tech.name}}</span>
     </p>
   </div> <!-- profile-details -->
 

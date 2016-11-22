@@ -89,7 +89,8 @@ module.exports = {
 
     //filters
     req.body.name ? filter.where.name = {$like: '%' + req.body.name + '%'} : false;
-    req.body.hire ? filter.where.hire = {$eq: true} : false;
+    req.body.hire === true ? filter.where.hire = {$eq: true} : false;
+    req.body.tech ? filter.include[0].where = {name: {$in: req.body.tech}} : false;
 
     Profile.findAll(filter)
       .then((users) => {
