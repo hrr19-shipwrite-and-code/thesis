@@ -221,8 +221,6 @@ input:checked + .slider:before {
 }
 
 .nav-dropdown {
-  /*margin-right: 0;
-  margin-left: auto;*/
   position: absolute;
   right: 10px;
 }
@@ -266,7 +264,7 @@ input:checked + .slider:before {
 .hide-dropdown {
   height: 70px;
   overflow: hidden;  
-  transition: all 750ms linear;  
+  /*transition: all 750ms linear;*/
 }
 
 .signIn {
