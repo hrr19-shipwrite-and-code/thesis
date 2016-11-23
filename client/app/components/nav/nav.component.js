@@ -29,11 +29,20 @@ System.register(['@angular/core', '../auth/auth.service', '../projectAdd/project
                     this.auth = auth;
                     this.add = add;
                 }
-                // name = localStorage.getItem('name');
-                // picture = localStorage.getItem('picture');
                 NavComponent.prototype.ngOnInit = function () {
-                    this.name = localStorage.getItem('name');
-                    this.picture = localStorage.getItem('picture');
+                    this.checkAgain();
+                };
+                NavComponent.prototype.checkAgain = function () {
+                    if (localStorage.getItem('name') === null) {
+                        var that_1 = this;
+                        setTimeout(function () {
+                            that_1.checkAgain();
+                        }, 600);
+                    }
+                    else {
+                        this.name = localStorage.getItem('name');
+                        this.picture = localStorage.getItem('picture');
+                    }
                 };
                 NavComponent = __decorate([
                     core_1.Component({
