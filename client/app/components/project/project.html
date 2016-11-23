@@ -95,7 +95,7 @@
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
             <form *ngIf="editTech" (ngSubmit)="addTech()">
-              <input type="text" list="techs" name="tech" id="techInput" class="form-control" [(ngModel)]="newTech" required>
+              <input type="text" list="techs" name="tech" id="techInput" class="form-control" [(ngModel)]="newTech" required autocomplete="off">
               <button type="submit" class="btn btn-primary btn-sm">Add</button>
             </form>
           </div>
