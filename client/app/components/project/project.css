@@ -18,7 +18,7 @@
 
 /* whole card */
 .main-card {
-  width: 900px;
+  width: 1000px;
   background-color: white;
   padding: 30px;
   border-radius: 5px;
@@ -64,8 +64,8 @@
 /* main image */
 
 .main-img-viewport {
-  min-width: 50vw;
-  max-height: 60vh;
+  width: 680px;
+  height: 476px;
 }
 
 .main-img {
@@ -205,36 +205,4 @@ input[name="title"] {
 
     cursor: inherit;
     display: block;
-}
-
-
-/* Kind of backwards, but this media query handles the screen being larger
-(defaults above are for smaller screens)
-TODO: refactor to be the opposite, more intuitive approach
-*/
-
-@media screen and (min-width: 1000px) {
-    .main-card {
-        background-color: white;
-    }
-
-    .main-img-viewport {
-      max-width: 50vw;
-      max-height: 70vh;
-      margin-left: 20px;
-    }
-
-    /*.main-img {
-      width: 100%
-    }*/
-
-    .main-content {
-      flex-wrap: nowrap;
-    }
-
-    .info {
-      margin-left: 20px;
-      margin-right: 10px;
-      margin-top: 25px;
-    }
 }
