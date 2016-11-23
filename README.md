@@ -28,7 +28,7 @@
 
 >3. In terminal type `mysql -u root -p` (Access the MySQL database)
 
->4. Once inside MySQL terminal type create database sushi (Created the sushi database)
+>4. Once inside MySQL terminal type `create database sushi` (Created the sushi database)
 
 >5. Whenever you run the server it will build out the tables
 
