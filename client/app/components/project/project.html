@@ -15,32 +15,40 @@
         </p>
       </div>
 
+
       <div class="main-content">
         <!-- Main Image -->
-        <div class="main-img-viewport">
-          <div class="main-img-wrapper">
-            <img src={{picture.url}} alt="main-img" class='main-img' />
-          </div>
+        <div class="image-and-upload">
+          <!-- Main Image Viewport -->
+          <div class="main-img-viewport">
+            <div class="main-img-wrapper">
+              <img src={{picture.url}} alt="main-img" class='main-img' />
+            </div>
+          </div> <!-- Main Image Viewport -->
 
+          <!-- Small images and Upload -->
           <div *ngIf="checkForImages()" class="small-images-view">
             <div class="small-img-cont" *ngFor="let pic of project.Images">
-              <img class="small-img" src="{{pic.url}}" (click)="setMainImage(pic)">
+              <div class="small-img-wrapper">
+                <img class="small-img" src="{{pic.url}}" (click)="setMainImage(pic)">
+              </div>
             </div>
           </div>
           <div *ngIf="checkUser(project.Profile.url)">
-            <button *ngIf="checkForImages()" (click)="updateThumbnail()">Set as display picture</button>
-            <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)">Delete picture</button>
+            <button *ngIf="checkForImages()" (click)="updateThumbnail()" class="btn btn-default btn-file">Set as display picture</button>
+            <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)" class="btn btn-default btn-file">Delete picture</button>
             <div class="form-group">
               <label class="btn btn-default btn-file">
                 Add Photo <input type="file"
-                  style="display: none"
-                  ngFileSelect
-                  [options]="options"
-                  (onUpload)="handleUpload($event)">
-                </label>
+                style="display: none"
+                ngFileSelect
+                [options]="options"
+                (onUpload)="handleUpload($event)">
+              </label>
             </div>
-          </div>
-        </div>
+          </div> <!-- Image Uploads -->
+
+        </div> <!-- Image and Uploads -->
 
 
         <!-- Info -->
@@ -149,6 +157,8 @@
         </div> <!-- Info -->
       </div> <!-- main-content -->
 
+      <hr>
+
       <div class="comments">
 
         <form *ngIf="authService.authenticated()" (ngSubmit)="postComment()" class="comment-form">
@@ -170,7 +180,11 @@
               <p class='comment-body'>
                 {{comment.comment}}
               </p>
-              {{comment.createdAt}}
+
+              <span class='comment-created-at'>
+                {{comment.createdAt}}
+              </span>
+
               <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
             </div> <!-- single-comment -->
 
