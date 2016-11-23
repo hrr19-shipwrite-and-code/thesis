@@ -162,7 +162,7 @@
   margin-right: 5px;
 }
 
-.fa-heart {
+.fa-heart, .fa-plus, .fa-pencil, .fa-times {
   cursor: pointer;
 }
 
@@ -227,8 +227,12 @@ input[name="title"] {
   margin-top: 0;
 }
 
-.fa-pencil,  {
+.fa-pencil  {
   color: #D9D9D9;
+}
+
+.fa-plus {
+  color: #888B8D;
 }
 
 .btn-primary, .btn-primary:active {
