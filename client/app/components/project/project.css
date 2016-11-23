@@ -66,6 +66,21 @@
 .main-img-viewport {
   width: 680px;
   height: 476px;
+  overflow: hidden;
+
+  position: relative;
+}
+
+.main-img-wrapper {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-img {

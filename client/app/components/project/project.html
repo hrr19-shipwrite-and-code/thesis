@@ -18,7 +18,10 @@
       <div class="main-content">
         <!-- Main Image -->
         <div class="main-img-viewport">
-          <img src={{picture.url}} alt="main-img" class='main-img' />
+          <div class="main-img-wrapper">
+            <img src={{picture.url}} alt="main-img" class='main-img' />
+          </div>
+
           <div *ngIf="checkForImages()" class="small-images-view">
             <div class="small-img-cont" *ngFor="let pic of project.Images">
               <img class="small-img" src="{{pic.url}}" (click)="setMainImage(pic)">
