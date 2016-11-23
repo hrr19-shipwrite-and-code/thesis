@@ -188,7 +188,7 @@ input:checked + .slider:before {
 	border-right: 25px solid transparent;
 	height: 25px;
 	width: 200px;
-  margin: 0 37%;
+  margin: 0 auto;
   text-align: center;
   color: white;
 }
