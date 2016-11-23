@@ -16,6 +16,7 @@
 .project-thumbnail {
   border-radius: 3px;
   background-color: white;
+  padding: 5px;
 
   width: 225px;
   height: 225px;
@@ -23,13 +24,15 @@
 
 /* Hover */
 .project-thumbnail-hover {
-  border-radius: 3px;
+  border-radius: 0px;
   background-color: rgba(255, 255, 255, 0.9);
 
   cursor: pointer;
+  /*border: 2px solid salmon;*/
+  z-index: 1;
 
-  width: 225px;
-  height: 178px;
+  width: 96%;
+  height: 67%;
 }
 
 /* Project Details */
@@ -40,10 +43,40 @@ h4.project-name {
 }
 
 .project-description {
-  max-width: 95%;
+  width: 95%;
   font-size: 0.9em;
   color: #444444;
   text-align: center;
+}
+
+/* Image */
+
+.project-thumbnail-img-viewport {
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+  padding: 0px;
+
+  position: relative;
+}
+
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-thumbnail-img {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0px;
+  /*position: absolute;*/
 }
 
 /* Social */
