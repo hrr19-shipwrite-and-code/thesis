@@ -3,6 +3,7 @@ const projectController = require('../projects/projectController.js');
 const techController = require('../tech/techController.js');
 const likeController = require('../likes/likeController.js');
 const commentController = require('../comments/commentController.js');
+const notificationController = require('../notifications/notificationController.js');
 const middleware = require('./middleware.js');
 
 
@@ -42,7 +43,6 @@ module.exports = function (app, express) {
   app.put('/api/project/thumbnail/:projectId', middleware.authCheck, projectController.updateProjectThumbnail);
   app.delete('/api/project/image/:imageId', middleware.authCheck, projectController.deleteProjectImage);
 
-
   //Comment Routes
   app.post('/api/comment/create/:projectId', middleware.authCheck, commentController.addCommentToProject);
   app.delete('/api/comment/delete/:commentId', middleware.authCheck, commentController.removeComment);
@@ -50,5 +50,8 @@ module.exports = function (app, express) {
 
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
-  app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike)
+  app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
+
+  //Notification routes
+  app.post('/api/notification/invite/:userId', notificationController.inviteMember);
 };
