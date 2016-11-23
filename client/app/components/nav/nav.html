@@ -18,7 +18,7 @@
   <!--Navbar Dropdown-->
   <div class="nav-dropdown" *ngIf="auth.authenticated()">
     <span>{{ name }}</span>
-    <img src="{{ picture }}" class="dropdown-image">
+    <img [src]="picture" class="dropdown-image">
     <div class="nav-dropdown-inside hide-dropdown" dropdown>
       <div class="space">
 
@@ -26,10 +26,6 @@
       <div class="nav-dropdown-links">
         <div routerLink="/profile/{{auth.checkUrl()}}" class="navLink">
           <span>Profile</span>
-        </div>
-        <hr>
-        <div routerLink="/editprofile" class="navLink">
-          <span>Edit Profile</span>
         </div>
         <hr>
         <div routerLink="/addproject" class="navLink">
