@@ -137,6 +137,10 @@
   font-size: 0.9em;
 }
 
+#techInput {
+  width: 250px;
+}
+
 /* Icons and Like/View data */
 .social {
   color: #888B8D;
