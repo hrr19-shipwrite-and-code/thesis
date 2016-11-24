@@ -128,17 +128,18 @@ module.exports = {
   },
 
   createTeam: (req, res, next) => {
+    console.log(req.body)
     const user = req.body.user;
     const team = req.body.team;
     const teamInfo = {
       name: req.body.name,
       url: team,
       email: req.body.email,
-      type: 'team'
+      type: 'Team'
     }
     Profile.findOne({where: {url: user}})
       .then((user) => {
-        user.createTeam(teamInfo, {admin: true})
+        user.createTeam(teamInfo, {type: 'Owner'})
           .then(() => {
             res.sendStatus(201);
           })
@@ -170,24 +171,6 @@ module.exports = {
       .catch(() => {
         res.sendStatus(404);
       })
-  },
-
-  addMember: (req, res, next) => {
-    const team = req.body.team;
-    const user = req.body.user;
-    Profile.findOne({where: {url: user}})
-      .then((user) => {
-        Profile.findOne({where: {url: team}})
-          .then((team) => {
-            team.addMember(user)
-              .then(() => {
-                res.sendStatus(200);
-              })
-              .catch((err) => {
-                res.sendStatus(400);
-              });
-          });
-      });
   },
 
   removeMember: (req, res, next) => {

@@ -53,5 +53,5 @@ module.exports = function (app, express) {
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
 
   //Notification routes
-  app.post('/api/notification/invite/:userId', notificationController.inviteMember);
+  app.post('/api/notification/invite/:teamId/:userId', notificationController.inviteMember);
 };

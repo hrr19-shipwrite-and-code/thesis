@@ -4,7 +4,7 @@ const db = new Sequelize('sushi', 'root', '');
 module.exports = db.define('TeamUsers', {
   type: {
     type: Sequelize.ENUM,
-    values: ['Admin', 'Member', 'Pending'],
+    values: ['Owner', 'Admin', 'Member', 'Pending'],
     allowNull: false
   }
 });
