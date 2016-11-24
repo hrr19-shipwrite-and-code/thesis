@@ -151,10 +151,10 @@ module.exports = {
   },
 
   editTeamInfo: (req, res, next) => {
-    const url = req.body.url;
-    Profile.update({email: req.body.email}, {where: {url: url}})
+    const teamId = req.params.teamId;
+    Profile.update({name: req.body.name}, {where: {id: teamId}})
       .then(() => {
-        res.sendStatus(201);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err)
