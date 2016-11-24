@@ -241,6 +241,18 @@ module.exports = {
   },
 
   demoteMember: (req, res, next) => {
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+    
+    TeamUser.update({type: 'Member'}, {
+      where: {teamId: team, userId: receiver, type: {$not: 'Owner'}}
+    })
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .catch((err) => {
+        res.sendStatus(400);
+      });
   },
 
   addPicture: (req, res, next) => {
