@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '../profile/profile.component.js', '../editProfile/editProfile.component.js', '../project/project.component.js', '../browse/browse.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../SearchDevelopers/SearchDevelopers.component.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../profile/profile.component.js', '../createTeam/createTeam.component.js', '../project/project.component.js', '../browse/browse.component.js', '../home/home.component.js', '../projectAdd/projectAdd.component.js', '../SearchDevelopers/SearchDevelopers.component.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, profile_component_js_1, editProfile_component_js_1, project_component_js_1, browse_component_js_1, home_component_js_1, projectAdd_component_js_1, SearchDevelopers_component_js_1;
+    var core_1, router_1, profile_component_js_1, createTeam_component_js_1, project_component_js_1, browse_component_js_1, home_component_js_1, projectAdd_component_js_1, SearchDevelopers_component_js_1;
     var appRoutes, AppRoutingModule;
     return {
         setters:[
@@ -23,8 +23,8 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
             function (profile_component_js_1_1) {
                 profile_component_js_1 = profile_component_js_1_1;
             },
-            function (editProfile_component_js_1_1) {
-                editProfile_component_js_1 = editProfile_component_js_1_1;
+            function (createTeam_component_js_1_1) {
+                createTeam_component_js_1 = createTeam_component_js_1_1;
             },
             function (project_component_js_1_1) {
                 project_component_js_1 = project_component_js_1_1;
@@ -49,7 +49,7 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
                 { path: 'addproject', component: projectAdd_component_js_1.ProjectAddComponent },
                 { path: 'project/:id', component: project_component_js_1.ProjectComponent },
                 { path: 'profile/:id', component: profile_component_js_1.ProfileComponent },
-                { path: 'editprofile', component: editProfile_component_js_1.EditProfileComponent },
+                { path: 'createteam', component: createTeam_component_js_1.CreateTeamComponent },
                 { path: 'developers', component: SearchDevelopers_component_js_1.SearchDevelopersComponent },
             ];
             AppRoutingModule = (function () {

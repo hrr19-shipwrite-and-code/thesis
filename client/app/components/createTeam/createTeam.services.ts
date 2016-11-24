@@ -5,7 +5,7 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 
 
 @Injectable()
-export class EditProfileService {
+export class CreateTeamService {
   constructor(private authHttp: AuthHttp, private http: Http) {}
 
   getUserInfo(){

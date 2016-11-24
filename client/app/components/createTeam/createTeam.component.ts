@@ -1,17 +1,17 @@
 import { OnInit, Component, NgZone } from '@angular/core';
-import { EditProfileService } from './editProfile.services.js';
+import { CreateTeamService } from './createTeam.services.js';
 import { Router } from '@angular/router';
 import { MapsAPILoader } from 'angular2-google-maps/core';
 
 
 @Component({
-  selector: 'editProfile',
-  templateUrl: './client/app/components/editProfile/editProfile.html',
-  styleUrls: ['./client/app/components/editProfile/editProfile.css'],
-  providers: [EditProfileService]
+  selector: 'createTeam',
+  templateUrl: './client/app/components/createTeam/createTeam.html',
+  styleUrls: ['./client/app/components/createTeam/createTeam.css'],
+  providers: [CreateTeamService]
 })
 
-export class EditProfileComponent implements OnInit{
+export class CreateTeamComponent implements OnInit{
 
   userInfo = {};
   picture: any = '';
@@ -25,26 +25,26 @@ export class EditProfileComponent implements OnInit{
   };
 
 
-  constructor(private editProfileService: EditProfileService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
+  constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
 
   ngOnInit() {
     this.getUserInfo();
 
-    // this.mapsAPILoader.load().then(() => {
-    //   let input = document.getElementById('location')
-    //   let autocomplete = new google.maps.places.Autocomplete(input, {
-    //     types: ['(cities)']
-    //   });
-    //   autocomplete.addListener("place_changed", () => {
-    //     this.zone.run(() => {
-    //       this.userInfo.location = autocomplete.getPlace().formatted_address
-    //     });
-    //   });
-    // });
+    this.mapsAPILoader.load().then(() => {
+      let input = document.getElementById('location')
+      let autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['(cities)']
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.zone.run(() => {
+          this.userInfo.location = autocomplete.getPlace().formatted_address
+        });
+      });
+    });
   }
 
   getUserInfo() {
-    this.editProfileService.getUserInfo()
+    this.createTeamService.getUserInfo()
       .subscribe( data => {
           this.userInfo = data;
           this.picture = this.userInfo.picture
@@ -53,7 +53,7 @@ export class EditProfileComponent implements OnInit{
   }
 
   editUserInfo() {
-    this.editProfileService.editUserInfo(this.userInfo)
+    this.createTeamService.editUserInfo(this.userInfo)
       .subscribe( data => {
         this.router.navigateByUrl('/profile/' + this.userInfo.url);
        });

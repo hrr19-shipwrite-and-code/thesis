@@ -1,4 +1,4 @@
-System.register(['@angular/core', './editProfile.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './createTeam.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,15 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, editProfile_services_js_1, router_1, core_2;
-    var EditProfileComponent;
+    var core_1, createTeam_services_js_1, router_1, core_2;
+    var CreateTeamComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (editProfile_services_js_1_1) {
-                editProfile_services_js_1 = editProfile_services_js_1_1;
+            function (createTeam_services_js_1_1) {
+                createTeam_services_js_1 = createTeam_services_js_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -27,9 +27,9 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                 core_2 = core_2_1;
             }],
         execute: function() {
-            EditProfileComponent = (function () {
-                function EditProfileComponent(editProfileService, router, mapsAPILoader, zone) {
-                    this.editProfileService = editProfileService;
+            CreateTeamComponent = (function () {
+                function CreateTeamComponent(createTeamService, router, mapsAPILoader, zone) {
+                    this.createTeamService = createTeamService;
                     this.router = router;
                     this.mapsAPILoader = mapsAPILoader;
                     this.zone = zone;
@@ -44,45 +44,46 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                         authTokenPrefix: 'Bearer'
                     };
                 }
-                EditProfileComponent.prototype.ngOnInit = function () {
-                    this.getUserInfo();
-                    // this.mapsAPILoader.load().then(() => {
-                    //   let input = document.getElementById('location')
-                    //   let autocomplete = new google.maps.places.Autocomplete(input, {
-                    //     types: ['(cities)']
-                    //   });
-                    //   autocomplete.addListener("place_changed", () => {
-                    //     this.zone.run(() => {
-                    //       this.userInfo.location = autocomplete.getPlace().formatted_address
-                    //     });
-                    //   });
-                    // });
-                };
-                EditProfileComponent.prototype.getUserInfo = function () {
+                CreateTeamComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.editProfileService.getUserInfo()
+                    this.getUserInfo();
+                    this.mapsAPILoader.load().then(function () {
+                        var input = document.getElementById('location');
+                        var autocomplete = new google.maps.places.Autocomplete(input, {
+                            types: ['(cities)']
+                        });
+                        autocomplete.addListener("place_changed", function () {
+                            _this.zone.run(function () {
+                                _this.userInfo.location = autocomplete.getPlace().formatted_address;
+                            });
+                        });
+                    });
+                };
+                CreateTeamComponent.prototype.getUserInfo = function () {
+                    var _this = this;
+                    this.createTeamService.getUserInfo()
                         .subscribe(function (data) {
                         _this.userInfo = data;
                         _this.picture = _this.userInfo.picture;
                         console.log(data);
                     });
                 };
-                EditProfileComponent.prototype.editUserInfo = function () {
+                CreateTeamComponent.prototype.editUserInfo = function () {
                     var _this = this;
-                    this.editProfileService.editUserInfo(this.userInfo)
+                    this.createTeamService.editUserInfo(this.userInfo)
                         .subscribe(function (data) {
                         _this.router.navigateByUrl('/profile/' + _this.userInfo.url);
                     });
                     localStorage.setItem("url", this.userInfo.url);
                     localStorage.setItem("name", this.userInfo.name);
                 };
-                EditProfileComponent.prototype.handleUpload = function (data) {
+                CreateTeamComponent.prototype.handleUpload = function (data) {
                     if (data && data.response) {
                         data = data.response;
                         localStorage.setItem("picture", data);
                     }
                 };
-                EditProfileComponent.prototype.handleChange = function (input) {
+                CreateTeamComponent.prototype.handleChange = function (input) {
                     var img = document.createElement("img");
                     img.src = window.URL.createObjectURL(input.files[0]);
                     var reader = new FileReader();
@@ -92,20 +93,20 @@ System.register(['@angular/core', './editProfile.services.js', '@angular/router'
                     }, false);
                     reader.readAsDataURL(input.files[0]);
                 };
-                EditProfileComponent = __decorate([
+                CreateTeamComponent = __decorate([
                     core_1.Component({
-                        selector: 'editProfile',
-                        templateUrl: './client/app/components/editProfile/editProfile.html',
-                        styleUrls: ['./client/app/components/editProfile/editProfile.css'],
-                        providers: [editProfile_services_js_1.EditProfileService]
+                        selector: 'createTeam',
+                        templateUrl: './client/app/components/createTeam/createTeam.html',
+                        styleUrls: ['./client/app/components/createTeam/createTeam.css'],
+                        providers: [createTeam_services_js_1.CreateTeamService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof editProfile_services_js_1.EditProfileService !== 'undefined' && editProfile_services_js_1.EditProfileService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone])
-                ], EditProfileComponent);
-                return EditProfileComponent;
+                    __metadata('design:paramtypes', [(typeof (_a = typeof createTeam_services_js_1.CreateTeamService !== 'undefined' && createTeam_services_js_1.CreateTeamService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone])
+                ], CreateTeamComponent);
+                return CreateTeamComponent;
                 var _a;
             }());
-            exports_1("EditProfileComponent", EditProfileComponent);
+            exports_1("CreateTeamComponent", CreateTeamComponent);
         }
     }
 });
-//# sourceMappingURL=editProfile.component.js.map
+//# sourceMappingURL=createTeam.component.js.map
