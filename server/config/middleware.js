@@ -29,9 +29,8 @@ module.exports = {
     })
   }),
 
-authCheck: jwt({
-  secret: new Buffer(auth.clientSecret, 'base64'),
-  audience: auth.clientId
-})
-
+  authCheck: jwt({
+    secret: new Buffer(auth.clientSecret, 'base64'),
+    audience: auth.clientId
+  }),
 };

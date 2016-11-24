@@ -185,23 +185,20 @@ module.exports = {
         $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
       }
     })
-      .then((user) => {
-        if(user){
+      .then((team) => {
+        if(team){
           //check if the receiver is already on the team
-          Profile.findOne({where: {id: team}})
-            .then((team) => {
-              team.getMember({where: {id: receiver}})
-                .then((member) => {
-                  if(member.length === 0){
-                    team.addMember(receiver, {type: 'Pending'})
-                      .then(() => {
-                        next();
-                      })  
-                  } else {
-                    res.sendStatus(404);
-                  } 
-                })
-            })    
+          team.getMember({where: {id: receiver}})
+            .then((member) => {
+              if(member.length === 0){
+                team.addMember(receiver, {type: 'Pending'})
+                  .then(() => {
+                    next();
+                  })  
+              } else {
+                res.sendStatus(400);
+              } 
+            })  
         } else {
           res.sendStatus(401);
         }
