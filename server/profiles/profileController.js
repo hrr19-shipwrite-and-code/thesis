@@ -163,14 +163,28 @@ module.exports = {
   },
 
   deleteTeam: (req, res,next) => {
-    const url = req.body.url;
-    Profile.destroy({where: {url: url}})
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(() => {
-        res.sendStatus(404);
-      })
+    const teamId = req.params.teamId;
+    const user = req.body.id;
+    Profile.findOne({
+      where: {
+        id: user,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type = "Owner")', user]]
+      }
+    })
+      .then((user) => {
+        if(user){
+          Profile.destroy({where: {id: teamId}})
+            .then((team) => {
+              res.json(team);
+            })
+            .catch((err) => {
+              console.log(err)
+              res.sendStatus(404);
+            })
+        } else {
+          res.sendStatus(401)
+        }
+      })     
   },
 
   memberTypeCheck: (req, res, next) => {

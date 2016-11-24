@@ -19,7 +19,7 @@ module.exports = function (app, express) {
 
   app.post('/api/team/create', profileController.createTeam);
   app.put('/api/team/edit', profileController.editTeamInfo);
-  app.delete('/api/team/delete', profileController.deleteTeam);
+  app.delete('/api/team/delete/:teamId', profileController.deleteTeam);
   app.post('/api/team/addMember/:teamId/:userId', profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
   app.delete('/api/team/leaveTeam/:teamId', profileController.leaveTeam);
   app.delete('/api/team/removeMember/:teamId/:userId', profileController.memberTypeCheck, profileController.removeMember);
