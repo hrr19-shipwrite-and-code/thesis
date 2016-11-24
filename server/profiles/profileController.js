@@ -173,6 +173,41 @@ module.exports = {
       })
   },
 
+  addMember: (req, res, next) => {
+    const sender = req.body.id;
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+
+    //check if sender is authorized to add member
+    Profile.findOne({
+      where: {
+        id: team,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
+      }
+    })
+      .then((user) => {
+        if(user){
+          //check if the receiver is already on the team
+          Profile.findOne({where: {id: team}})
+            .then((team) => {
+              team.getMember({where: {id: receiver}})
+                .then((member) => {
+                  if(member.length === 0){
+                    team.addMember(receiver, {type: 'Pending'})
+                      .then(() => {
+                        next();
+                      })  
+                  } else {
+                    res.sendStatus(404);
+                  } 
+                })
+            })    
+        } else {
+          res.sendStatus(401);
+        }
+      })
+  },
+
   removeMember: (req, res, next) => {
     const team = req.body.team;
     const user = req.body.user;

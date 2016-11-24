@@ -10,18 +10,19 @@ const middleware = require('./middleware.js');
 module.exports = function (app, express) {
 
   //Profile Routes
-  app.post('/api/user/create', middleware.authCheck, profileController.createUser);
-  app.post('/api/team/create', profileController.createTeam);
-  app.put('/api/team/edit', profileController.editTeamInfo);
-  app.delete('/api/team/delete', profileController.deleteTeam);
-  app.post('/api/team/addMember', profileController.addMember);
-  app.delete('/api/team/removeMember', profileController.removeMember);
-  app.put('/api/team/promoteMember', profileController.promoteMember);
-  app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addPicture);
   app.get('/api/profile/:profileUrl', profileController.getProfile);
+  app.post('/api/user/create', middleware.authCheck, profileController.createUser);
+  app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addPicture);
   app.post('/api/user/getAll', profileController.getAllUser);
   app.get('/api/editUserInfo', middleware.authCheck, profileController.getEditUserInfo);
   app.put('/api/user/edit', middleware.authCheck, profileController.editUserInfo);
+
+  app.post('/api/team/create', profileController.createTeam);
+  app.put('/api/team/edit', profileController.editTeamInfo);
+  app.delete('/api/team/delete', profileController.deleteTeam);
+  app.post('/api/team/addMember/:teamId/:userId', profileController.addMember, notificationController.inviteMember);
+  app.delete('/api/team/removeMember', profileController.removeMember);
+  app.put('/api/team/promoteMember', profileController.promoteMember);
 
   //Tech Routes
   app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
@@ -51,7 +52,4 @@ module.exports = function (app, express) {
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
-
-  //Notification routes
-  app.post('/api/notification/invite/:teamId/:userId', notificationController.inviteMember);
 };
