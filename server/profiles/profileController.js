@@ -173,12 +173,9 @@ module.exports = {
       })
   },
 
-  addMember: (req, res, next) => {
+  memberTypeCheck: (req, res, next) => {
     const sender = req.body.id;
-    const receiver = req.params.userId;
     const team = req.params.teamId;
-
-    //check if sender is authorized to add member
     Profile.findOne({
       where: {
         id: team,
@@ -187,69 +184,63 @@ module.exports = {
     })
       .then((team) => {
         if(team){
-          //check if the receiver is already on the team
-          team.getMember({where: {id: receiver}})
-            .then((member) => {
-              if(member.length === 0){
-                team.addMember(receiver, {type: 'Pending'})
-                  .then(() => {
-                    next();
-                  })  
-              } else {
-                res.sendStatus(400);
-              } 
-            })  
-        } else {
-          res.sendStatus(401);
+          req.team = team;
+          next() 
+        } else{
+          res.sendStatus(401)
         }
       })
+  },
+
+  addMember: (req, res, next) => {
+    const receiver = req.params.userId;
+    const team = req.team;
+    
+    team.getMember({where: {id: receiver}})
+      .then((member) => {
+        if(member.length === 0){
+          team.addMember(receiver, {type: 'Pending'})
+            .then(() => {
+              next();
+            })  
+        } else {
+          res.sendStatus(400);
+        } 
+      })  
   },
 
   removeMember: (req, res, next) => {
-    const sender = req.body.id;
     const receiver = req.params.userId;
-    const team = req.params.teamId;
+    const team = req.team;
     //check if sender is authorized to add member
-    Profile.findOne({
-      where: {
-        id: team,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
-      }
-    })
-      .then((team) => {
-        if(team){
-          Profile.findOne({where: {id: receiver}})
-            .then((user) => {
-              team.removeMember(user)
-                .then(() => {
-                  res.sendStatus(200);
-                })
-                .catch((err) => {
-                  res.sendStatus(400);
-                });
+    Profile.findOne({where: {id: receiver}})
+      .then((user) => {
+        team.removeMember(user)
+          .then(() => {
+            res.sendStatus(200);
           })
-        } else {
-          res.sendStatus(401)
-        }
-        
-      })
+          .catch((err) => {
+            res.sendStatus(400);
+          });
+    })
   },
 
   promoteMember: (req, res, next) => {
-    const user = req.body.user;
-    const team = req.body.team;
-    TeamUser.findOne({where: {userId: user, teamId: team, admin: true}, attributes: ['userId', 'teamId', "admin"]})
-      .then((user) => {
-        res.json(user);
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+    
+    TeamUser.update({type: 'Admin'}, {
+      where: {teamId: team, userId: receiver, type: {$not: 'Owner'}}
+    })
+      .then(() => {
+        res.sendStatus(200)
       })
       .catch((err) => {
-        console.log(err)
         res.sendStatus(400);
-      })
+      });
   },
 
   demoteMember: (req, res, next) => {
-
   },
 
   addPicture: (req, res, next) => {

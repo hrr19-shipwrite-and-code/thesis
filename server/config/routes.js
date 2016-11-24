@@ -20,9 +20,9 @@ module.exports = function (app, express) {
   app.post('/api/team/create', profileController.createTeam);
   app.put('/api/team/edit', profileController.editTeamInfo);
   app.delete('/api/team/delete', profileController.deleteTeam);
-  app.post('/api/team/addMember/:teamId/:userId', profileController.addMember, notificationController.inviteMember);
-  app.delete('/api/team/removeMember/:teamId/:userId', profileController.removeMember);
-  app.put('/api/team/promoteMember', profileController.promoteMember);
+  app.post('/api/team/addMember/:teamId/:userId', profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
+  app.delete('/api/team/removeMember/:teamId/:userId', profileController.memberTypeCheck, profileController.removeMember);
+  app.put('/api/team/promoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.promoteMember);
 
   //Tech Routes
   app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
