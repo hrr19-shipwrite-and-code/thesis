@@ -128,16 +128,17 @@ module.exports = {
   },
 
   createTeam: (req, res, next) => {
-    console.log(req.body)
-    const user = req.body.user;
-    const team = req.body.team;
+    const authId = req.user.sub;
     const teamInfo = {
       name: req.body.name,
-      url: team,
+      url: req.body.url,
       email: req.body.email,
+      location: req.body.location,
+      hire: req.body.hire || false,
+      bio: req.body.bio,
       type: 'Team'
     }
-    Profile.findOne({where: {url: user}})
+    Profile.findOne({where: {authId: authId}})
       .then((user) => {
         user.createTeam(teamInfo, {type: 'Owner'})
           .then(() => {

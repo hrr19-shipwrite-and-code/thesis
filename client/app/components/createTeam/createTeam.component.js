@@ -33,20 +33,10 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                     this.router = router;
                     this.mapsAPILoader = mapsAPILoader;
                     this.zone = zone;
-                    this.userInfo = {};
-                    this.picture = '';
-                    this.options = {
-                        url: 'http://localhost:1337/api/user/addPicture',
-                        filterExtensions: true,
-                        allowedExtensions: ['image/png', 'image/jpg'],
-                        calculateSpeed: true,
-                        authToken: localStorage.getItem('id_token'),
-                        authTokenPrefix: 'Bearer'
-                    };
+                    this.location = '';
                 }
                 CreateTeamComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.getUserInfo();
                     this.mapsAPILoader.load().then(function () {
                         var input = document.getElementById('location');
                         var autocomplete = new google.maps.places.Autocomplete(input, {
@@ -54,44 +44,18 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                         });
                         autocomplete.addListener("place_changed", function () {
                             _this.zone.run(function () {
-                                _this.userInfo.location = autocomplete.getPlace().formatted_address;
+                                _this.location = autocomplete.getPlace().formatted_address;
                             });
                         });
                     });
                 };
-                CreateTeamComponent.prototype.getUserInfo = function () {
+                CreateTeamComponent.prototype.createTeam = function (teamInfo) {
                     var _this = this;
-                    this.createTeamService.getUserInfo()
+                    console.log(teamInfo);
+                    this.createTeamService.createTeam(teamInfo)
                         .subscribe(function (data) {
-                        _this.userInfo = data;
-                        _this.picture = _this.userInfo.picture;
-                        console.log(data);
+                        _this.router.navigateByUrl('/profile/' + teamInfo.url);
                     });
-                };
-                CreateTeamComponent.prototype.editUserInfo = function () {
-                    var _this = this;
-                    this.createTeamService.editUserInfo(this.userInfo)
-                        .subscribe(function (data) {
-                        _this.router.navigateByUrl('/profile/' + _this.userInfo.url);
-                    });
-                    localStorage.setItem("url", this.userInfo.url);
-                    localStorage.setItem("name", this.userInfo.name);
-                };
-                CreateTeamComponent.prototype.handleUpload = function (data) {
-                    if (data && data.response) {
-                        data = data.response;
-                        localStorage.setItem("picture", data);
-                    }
-                };
-                CreateTeamComponent.prototype.handleChange = function (input) {
-                    var img = document.createElement("img");
-                    img.src = window.URL.createObjectURL(input.files[0]);
-                    var reader = new FileReader();
-                    var that = this;
-                    reader.addEventListener("load", function (event) {
-                        that.picture = event.target.result;
-                    }, false);
-                    reader.readAsDataURL(input.files[0]);
                 };
                 CreateTeamComponent = __decorate([
                     core_1.Component({

@@ -3,65 +3,43 @@
 
 
   <div class="main-content shadow horizontal-center">
-    <h4>Edit Profile</h4>
+    <h4>Create Team</h4>
 
-    <form>
+    <form #form="ngForm">
       <div class="form-group">
         <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your full name" [(ngModel)]="userInfo.name" name="name" required>
+        <input type="text" class="form-control" placeholder="Enter your team name" ngModel name="name" required>
       </div>
 
       <div class="form-group">
         <p class='email-label'>URL:</p>
-        <input type="text" class="form-control" placeholder="Enter new URL" [(ngModel)]="userInfo.url" name="url" required>
+        <input type="text" class="form-control" placeholder="Enter team URL" ngModel name="url" required>
       </div>
 
       <div class="form-group">
-        <p class='email-label'>Profile Picture:</p>
-        <img src={{picture}} />
-        <form>
-          <input type="file"
-            ngFileSelect
-            [options]="options"
-            (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
-        </form>
+        <p class='email-label'>Email:</p>
+        <input type="text" class="form-control" placeholder="Enter team email" ngModel name="email" required>
       </div>
 
       <div class="form-group">
         <p class='location-label'>Location:</p>
-        <input type="text" class="form-control" placeholder="Enter your location" id="location" [(ngModel)]="userInfo.location" name="location">
+        <input type="text" class="form-control" placeholder="Enter your team location" id="location" [(ngModel)]="location" name="location">
       </div>
 
       <div class="form-group">
         <p class='location-label'>Hire:</p>
         <label class="switch">
-          <input type="checkbox" [(ngModel)]="userInfo.hire" name="hire">
+          <input type="checkbox" ngModel name="hire">
           <div class="slider round"></div>
         </label>
       </div>
 
       <div class="form-group">
         <p class='bio-label'>Bio:</p>
-        <textarea class="form-control" rows="3" placeholder="Enter your bio" [(ngModel)]="userInfo.bio" name="bio"></textarea>
-      </div>
-
-      <div class="form-group">
-        <p class='location-label'>Connect:</p>
-        Personal:
-        <input type="text" class="form-control" placeholder="Enter your personal website url" [(ngModel)]="userInfo.personal" name="personal">
-        Blog:
-        <input type="text" class="form-control" placeholder="Enter your blog url" [(ngModel)]="userInfo.blog" name="blog">
-        Github:
-        <input type="text" class="form-control" placeholder="Enter your github url" [(ngModel)]="userInfo.github" name="github">
-        LinkedIn:
-        <input type="text" class="form-control" placeholder="Enter your linkedin website url" [(ngModel)]="userInfo.linkedin" name="linkedin">
-        Twitter:
-        <input type="text" class="form-control" placeholder="Enter your twitter url" [(ngModel)]="userInfo.twitter" name="twitter">
-        Facebook:
-        <input type="text" class="form-control" placeholder="Enter your facebook website url" [(ngModel)]="userInfo.facebook" name="facebook">
+        <textarea class="form-control" rows="3" placeholder="Enter your team bio" ngModel name="bio"></textarea>
       </div>
     </form>
-    <button class="btn btn-primary" (click)="editUserInfo()">Save</button>
+    <button class="btn btn-primary" (click)="createTeam(form.value)">Save</button>
   </div>
 
 

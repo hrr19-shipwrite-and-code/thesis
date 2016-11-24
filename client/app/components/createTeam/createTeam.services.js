@@ -30,14 +30,10 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                     this.authHttp = authHttp;
                     this.http = http;
                 }
-                CreateTeamService.prototype.getUserInfo = function () {
-                    return this.authHttp.get('http://localhost:1337/api/editUserInfo')
-                        .map(function (res) { return res.json(); });
-                };
-                CreateTeamService.prototype.editUserInfo = function (userInfo) {
+                CreateTeamService.prototype.createTeam = function (teamInfo) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
+                    return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
                         .map(function (res) { return res.json; });
                 };
                 CreateTeamService = __decorate([

@@ -13,22 +13,11 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
 
 export class CreateTeamComponent implements OnInit{
 
-  userInfo = {};
-  picture: any = '';
-  options: Object = {
-    url: 'http://localhost:1337/api/user/addPicture',
-    filterExtensions: true,
-    allowedExtensions: ['image/png', 'image/jpg'],
-    calculateSpeed: true,
-    authToken: localStorage.getItem('id_token'),
-    authTokenPrefix: 'Bearer'
-  };
-
+  location = '';
 
   constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
 
   ngOnInit() {
-    this.getUserInfo();
 
     this.mapsAPILoader.load().then(() => {
       let input = document.getElementById('location')
@@ -37,49 +26,17 @@ export class CreateTeamComponent implements OnInit{
       });
       autocomplete.addListener("place_changed", () => {
         this.zone.run(() => {
-          this.userInfo.location = autocomplete.getPlace().formatted_address
+          this.location = autocomplete.getPlace().formatted_address
         });
       });
     });
   }
 
-  getUserInfo() {
-    this.createTeamService.getUserInfo()
+  createTeam(teamInfo) {
+    console.log(teamInfo)
+    this.createTeamService.createTeam(teamInfo)
       .subscribe( data => {
-          this.userInfo = data;
-          this.picture = this.userInfo.picture
-          console.log(data)
-        });
-  }
-
-  editUserInfo() {
-    this.createTeamService.editUserInfo(this.userInfo)
-      .subscribe( data => {
-        this.router.navigateByUrl('/profile/' + this.userInfo.url);
+        this.router.navigateByUrl('/profile/' + teamInfo.url);
        });
-      localStorage.setItem("url", this.userInfo.url);
-      localStorage.setItem("name", this.userInfo.name);
-  }
-
-
-  handleUpload(data): void {
-    if (data && data.response) {
-      data = data.response;
-      localStorage.setItem("picture", data);
-    }
-  }
-
-  handleChange(input) {
-    let img = document.createElement("img");
-    img.src = window.URL.createObjectURL(input.files[0]);
-
-    const reader = new FileReader();
-    const that = this;
-
-    reader.addEventListener("load", (event) => {
-      that.picture = event.target.result;
-    }, false);
-
-    reader.readAsDataURL(input.files[0]);
   }
 }
