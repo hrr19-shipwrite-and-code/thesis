@@ -206,20 +206,32 @@ module.exports = {
   },
 
   removeMember: (req, res, next) => {
-    const team = req.body.team;
-    const user = req.body.user;
-    Profile.findOne({where: {url: user}})
-      .then((user) => {
-        Profile.findOne({where: {url: team}})
-          .then((team) => {
-            team.removeMember(user)
-              .then(() => {
-                res.sendStatus(200);
-              })
-              .catch((err) => {
-                res.sendStatus(400);
-              });
+    const sender = req.body.id;
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+    //check if sender is authorized to add member
+    Profile.findOne({
+      where: {
+        id: team,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
+      }
+    })
+      .then((team) => {
+        if(team){
+          Profile.findOne({where: {id: receiver}})
+            .then((user) => {
+              team.removeMember(user)
+                .then(() => {
+                  res.sendStatus(200);
+                })
+                .catch((err) => {
+                  res.sendStatus(400);
+                });
           })
+        } else {
+          res.sendStatus(401)
+        }
+        
       })
   },
 

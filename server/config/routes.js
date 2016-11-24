@@ -21,7 +21,7 @@ module.exports = function (app, express) {
   app.put('/api/team/edit', profileController.editTeamInfo);
   app.delete('/api/team/delete', profileController.deleteTeam);
   app.post('/api/team/addMember/:teamId/:userId', profileController.addMember, notificationController.inviteMember);
-  app.delete('/api/team/removeMember', profileController.removeMember);
+  app.delete('/api/team/removeMember/:teamId/:userId', profileController.removeMember);
   app.put('/api/team/promoteMember', profileController.promoteMember);
 
   //Tech Routes
