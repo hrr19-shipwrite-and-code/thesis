@@ -36,4 +36,16 @@ export class ProfileService {
     return this.authHttp.delete('http://localhost:1337/api/profile/removeTech/' +  techId)
       .map(res => res);
   }
+
+  teamAuthCheck(teamId) {
+    return this.authHttp.get('http://localhost:1337/api/team/teamAuthCheck/' +  teamId)
+      .map(res => res);
+  },
+
+  updateTeamProfile(teamId, data) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
+      .map(res => res)
+  }
 }

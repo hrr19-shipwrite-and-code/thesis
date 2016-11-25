@@ -34,6 +34,7 @@ export class ProfileComponent {
     authTokenPrefix: 'Bearer'
   };
   techs = [];
+  admin = false;
 
   constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
@@ -46,6 +47,15 @@ export class ProfileComponent {
     this.projectService.getTech()
       .subscribe( data => {
         this.techs = data;
+      })
+  }
+
+  teamAuthCheck(teamId) {
+    this.profileService.teamAuthCheck(teamId)
+      .subscribe(data => {
+        this.admin = true;
+      }, err => {
+        this.admin = false;
       })
   }
 
@@ -73,6 +83,9 @@ export class ProfileComponent {
         this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
+        if(data.type === 'Team'){
+          this.teamAuthCheck(data.id);
+        }
       });
     });
   }
@@ -89,29 +102,47 @@ export class ProfileComponent {
   }
 
   updateUserInfo(event, input, type) {
-    if (type === 'basic') {
-      localStorage.setItem('name', input.name);
-    }
-    if (input.url === this.clientId) {
+    if (input.url === this.profileInfo.url) {
       return;
     }
-    return this.profileService.updateUserProfile(input)
-      .subscribe(
-        data => {
+    if(this.profileInfo.type === 'Team'){
+      return this.profileService.updateTeamProfile(this.profileInfo.id, input)
+        .subscribe(data => {
           if (type === 'url') {
-            localStorage.setItem('url', input.url);
-            this.clientId = localStorage.getItem('url');
             this.urlTaken = false;
             this.router.navigateByUrl('/profile/' + input.url)
           } else {
-          this.editForm(type)
+            this.editForm(type)
           }
         },
         err => {
           if (type === 'url') {
             this.urlTaken = true;
-          }}
-      )
+          }
+        })
+    } else {
+      if (type === 'basic') {
+        localStorage.setItem('name', input.name);
+      }
+      return this.profileService.updateUserProfile(input)
+        .subscribe(
+          data => {
+            if (type === 'url') {
+              localStorage.setItem('url', input.url);
+              this.clientId = localStorage.getItem('url');
+              this.urlTaken = false;
+              this.router.navigateByUrl('/profile/' + input.url)
+            } else {
+              this.editForm(type)
+            }
+          },
+          err => {
+            if (type === 'url') {
+              this.urlTaken = true;
+            }}
+        )
+    }
+    
   }
 
   editForm(key) {

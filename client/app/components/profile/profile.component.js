@@ -58,6 +58,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         authTokenPrefix: 'Bearer'
                     };
                     this.techs = [];
+                    this.admin = false;
                 }
                 ProfileComponent.prototype.ngOnInit = function () {
                     this.getUserInfo();
@@ -68,6 +69,15 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.projectService.getTech()
                         .subscribe(function (data) {
                         _this.techs = data;
+                    });
+                };
+                ProfileComponent.prototype.teamAuthCheck = function (teamId) {
+                    var _this = this;
+                    this.profileService.teamAuthCheck(teamId)
+                        .subscribe(function (data) {
+                        _this.admin = true;
+                    }, function (err) {
+                        _this.admin = false;
                     });
                 };
                 ProfileComponent.prototype.googleLocation = function () {
@@ -95,6 +105,9 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.profileInfo.picture = _this.profileInfo.picture + '?dummy=' + Date.now();
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
+                            if (data.type === 'Team') {
+                                _this.teamAuthCheck(data.id);
+                            }
                         });
                     });
                 };
@@ -110,28 +123,46 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 };
                 ProfileComponent.prototype.updateUserInfo = function (event, input, type) {
                     var _this = this;
-                    if (type === 'basic') {
-                        localStorage.setItem('name', input.name);
-                    }
-                    if (input.url === this.clientId) {
+                    if (input.url === this.profileInfo.url) {
                         return;
                     }
-                    return this.profileService.updateUserProfile(input)
-                        .subscribe(function (data) {
-                        if (type === 'url') {
-                            localStorage.setItem('url', input.url);
-                            _this.clientId = localStorage.getItem('url');
-                            _this.urlTaken = false;
-                            _this.router.navigateByUrl('/profile/' + input.url);
+                    if (this.profileInfo.type === 'Team') {
+                        return this.profileService.updateTeamProfile(this.profileInfo.id, input)
+                            .subscribe(function (data) {
+                            if (type === 'url') {
+                                _this.urlTaken = false;
+                                _this.router.navigateByUrl('/profile/' + input.url);
+                            }
+                            else {
+                                _this.editForm(type);
+                            }
+                        }, function (err) {
+                            if (type === 'url') {
+                                _this.urlTaken = true;
+                            }
+                        });
+                    }
+                    else {
+                        if (type === 'basic') {
+                            localStorage.setItem('name', input.name);
                         }
-                        else {
-                            _this.editForm(type);
-                        }
-                    }, function (err) {
-                        if (type === 'url') {
-                            _this.urlTaken = true;
-                        }
-                    });
+                        return this.profileService.updateUserProfile(input)
+                            .subscribe(function (data) {
+                            if (type === 'url') {
+                                localStorage.setItem('url', input.url);
+                                _this.clientId = localStorage.getItem('url');
+                                _this.urlTaken = false;
+                                _this.router.navigateByUrl('/profile/' + input.url);
+                            }
+                            else {
+                                _this.editForm(type);
+                            }
+                        }, function (err) {
+                            if (type === 'url') {
+                                _this.urlTaken = true;
+                            }
+                        });
+                    }
                 };
                 ProfileComponent.prototype.editForm = function (key) {
                     this.editing[key] = !this.editing[key];

@@ -13,7 +13,7 @@
             [options]="options"
             (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
         <div class="edit">
-        <i *ngIf='isCurrentUser()' (click)="editForm('picture')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
+        <i *ngIf='isCurrentUser() || admin' (click)="editForm('picture')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
         </div>
         <!-- Show Basic Profile Info -->
         <div *ngIf="!editing.basic">
@@ -41,7 +41,7 @@
         </div>
         <!-- Edit Pencil Icon -->
         <div class="edit">
-        <i *ngIf='isCurrentUser()' (click)="editForm('basic')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
+        <i *ngIf='isCurrentUser() || admin' (click)="editForm('basic')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
         </div>
       </div> <!-- topInfo -->
 
@@ -51,7 +51,7 @@
       <div class='connect'>
         <h4>SKILLS</h4>
         <ul *ngIf="profileInfo.Teches.length">
-          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf="isCurrentUser()" (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
+          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf="isCurrentUser() || admin" (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
         </ul>
         <!-- Hidden User Tech Input -->
         <datalist id="techs">
@@ -62,7 +62,7 @@
           <button type="submit" class="btn btn-primary btn-sm">Add</button>
         </form>
         <div class="edit">
-        <i *ngIf='isCurrentUser()' (click)="editForm('tech')" class="fa fa-plus" aria-hidden="true" title="Add Skills"></i>
+        <i *ngIf='isCurrentUser() || admin' (click)="editForm('tech')" class="fa fa-plus" aria-hidden="true" title="Add Skills"></i>
         </div>
       </div>
 
@@ -85,7 +85,7 @@
       <hr>
 
       <!-- User/Team Connections -->
-      <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser()">
+      <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser() || admin">
         <h4>CONNECT</h4>
         <ul class='urls' *ngIf="!editing.contact">
           <li *ngIf="profileInfo.personal"><a href='{{profileInfo.personal}}'>personal</a></li>
@@ -109,11 +109,11 @@
         </form>
         </div>
         <div class="edit">
-        <i *ngIf='isCurrentUser()' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
+        <i *ngIf='isCurrentUser() || admin' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
         </div>
       </div>
       <!-- User URL Edit -->
-      <div class="connect" *ngIf='isCurrentUser()'> 
+      <div class="connect" *ngIf='isCurrentUser() || admin'> 
         <h4>sushi url</h4>
         <span *ngIf="urlTaken">URL Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">

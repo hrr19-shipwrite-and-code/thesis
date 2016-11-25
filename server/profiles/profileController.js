@@ -153,7 +153,7 @@ module.exports = {
 
   editTeamInfo: (req, res, next) => {
     const teamId = req.params.teamId;
-    Profile.update({name: req.body.name}, {where: {id: teamId}})
+    Profile.update(req.body, {where: {id: teamId}})
       .then(() => {
         res.sendStatus(200);
       })
@@ -189,12 +189,12 @@ module.exports = {
   },
 
   memberTypeCheck: (req, res, next) => {
-    const sender = req.body.id;
+    const sender = req.user.sub;
     const team = req.params.teamId;
     Profile.findOne({
       where: {
         id: team,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
       }
     })
       .then((team) => {
@@ -205,6 +205,10 @@ module.exports = {
           res.sendStatus(401)
         }
       })
+  },
+
+  teamAuthCheck: (req, res, next) => {
+    res.sendStatus(200)
   },
 
   addMember: (req, res, next) => {
