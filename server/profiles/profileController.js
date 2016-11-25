@@ -299,7 +299,7 @@ module.exports = {
       });
   },
 
-  addPicture: (req, res, next) => {
+  addUserPicture: (req, res, next) => {
     const authId = req.user.sub
     const URL = '/client/uploads/profile/' + authId;
     Profile.findOne({where: {authId: authId}})
@@ -308,6 +308,18 @@ module.exports = {
           .then((update) => {
             res.send(update);
           });
+      });
+  },
+
+  addTeamPicture: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const URL = '/client/uploads/profile/' + teamId;
+    Profile.findOne({where: {id: teamId}})
+      .then((profile) => {
+        profile.update({ picture: URL})
+          .then((update) => {
+            res.send(update);
+          })
       });
   }
 };

@@ -85,6 +85,7 @@ export class ProfileComponent {
         this.tempUrl = data.url;
         if(data.type === 'Team'){
           this.teamAuthCheck(data.id);
+          this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
         }
       });
     });
@@ -190,7 +191,7 @@ export class ProfileComponent {
 
   //Image Upload function
   handleUpload(data): void {
-    if (data && data.response) {
+    if (data && data.response && this.profileInfo.type === 'Member') {
       data = JSON.parse(data.response);
       localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
     }

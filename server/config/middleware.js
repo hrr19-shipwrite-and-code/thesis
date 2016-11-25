@@ -23,7 +23,7 @@ module.exports = {
         cb(null, './client/uploads/profile');
       },
       filename: (req, file, cb) => {
-        let ext = req.user.sub;
+        let ext = req.params.teamId || req.user.sub;
         cb(null, ext);
       }
     })

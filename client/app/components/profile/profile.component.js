@@ -107,6 +107,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.tempUrl = data.url;
                             if (data.type === 'Team') {
                                 _this.teamAuthCheck(data.id);
+                                _this.options.url = 'http://localhost:1337/api/team/addPicture/' + _this.profileInfo.id;
                             }
                         });
                     });
@@ -210,7 +211,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 };
                 //Image Upload function
                 ProfileComponent.prototype.handleUpload = function (data) {
-                    if (data && data.response) {
+                    if (data && data.response && this.profileInfo.type === 'Member') {
                         data = JSON.parse(data.response);
                         localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
                     }
