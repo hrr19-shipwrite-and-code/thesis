@@ -49,11 +49,6 @@ export class ProfileService {
       .map(res => res);
   }
 
-  teamAuthCheck(teamId) {
-    return this.authHttp.get('http://localhost:1337/api/team/teamAuthCheck/' +  teamId)
-      .map(res => res);
-  },
-
   updateTeamProfile(teamId, data) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

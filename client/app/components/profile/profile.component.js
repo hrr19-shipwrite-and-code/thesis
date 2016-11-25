@@ -58,7 +58,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         authTokenPrefix: 'Bearer'
                     };
                     this.techs = [];
-                    this.admin = false;
+                    this.memberType = '';
                 }
                 ProfileComponent.prototype.ngOnInit = function () {
                     this.getUserInfo();
@@ -69,15 +69,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.projectService.getTech()
                         .subscribe(function (data) {
                         _this.techs = data;
-                    });
-                };
-                ProfileComponent.prototype.teamAuthCheck = function (teamId) {
-                    var _this = this;
-                    this.profileService.teamAuthCheck(teamId)
-                        .subscribe(function (data) {
-                        _this.admin = true;
-                    }, function (err) {
-                        _this.admin = false;
                     });
                 };
                 ProfileComponent.prototype.googleLocation = function () {
@@ -106,8 +97,13 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
                             if (data.type === 'Team') {
-                                _this.teamAuthCheck(data.id);
                                 _this.options.url = 'http://localhost:1337/api/team/addPicture/' + _this.profileInfo.id;
+                                for (var _i = 0, _a = _this.profileInfo.Member; _i < _a.length; _i++) {
+                                    var member = _a[_i];
+                                    if (member.url === _this.clientId) {
+                                        return _this.memberType = member.TeamUsers.type;
+                                    }
+                                }
                             }
                         });
                     });

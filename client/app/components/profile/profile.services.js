@@ -64,10 +64,6 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.authHttp.delete('http://localhost:1337/api/team/removeTech/' + teamId + '/' + techId)
                         .map(function (res) { return res; });
                 };
-                ProfileService.prototype.teamAuthCheck = function (teamId) {
-                    return this.authHttp.get('http://localhost:1337/api/team/teamAuthCheck/' + teamId)
-                        .map(function (res) { return res; });
-                };
                 ProfileService.prototype.updateTeamProfile = function (teamId, data) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });

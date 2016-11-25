@@ -34,7 +34,7 @@ export class ProfileComponent {
     authTokenPrefix: 'Bearer'
   };
   techs = [];
-  admin = false;
+  memberType = '';
 
   constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
@@ -47,15 +47,6 @@ export class ProfileComponent {
     this.projectService.getTech()
       .subscribe( data => {
         this.techs = data;
-      })
-  }
-
-  teamAuthCheck(teamId) {
-    this.profileService.teamAuthCheck(teamId)
-      .subscribe(data => {
-        this.admin = true;
-      }, err => {
-        this.admin = false;
       })
   }
 
@@ -84,8 +75,12 @@ export class ProfileComponent {
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
         if(data.type === 'Team'){
-          this.teamAuthCheck(data.id);
           this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
+          for(let member of this.profileInfo.Member) {
+            if(member.url === this.clientId){
+              return this.memberType = member.TeamUsers.type;
+            }
+          }
         }
       });
     });

@@ -48,7 +48,7 @@ module.exports = {
         model: Profile,
         as: 'Member',
         attributes: ['id', 'name', 'url'],
-        through: {attributes: []}
+        through: {attributes: ['type']}
       },
       {
         model: Profile,
@@ -205,10 +205,6 @@ module.exports = {
           res.sendStatus(401)
         }
       })
-  },
-
-  teamAuthCheck: (req, res, next) => {
-    res.sendStatus(200)
   },
 
   addMember: (req, res, next) => {
