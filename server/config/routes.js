@@ -28,8 +28,10 @@ module.exports = function (app, express) {
   app.put('/api/team/demoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.demoteMember);
 
   //Tech Routes
-  app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
-  app.delete('/api/profile/removeTech/:techId', middleware.authCheck, techController.profileRemoveTech);
+  app.post('/api/user/addTech', middleware.authCheck, techController.userAddTech);
+  app.delete('/api/user/removeTech/:techId', middleware.authCheck, techController.userRemoveTech);
+  app.post('/api/team/addTech/:teamId', middleware.authCheck, profileController.memberTypeCheck, techController.teamAddTech);
+  app.delete('/api/team/removeTech/:teamId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.teamRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
   app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);

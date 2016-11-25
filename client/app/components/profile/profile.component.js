@@ -176,17 +176,30 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         }
                     }
                     var newTech = { name: this.newTech };
-                    this.profileService.addTech(newTech)
-                        .subscribe(function (data) {
-                        _this.profileInfo.Teches.push(data);
-                    });
+                    if (this.profileInfo.type === 'Team') {
+                        this.profileService.teamAddTech(this.profileInfo.id, newTech)
+                            .subscribe(function (data) {
+                            _this.profileInfo.Teches.push(data);
+                        });
+                    }
+                    else {
+                        this.profileService.userAddTech(newTech)
+                            .subscribe(function (data) {
+                            _this.profileInfo.Teches.push(data);
+                        });
+                    }
                     this.newTech = '';
                     this.editing.tech = !this.editing.tech;
                 };
-                ProfileComponent.prototype.deleteTech = function (event, id) {
-                    console.log(id);
-                    this.profileService.deleteTech(id)
-                        .subscribe(function (data) { });
+                ProfileComponent.prototype.deleteTech = function (event, techId) {
+                    if (this.profileInfo.type === 'Team') {
+                        this.profileService.teamDeleteTech(this.profileInfo.id, techId)
+                            .subscribe(function (data) { });
+                    }
+                    else {
+                        this.profileService.userDeleteTech(techId)
+                            .subscribe(function (data) { });
+                    }
                     for (var i = 0; i < this.profileInfo.Teches.length; i++) {
                         if (this.profileInfo.Teches[i].id == Number(id)) {
                             return this.profileInfo.Teches.splice(i, 1);

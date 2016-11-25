@@ -156,18 +156,31 @@ export class ProfileComponent {
       }
     }
     let newTech = { name: this.newTech };
-      this.profileService.addTech(newTech)
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamAddTech(this.profileInfo.id, newTech)
         .subscribe(data => {
           this.profileInfo.Teches.push(data);
         });
+    } else {
+      this.profileService.userAddTech(newTech)
+        .subscribe(data => {
+          this.profileInfo.Teches.push(data);
+        });
+    }
+    
     this.newTech = '';
     this.editing.tech = !this.editing.tech;
   }
 
-  deleteTech(event, id) {
-    console.log(id);
-    this.profileService.deleteTech(id)
-      .subscribe(data => {});
+  deleteTech(event, techId) {
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamDeleteTech(this.profileInfo.id, techId)
+        .subscribe(data => {});
+    } else {
+      this.profileService.userDeleteTech(techId)
+        .subscribe(data => {});
+    }
+    
     for(let i = 0; i < this.profileInfo.Teches.length; i++){
       if(this.profileInfo.Teches[i].id == Number(id)) {
         return this.profileInfo.Teches.splice(i, 1);

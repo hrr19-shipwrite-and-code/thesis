@@ -44,14 +44,24 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.authHttp.put('http://localhost:1337/api/user/edit', data, options)
                         .map(function (res) { return res.json(); });
                 };
-                ProfileService.prototype.addTech = function (tech) {
+                ProfileService.prototype.userAddTech = function (tech) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.post('http://localhost:1337/api/profile/addTech', JSON.stringify(tech), options)
+                    return this.authHttp.post('http://localhost:1337/api/user/addTech', JSON.stringify(tech), options)
                         .map(function (res) { return res.json(); });
                 };
-                ProfileService.prototype.deleteTech = function (techId) {
-                    return this.authHttp.delete('http://localhost:1337/api/profile/removeTech/' + techId)
+                ProfileService.prototype.userDeleteTech = function (techId) {
+                    return this.authHttp.delete('http://localhost:1337/api/user/removeTech/' + techId)
+                        .map(function (res) { return res; });
+                };
+                ProfileService.prototype.teamAddTech = function (teamId, tech) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/team/addTech/' + teamId, JSON.stringify(tech), options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProfileService.prototype.teamDeleteTech = function (teamId, techId) {
+                    return this.authHttp.delete('http://localhost:1337/api/team/removeTech/' + teamId + '/' + techId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.teamAuthCheck = function (teamId) {
