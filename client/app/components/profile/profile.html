@@ -122,7 +122,7 @@
         </form>
       </div>
       <button class="btn btn-primary btn-sm" *ngIf='memberType === "Member" || memberType === "Admin"'>Leave Team</button>
-      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Owner"'>Delete Team</button>
+      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Owner"' (click)='deleteTeam()'>Delete Team</button>
     </div> <!-- sidebar -->
 
   </div> <!-- sidebar-container -->

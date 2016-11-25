@@ -165,11 +165,11 @@ module.exports = {
 
   deleteTeam: (req, res,next) => {
     const teamId = req.params.teamId;
-    const user = req.body.id;
+    const user = req.user.sub;
     Profile.findOne({
       where: {
-        id: user,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type = "Owner")', user]]
+        authId: user,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type = "Owner")', user]]
       }
     })
       .then((user) => {

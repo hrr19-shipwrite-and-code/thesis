@@ -55,4 +55,9 @@ export class ProfileService {
     return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
       .map(res => res)
   }
+
+  deleteTeam(teamId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
+      .map(res => res)
+  }
 }

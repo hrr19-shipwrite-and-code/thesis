@@ -81,6 +81,8 @@ export class ProfileComponent {
               return this.memberType = member.TeamUsers.type;
             }
           }
+        } else {
+          this.memberType = '';
         }
       });
     });
@@ -106,9 +108,9 @@ export class ProfileComponent {
         .subscribe(data => {
           if (type === 'url') {
             this.urlTaken = false;
-            this.router.navigateByUrl('/profile/' + input.url)
+            this.router.navigateByUrl('/profile/' + input.url);
           } else {
-            this.editForm(type)
+            this.editForm(type);
           }
         },
         err => {
@@ -127,9 +129,9 @@ export class ProfileComponent {
               localStorage.setItem('url', input.url);
               this.clientId = localStorage.getItem('url');
               this.urlTaken = false;
-              this.router.navigateByUrl('/profile/' + input.url)
+              this.router.navigateByUrl('/profile/' + input.url);
             } else {
-              this.editForm(type)
+              this.editForm(type);
             }
           },
           err => {
@@ -203,5 +205,14 @@ export class ProfileComponent {
     reader.readAsDataURL(input.files[0]);
   }
 
-
+  //Manage Team function
+  deleteTeam() {
+    let choice = prompt('Enter the team name you wish to delete');
+    if (choice === this.profileInfo.name) {
+      this.profileService.deleteTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.router.navigateByUrl('/profile/' + this.clientId)
+        });
+    }
+  }
 }

@@ -105,6 +105,9 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                                     }
                                 }
                             }
+                            else {
+                                _this.memberType = '';
+                            }
                         });
                     });
                 };
@@ -221,6 +224,17 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         that.profileInfo.picture = event.target.result;
                     }, false);
                     reader.readAsDataURL(input.files[0]);
+                };
+                //Manage Team function
+                ProfileComponent.prototype.deleteTeam = function () {
+                    var _this = this;
+                    var choice = prompt('Enter the team name you wish to delete');
+                    if (choice === this.profileInfo.name) {
+                        this.profileService.deleteTeam(this.profileInfo.id)
+                            .subscribe(function (data) {
+                            _this.router.navigateByUrl('/profile/' + _this.clientId);
+                        });
+                    }
                 };
                 ProfileComponent = __decorate([
                     core_1.Component({

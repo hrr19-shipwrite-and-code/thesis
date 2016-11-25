@@ -70,6 +70,10 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
                         .map(function (res) { return res; });
                 };
+                ProfileService.prototype.deleteTeam = function (teamId) {
+                    return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
+                        .map(function (res) { return res; });
+                };
                 ProfileService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
