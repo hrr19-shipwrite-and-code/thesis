@@ -70,7 +70,7 @@
       <div *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
         <ul>
-          <li *ngFor="let team of profileInfo.Team">{{team.name}}</li>
+          <li *ngFor="let team of profileInfo.Team"><a routerLink="/profile/{{team.url}}">{{team.name}}</a></li>
         </ul>
       </div>
 
@@ -78,7 +78,7 @@
       <div *ngIf="profileInfo.Member.length">
         <h4>MEMBERS</h4>
         <ul>
-          <li *ngFor="let member of profileInfo.Member">{{member.name}}</li>
+          <li *ngFor="let member of profileInfo.Member"><a routerLink="/profile/{{member.url}}">{{member.name}}</a></li>
         </ul>
       </div>
 
