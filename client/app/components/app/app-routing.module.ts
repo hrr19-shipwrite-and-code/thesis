@@ -2,7 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProfileComponent } from '../profile/profile.component.js';
-import { EditProfileComponent } from '../editProfile/editProfile.component.js';
+import { CreateTeamComponent } from '../createTeam/createTeam.component.js';
 import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'addproject', component: ProjectAddComponent},
   { path: 'project/:id', component: ProjectComponent },
   { path: 'profile/:id', component: ProfileComponent },
-  { path: 'editprofile', component: EditProfileComponent },
+  { path: 'createteam', component: CreateTeamComponent },
   { path: 'developers', component: SearchDevelopersComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];

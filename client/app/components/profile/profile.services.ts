@@ -25,15 +25,39 @@ export class ProfileService {
       .map(res => res.json())
   }
 
-  addTech(tech) {
+  userAddTech(tech) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.post('http://localhost:1337/api/profile/addTech', JSON.stringify(tech), options)
+    return this.authHttp.post('http://localhost:1337/api/user/addTech', JSON.stringify(tech), options)
       .map(res => res.json());
   }
 
-  deleteTech(techId) {
-    return this.authHttp.delete('http://localhost:1337/api/profile/removeTech/' +  techId)
+  userDeleteTech(techId) {
+    return this.authHttp.delete('http://localhost:1337/api/user/removeTech/' +  techId)
       .map(res => res);
+  }
+
+  teamAddTech(teamId, tech) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/team/addTech/' + teamId, JSON.stringify(tech), options)
+      .map(res => res.json());
+  }
+
+  teamDeleteTech(teamId, techId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/removeTech/' + teamId + '/' +  techId)
+      .map(res => res);
+  }
+
+  updateTeamProfile(teamId, data) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
+      .map(res => res)
+  }
+
+  deleteTeam(teamId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
+      .map(res => res)
   }
 }

@@ -5,14 +5,13 @@ const Profile = require('../profiles/profileSchema.js');
 const Project = require('../projects/projectSchema.js');
 
 module.exports = {
-  profileAddTech: (req, res, next) => {
+  userAddTech: (req, res, next) => {
     const authId = req.user.sub;
     const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Profile.findOne({where: {authId: authId}})
           .then((profile) => {
-            //console.log(tech);
             profile.addTech(tech)
               .then(() => {
                 res.send(tech);
@@ -25,12 +24,48 @@ module.exports = {
       });
   },
 
-  profileRemoveTech: (req, res, next) => {
+  userRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
     const techId = req.params.techId;
     Tech.findOne({where: {id: techId}})
       .then((tech) => {
         Profile.findOne({where: {authId: authId}})
+          .then((profile) => {
+            profile.removeTech(tech)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                res.sendStatus(401);
+              })
+          })
+      })
+  },
+
+  teamAddTech: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const techName = req.body.name;
+    Tech.findOrCreate({where: {name: techName}})
+      .spread((tech) => {
+        Profile.findOne({where: {id: teamId}})
+          .then((profile) => {
+            profile.addTech(tech)
+              .then(() => {
+                res.send(tech);
+              })
+              .catch((err) => {
+                res.sendStatus(404);
+              });
+          });
+      });
+  },
+
+  teamRemoveTech: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const techId = req.params.techId;
+    Tech.findOne({where: {id: techId}})
+      .then((tech) => {
+        Profile.findOne({where: {id: teamId}})
           .then((profile) => {
             profile.removeTech(tech)
               .then(() => {

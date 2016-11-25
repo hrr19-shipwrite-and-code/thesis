@@ -1,42 +1,30 @@
 const Profile = require('../profiles/profileSchema.js');
 const Notification = require('./notificationSchema.js');
+const TeamUser = require('../profiles/teamUserSchema.js');
 
 module.exports = {
   inviteMember: (req, res, next) => {
     const sender = req.body.id;
     const receiver = req.params.userId;
-    Notification.create({type: 'invite'})
-      .then((notif) => {
-        Profile.findOne({where: {id: sender}})
-          .then((send) => {
-              notif.addsender(send)
-                .then((note) => {
-                  Profile.findOne({where: {id: receiver}})
-                    .then((recev) => {
-                      notif.addreceiver(recev);
-                      })
-                    .catch((err) => {
-                          console.log(err);
-                          res.send(404);
-                    });
-              });
-          });
-      });
-  }
-};
+    const team = req.params.teamId;
+    Profile.findOne({where: {id: team}})
+      .then((user) => {
+        Notification.create({type: 'TeamInvite', ReceiverId: receiver})
+          .then((notif) => {
+            notif.setSender(user)
+              .then((notif) => {
+                res.json(notif);
+              })
+              .catch((err) => {
+                res.sendStatus(404);
+              }) 
+          })
+      })
+  },
 
-  //   Profile.findOne({where: {id: sender}})
-  //     .then((send) => {
-  //       Profile.findOne({where: {id: receiver}})
-  //         .then((recev) => {
-  //           send.setReceiver(recev, {type: 'invite', view: false})
-  //             .then((notif) => {
-  //               res.send(200);
-  //                 })
-  //             .catch((err) => {
-  //               console.log(err);
-  //               res.send(404);
-  //             });
-  //         });
-  //     });
-  // }
+  //get all notification by userId
+
+  //promote member notification
+
+  //demote member notification
+};

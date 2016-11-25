@@ -23,15 +23,14 @@ module.exports = {
         cb(null, './client/uploads/profile');
       },
       filename: (req, file, cb) => {
-        let ext = req.user.sub;
+        let ext = req.params.teamId || req.user.sub;
         cb(null, ext);
       }
     })
   }),
 
-authCheck: jwt({
-  secret: new Buffer(auth.clientSecret, 'base64'),
-  audience: auth.clientId
-})
-
+  authCheck: jwt({
+    secret: new Buffer(auth.clientSecret, 'base64'),
+    audience: auth.clientId
+  }),
 };

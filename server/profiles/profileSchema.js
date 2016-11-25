@@ -19,10 +19,12 @@ const Profile = db.define('Profile', {
     },
     noUpdate: true
   },
-  picture: Sequelize.STRING,
+  picture: {
+    type: Sequelize.STRING,
+    defaultValue: './client/app/assets/group.jpg'
+  },
   authId: {
     type: Sequelize.STRING,
-    allowNull: false,
     unique: true,
     noUpdate: true
   },

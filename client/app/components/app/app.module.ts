@@ -11,7 +11,7 @@ import { AgmCoreModule } from "angular2-google-maps/core";
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
-import { EditProfileComponent } from '../editProfile/editProfile.component.js';
+import { CreateTeamComponent } from '../createTeam/createTeam.component.js';
 import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
@@ -47,7 +47,7 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     HomeComponent,
     NavComponent,
     ProfileComponent,
-    EditProfileComponent,
+    CreateTeamComponent,
     ProjectComponent,
     BrowseComponent,
     ProjectAddComponent,

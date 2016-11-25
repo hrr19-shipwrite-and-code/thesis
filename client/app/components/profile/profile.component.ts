@@ -34,6 +34,7 @@ export class ProfileComponent {
     authTokenPrefix: 'Bearer'
   };
   techs = [];
+  memberType = '';
 
   constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
@@ -73,6 +74,16 @@ export class ProfileComponent {
         this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
+        if(data.type === 'Team'){
+          this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
+          for(let member of this.profileInfo.Member) {
+            if(member.url === this.clientId){
+              return this.memberType = member.TeamUsers.type;
+            }
+          }
+        } else {
+          this.memberType = '';
+        }
       });
     });
   }
@@ -89,29 +100,47 @@ export class ProfileComponent {
   }
 
   updateUserInfo(event, input, type) {
-    if (type === 'basic') {
-      localStorage.setItem('name', input.name);
-    }
-    if (input.url === this.clientId) {
+    if (input.url === this.profileInfo.url) {
       return;
     }
-    return this.profileService.updateUserProfile(input)
-      .subscribe(
-        data => {
+    if(this.profileInfo.type === 'Team'){
+      return this.profileService.updateTeamProfile(this.profileInfo.id, input)
+        .subscribe(data => {
           if (type === 'url') {
-            localStorage.setItem('url', input.url);
-            this.clientId = localStorage.getItem('url');
             this.urlTaken = false;
-            this.router.navigateByUrl('/profile/' + input.url)
+            this.router.navigateByUrl('/profile/' + input.url);
           } else {
-          this.editForm(type)
+            this.editForm(type);
           }
         },
         err => {
           if (type === 'url') {
             this.urlTaken = true;
-          }}
-      )
+          }
+        })
+    } else {
+      if (type === 'basic') {
+        localStorage.setItem('name', input.name);
+      }
+      return this.profileService.updateUserProfile(input)
+        .subscribe(
+          data => {
+            if (type === 'url') {
+              localStorage.setItem('url', input.url);
+              this.clientId = localStorage.getItem('url');
+              this.urlTaken = false;
+              this.router.navigateByUrl('/profile/' + input.url);
+            } else {
+              this.editForm(type);
+            }
+          },
+          err => {
+            if (type === 'url') {
+              this.urlTaken = true;
+            }}
+        )
+    }
+    
   }
 
   editForm(key) {
@@ -125,20 +154,33 @@ export class ProfileComponent {
       }
     }
     let newTech = { name: this.newTech };
-      this.profileService.addTech(newTech)
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamAddTech(this.profileInfo.id, newTech)
         .subscribe(data => {
           this.profileInfo.Teches.push(data);
         });
+    } else {
+      this.profileService.userAddTech(newTech)
+        .subscribe(data => {
+          this.profileInfo.Teches.push(data);
+        });
+    }
+    
     this.newTech = '';
     this.editing.tech = !this.editing.tech;
   }
 
-  deleteTech(event, id) {
-    console.log(id);
-    this.profileService.deleteTech(id)
-      .subscribe(data => {});
+  deleteTech(event, techId) {
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamDeleteTech(this.profileInfo.id, techId)
+        .subscribe(data => {});
+    } else {
+      this.profileService.userDeleteTech(techId)
+        .subscribe(data => {});
+    }
+    
     for(let i = 0; i < this.profileInfo.Teches.length; i++){
-      if(this.profileInfo.Teches[i].id == Number(id)) {
+      if(this.profileInfo.Teches[i].id == Number(techId)) {
         return this.profileInfo.Teches.splice(i, 1);
       };
     };
@@ -146,7 +188,7 @@ export class ProfileComponent {
 
   //Image Upload function
   handleUpload(data): void {
-    if (data && data.response) {
+    if (data && data.response && this.profileInfo.type === 'Member') {
       data = JSON.parse(data.response);
       localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
     }
@@ -163,5 +205,14 @@ export class ProfileComponent {
     reader.readAsDataURL(input.files[0]);
   }
 
-
+  //Manage Team function
+  deleteTeam() {
+    let choice = prompt('Enter the name of the team you wish to delete');
+    if (choice === this.profileInfo.name) {
+      this.profileService.deleteTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.router.navigateByUrl('/profile/' + this.clientId)
+        });
+    }
+  }
 }

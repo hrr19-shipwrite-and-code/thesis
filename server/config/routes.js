@@ -10,22 +10,28 @@ const middleware = require('./middleware.js');
 module.exports = function (app, express) {
 
   //Profile Routes
-  app.post('/api/user/create', middleware.authCheck, profileController.createUser);
-  app.post('/api/team/create', profileController.createTeam);
-  app.put('/api/team/edit', profileController.editTeamInfo);
-  app.delete('/api/team/delete', profileController.deleteTeam);
-  app.post('/api/team/addMember', profileController.addMember);
-  app.delete('/api/team/removeMember', profileController.removeMember);
-  app.put('/api/team/promoteMember', profileController.promoteMember);
-  app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addPicture);
   app.get('/api/profile/:profileUrl', profileController.getProfile);
+  app.post('/api/user/create', middleware.authCheck, profileController.createUser);
+  app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addUserPicture);
+  app.post('/api/team/addPicture/:teamId', middleware.authCheck, profileController.memberTypeCheck, middleware.uploadProfilePicture.any(), profileController.addTeamPicture);
   app.post('/api/user/getAll', profileController.getAllUser);
   app.get('/api/editUserInfo', middleware.authCheck, profileController.getEditUserInfo);
   app.put('/api/user/edit', middleware.authCheck, profileController.editUserInfo);
 
+  app.post('/api/team/create', middleware.authCheck, profileController.createTeam);
+  app.put('/api/team/edit/:teamId', middleware.authCheck, profileController.memberTypeCheck, profileController.editTeamInfo);
+  app.delete('/api/team/delete/:teamId', middleware.authCheck, profileController.deleteTeam);
+  app.post('/api/team/addMember/:teamId/:userId', profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
+  app.delete('/api/team/leaveTeam/:teamId', profileController.leaveTeam);
+  app.delete('/api/team/removeMember/:teamId/:userId', profileController.memberTypeCheck, profileController.removeMember);
+  app.put('/api/team/promoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.promoteMember);
+  app.put('/api/team/demoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.demoteMember);
+
   //Tech Routes
-  app.post('/api/profile/addTech', middleware.authCheck, techController.profileAddTech);
-  app.delete('/api/profile/removeTech/:techId', middleware.authCheck, techController.profileRemoveTech);
+  app.post('/api/user/addTech', middleware.authCheck, techController.userAddTech);
+  app.delete('/api/user/removeTech/:techId', middleware.authCheck, techController.userRemoveTech);
+  app.post('/api/team/addTech/:teamId', middleware.authCheck, profileController.memberTypeCheck, techController.teamAddTech);
+  app.delete('/api/team/removeTech/:teamId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.teamRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
   app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);
@@ -51,7 +57,4 @@ module.exports = function (app, express) {
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
-
-  //Notification routes
-  app.post('/api/notification/invite/:userId', notificationController.inviteMember);
 };

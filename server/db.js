@@ -30,9 +30,10 @@ Profile.sync()
     Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
     TeamUser.sync();
 
-
-    Notification.belongsTo(Profile, {as: 'sender', foreignKey: 'recId'});
-    Notification.belongsTo(Profile, {as: 'receiver', foreignKey: 'sendId'});
+    Profile.hasMany(Notification, {foreignKey: 'SenderId'});
+    Notification.belongsTo(Profile, {as: 'Sender', foreignKey: 'SenderId'});
+    Profile.hasMany(Notification, {foreignKey: 'ReceiverId'});
+    Notification.belongsTo(Profile, {as: 'Receiver', foreignKey: 'ReceiverId'});
     Notification.sync();
 
   });
