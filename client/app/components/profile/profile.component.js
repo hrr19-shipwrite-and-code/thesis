@@ -201,7 +201,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             .subscribe(function (data) { });
                     }
                     for (var i = 0; i < this.profileInfo.Teches.length; i++) {
-                        if (this.profileInfo.Teches[i].id == Number(id)) {
+                        if (this.profileInfo.Teches[i].id == Number(techId)) {
                             return this.profileInfo.Teches.splice(i, 1);
                         }
                         ;

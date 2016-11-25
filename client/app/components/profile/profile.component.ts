@@ -182,7 +182,7 @@ export class ProfileComponent {
     }
     
     for(let i = 0; i < this.profileInfo.Teches.length; i++){
-      if(this.profileInfo.Teches[i].id == Number(id)) {
+      if(this.profileInfo.Teches[i].id == Number(techId)) {
         return this.profileInfo.Teches.splice(i, 1);
       };
     };
