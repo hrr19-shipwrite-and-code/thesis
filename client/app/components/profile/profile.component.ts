@@ -207,7 +207,7 @@ export class ProfileComponent {
 
   //Manage Team function
   deleteTeam() {
-    let choice = prompt('Enter the team name you wish to delete');
+    let choice = prompt('Enter the name of the team you wish to delete');
     if (choice === this.profileInfo.name) {
       this.profileService.deleteTeam(this.profileInfo.id)
         .subscribe(data => {

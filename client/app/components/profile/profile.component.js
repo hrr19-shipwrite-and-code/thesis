@@ -228,7 +228,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 //Manage Team function
                 ProfileComponent.prototype.deleteTeam = function () {
                     var _this = this;
-                    var choice = prompt('Enter the team name you wish to delete');
+                    var choice = prompt('Enter the name of the team you wish to delete');
                     if (choice === this.profileInfo.name) {
                         this.profileService.deleteTeam(this.profileInfo.id)
                             .subscribe(function (data) {
