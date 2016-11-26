@@ -78,6 +78,10 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.authHttp.post('http://localhost:1337/api/team/addMember/' + teamId + '/' + memberURL, {}, options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProfileService.prototype.removeMember = function (teamId, userId) {
+                    return this.authHttp.delete('http://localhost:1337/api/team/removeMember/' + teamId + '/' + userId)
                         .map(function (res) { return res; });
                 };
                 ProfileService = __decorate([

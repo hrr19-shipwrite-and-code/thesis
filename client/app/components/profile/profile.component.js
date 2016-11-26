@@ -240,6 +240,12 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.addMember = function (memberURL) {
                     this.profileService.addMember(this.profileInfo.id, memberURL)
                         .subscribe(function (data) {
+                        console.log(data);
+                    });
+                };
+                ProfileComponent.prototype.removeMember = function (userId) {
+                    this.profileService.removeMember(this.profileInfo.id, userId)
+                        .subscribe(function (data) {
                     });
                 };
                 ProfileComponent = __decorate([

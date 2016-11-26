@@ -220,6 +220,13 @@ export class ProfileComponent {
   addMember(memberURL) {
     this.profileService.addMember(this.profileInfo.id, memberURL)
       .subscribe(data => {
+        console.log(data)
+      });
+  }
+
+  removeMember(userId) {
+    this.profileService.removeMember(this.profileInfo.id, userId)
+      .subscribe(data => {
 
       });
   }

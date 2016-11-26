@@ -216,7 +216,7 @@ module.exports = {
         if(member.length === 0){
           Profile.findOne({where: {url: receiver, type: 'Member'}})
             .then((memberInfo) => {
-              req.userId = memberInfo.id;
+              req.userInfo = memberInfo;
               team.addMember(memberInfo.id, {type: 'Pending'})
                 .then(() => {
                   next();
@@ -233,15 +233,24 @@ module.exports = {
     const receiver = req.params.userId;
     const team = req.team;
     //check if sender is authorized to remove member
-    Profile.findOne({where: {id: receiver}})
+    Profile.findOne({
+      where: {
+        id: receiver,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', receiver]]
+      }
+    })
       .then((user) => {
-        team.removeMember(user)
+        if(user){
+          team.removeMember(user)
           .then(() => {
             res.sendStatus(200);
           })
           .catch((err) => {
             res.sendStatus(400);
           });
+        } else {
+          res.sendStatus(401);
+        }
     })
   },
 
