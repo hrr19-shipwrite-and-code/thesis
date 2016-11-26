@@ -81,7 +81,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     }, function (err) { return _this.error = true; });
                 };
                 ProjectComponent.prototype.gotoUser = function () {
-                    this.router.navigateByUrl('/profile/' + this.project.Profile.url);
+                    this.router.navigateByUrl('/' + this.project.Profile.url);
                 };
                 ProjectComponent.prototype.determineOpenSource = function (data) {
                     if (data) {

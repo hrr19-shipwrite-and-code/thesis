@@ -71,7 +71,7 @@ export class ProjectComponent {
   }
 
   gotoUser() {
-    this.router.navigateByUrl('/profile/' + this.project.Profile.url )
+    this.router.navigateByUrl('/' + this.project.Profile.url )
   }
 
   determineOpenSource(data) {

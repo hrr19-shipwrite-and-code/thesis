@@ -133,7 +133,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             .subscribe(function (data) {
                             if (type === 'url') {
                                 _this.urlTaken = false;
-                                _this.router.navigateByUrl('/profile/' + input.url);
+                                _this.router.navigateByUrl('/' + input.url);
                             }
                             else {
                                 _this.editForm(type);
@@ -154,7 +154,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                                 localStorage.setItem('url', input.url);
                                 _this.clientId = localStorage.getItem('url');
                                 _this.urlTaken = false;
-                                _this.router.navigateByUrl('/profile/' + input.url);
+                                _this.router.navigateByUrl('/' + input.url);
                             }
                             else {
                                 _this.editForm(type);
@@ -234,7 +234,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     if (choice === this.profileInfo.name) {
                         this.profileService.deleteTeam(this.profileInfo.id)
                             .subscribe(function (data) {
-                            _this.router.navigateByUrl('/profile/' + _this.clientId);
+                            _this.router.navigateByUrl('/' + _this.clientId);
                         });
                     }
                 };

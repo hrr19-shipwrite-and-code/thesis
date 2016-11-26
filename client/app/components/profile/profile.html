@@ -70,7 +70,7 @@
       <div *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
         <div>
-          <div *ngFor="let team of profileInfo.Team"><a routerLink="/profile/{{team.url}}">{{team.name}}</a></div>
+          <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
         </div>
       </div>
 
@@ -80,7 +80,7 @@
         <div>
           <div *ngFor='let member of profileInfo.Member'>
             <div *ngIf='member.TeamUsers.type !=="Pending" || memberType === "Owner" || memberType === "Admin"'>
-              <a routerLink="/profile/{{member.url}}">{{member.name}}</a>
+              <a routerLink="/{{member.url}}">{{member.name}}</a>
               <span *ngIf='member.TeamUsers.type === "Pending"'>(Pending)</span>
 
               <!-- Member Type Icons -->

@@ -45,12 +45,11 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
             appRoutes = [
                 { path: '', component: home_component_js_1.HomeComponent },
                 { path: 'browse', component: browse_component_js_1.BrowseComponent },
-                { path: 'profile', component: profile_component_js_1.ProfileComponent },
                 { path: 'addproject', component: projectAdd_component_js_1.ProjectAddComponent },
                 { path: 'project/:id', component: project_component_js_1.ProjectComponent },
-                { path: 'profile/:id', component: profile_component_js_1.ProfileComponent },
                 { path: 'createteam', component: createTeam_component_js_1.CreateTeamComponent },
                 { path: 'developers', component: SearchDevelopers_component_js_1.SearchDevelopersComponent },
+                { path: ':id', component: profile_component_js_1.ProfileComponent },
             ];
             AppRoutingModule = (function () {
                 function AppRoutingModule() {

@@ -110,7 +110,7 @@ export class ProfileComponent {
         .subscribe(data => {
           if (type === 'url') {
             this.urlTaken = false;
-            this.router.navigateByUrl('/profile/' + input.url);
+            this.router.navigateByUrl('/' + input.url);
           } else {
             this.editForm(type);
           }
@@ -131,7 +131,7 @@ export class ProfileComponent {
               localStorage.setItem('url', input.url);
               this.clientId = localStorage.getItem('url');
               this.urlTaken = false;
-              this.router.navigateByUrl('/profile/' + input.url);
+              this.router.navigateByUrl('/' + input.url);
             } else {
               this.editForm(type);
             }
@@ -213,7 +213,7 @@ export class ProfileComponent {
     if (choice === this.profileInfo.name) {
       this.profileService.deleteTeam(this.profileInfo.id)
         .subscribe(data => {
-          this.router.navigateByUrl('/profile/' + this.clientId)
+          this.router.navigateByUrl('/' + this.clientId)
         });
     }
   }
