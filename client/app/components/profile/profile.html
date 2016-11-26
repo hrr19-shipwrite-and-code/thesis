@@ -69,9 +69,9 @@
       <!-- User Teams if single User -->
       <div *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
-        <ul>
-          <li *ngFor="let team of profileInfo.Team"><a routerLink="/profile/{{team.url}}">{{team.name}}</a></li>
-        </ul>
+        <div>
+          <div *ngFor="let team of profileInfo.Team"><a routerLink="/profile/{{team.url}}">{{team.name}}</a></div>
+        </div>
       </div>
 
       <!-- Teams members if team profile -->

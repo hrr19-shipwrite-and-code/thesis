@@ -54,7 +54,7 @@ module.exports = {
         model: Profile,
         as: 'Team',
         attributes: ['id', 'name', 'url'],
-        through: {attributes: []}
+        through: {where: {type: {$not: 'Pending'}}}
       },
       {
         model: Project
@@ -232,7 +232,7 @@ module.exports = {
   removeMember: (req, res, next) => {
     const receiver = req.params.userId;
     const team = req.team;
-    //check if sender is authorized to remove member
+    //check if member can be removed (not owner)
     Profile.findOne({
       where: {
         id: receiver,
