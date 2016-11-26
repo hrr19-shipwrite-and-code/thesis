@@ -48,7 +48,7 @@
       <hr>
 
       <!-- User Tech skills -->
-      <div class='connect'>
+      <div class='connect' *ngIf="profileInfo.Teches.length || isCurrentUser()">
         <h4>SKILLS</h4>
         <ul *ngIf="profileInfo.Teches.length">
           <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
