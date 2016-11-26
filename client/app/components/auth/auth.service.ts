@@ -13,7 +13,10 @@ export class AuthService {
     additionalSignUpFields: [{
       name: "name",
       placeholder: "Enter full name",
-    }]
+    }],
+    auth: {
+      redirect: false,
+    }
   }
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
 
@@ -27,13 +30,7 @@ export class AuthService {
       localStorage.setItem('id_token', authResult.idToken);
 
       // Fetch profile information
-      this.lock.getProfile(authResult.idToken, (error, profile) => {
-        if (error) {
-          // Handle error
-          alert(error);
-          return;
-        }
-        console.log(profile);
+      this.lock.getProfile(authResult.idToken, (error, profile) => {      
         this.findOrCreateUser(profile)
       });
     });
@@ -49,6 +46,7 @@ export class AuthService {
         localStorage.setItem('url', data.url);
         localStorage.setItem('name', data.name);
         localStorage.setItem('picture', data.picture);
+        setTimeout(() => location.reload(), 1000);
       })
   }
 
