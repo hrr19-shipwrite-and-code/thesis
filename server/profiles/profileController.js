@@ -208,16 +208,21 @@ module.exports = {
   },
 
   addMember: (req, res, next) => {
-    const receiver = req.params.userId;
+    const receiver = req.params.userURL;
     const team = req.team;
     
-    team.getMember({where: {id: receiver}})
+    team.getMember({where: {url: receiver, type: 'Member'}})
       .then((member) => {
         if(member.length === 0){
-          team.addMember(receiver, {type: 'Pending'})
-            .then(() => {
-              next();
-            })  
+          Profile.findOne({where: {url: receiver, type: 'Member'}})
+            .then((memberInfo) => {
+              req.userId = memberInfo.id;
+              team.addMember(memberInfo.id, {type: 'Pending'})
+                .then(() => {
+                  next();
+                })  
+            })
+          
         } else {
           res.sendStatus(400);
         } 

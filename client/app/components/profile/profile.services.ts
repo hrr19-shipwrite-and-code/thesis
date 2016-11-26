@@ -60,4 +60,11 @@ export class ProfileService {
     return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
       .map(res => res)
   }
+
+  addMember(teamId, memberURL) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/team/addMember/' + teamId + '/' + memberURL, {}, options)
+      .map(res => res)
+  }
 }

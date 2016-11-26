@@ -80,6 +80,16 @@
         <ul>
           <li *ngFor="let member of profileInfo.Member"><a routerLink="/profile/{{member.url}}">{{member.name}}</a></li>
         </ul>
+        <div class="edit">
+        <div *ngIf="editing.member">
+          <form #newMember="ngForm" (ngSubmit)="addMember(newMember.value.member)">
+            <input type="text" name="member" class="form-control" ngModel placeholder="Enter username">
+            <button class="btn btn-primary btn-sm">Add</button>
+          </form>
+        </div>
+        <!-- Edit Pencil Icon -->
+        <i *ngIf='memberType === "Owner" || memberType === "Admin"' (click)="editForm('member')" class="fa fa-plus" aria-hidden="true" title="Add Members"></i>
+        </div>
       </div>
 
       <hr>

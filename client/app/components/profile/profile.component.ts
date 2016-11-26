@@ -23,7 +23,8 @@ export class ProfileComponent {
     basic: false,
     tech: false,
     contact: false,
-    picture: false
+    picture: false,
+    member: false
   };
   private options: Object = {
     url: 'http://localhost:1337/api/user/addPicture',
@@ -214,5 +215,12 @@ export class ProfileComponent {
           this.router.navigateByUrl('/profile/' + this.clientId)
         });
     }
+  }
+
+  addMember(memberURL) {
+    this.profileService.addMember(this.profileInfo.id, memberURL)
+      .subscribe(data => {
+
+      });
   }
 }

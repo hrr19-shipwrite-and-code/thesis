@@ -47,7 +47,8 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         basic: false,
                         tech: false,
                         contact: false,
-                        picture: false
+                        picture: false,
+                        member: false
                     };
                     this.options = {
                         url: 'http://localhost:1337/api/user/addPicture',
@@ -235,6 +236,11 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.router.navigateByUrl('/profile/' + _this.clientId);
                         });
                     }
+                };
+                ProfileComponent.prototype.addMember = function (memberURL) {
+                    this.profileService.addMember(this.profileInfo.id, memberURL)
+                        .subscribe(function (data) {
+                    });
                 };
                 ProfileComponent = __decorate([
                     core_1.Component({
