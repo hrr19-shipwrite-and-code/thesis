@@ -146,7 +146,7 @@
         </form>
       </div>
 
-      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Pending"'>Join Team</button>
+      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Pending"' (click)='joinTeam()'>Join Team</button>
       <button class="btn btn-primary btn-sm" *ngIf='memberType === "Member" || memberType === "Admin"' (click)='leaveTeam()'>Leave Team</button>
       <button class="btn btn-primary btn-sm" *ngIf='memberType === "Owner"' (click)='deleteTeam()'>Delete Team</button>
     </div> <!-- sidebar -->

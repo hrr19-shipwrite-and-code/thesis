@@ -188,6 +188,27 @@ module.exports = {
       })     
   },
 
+  joinTeam: (req, res, next) => {
+    const authId = req.user.sub;
+    const teamId = req.params.teamId;
+    Profile.findOne({
+      where: {authId: authId},
+      attributes: ['id', 'name', 'url']
+    })
+      .then((user) => {
+        TeamUser.update({type: 'Member'}, {
+          where: {teamId: teamId, userId: user.id, type: 'Pending'}
+        })
+          .then((change) => {
+            if(change[0] !== 0) {
+              res.json(user);
+            } else {
+              res.sendStatus(401);
+            }
+          })
+      })
+  },
+
   memberTypeCheck: (req, res, next) => {
     const sender = req.user.sub;
     const team = req.params.teamId;

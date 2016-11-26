@@ -218,6 +218,18 @@ export class ProfileComponent {
     }
   }
 
+  joinTeam() {
+    let response = confirm("Are you sure you want to join " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.joinTeam(this.profileInfo.id)
+        .subscribe(data => {
+          data.TeamUsers = {type: 'Member'}
+          this.memberType = 'Member';
+          this.profileInfo.Member.push(data);
+        });
+    }
+  }
+
   leaveTeam() {
     let response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
     if(response){

@@ -238,6 +238,18 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                 };
+                ProfileComponent.prototype.joinTeam = function () {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to join " + this.profileInfo.name + "?");
+                    if (response) {
+                        this.profileService.joinTeam(this.profileInfo.id)
+                            .subscribe(function (data) {
+                            data.TeamUsers = { type: 'Member' };
+                            _this.memberType = 'Member';
+                            _this.profileInfo.Member.push(data);
+                        });
+                    }
+                };
                 ProfileComponent.prototype.leaveTeam = function () {
                     var _this = this;
                     var response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");

@@ -74,6 +74,12 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
                         .map(function (res) { return res; });
                 };
+                ProfileService.prototype.joinTeam = function (teamId) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.put('http://localhost:1337/api/team/joinTeam/' + teamId, {}, options)
+                        .map(function (res) { return res.json(); });
+                };
                 ProfileService.prototype.leaveTeam = function (teamId) {
                     return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + teamId)
                         .map(function (res) { return res; });
