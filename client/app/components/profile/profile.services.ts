@@ -72,4 +72,12 @@ export class ProfileService {
     return this.authHttp.delete('http://localhost:1337/api/team/removeMember/' + teamId + '/' + userId)
       .map(res => res);
   }
+
+  promoteMember() {
+    
+  }
+
+  demoteMember() {
+
+  }
 }

@@ -84,6 +84,10 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     return this.authHttp.delete('http://localhost:1337/api/team/removeMember/' + teamId + '/' + userId)
                         .map(function (res) { return res; });
                 };
+                ProfileService.prototype.promoteMember = function () {
+                };
+                ProfileService.prototype.demoteMember = function () {
+                };
                 ProfileService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])

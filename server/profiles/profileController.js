@@ -217,7 +217,8 @@ module.exports = {
           Profile.findOne({where: {url: receiver, type: 'Member'}})
             .then((memberInfo) => {
               req.userInfo = memberInfo;
-              team.addMember(memberInfo.id, {type: 'Pending'})
+              //************NEED TO BE CHANGED BACK TO PENDING
+              team.addMember(memberInfo.id, {type: 'Member'})
                 .then(() => {
                   next();
                 })  
