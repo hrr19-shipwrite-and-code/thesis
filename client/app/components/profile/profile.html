@@ -88,9 +88,9 @@
               <span *ngIf='member.TeamUsers.type === "Admin"'><i class="fa fa-user" aria-hidden="true" title="Admin"></i></span>
               
               <!-- Edit Member -->
-              <span *ngIf='member.TeamUsers.type === "Admin" && memberType === "Owner" || memberType === "Admin"'><i class="fa fa-level-down" aria-hidden="true" title="Demote"></i></span>
-              <span *ngIf='member.TeamUsers.type === "Member" && memberType === "Owner" || memberType === "Admin"'><i class="fa fa-level-up" aria-hidden="true" title="Promote"></i></span>
-              <span><i *ngIf='member.TeamUsers.type !== "Owner" && memberType === "Owner" || memberType === "Admin"' (click)="removeMember(member.id, member.name)" class="fa fa-times" aria-hidden="true"></i></span>
+              <span *ngIf='member.TeamUsers.type === "Admin" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="demoteMember(member)"><i class="fa fa-level-down" aria-hidden="true" title="Demote"></i></span>
+              <span *ngIf='member.TeamUsers.type === "Member" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="promoteMember(member)"><i class="fa fa-level-up" aria-hidden="true" title="Promote"></i></span>
+              <span *ngIf='member.TeamUsers.type !== "Owner" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="removeMember(member.id, member.name)"><i class="fa fa-times" aria-hidden="true"></i></span>
             </div>
           </div>
         </div>

@@ -73,11 +73,17 @@ export class ProfileService {
       .map(res => res);
   }
 
-  promoteMember() {
-    
+  promoteMember(teamId, userId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/promoteMember/' + teamId + '/' + userId, {}, options)
+      .map(res => res)
   }
 
-  demoteMember() {
-
+  demoteMember(teamId, userId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/demoteMember/' + teamId + '/' + userId, {}, options)
+      .map(res => res)
   }
 }

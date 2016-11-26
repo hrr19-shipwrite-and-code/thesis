@@ -229,7 +229,7 @@ export class ProfileComponent {
   }
 
   removeMember(userId, name) {
-    let response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name);
+    let response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name + "?");
     if(response){
       this.profileService.removeMember(this.profileInfo.id, userId)
         .subscribe(data => {
@@ -240,6 +240,27 @@ export class ProfileComponent {
           }
         });
     }
-    
+  }
+
+  promoteMember(member) {
+    let response = confirm("Are you sure you want to promote " + member.name + " to admin?");
+    if(response){
+      this.profileService.promoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Admin';
+        })
+    }  
+  }
+
+  demoteMember(member) {
+    let response = confirm("Are you sure you want to demote " + member.name + " to member?");
+    if(response){
+      this.profileService.demoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Member';
+        })
+    }  
   }
 }

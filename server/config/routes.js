@@ -24,8 +24,8 @@ module.exports = function (app, express) {
   app.post('/api/team/addMember/:teamId/:userURL', middleware.authCheck, profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
   app.delete('/api/team/leaveTeam/:teamId', profileController.leaveTeam);
   app.delete('/api/team/removeMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.removeMember);
-  app.put('/api/team/promoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.promoteMember);
-  app.put('/api/team/demoteMember/:teamId/:userId', profileController.memberTypeCheck, profileController.demoteMember);
+  app.put('/api/team/promoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.promoteMember);
+  app.put('/api/team/demoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.demoteMember);
 
   //Tech Routes
   app.post('/api/user/addTech', middleware.authCheck, techController.userAddTech);

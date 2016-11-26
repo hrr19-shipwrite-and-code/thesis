@@ -250,7 +250,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 };
                 ProfileComponent.prototype.removeMember = function (userId, name) {
                     var _this = this;
-                    var response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name);
+                    var response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name + "?");
                     if (response) {
                         this.profileService.removeMember(this.profileInfo.id, userId)
                             .subscribe(function (data) {
@@ -259,6 +259,28 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                                     return _this.profileInfo.Member.splice(i, 1);
                                 }
                             }
+                        });
+                    }
+                };
+                ProfileComponent.prototype.promoteMember = function (member) {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to promote " + member.name + " to admin?");
+                    if (response) {
+                        this.profileService.promoteMember(this.profileInfo.id, member.id)
+                            .subscribe(function (data) {
+                            var index = _this.profileInfo.Member.indexOf(member);
+                            _this.profileInfo.Member[index].TeamUsers.type = 'Admin';
+                        });
+                    }
+                };
+                ProfileComponent.prototype.demoteMember = function (member) {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to demote " + member.name + " to member?");
+                    if (response) {
+                        this.profileService.demoteMember(this.profileInfo.id, member.id)
+                            .subscribe(function (data) {
+                            var index = _this.profileInfo.Member.indexOf(member);
+                            _this.profileInfo.Member[index].TeamUsers.type = 'Member';
                         });
                     }
                 };
