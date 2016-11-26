@@ -53,11 +53,49 @@ export class ProfileService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
-      .map(res => res)
+      .map(res => res);
   }
 
   deleteTeam(teamId) {
     return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
+      .map(res => res);
+  }
+
+  joinTeam(teamId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/joinTeam/' + teamId, {}, options)
+      .map(res => res.json())
+  }
+
+  leaveTeam(teamId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + teamId)
+      .map(res => res);
+  }
+
+  addMember(teamId, memberURL) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/team/addMember/' + teamId + '/' + memberURL, {}, options)
+      .map(res => res.json());
+  }
+
+  removeMember(teamId, userId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/removeMember/' + teamId + '/' + userId)
+      .map(res => res);
+  }
+
+  promoteMember(teamId, userId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/promoteMember/' + teamId + '/' + userId, {}, options)
+      .map(res => res)
+  }
+
+  demoteMember(teamId, userId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/team/demoteMember/' + teamId + '/' + userId, {}, options)
       .map(res => res)
   }
 }

@@ -48,7 +48,7 @@
       <hr>
 
       <!-- User Tech skills -->
-      <div class='connect'>
+      <div class='connect' *ngIf="profileInfo.Teches.length || isCurrentUser()">
         <h4>SKILLS</h4>
         <ul *ngIf="profileInfo.Teches.length">
           <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
@@ -69,17 +69,41 @@
       <!-- User Teams if single User -->
       <div *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
-        <ul>
-          <li *ngFor="let team of profileInfo.Team"><a routerLink="/profile/{{team.url}}">{{team.name}}</a></li>
-        </ul>
+        <div>
+          <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
+        </div>
       </div>
 
       <!-- Teams members if team profile -->
       <div *ngIf="profileInfo.Member.length">
         <h4>MEMBERS</h4>
-        <ul>
-          <li *ngFor="let member of profileInfo.Member"><a routerLink="/profile/{{member.url}}">{{member.name}}</a></li>
-        </ul>
+        <div>
+          <div *ngFor='let member of profileInfo.Member'>
+            <div *ngIf='member.TeamUsers.type !=="Pending" || memberType === "Owner" || memberType === "Admin"'>
+              <a routerLink="/{{member.url}}">{{member.name}}</a>
+              <span *ngIf='member.TeamUsers.type === "Pending"'>(Pending)</span>
+
+              <!-- Member Type Icons -->
+              <span *ngIf='member.TeamUsers.type === "Owner"'><i class="fa fa-star" aria-hidden="true" title="Owner"></i></span>
+              <span *ngIf='member.TeamUsers.type === "Admin"'><i class="fa fa-user" aria-hidden="true" title="Admin"></i></span>
+              
+              <!-- Edit Member -->
+              <span *ngIf='member.TeamUsers.type === "Admin" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="demoteMember(member)"><i class="fa fa-level-down" aria-hidden="true" title="Demote"></i></span>
+              <span *ngIf='member.TeamUsers.type === "Member" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="promoteMember(member)"><i class="fa fa-level-up" aria-hidden="true" title="Promote"></i></span>
+              <span *ngIf='member.TeamUsers.type !== "Owner" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="removeMember(member.id, member.name)"><i class="fa fa-times" aria-hidden="true"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="edit">
+        <div *ngIf="editing.member">
+          <form (ngSubmit)="addMember()">
+            <input type="text" name="member" class="form-control" [(ngModel)]="newMember" placeholder="Enter username">
+            <button class="btn btn-primary btn-sm">Add</button>
+          </form>
+        </div>
+        <!-- Edit Pencil Icon -->
+        <i *ngIf='memberType === "Owner" || memberType === "Admin"' (click)="editForm('member')" class="fa fa-plus" aria-hidden="true" title="Add Members"></i>
+        </div>
       </div>
 
       <hr>
@@ -121,7 +145,9 @@
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>
-      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Member" || memberType === "Admin"'>Leave Team</button>
+
+      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Pending"' (click)='joinTeam()'>Join Team</button>
+      <button class="btn btn-primary btn-sm" *ngIf='memberType === "Member" || memberType === "Admin"' (click)='leaveTeam()'>Leave Team</button>
       <button class="btn btn-primary btn-sm" *ngIf='memberType === "Owner"' (click)='deleteTeam()'>Delete Team</button>
     </div> <!-- sidebar -->
 

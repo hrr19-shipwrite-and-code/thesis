@@ -4,8 +4,7 @@ const TeamUser = require('../profiles/teamUserSchema.js');
 
 module.exports = {
   inviteMember: (req, res, next) => {
-    const sender = req.body.id;
-    const receiver = req.params.userId;
+    const receiver = req.userInfo.id;
     const team = req.params.teamId;
     Profile.findOne({where: {id: team}})
       .then((user) => {
@@ -13,7 +12,7 @@ module.exports = {
           .then((notif) => {
             notif.setSender(user)
               .then((notif) => {
-                res.json(notif);
+                res.json(req.userInfo);
               })
               .catch((err) => {
                 res.sendStatus(404);

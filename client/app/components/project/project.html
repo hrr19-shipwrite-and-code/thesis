@@ -11,7 +11,7 @@
         <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('title')" class="fa fa-pencil" aria-hidden="true" title="Edit Project Title"></i>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
-          by <a class='user-name navLink' routerLink="/profile/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
+          by <a class='user-name navLink' routerLink="/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
         </p>
       </div>
 
@@ -175,7 +175,7 @@
             <div class="single-comment" *ngFor="let comment of comments">
               <hr>
               <p class='comment-author'>
-                <a routerLink="/profile/{{comment.Profile.url}}">{{comment.Profile.name}}</a>
+                <a routerLink="/{{comment.Profile.url}}">{{comment.Profile.name}}</a>
               </p>
               <p class='comment-body'>
                 {{comment.comment}}

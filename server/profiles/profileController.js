@@ -54,7 +54,7 @@ module.exports = {
         model: Profile,
         as: 'Team',
         attributes: ['id', 'name', 'url'],
-        through: {attributes: []}
+        through: {where: {type: {$not: 'Pending'}}}
       },
       {
         model: Project
@@ -188,6 +188,27 @@ module.exports = {
       })     
   },
 
+  joinTeam: (req, res, next) => {
+    const authId = req.user.sub;
+    const teamId = req.params.teamId;
+    Profile.findOne({
+      where: {authId: authId},
+      attributes: ['id', 'name', 'url']
+    })
+      .then((user) => {
+        TeamUser.update({type: 'Member'}, {
+          where: {teamId: teamId, userId: user.id, type: 'Pending'}
+        })
+          .then((change) => {
+            if(change[0] !== 0) {
+              res.json(user);
+            } else {
+              res.sendStatus(401);
+            }
+          })
+      })
+  },
+
   memberTypeCheck: (req, res, next) => {
     const sender = req.user.sub;
     const team = req.params.teamId;
@@ -208,16 +229,21 @@ module.exports = {
   },
 
   addMember: (req, res, next) => {
-    const receiver = req.params.userId;
+    const receiver = req.params.userURL;
     const team = req.team;
     
-    team.getMember({where: {id: receiver}})
+    team.getMember({where: {url: receiver, type: 'Member'}})
       .then((member) => {
         if(member.length === 0){
-          team.addMember(receiver, {type: 'Pending'})
-            .then(() => {
-              next();
-            })  
+          Profile.findOne({where: {url: receiver, type: 'Member'}})
+            .then((memberInfo) => {
+              req.userInfo = memberInfo;
+              team.addMember(memberInfo.id, {type: 'Pending'})
+                .then(() => {
+                  next();
+                })  
+            })
+          
         } else {
           res.sendStatus(400);
         } 
@@ -227,27 +253,36 @@ module.exports = {
   removeMember: (req, res, next) => {
     const receiver = req.params.userId;
     const team = req.team;
-    //check if sender is authorized to remove member
-    Profile.findOne({where: {id: receiver}})
+    //check if member can be removed (not owner)
+    Profile.findOne({
+      where: {
+        id: receiver,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', receiver]]
+      }
+    })
       .then((user) => {
-        team.removeMember(user)
+        if(user){
+          team.removeMember(user)
           .then(() => {
             res.sendStatus(200);
           })
           .catch((err) => {
             res.sendStatus(400);
           });
+        } else {
+          res.sendStatus(401);
+        }
     })
   },
 
   leaveTeam: (req, res, next) => {
-    const userId = req.body.id;
+    const authId = req.user.sub;
     const team = req.params.teamId;
 
     Profile.findOne({
       where: {
-        id: userId,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Admin", "Member"))', userId]]
+        authId: authId,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member"))', authId]]
       },
     })
       .then((user) => {

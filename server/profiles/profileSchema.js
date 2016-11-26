@@ -9,7 +9,10 @@ const Profile = db.define('Profile', {
   url: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notIn: [['browse', 'addproject', 'createteam', 'developers', 'teams', 'project']]
+    }
   },
   email: {
     type: Sequelize.STRING,

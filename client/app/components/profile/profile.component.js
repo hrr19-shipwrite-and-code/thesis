@@ -42,12 +42,14 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.clientId = localStorage.getItem('url');
                     this.profileInfo = { Teches: [], Team: [], Member: [] };
                     this.newTech = '';
+                    this.newMember = '';
                     this.urlTaken = false;
                     this.editing = {
                         basic: false,
                         tech: false,
                         contact: false,
-                        picture: false
+                        picture: false,
+                        member: false
                     };
                     this.options = {
                         url: 'http://localhost:1337/api/user/addPicture',
@@ -131,7 +133,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             .subscribe(function (data) {
                             if (type === 'url') {
                                 _this.urlTaken = false;
-                                _this.router.navigateByUrl('/profile/' + input.url);
+                                _this.router.navigateByUrl('/' + input.url);
                             }
                             else {
                                 _this.editForm(type);
@@ -152,7 +154,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                                 localStorage.setItem('url', input.url);
                                 _this.clientId = localStorage.getItem('url');
                                 _this.urlTaken = false;
-                                _this.router.navigateByUrl('/profile/' + input.url);
+                                _this.router.navigateByUrl('/' + input.url);
                             }
                             else {
                                 _this.editForm(type);
@@ -232,7 +234,80 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     if (choice === this.profileInfo.name) {
                         this.profileService.deleteTeam(this.profileInfo.id)
                             .subscribe(function (data) {
-                            _this.router.navigateByUrl('/profile/' + _this.clientId);
+                            _this.router.navigateByUrl('/' + _this.clientId);
+                        });
+                    }
+                };
+                ProfileComponent.prototype.joinTeam = function () {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to join " + this.profileInfo.name + "?");
+                    if (response) {
+                        this.profileService.joinTeam(this.profileInfo.id)
+                            .subscribe(function (data) {
+                            data.TeamUsers = { type: 'Member' };
+                            _this.memberType = 'Member';
+                            _this.profileInfo.Member.push(data);
+                        });
+                    }
+                };
+                ProfileComponent.prototype.leaveTeam = function () {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
+                    if (response) {
+                        this.profileService.leaveTeam(this.profileInfo.id)
+                            .subscribe(function (data) {
+                            _this.memberType = '';
+                            for (var i = 0; i < _this.profileInfo.Member.length; i++) {
+                                if (_this.profileInfo.Member[i].url === _this.clientId) {
+                                    return _this.profileInfo.Member.splice(i, 1);
+                                }
+                            }
+                        });
+                    }
+                };
+                ProfileComponent.prototype.addMember = function () {
+                    var _this = this;
+                    this.profileService.addMember(this.profileInfo.id, this.newMember)
+                        .subscribe(function (data) {
+                        data.TeamUsers = { type: 'Pending' };
+                        _this.profileInfo.Member.push(data);
+                        _this.newMember = '';
+                        _this.editing.member = !_this.editing.member;
+                    });
+                };
+                ProfileComponent.prototype.removeMember = function (userId, name) {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name + "?");
+                    if (response) {
+                        this.profileService.removeMember(this.profileInfo.id, userId)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.profileInfo.Member.length; i++) {
+                                if (_this.profileInfo.Member[i].id === userId) {
+                                    return _this.profileInfo.Member.splice(i, 1);
+                                }
+                            }
+                        });
+                    }
+                };
+                ProfileComponent.prototype.promoteMember = function (member) {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to promote " + member.name + " to admin?");
+                    if (response) {
+                        this.profileService.promoteMember(this.profileInfo.id, member.id)
+                            .subscribe(function (data) {
+                            var index = _this.profileInfo.Member.indexOf(member);
+                            _this.profileInfo.Member[index].TeamUsers.type = 'Admin';
+                        });
+                    }
+                };
+                ProfileComponent.prototype.demoteMember = function (member) {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to demote " + member.name + " to member?");
+                    if (response) {
+                        this.profileService.demoteMember(this.profileInfo.id, member.id)
+                            .subscribe(function (data) {
+                            var index = _this.profileInfo.Member.indexOf(member);
+                            _this.profileInfo.Member[index].TeamUsers.type = 'Member';
                         });
                     }
                 };

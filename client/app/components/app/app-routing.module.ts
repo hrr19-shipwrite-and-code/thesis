@@ -14,12 +14,11 @@ import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDeveloper
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: 'addproject', component: ProjectAddComponent},
   { path: 'project/:id', component: ProjectComponent },
-  { path: 'profile/:id', component: ProfileComponent },
   { path: 'createteam', component: CreateTeamComponent },
   { path: 'developers', component: SearchDevelopersComponent },
+  { path: ':id', component: ProfileComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -17,13 +17,15 @@ export class ProfileComponent {
   private clientId = localStorage.getItem('url');
   private profileInfo = {Teches: [], Team: [], Member: []};
   private newTech = '';
+  private newMember = '';
   private urlTaken = false;
   private tempUrl: string;
   private editing = {
     basic: false,
     tech: false,
     contact: false,
-    picture: false
+    picture: false,
+    member: false
   };
   private options: Object = {
     url: 'http://localhost:1337/api/user/addPicture',
@@ -108,7 +110,7 @@ export class ProfileComponent {
         .subscribe(data => {
           if (type === 'url') {
             this.urlTaken = false;
-            this.router.navigateByUrl('/profile/' + input.url);
+            this.router.navigateByUrl('/' + input.url);
           } else {
             this.editForm(type);
           }
@@ -129,7 +131,7 @@ export class ProfileComponent {
               localStorage.setItem('url', input.url);
               this.clientId = localStorage.getItem('url');
               this.urlTaken = false;
-              this.router.navigateByUrl('/profile/' + input.url);
+              this.router.navigateByUrl('/' + input.url);
             } else {
               this.editForm(type);
             }
@@ -211,8 +213,81 @@ export class ProfileComponent {
     if (choice === this.profileInfo.name) {
       this.profileService.deleteTeam(this.profileInfo.id)
         .subscribe(data => {
-          this.router.navigateByUrl('/profile/' + this.clientId)
+          this.router.navigateByUrl('/' + this.clientId)
         });
     }
+  }
+
+  joinTeam() {
+    let response = confirm("Are you sure you want to join " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.joinTeam(this.profileInfo.id)
+        .subscribe(data => {
+          data.TeamUsers = {type: 'Member'}
+          this.memberType = 'Member';
+          this.profileInfo.Member.push(data);
+        });
+    }
+  }
+
+  leaveTeam() {
+    let response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.leaveTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.memberType = '';
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].url === this.clientId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
+          }
+        });
+    }
+  }
+
+  addMember() {
+    this.profileService.addMember(this.profileInfo.id, this.newMember)
+      .subscribe(data => {
+        data.TeamUsers = {type: 'Pending'}
+        this.profileInfo.Member.push(data);
+        this.newMember = '';
+        this.editing.member = !this.editing.member;
+      });
+  }
+
+  removeMember(userId, name) {
+    let response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.removeMember(this.profileInfo.id, userId)
+        .subscribe(data => {
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].id === userId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
+          }
+        });
+    }
+  }
+
+  promoteMember(member) {
+    let response = confirm("Are you sure you want to promote " + member.name + " to admin?");
+    if(response){
+      this.profileService.promoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Admin';
+        })
+    }  
+  }
+
+  demoteMember(member) {
+    let response = confirm("Are you sure you want to demote " + member.name + " to member?");
+    if(response){
+      this.profileService.demoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Member';
+        })
+    }  
   }
 }

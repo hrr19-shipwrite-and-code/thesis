@@ -36,7 +36,7 @@ export class CreateTeamComponent implements OnInit{
     console.log(teamInfo)
     this.createTeamService.createTeam(teamInfo)
       .subscribe( data => {
-        this.router.navigateByUrl('/profile/' + teamInfo.url);
+        this.router.navigateByUrl('/' + teamInfo.url);
        });
   }
 }

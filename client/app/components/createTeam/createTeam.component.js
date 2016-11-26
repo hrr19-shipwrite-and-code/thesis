@@ -54,7 +54,7 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                     console.log(teamInfo);
                     this.createTeamService.createTeam(teamInfo)
                         .subscribe(function (data) {
-                        _this.router.navigateByUrl('/profile/' + teamInfo.url);
+                        _this.router.navigateByUrl('/' + teamInfo.url);
                     });
                 };
                 CreateTeamComponent = __decorate([
