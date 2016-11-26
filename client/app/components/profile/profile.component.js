@@ -238,6 +238,21 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                 };
+                ProfileComponent.prototype.leaveTeam = function () {
+                    var _this = this;
+                    var response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
+                    if (response) {
+                        this.profileService.leaveTeam(this.profileInfo.id)
+                            .subscribe(function (data) {
+                            _this.memberType = '';
+                            for (var i = 0; i < _this.profileInfo.Member.length; i++) {
+                                if (_this.profileInfo.Member[i].url === _this.clientId) {
+                                    return _this.profileInfo.Member.splice(i, 1);
+                                }
+                            }
+                        });
+                    }
+                };
                 ProfileComponent.prototype.addMember = function () {
                     var _this = this;
                     this.profileService.addMember(this.profileInfo.id, this.newMember)

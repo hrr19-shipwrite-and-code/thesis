@@ -218,6 +218,21 @@ export class ProfileComponent {
     }
   }
 
+  leaveTeam() {
+    let response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.leaveTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.memberType = '';
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].url === this.clientId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
+          }
+        });
+    }
+  }
+
   addMember() {
     this.profileService.addMember(this.profileInfo.id, this.newMember)
       .subscribe(data => {

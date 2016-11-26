@@ -61,6 +61,11 @@ export class ProfileService {
       .map(res => res);
   }
 
+  leaveTeam(teamId) {
+    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + teamId)
+      .map(res => res);
+  }
+
   addMember(teamId, memberURL) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

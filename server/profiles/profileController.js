@@ -255,13 +255,13 @@ module.exports = {
   },
 
   leaveTeam: (req, res, next) => {
-    const userId = req.body.id;
+    const authId = req.user.sub;
     const team = req.params.teamId;
 
     Profile.findOne({
       where: {
-        id: userId,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Admin", "Member"))', userId]]
+        authId: authId,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member"))', authId]]
       },
     })
       .then((user) => {
