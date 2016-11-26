@@ -228,14 +228,18 @@ export class ProfileComponent {
       });
   }
 
-  removeMember(userId) {
-    this.profileService.removeMember(this.profileInfo.id, userId)
-      .subscribe(data => {
-        for(let i = 0; i < this.profileInfo.Member.length; i++){
-          if(this.profileInfo.Member[i].id === userId){
-            return this.profileInfo.Member.splice(i, 1);
+  removeMember(userId, name) {
+    let response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name);
+    if(response){
+      this.profileService.removeMember(this.profileInfo.id, userId)
+        .subscribe(data => {
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].id === userId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
           }
-        }
-      });
+        });
+    }
+    
   }
 }

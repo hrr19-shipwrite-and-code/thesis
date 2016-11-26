@@ -82,7 +82,7 @@
             <div *ngIf='member.TeamUsers.type !=="Pending" || memberType === "Owner" || memberType === "Admin"'>
               <a routerLink="/profile/{{member.url}}">{{member.name}}</a>
               <span *ngIf='member.TeamUsers.type === "Pending"'>(Pending)</span>
-              <span><i *ngIf='member.TeamUsers.type !== "Owner" && memberType === "Owner" || memberType === "Admin"' (click)="removeMember(member.id)" class="fa fa-times" aria-hidden="true"></i></span>
+              <span><i *ngIf='member.TeamUsers.type !== "Owner" && memberType === "Owner" || memberType === "Admin"' (click)="removeMember(member.id, member.name)" class="fa fa-times" aria-hidden="true"></i></span>
             </div>
           </div>
         </div>

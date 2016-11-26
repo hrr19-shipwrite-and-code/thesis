@@ -248,16 +248,19 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         _this.editing.member = !_this.editing.member;
                     });
                 };
-                ProfileComponent.prototype.removeMember = function (userId) {
+                ProfileComponent.prototype.removeMember = function (userId, name) {
                     var _this = this;
-                    this.profileService.removeMember(this.profileInfo.id, userId)
-                        .subscribe(function (data) {
-                        for (var i = 0; i < _this.profileInfo.Member.length; i++) {
-                            if (_this.profileInfo.Member[i].id === userId) {
-                                return _this.profileInfo.Member.splice(i, 1);
+                    var response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name);
+                    if (response) {
+                        this.profileService.removeMember(this.profileInfo.id, userId)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.profileInfo.Member.length; i++) {
+                                if (_this.profileInfo.Member[i].id === userId) {
+                                    return _this.profileInfo.Member.splice(i, 1);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 };
                 ProfileComponent = __decorate([
                     core_1.Component({
