@@ -88,8 +88,8 @@
         </div>
         <div class="edit">
         <div *ngIf="editing.member">
-          <form #newMember="ngForm" (ngSubmit)="addMember(newMember.value.member)">
-            <input type="text" name="member" class="form-control" ngModel placeholder="Enter username">
+          <form (ngSubmit)="addMember()">
+            <input type="text" name="member" class="form-control" [(ngModel)]="newMember" placeholder="Enter username">
             <button class="btn btn-primary btn-sm">Add</button>
           </form>
         </div>

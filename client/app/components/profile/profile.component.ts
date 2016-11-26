@@ -17,6 +17,7 @@ export class ProfileComponent {
   private clientId = localStorage.getItem('url');
   private profileInfo = {Teches: [], Team: [], Member: []};
   private newTech = '';
+  private newMember = '';
   private urlTaken = false;
   private tempUrl: string;
   private editing = {
@@ -217,17 +218,24 @@ export class ProfileComponent {
     }
   }
 
-  addMember(memberURL) {
-    this.profileService.addMember(this.profileInfo.id, memberURL)
+  addMember() {
+    this.profileService.addMember(this.profileInfo.id, this.newMember)
       .subscribe(data => {
-        console.log(data)
+        data.TeamUsers = {type: 'Pending'}
+        this.profileInfo.Member.push(data);
+        this.newMember = '';
+        this.editing.member = !this.editing.member;
       });
   }
 
   removeMember(userId) {
     this.profileService.removeMember(this.profileInfo.id, userId)
       .subscribe(data => {
-
+        for(let i = 0; i < this.profileInfo.Member.length; i++){
+          if(this.profileInfo.Member[i].id === userId){
+            return this.profileInfo.Member.splice(i, 1);
+          }
+        }
       });
   }
 }

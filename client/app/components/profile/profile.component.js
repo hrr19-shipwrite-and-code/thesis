@@ -42,6 +42,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.clientId = localStorage.getItem('url');
                     this.profileInfo = { Teches: [], Team: [], Member: [] };
                     this.newTech = '';
+                    this.newMember = '';
                     this.urlTaken = false;
                     this.editing = {
                         basic: false,
@@ -237,15 +238,25 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                 };
-                ProfileComponent.prototype.addMember = function (memberURL) {
-                    this.profileService.addMember(this.profileInfo.id, memberURL)
+                ProfileComponent.prototype.addMember = function () {
+                    var _this = this;
+                    this.profileService.addMember(this.profileInfo.id, this.newMember)
                         .subscribe(function (data) {
-                        console.log(data);
+                        data.TeamUsers = { type: 'Pending' };
+                        _this.profileInfo.Member.push(data);
+                        _this.newMember = '';
+                        _this.editing.member = !_this.editing.member;
                     });
                 };
                 ProfileComponent.prototype.removeMember = function (userId) {
+                    var _this = this;
                     this.profileService.removeMember(this.profileInfo.id, userId)
                         .subscribe(function (data) {
+                        for (var i = 0; i < _this.profileInfo.Member.length; i++) {
+                            if (_this.profileInfo.Member[i].id === userId) {
+                                return _this.profileInfo.Member.splice(i, 1);
+                            }
+                        }
                     });
                 };
                 ProfileComponent = __decorate([
