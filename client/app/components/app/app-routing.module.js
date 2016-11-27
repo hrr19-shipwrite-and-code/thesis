@@ -49,6 +49,7 @@ System.register(['@angular/core', '@angular/router', '../profile/profile.compone
                 { path: 'project/:id', component: project_component_js_1.ProjectComponent },
                 { path: 'createteam', component: createTeam_component_js_1.CreateTeamComponent },
                 { path: 'developers', component: SearchDevelopers_component_js_1.SearchDevelopersComponent },
+                { path: 'teams', component: SearchDevelopers_component_js_1.SearchDevelopersComponent },
                 { path: ':id', component: profile_component_js_1.ProfileComponent },
             ];
             AppRoutingModule = (function () {
