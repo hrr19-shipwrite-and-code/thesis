@@ -22,8 +22,8 @@
         <p class='bio'>
           {{profileInfo.bio}}
         </p>
-        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true">Hire Me!</button></a>
-        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true">Hire Us!</button></a>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Member' && profileInfo.hire === true"><i class="fa fa-envelope" aria-hidden="true"></i> Hire Me</button></a>
+        <a href="mailto:{{profileInfo.email}}"><button class='follow' *ngIf="profileInfo.type === 'Team' && profileInfo.hire === true"><i class="fa fa-envelope" aria-hidden="true"></i> Hire Us</button></a>
         </div>
         <!-- Edit basic profile info -->
         <div *ngIf="editing.basic">
@@ -102,7 +102,7 @@
           </form>
         </div>
         <!-- Edit Pencil Icon -->
-        <i *ngIf='memberType === "Owner" || memberType === "Admin"' (click)="editForm('member')" class="fa fa-plus" aria-hidden="true" title="Add Members"></i>
+        <i *ngIf='memberType === "Owner" || memberType === "Admin"' (click)="editForm('member')" class="fa fa-user-plus" aria-hidden="true" title="Add Members"></i>
         </div>
       </div>
 
