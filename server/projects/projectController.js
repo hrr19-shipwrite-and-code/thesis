@@ -39,10 +39,10 @@ module.exports = {
 
   deleteProject: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.user.sub;
+    const find = req.team ? {where: {id: req.params.teamId}}: {where: {authId: req.user.sub}}
     fse.remove('client/uploads/' + id, (err) => {
       if (err) res.sendStatus(404);
-      Profile.findOne({where: {authId: authId}})
+      Profile.findOne(find)
         .then((user) => {
           Project.destroy({where: {id: id, ProfileId: user.id}})
             .then(() => {
@@ -60,9 +60,9 @@ module.exports = {
 
   editProject: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.user.sub;
+    const find = req.team ? {where: {id: req.params.teamId}}: {where: {authId: req.user.sub}}
     console.log(id);
-    Profile.findOne({ where: { authId: authId}})
+    Profile.findOne(find)
       .then((user) => {
         Project.update(req.body, {where: {id: id, ProfileId:user.id}})
           .then(() => {
@@ -84,7 +84,7 @@ module.exports = {
       include: [
         {
           model: Profile, 
-          attributes: ['name', 'url', 'authId'],
+          attributes: ['name', 'url', 'authId', 'id'],
           include: {
             model: Profile,
             as: 'Member',

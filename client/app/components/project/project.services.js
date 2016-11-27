@@ -97,6 +97,35 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
                         .map(function (res) { return res; });
                 };
+                //Team functions
+                ProjectService.prototype.deleteProject = function (id) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/delete/' + id, options)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.addTech = function (tech) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+                        .map(function (res) { return res.json(); });
+                };
+                ProjectService.prototype.deleteTech = function (techId, projectId) {
+                    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.teamEditDescription = function (teamId, projectId, description) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.put('http://localhost:1337/api/project/teamEdit/' + teamId + '/' + projectId, description, options)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.deleteImage = function (id) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
+                        .map(function (res) { return res; });
+                };
                 ProjectService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, angular2_jwt_1.AuthHttp])

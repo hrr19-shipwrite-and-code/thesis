@@ -86,4 +86,38 @@ export class ProjectService {
     return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
       .map(res => res)
   }
+
+  //Team functions
+  deleteProject(id) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.delete('http://localhost:1337/api/project/delete/' + id, options)
+      .map(res => res)
+  }
+
+  addTech(tech) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+      .map(res => res.json());
+  }
+
+  deleteTech(techId, projectId) {
+    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
+      .map(res => res);
+  }
+
+  teamEditDescription(teamId, projectId, description) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.put('http://localhost:1337/api/project/teamEdit/' + teamId + '/' + projectId, description, options)
+      .map(res => res)
+  }
+
+  deleteImage (id) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
+      .map(res => res)
+  }
 }

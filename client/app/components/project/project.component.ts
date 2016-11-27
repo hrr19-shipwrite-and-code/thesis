@@ -68,6 +68,7 @@ export class ProjectComponent {
           this.project = data
           for(let member of data.Profile.Member){
             if(member.url === localStorage.getItem('url')){
+              //this.options.url = ???
               return this.memberType = member.TeamUsers.type
             }
           }
@@ -262,11 +263,21 @@ export class ProjectComponent {
     }
     this.project[type] = input[type]
     //this.project.descripiton = input.descripiton;
-    this.projectService.editDescription(this.id, input)
-      .subscribe(
-        data => this.editingProject(type),
-        err => err
-      )
+    if(this.memberType === '') {
+      this.projectService.editDescription(this.id, input)
+        .subscribe(
+          data => this.editingProject(type),
+          err => err
+        )
+    } else {
+      console.log(this.project)
+      this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+        .subscribe(
+          data => this.editingProject(type),
+          err => err
+        )
+    }
+   
   }
 
 

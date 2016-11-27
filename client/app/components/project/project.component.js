@@ -82,6 +82,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {
                             var member = _a[_i];
                             if (member.url === localStorage.getItem('url')) {
+                                //this.options.url = ???
                                 return _this.memberType = member.TeamUsers.type;
                             }
                         }
@@ -253,8 +254,15 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     }
                     this.project[type] = input[type];
                     //this.project.descripiton = input.descripiton;
-                    this.projectService.editDescription(this.id, input)
-                        .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    if (this.memberType === '') {
+                        this.projectService.editDescription(this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
+                    else {
+                        console.log(this.project);
+                        this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
                 };
                 ProjectComponent.prototype.editingProject = function (type) {
                     if (type === 'tech') {
