@@ -54,6 +54,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editDeploy = false;
                     this.editProgress = false;
                     this.editSource = false;
+                    this.memberType = '';
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -78,6 +79,13 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         _this.determineOpenSource(data.openSource);
                         _this.project = data;
+                        for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {
+                            var member = _a[_i];
+                            if (member.url === localStorage.getItem('url')) {
+                                //this.options.url = ???
+                                return _this.memberType = member.TeamUsers.type;
+                            }
+                        }
                     }, function (err) { return _this.error = true; });
                 };
                 ProjectComponent.prototype.gotoUser = function () {
@@ -95,8 +103,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     var choice = prompt('Enter the projects the title of the project you wish to delete');
                     if (choice === this.project.title) {
-                        this.projectService.deleteProject(this.id)
-                            .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        if (this.memberType === '') {
+                            this.projectService.deleteProject(this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
+                        else {
+                            this.projectService.teamDeleteProject(this.project.Profile.id, this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
                     }
                 };
                 //Checks if the user already likes this project
@@ -245,9 +259,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.determineOpenSource(this.project.contribute);
                     }
                     this.project[type] = input[type];
-                    //this.project.descripiton = input.descripiton;
-                    this.projectService.editDescription(this.id, input)
-                        .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    if (this.memberType === '') {
+                        this.projectService.editDescription(this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
+                    else {
+                        this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
                 };
                 ProjectComponent.prototype.editingProject = function (type) {
                     if (type === 'tech') {

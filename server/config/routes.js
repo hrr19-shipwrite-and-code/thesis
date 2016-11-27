@@ -38,12 +38,16 @@ module.exports = function (app, express) {
   app.get('/api/tech', techController.getAllTech);
 
   //Project Routes
-  app.post('/api/project/create', middleware.authCheck,  projectController.createProject);
+  app.post('/api/project/userCreate', middleware.authCheck, projectController.createProject);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.post('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);
   app.put('/api/project/edit/:projectId', middleware.authCheck, projectController.editProject);
   app.delete('/api/project/delete/:projectId', middleware.authCheck, projectController.deleteProject);
+
+  app.post('/api/project/teamCreate/:teamId', middleware.authCheck, profileController.memberTypeCheck, projectController.createProject);
+  app.put('/api/project/teamEdit/:teamId/:projectId', middleware.authCheck, profileController.memberTypeCheck, projectController.editProject);
+  app.delete('/api/project/teamDelete/:teamId/:projectId', middleware.authCheck, profileController.memberTypeCheck, projectController.deleteProject);
 
   //Project Images
   app.post('/api/project/upload/:projectId', middleware.authCheck, middleware.uploadProjectPicture.any(), projectController.uploadProjectImage);

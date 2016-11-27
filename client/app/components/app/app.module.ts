@@ -28,6 +28,7 @@ import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
 import { AddProductModelDirective } from '../../directives/new-project-model.directive.js';
 
 import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
+import { ProfileService } from '../profile/profile.services.js';
 
 
 @NgModule({
@@ -53,9 +54,7 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     ProjectAddComponent,
     SearchDevelopersComponent,
     ProfilePreviewComponent,
-
     ProjectThumbnailComponent,
-    //UPLOAD_DIRECTIVES,
     HoverDirective,
     TechHoverDirective,
     AddProductModelDirective,
@@ -64,7 +63,8 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
   bootstrap:    [ AppComponent ],
   providers: [
     AUTH_PROVIDERS,
-    ProjectAddService
+    ProjectAddService,
+    ProfileService
   ]
 })
 

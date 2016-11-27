@@ -8,7 +8,7 @@
           <button class="btn btn-primary btn-sm">Edit</button>
         </form>
         <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
-        <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('title')" class="fa fa-pencil" aria-hidden="true" title="Edit Project Title"></i>
+        <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('title')" class="fa fa-pencil" aria-hidden="true" title="Edit Project Title"></i>
         <p class='subhead'>
           <!-- Attatch the project.Profile.url when your profile has it!! -->
           by <a class='user-name navLink' routerLink="/{{project.Profile.url}}">{{project.Profile.name}}</a> on <span class='date'>{{project.createdAt}}</span>
@@ -34,7 +34,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="checkUser(project.Profile.url)">
+          <div *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"'>
             <button *ngIf="checkForImages()" (click)="updateThumbnail()" class="btn btn-default btn-file">Set as display picture</button>
             <button *ngIf="checkForImages()" (click)="deleteImage(picture.id)" class="btn btn-default btn-file">Delete picture</button>
             <div class="form-group">
@@ -59,14 +59,14 @@
             </p>
 
             <!--Edit Discription-->
-            <div *ngIf="checkUser(project.Profile.url)">
+            <div *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"'>
               <div *ngIf="editDescrip">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editProject($event, editDescriptionInput.value, 'description')" >
                   <textarea name="description" rows="4" [(ngModel)]="project.description" class="form-control"></textarea>
                   <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
               </div>
-              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('description')" class="fa fa-pencil" aria-hidden="true" title="Edit Description"></i>
+              <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('description')" class="fa fa-pencil" aria-hidden="true" title="Edit Description"></i>
             </div>
 
           </div>
@@ -84,13 +84,13 @@
           <div>Technology:</div>
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
-            <span><i *ngIf="checkUser(project.Profile.url)" id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span><i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
           </div>
-          <div><i *ngIf='checkUser(project.Profile.url)' class="fa fa-plus" aria-hidden="true" (click)="editingProject('tech')" title="Add Tech"></i></div>
+          <div><i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' class="fa fa-plus" aria-hidden="true" (click)="editingProject('tech')" title="Add Tech"></i></div>
 
 
           <!--Add to tech stack-->
-          <div *ngIf="checkUser(project.Profile.url)">
+          <div *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"'>
             <datalist id="techs">
               <option *ngFor="let tech of techs" [value]="tech.name">
             </datalist>
@@ -108,18 +108,18 @@
             <div>
               <!-- Deploy Info/Form -->
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
-              <span *ngIf="checkUser(project.Profile.url) && project.deploy.length === 0">Add deploy link</span>
+              <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.deploy.length === 0'>Add deploy link</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
                 <input type="text" name="deploy" class="form-control" [(ngModel)]="project.deploy">
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
-              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
+              <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
             </div>
             <div>
               <!-- GitHub Info/Form -->
               <span *ngIf="project.github && !editGithub"><a href={{project.github}}>GitHub</a></span>
-              <span *ngIf="checkUser(project.Profile.url) && project.github.length === 0">Add a github</span>
-              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
+              <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.github.length === 0'>Add a github</span>
+              <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
                 <input type="text" name="github" class="form-control" [(ngModel)]="project.github">
                 <button class="btn btn-primary btn-sm">Edit</button>
@@ -135,7 +135,7 @@
                   <option value="Abandonded">Abandonded</option>
                 </select>
               </span>
-              <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>
+              <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>
               </div>
               <div>
                 <!-- Open Source Info/Toggle -->
@@ -146,10 +146,10 @@
                     <div class="slider round"></div>
                   </label>
                 </span>
-                <i *ngIf='checkUser(project.Profile.url)' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>
+                <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('contribute')" class="fa fa-pencil" aria-hidden="true" title="Switch Open Source"></i>
               </div>
               <!-- Delete Button -->
-              <button class="btn btn-primary btn-sm" *ngIf='checkUser(project.Profile.url)' (click)="deleteProject()">Delete Project</button>
+              <button class="btn btn-primary btn-sm" *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="deleteProject()">Delete Project</button>
             </div>
             <div>
           </div>
@@ -185,7 +185,7 @@
                 {{comment.createdAt}}
               </span>
 
-              <i *ngIf="checkUser(comment.Profile.url)" (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
+              <i *ngIf='checkUser(comment.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="deleteComment($event, comment)" class="fa fa-trash" id={{comment.id}} aria-hidden="true"></i>
             </div> <!-- single-comment -->
 
           </div> <!-- comments-list -->

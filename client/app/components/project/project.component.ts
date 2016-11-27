@@ -39,6 +39,7 @@ export class ProjectComponent {
   private editDeploy = false;
   private editProgress = false;
   private editSource = false;
+  private memberType = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
 
@@ -65,6 +66,12 @@ export class ProjectComponent {
           data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
           this.determineOpenSource(data.openSource);
           this.project = data
+          for(let member of data.Profile.Member){
+            if(member.url === localStorage.getItem('url')){
+              //this.options.url = ???
+              return this.memberType = member.TeamUsers.type
+            }
+          }
         },
         err => this.error = true
       )
@@ -85,11 +92,19 @@ export class ProjectComponent {
   deleteProject() {
     let choice = prompt('Enter the projects the title of the project you wish to delete');
     if (choice === this.project.title) {
-      this.projectService.deleteProject(this.id)
-        .subscribe(
-          data => this.router.navigateByUrl('/'),
-          err => err
-        )
+      if(this.memberType === '') {
+        this.projectService.deleteProject(this.id)
+          .subscribe(
+            data => this.router.navigateByUrl('/'),
+            err => err
+          )
+      } else {
+        this.projectService.teamDeleteProject(this.project.Profile.id, this.id)
+          .subscribe(
+            data => this.router.navigateByUrl('/'),
+            err => err
+          )
+      }  
     }
   }
 
@@ -255,12 +270,21 @@ export class ProjectComponent {
       this.determineOpenSource(this.project.contribute);
     }
     this.project[type] = input[type]
-    //this.project.descripiton = input.descripiton;
-    this.projectService.editDescription(this.id, input)
-      .subscribe(
-        data => this.editingProject(type),
-        err => err
-      )
+
+    if(this.memberType === '') {
+      this.projectService.editDescription(this.id, input)
+        .subscribe(
+          data => this.editingProject(type),
+          err => err
+        )
+    } else {
+      this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+        .subscribe(
+          data => this.editingProject(type),
+          err => err
+        )
+    }
+   
   }
 
 
