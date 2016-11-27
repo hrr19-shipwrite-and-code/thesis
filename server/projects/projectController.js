@@ -14,29 +14,27 @@ module.exports = {
    *****************************************/
 
   createProject: (req, res, next) => {
-    console.log(req.body)
-    const authId = req.user.sub;
-      Profile.findOne({where: {authId: authId}})
-        .then((user) => {
-          user.createProject({
-            title: req.body.title,
-            description: req.body.description,
-            github: req.body.github,
-            deploy: req.body.deploy,
-            progress: req.body.status,
-            contribute: req.body.openSourse,
-            })
-            .then((project) => {
-              console.log(project);
-              mkdirp('./client/uploads/' + project.id, (err) => {
-                if (err) console.log(err);
-                res.json({id: project.id});
-              });
+    const find = req.team ? {where: {id: req.params.teamId}}: {where: {authId: req.user.sub}}
+    Profile.findOne(find)
+      .then((user) => {
+        user.createProject({
+          title: req.body.title,
+          description: req.body.description,
+          github: req.body.github,
+          deploy: req.body.deploy,
+          progress: req.body.status,
+          contribute: req.body.openSourse,
+          })
+          .then((project) => {
+            mkdirp('./client/uploads/' + project.id, (err) => {
+              if (err) console.log(err);
+              res.json({id: project.id});
             });
-        })
-        .catch((err) => {
-          res.sendStatus(404);
-        });
+          });
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
   },
 
   deleteProject: (req, res, next) => {

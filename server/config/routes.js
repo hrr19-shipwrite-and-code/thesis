@@ -38,7 +38,8 @@ module.exports = function (app, express) {
   app.get('/api/tech', techController.getAllTech);
 
   //Project Routes
-  app.post('/api/project/create', middleware.authCheck,  projectController.createProject);
+  app.post('/api/project/userCreate', middleware.authCheck, projectController.createProject);
+  app.post('/api/project/teamCreate/:teamId', middleware.authCheck, profileController.memberTypeCheck, projectController.createProject);
   app.get('/api/project/id/:projectId', projectController.getProject);
   app.post('/api/project/getAll', projectController.getAllProjects);
   app.get('/api/project/user/:id', projectController.getUserProjects);

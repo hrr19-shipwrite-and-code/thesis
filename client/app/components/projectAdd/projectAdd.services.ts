@@ -7,10 +7,18 @@ export class ProjectAddService {
   postProject
   constructor (private authHttp: AuthHttp) {}
 
-  createProject(project) {
+  userCreateProject(project) {
    let headers = new Headers({ 'Content-Type': 'application/json' });
    let options = new RequestOptions({ headers: headers });
-   const url = 'http://localhost:1337/api/project/create'
+   const url = 'http://localhost:1337/api/project/userCreate'
+   return this.authHttp.post(url, JSON.stringify(project), options)
+    .map(res => res.json())
+  }
+
+  teamCreateProject(project, teamId) {
+   let headers = new Headers({ 'Content-Type': 'application/json' });
+   let options = new RequestOptions({ headers: headers });
+   const url = 'http://localhost:1337/api/project/teamCreate/' + teamId
    return this.authHttp.post(url, JSON.stringify(project), options)
     .map(res => res.json())
   }
