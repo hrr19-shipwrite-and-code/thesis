@@ -122,8 +122,8 @@ module.exports = {
 
   uploadProjectImage: (req, res, next) => {
     const id = req.params.projectId;
-    const authId = req.user.sub;
-    Profile.find({where: {authId: authId}})
+    const find = req.team ? {where: {id: req.params.teamId}}: {where: {authId: req.user.sub}}
+    Profile.find(find)
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
         Project.find({where: {id: id, ProfileId: profile.id}})
@@ -158,6 +158,7 @@ module.exports = {
   },
 
   deleteProjectImage: (req, res, next ) => {
+    //todo: authcheck needed!
     const id = req.params.imageId;
     Image.findById(id)
       .then((image) => {
