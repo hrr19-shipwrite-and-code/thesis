@@ -103,8 +103,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     var choice = prompt('Enter the projects the title of the project you wish to delete');
                     if (choice === this.project.title) {
-                        this.projectService.deleteProject(this.id)
-                            .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        if (this.memberType === '') {
+                            this.projectService.deleteProject(this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
+                        else {
+                            this.projectService.teamDeleteProject(this.project.Profile.id, this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
                     }
                 };
                 //Checks if the user already likes this project
@@ -253,13 +259,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.determineOpenSource(this.project.contribute);
                     }
                     this.project[type] = input[type];
-                    //this.project.descripiton = input.descripiton;
                     if (this.memberType === '') {
                         this.projectService.editDescription(this.id, input)
                             .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
                     }
                     else {
-                        console.log(this.project);
                         this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
                             .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
                     }

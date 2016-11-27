@@ -88,10 +88,10 @@ export class ProjectService {
   }
 
   //Team functions
-  deleteProject(id) {
+  teamDeleteProject(teamId, projectId) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.delete('http://localhost:1337/api/project/delete/' + id, options)
+    return this.authHttp.delete('http://localhost:1337/api/project/teamDelete/' + teamId + '/' + projectId, options)
       .map(res => res)
   }
 

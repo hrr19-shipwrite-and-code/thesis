@@ -98,10 +98,10 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                         .map(function (res) { return res; });
                 };
                 //Team functions
-                ProjectService.prototype.deleteProject = function (id) {
+                ProjectService.prototype.teamDeleteProject = function (teamId, projectId) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.delete('http://localhost:1337/api/project/delete/' + id, options)
+                    return this.authHttp.delete('http://localhost:1337/api/project/teamDelete/' + teamId + '/' + projectId, options)
                         .map(function (res) { return res; });
                 };
                 ProjectService.prototype.addTech = function (tech) {
