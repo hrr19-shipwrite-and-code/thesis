@@ -4,15 +4,19 @@ const db = new Sequelize('sushi', 'root', '');
 const Profile = db.define('Profile', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notIn: [['', ' ']]
+    }
   },
   url: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
     validate: {
-      notIn: [['browse', 'addproject', 'createteam', 'developers', 'teams', 'project']]
-    }
+      notIn: [['browse', 'addproject', 'createteam', 'developers', 'teams', 'project']],
+      is: /^[a-z0-9_-]{1,30}$/
+    },
   },
   email: {
     type: Sequelize.STRING,

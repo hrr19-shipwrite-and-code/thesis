@@ -1,4 +1,4 @@
-System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-google-maps/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-google-maps/core', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, searchDevelopers_services_js_1, core_2;
+    var core_1, searchDevelopers_services_js_1, core_2, router_1;
     var SearchDevelopersComponent;
     return {
         setters:[
@@ -22,17 +22,22 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
             },
             function (core_2_1) {
                 core_2 = core_2_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             SearchDevelopersComponent = (function () {
-                function SearchDevelopersComponent(searchDevelopersServices, mapsAPILoader, zone) {
+                function SearchDevelopersComponent(searchDevelopersServices, mapsAPILoader, zone, router) {
                     this.searchDevelopersServices = searchDevelopersServices;
                     this.mapsAPILoader = mapsAPILoader;
                     this.zone = zone;
+                    this.router = router;
                 }
                 SearchDevelopersComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.getAllUsers({});
+                    this.type = this.router.url === '/teams' ? 'Team' : 'Member';
+                    this.getAllProfiles({ type: this.type });
                     this.mapsAPILoader.load().then(function () {
                         var input = document.getElementById('location');
                         var autocomplete = new google.maps.places.Autocomplete(input, {
@@ -45,9 +50,9 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         });
                     });
                 };
-                SearchDevelopersComponent.prototype.getAllUsers = function (filter) {
+                SearchDevelopersComponent.prototype.getAllProfiles = function (filter) {
                     var _this = this;
-                    var filterConditions = {};
+                    var filterConditions = { type: this.type };
                     for (var key in filter) {
                         if (filter[key]) {
                             if (key === 'tech' || key === 'location') {
@@ -61,9 +66,8 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                             }
                         }
                     }
-                    this.searchDevelopersServices.getAllUsers(filterConditions)
+                    this.searchDevelopersServices.getAllProfiles(filterConditions)
                         .subscribe(function (data) {
-                        console.log(data);
                         _this.users = data;
                     });
                 };
@@ -74,7 +78,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         styleUrls: ['./client/app/components/searchDevelopers/searchDevelopers.css'],
                         providers: [searchDevelopers_services_js_1.SearchDevelopersServices]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone, router_1.Router])
                 ], SearchDevelopersComponent);
                 return SearchDevelopersComponent;
                 var _a;
