@@ -18,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'project/:id', component: ProjectComponent },
   { path: 'createteam', component: CreateTeamComponent },
   { path: 'developers', component: SearchDevelopersComponent },
+  { path: 'teams', component: SearchDevelopersComponent },
   { path: ':id', component: ProfileComponent },
   // { path: '**', component: PageNotFoundComponent }
 ];

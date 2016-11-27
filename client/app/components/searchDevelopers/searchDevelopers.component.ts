@@ -2,6 +2,7 @@ import { OnInit, Component, NgZone } from '@angular/core';
 import { ProfilePreviewComponent } from '../profilePreview/profilePreview.component.js';
 import { SearchDevelopersServices } from './searchDevelopers.services.js';
 import { MapsAPILoader } from 'angular2-google-maps/core';
+import { Router } from '@angular/router';
 
 
 
@@ -15,10 +16,13 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
 export class SearchDevelopersComponent implements OnInit{
   users;
   location;
-  constructor(private searchDevelopersServices: SearchDevelopersServices, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
+  type;
+  constructor(private searchDevelopersServices: SearchDevelopersServices, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
   ngOnInit() {
-    this.getAllUsers({});
+    this.type = this.router.url === '/teams' ? 'Team' : 'Member';
+
+    this.getAllProfiles({type: this.type});
 
     this.mapsAPILoader.load().then(() => {
       let input = document.getElementById('location')
@@ -33,8 +37,8 @@ export class SearchDevelopersComponent implements OnInit{
     });
   }
 
-  getAllUsers(filter) {
-    let filterConditions = {}
+  getAllProfiles(filter) {
+    let filterConditions = {type: this.type}
     for(let key in filter) {
       if(filter[key]) {
         if(key === 'tech' || key === 'location'){
@@ -48,9 +52,8 @@ export class SearchDevelopersComponent implements OnInit{
       }
     }
 
-    this.searchDevelopersServices.getAllUsers(filterConditions)
+    this.searchDevelopersServices.getAllProfiles(filterConditions)
       .subscribe(data => {
-        console.log(data);
         this.users = data;
       })
   }

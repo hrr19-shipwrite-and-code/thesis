@@ -11,6 +11,7 @@
   <div class='links'>
     <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
     <a routerLink="/developers" routerLinkActive="active" class="navLink">Developers</a>
+    <a routerLink="/teams" routerLinkActive="active" class="navLink">Teams</a>
   </div>
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>

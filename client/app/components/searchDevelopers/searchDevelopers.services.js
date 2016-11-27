@@ -25,10 +25,10 @@ System.register(['@angular/http', '@angular/core'], function(exports_1, context_
                 function SearchDevelopersServices(http) {
                     this.http = http;
                 }
-                SearchDevelopersServices.prototype.getAllUsers = function (filter) {
+                SearchDevelopersServices.prototype.getAllProfiles = function (filter) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/user/getAll';
+                    var url = 'http://localhost:1337/api/profile/getAll';
                     return this.http.post(url, JSON.stringify(filter), options)
                         .map(function (res) { return res.json(); });
                 };

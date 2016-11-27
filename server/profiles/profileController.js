@@ -69,12 +69,10 @@ module.exports = {
       });
   },
 
-  getAllUser: (req, res, next) => {
+  getAllProfile: (req, res, next) => {
     let filter = {
       where: {
-        type: {
-          $eq: 'Member'
-        },
+        type: req.body.type,
         $and: []
       },
       include: [{

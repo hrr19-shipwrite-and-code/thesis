@@ -14,7 +14,7 @@ module.exports = function (app, express) {
   app.post('/api/user/create', middleware.authCheck, profileController.createUser);
   app.post('/api/user/addPicture', middleware.authCheck, middleware.uploadProfilePicture.any(), profileController.addUserPicture);
   app.post('/api/team/addPicture/:teamId', middleware.authCheck, profileController.memberTypeCheck, middleware.uploadProfilePicture.any(), profileController.addTeamPicture);
-  app.post('/api/user/getAll', profileController.getAllUser);
+  app.post('/api/profile/getAll', profileController.getAllProfile);
   app.get('/api/editUserInfo', middleware.authCheck, profileController.getEditUserInfo);
   app.put('/api/user/edit', middleware.authCheck, profileController.editUserInfo);
 
