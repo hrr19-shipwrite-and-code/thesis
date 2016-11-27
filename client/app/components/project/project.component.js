@@ -54,6 +54,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editDeploy = false;
                     this.editProgress = false;
                     this.editSource = false;
+                    this.memberType = '';
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -78,6 +79,12 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         _this.determineOpenSource(data.openSource);
                         _this.project = data;
+                        for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {
+                            var member = _a[_i];
+                            if (member.url === localStorage.getItem('url')) {
+                                return _this.memberType = member.TeamUsers.type;
+                            }
+                        }
                     }, function (err) { return _this.error = true; });
                 };
                 ProjectComponent.prototype.gotoUser = function () {

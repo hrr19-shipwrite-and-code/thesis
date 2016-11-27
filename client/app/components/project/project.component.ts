@@ -39,6 +39,7 @@ export class ProjectComponent {
   private editDeploy = false;
   private editProgress = false;
   private editSource = false;
+  private memberType = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
 
@@ -65,6 +66,11 @@ export class ProjectComponent {
           data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
           this.determineOpenSource(data.openSource);
           this.project = data
+          for(let member of data.Profile.Member){
+            if(member.url === localStorage.getItem('url')){
+              return this.memberType = member.TeamUsers.type
+            }
+          }
         },
         err => this.error = true
       )
