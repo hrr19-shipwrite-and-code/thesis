@@ -54,6 +54,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editDeploy = false;
                     this.editProgress = false;
                     this.editSource = false;
+                    this.team = false;
                     this.memberType = '';
                 }
                 //Runs this function everytime route accessed
@@ -66,7 +67,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.getAllTech();
-                    this.options.url = 'http://localhost:1337/api/project/upload/' + this.id;
+                    this.options.url = 'http://localhost:1337/api/project/upload/user/' + this.id;
+                    ;
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -79,6 +81,10 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         _this.determineOpenSource(data.openSource);
                         _this.project = data;
+                        if (data.Profile.Member.length > 0) {
+                            _this.options.url = 'http://localhost:1337/api/project/upload/team/' + data.Profile.id + '/' + _this.id;
+                            _this.team = true;
+                        }
                         for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {
                             var member = _a[_i];
                             if (member.url === localStorage.getItem('url')) {
@@ -86,7 +92,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                                 return _this.memberType = member.TeamUsers.type;
                             }
                         }
-                    }, function (err) { return _this.error = true; });
+                    }, function (err) { return _this.router.navigateByUrl('/'); });
                 };
                 ProjectComponent.prototype.gotoUser = function () {
                     this.router.navigateByUrl('/' + this.project.Profile.url);
@@ -221,9 +227,16 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 };
                 //Set image as project thumbnail
                 ProjectComponent.prototype.updateThumbnail = function () {
-                    var data = this.picture;
-                    this.projectService.setAsThumb(this.id, data)
-                        .subscribe(function (data) { return data; }, function (err) { return err; });
+                    if (this.team) {
+                        var data = this.picture;
+                        this.projectService.setTeamThumb(this.id, this.project.Profile.id, data)
+                            .subscribe(function (data) { return data; }, function (err) { return err; });
+                    }
+                    else {
+                        var data = this.picture;
+                        this.projectService.setAsThumb(this.id, data)
+                            .subscribe(function (data) { return data; }, function (err) { return err; });
+                    }
                 };
                 //Function to make thumbnail the large image
                 ProjectComponent.prototype.setMainImage = function (img) {
@@ -232,19 +245,36 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 //Delete image from database and page
                 ProjectComponent.prototype.deleteImage = function (id) {
                     var _this = this;
-                    this.projectService.deleteImage(id)
-                        .subscribe(function (data) {
-                        for (var i = 0; i < _this.project.Images.length; i++) {
-                            var img = _this.project.Images[i];
-                            if (img.id === id) {
-                                _this.project.Images.splice(i, i + 1);
-                                _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
-                                if (_this.picture.url === '/client/app/assets/thumbnail.png') {
-                                    _this.updateThumbnail();
+                    if (this.team) {
+                        this.projectService.deleteTeamImage(id, this.id, this.project.Profile.id)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.project.Images.length; i++) {
+                                var img = _this.project.Images[i];
+                                if (img.id === id) {
+                                    _this.project.Images.splice(i, i + 1);
+                                    _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
+                                    if (_this.picture.url === '/client/app/assets/thumbnail.png') {
+                                        _this.updateThumbnail();
+                                    }
                                 }
                             }
-                        }
-                    }, function (err) { return err; });
+                        }, function (err) { return err; });
+                    }
+                    else {
+                        this.projectService.deleteImage(id, this.id)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.project.Images.length; i++) {
+                                var img = _this.project.Images[i];
+                                if (img.id === id) {
+                                    _this.project.Images.splice(i, i + 1);
+                                    _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
+                                    if (_this.picture.url === '/client/app/assets/thumbnail.png') {
+                                        _this.updateThumbnail();
+                                    }
+                                }
+                            }
+                        }, function (err) { return err; });
+                    }
                 };
                 //Checks whether to hide certain buttons
                 ProjectComponent.prototype.checkForImages = function () {

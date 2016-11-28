@@ -39,6 +39,7 @@ export class ProjectComponent {
   private editDeploy = false;
   private editProgress = false;
   private editSource = false;
+  private team = false;
   private memberType = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
@@ -52,7 +53,7 @@ export class ProjectComponent {
     this.getComment(this.id);
     this.doesUserLike(this.id);
     this.getAllTech();
-    this.options.url = 'http://localhost:1337/api/project/upload/' + this.id;
+    this.options.url = 'http://localhost:1337/api/project/upload/user/' + this.id;);
   }
 
   //Service function to get the project by the route params Id
@@ -66,6 +67,10 @@ export class ProjectComponent {
           data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
           this.determineOpenSource(data.openSource);
           this.project = data
+          if (data.Profile.Member.length > 0) {
+            this.options.url = 'http://localhost:1337/api/project/upload/team/' + data.Profile.id + '/' + this.id;
+            this.team = true;
+          }
           for(let member of data.Profile.Member){
             if(member.url === localStorage.getItem('url')){
               //this.options.url = ???
@@ -73,7 +78,7 @@ export class ProjectComponent {
             }
           }
         },
-        err => this.error = true
+        err => this.router.navigateByUrl('/')
       )
   }
 
@@ -223,12 +228,21 @@ export class ProjectComponent {
 
   //Set image as project thumbnail
   updateThumbnail () {
-    let data = this.picture;
-    this.projectService.setAsThumb(this.id, data)
-      .subscribe(
-        data => data,
-        err => err
-      )
+    if (this.team) {
+      let data = this.picture;
+      this.projectService.setTeamThumb(this.id, this.project.Profile.id, data)
+        .subscribe(
+          data => data,
+          err => err
+        )
+    } else {
+      let data = this.picture;
+      this.projectService.setAsThumb(this.id, data)
+        .subscribe(
+          data => data,
+          err => err
+        )
+    }
   }
 
   //Function to make thumbnail the large image
@@ -238,22 +252,41 @@ export class ProjectComponent {
 
   //Delete image from database and page
   deleteImage (id) {
-    this.projectService.deleteImage(id)
-      .subscribe(
-        data => {
-          for (let i = 0; i < this.project.Images.length; i++) {
-            let img = this.project.Images[i];
-            if (img.id === id) {
-              this.project.Images.splice(i, i+1)
-              this.picture = this.project.Images[0] || {url: '/client/app/assets/thumbnail.png'};
-              if (this.picture.url === '/client/app/assets/thumbnail.png') {
-                this.updateThumbnail();
+    if (this.team) {
+      this.projectService.deleteTeamImage(id, this.id, this.project.Profile.id)
+        .subscribe(
+          data => {
+            for (let i = 0; i < this.project.Images.length; i++) {
+              let img = this.project.Images[i];
+              if (img.id === id) {
+                this.project.Images.splice(i, i+1)
+                this.picture = this.project.Images[0] || {url: '/client/app/assets/thumbnail.png'};
+                if (this.picture.url === '/client/app/assets/thumbnail.png') {
+                  this.updateThumbnail();
+                }
               }
             }
-          }
-          },
-        err => err
-      )
+            },
+          err => err
+        )
+    } else {
+      this.projectService.deleteImage(id, this.id)
+        .subscribe(
+          data => {
+            for (let i = 0; i < this.project.Images.length; i++) {
+              let img = this.project.Images[i];
+              if (img.id === id) {
+                this.project.Images.splice(i, i+1)
+                this.picture = this.project.Images[0] || {url: '/client/app/assets/thumbnail.png'};
+                if (this.picture.url === '/client/app/assets/thumbnail.png') {
+                  this.updateThumbnail();
+                }
+              }
+            }
+            },
+          err => err
+        )
+    }
   }
 
   //Checks whether to hide certain buttons
