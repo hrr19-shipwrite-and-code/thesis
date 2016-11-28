@@ -157,17 +157,31 @@ export class ProjectComponent {
     }
 
     let newTech = { name: this.newTech, id: this.project.id };
-    this.projectService.addTech(newTech)
-      .subscribe(data => {
-        this.project.Teches.push(data);
-      });
+    if(this.memberType === '') {
+      this.projectService.addTech(newTech)
+        .subscribe(data => {
+          this.project.Teches.push(data);
+        });
+    } else {
+      this.projectService.teamAddTech(this.project.Profile.id, newTech)
+        .subscribe(data => {
+          this.project.Teches.push(data);
+        });
+    }
+    
     this.newTech = '';
     this.editTech = !this.editTech;
   }
 
   deleteTech(event) {
-    this.projectService.deleteTech(event.target.id, this.project.id)
-      .subscribe(data => {});
+    if(this.memberType === ''){
+      this.projectService.deleteTech(event.target.id, this.project.id)
+        .subscribe(data => {});
+    } else {
+      this.projectService.teamDeleteTech(this.project.Profile.id, event.target.id, this.project.id)
+        .subscribe(data => {});
+    }
+    
     for(let i = 0; i < this.project.Teches.length; i++){
       if(this.project.Teches[i].id == Number(event.target.id)) {
         return this.project.Teches.splice(i, 1);

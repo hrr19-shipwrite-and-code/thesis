@@ -116,14 +116,14 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     return this.authHttp.delete('http://localhost:1337/api/project/teamDelete/' + teamId + '/' + projectId, options)
                         .map(function (res) { return res; });
                 };
-                ProjectService.prototype.addTech = function (tech) {
+                ProjectService.prototype.teamAddTech = function (teamId, tech) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+                    return this.authHttp.post('http://localhost:1337/api/project/teamAddTech/' + teamId, JSON.stringify(tech), options)
                         .map(function (res) { return res.json(); });
                 };
-                ProjectService.prototype.deleteTech = function (techId, projectId) {
-                    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
+                ProjectService.prototype.teamDeleteTech = function (teamId, techId, projectId) {
+                    return this.authHttp.delete('http://localhost:1337/api/project/teamRemoveTech/' + teamId + '/' + projectId + '/' + techId)
                         .map(function (res) { return res; });
                 };
                 ProjectService.prototype.teamEditDescription = function (teamId, projectId, description) {
