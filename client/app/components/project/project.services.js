@@ -88,13 +88,25 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                 ProjectService.prototype.setAsThumb = function (id, data) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/' + id, JSON.stringify(data), options)
+                    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/user/' + id, JSON.stringify(data), options)
                         .map(function (res) { return res; });
                 };
-                ProjectService.prototype.deleteImage = function (id) {
+                ProjectService.prototype.setTeamThumb = function (id, team, data) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
+                    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/team/' + team + '/' + id, JSON.stringify(data), options)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.deleteImage = function (id, proj) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/image/user/' + proj + '/' + id, options)
+                        .map(function (res) { return res; });
+                };
+                ProjectService.prototype.deleteTeamImage = function (id, proj, team) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.authHttp.delete('http://localhost:1337/api/project/image/team/' + proj + '/' + team + '/' + id, options)
                         .map(function (res) { return res; });
                 };
                 //Team functions
@@ -118,12 +130,6 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core', 'rxjs/add/ope
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.authHttp.put('http://localhost:1337/api/project/teamEdit/' + teamId + '/' + projectId, description, options)
-                        .map(function (res) { return res; });
-                };
-                ProjectService.prototype.deleteImage = function (id) {
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-                    var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
                         .map(function (res) { return res; });
                 };
                 ProjectService = __decorate([

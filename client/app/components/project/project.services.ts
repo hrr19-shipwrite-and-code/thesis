@@ -76,14 +76,28 @@ export class ProjectService {
   setAsThumb (id, data) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/' + id, JSON.stringify(data), options)
+    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/user/' + id, JSON.stringify(data), options)
       .map(res => res)
   }
 
-  deleteImage (id) {
+  setTeamThumb (id, team, data) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
+    return this.authHttp.put('http://localhost:1337/api/project/thumbnail/team/' + team + '/' + id, JSON.stringify(data), options)
+      .map(res => res)
+  }
+
+  deleteImage (id, proj) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.delete('http://localhost:1337/api/project/image/user/' + proj + '/' + id, options)
+      .map(res => res)
+  }
+
+  deleteTeamImage(id, proj, team) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.authHttp.delete('http://localhost:1337/api/project/image/team/' + proj + '/'+ team + '/' + id, options)
       .map(res => res)
   }
 
@@ -114,10 +128,4 @@ export class ProjectService {
       .map(res => res)
   }
 
-  deleteImage (id) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.authHttp.delete('http://localhost:1337/api/project/image/' + id, options)
-      .map(res => res)
-  }
 }
