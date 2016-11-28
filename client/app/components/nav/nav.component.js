@@ -53,7 +53,6 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.handleClick = function (e) {
                     var className = e.target.className.split(' ')[0];
-                    console.log(className);
                     if (e.target.id === 'notification' && className !== 'inside') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;

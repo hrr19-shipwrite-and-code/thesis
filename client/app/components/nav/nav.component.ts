@@ -42,7 +42,6 @@ export class NavComponent {
 
   handleClick(e) {
     let className = e.target.className.split(' ')[0];
-    console.log(className)
     if (e.target.id === 'notification' && className !== 'inside') {
       this.notificationShow = !this.notificationShow;
       this.profileShow = false;
