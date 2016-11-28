@@ -23,15 +23,27 @@ export class AuthService {
 
   //Store profile object in auth class
 
-  constructor(private authHttp: AuthHttp, private router: Router) {
+  constructor(private authHttp: AuthHttp, private router: Router, private http: Http) {
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
 
       // Fetch profile information
-      this.lock.getProfile(authResult.idToken, (error, profile) => {      
-        this.findOrCreateUser(profile)
+      this.lock.getProfile(authResult.idToken, (error, profile) => {
+        //Get additional github information
+        if(profile.url){
+          this.http.get(profile.url)
+          .map(res => res.json())
+          .subscribe(data => {
+            profile.bio = data.bio;
+            profile.blog = data.blog;
+            this.findOrCreateUser(profile)
+          })  
+        } else {
+          console.log(profile)
+          this.findOrCreateUser(profile)
+        } 
       });
     });
   };
@@ -42,11 +54,10 @@ export class AuthService {
     this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
       .map(res => res.json())
       .subscribe( data => {
-        console.log(data)
         localStorage.setItem('url', data.url);
         localStorage.setItem('name', data.name);
         localStorage.setItem('picture', data.picture);
-        setTimeout(() => location.reload(), 1000);
+        //setTimeout(() => location.reload(), 1000);
       })
   }
 

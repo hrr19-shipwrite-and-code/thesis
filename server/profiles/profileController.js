@@ -19,7 +19,9 @@ module.exports = {
           picture: req.body.picture,
           hire: req.body.hireable || false,
           github: req.body.html_url || null,
-          linkedin: req.body.publicProfileUrl || null
+          linkedin: req.body.publicProfileUrl || null,
+          blog: req.body.blog || null,
+          bio: req.body.bio || null
         }
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
