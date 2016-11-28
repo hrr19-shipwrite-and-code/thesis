@@ -25,8 +25,9 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exp
             }],
         execute: function() {
             ProjectAddService = (function () {
-                function ProjectAddService(authHttp) {
+                function ProjectAddService(authHttp, http) {
                     this.authHttp = authHttp;
+                    this.http = http;
                 }
                 ProjectAddService.prototype.userCreateProject = function (project) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -42,9 +43,13 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exp
                     return this.authHttp.post(url, JSON.stringify(project), options)
                         .map(function (res) { return res.json(); });
                 };
+                ProjectAddService.prototype.getGithubProject = function (gitUsername) {
+                    return this.http.get('http://api.github.com/users/' + gitUsername + '/repos')
+                        .map(function (res) { return res.json(); });
+                };
                 ProjectAddService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
                 ], ProjectAddService);
                 return ProjectAddService;
             }());

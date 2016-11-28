@@ -15,7 +15,8 @@ export class ProjectAddComponent {
   private userUrl = localStorage.getItem('url');
   private defaultValue = 'Completed'
   private owner = 'Member';
-  private userInfo = {}
+  private userInfo = {};
+  private repos = {}
   constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
 
   ngOnInit() {
@@ -41,8 +42,18 @@ export class ProjectAddComponent {
   getProfileInfo() {
     this.profileService.getProfileInfo(this.userUrl)
       .subscribe(data => {
-        console.log(data);
         this.userInfo = data;
+        if(data.github){
+          let username = data.github.split('/');
+          this.getGithubProject(username[username.length-1])
+        }
       });
+  }
+
+  getGithubProject(gitUsername) {
+    this.projectService.getGithubProject(gitUsername)
+      .subscribe(data => {
+        this.repos = data;
+      })
   }
 }

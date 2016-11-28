@@ -31,10 +31,11 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
         execute: function() {
             AuthService = (function () {
                 //Store profile object in auth class
-                function AuthService(authHttp, router) {
+                function AuthService(authHttp, router, http) {
                     var _this = this;
                     this.authHttp = authHttp;
                     this.router = router;
+                    this.http = http;
                     this.options = {
                         additionalSignUpFields: [{
                                 name: "name",
@@ -50,7 +51,19 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                         localStorage.setItem('id_token', authResult.idToken);
                         // Fetch profile information
                         _this.lock.getProfile(authResult.idToken, function (error, profile) {
-                            _this.findOrCreateUser(profile);
+                            //Get additional github information
+                            if (profile.url) {
+                                _this.http.get(profile.url)
+                                    .map(function (res) { return res.json(); })
+                                    .subscribe(function (data) {
+                                    profile.bio = data.bio;
+                                    profile.blog = data.blog;
+                                    _this.findOrCreateUser(profile);
+                                });
+                            }
+                            else {
+                                _this.findOrCreateUser(profile);
+                            }
                         });
                     });
                 }
@@ -61,7 +74,6 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                     this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
-                        console.log(data);
                         localStorage.setItem('url', data.url);
                         localStorage.setItem('name', data.name);
                         localStorage.setItem('picture', data.picture);
@@ -87,7 +99,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                 };
                 AuthService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp, router_1.Router])
+                    __metadata('design:paramtypes', [angular2_jwt_2.AuthHttp, router_1.Router, http_1.Http])
                 ], AuthService);
                 return AuthService;
             }());

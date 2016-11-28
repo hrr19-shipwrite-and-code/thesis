@@ -19,7 +19,9 @@ module.exports = {
           picture: req.body.picture,
           hire: req.body.hireable || false,
           github: req.body.html_url || null,
-          linkedin: req.body.publicProfileUrl || null
+          linkedin: req.body.publicProfileUrl || null,
+          blog: req.body.blog || null,
+          bio: req.body.bio || null
         }
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
@@ -280,14 +282,15 @@ module.exports = {
     Profile.findOne({
       where: {
         authId: authId,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member"))', authId]]
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', authId]]
       },
     })
       .then((user) => {
         if(user){
           user.removeTeam(team)
             .then(() => {
-              res.sendStatus(200);
+              req.user.id = user.id;
+              next();
             })
             .catch((err) => {
               res.sendStatus(401);

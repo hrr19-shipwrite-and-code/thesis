@@ -24,7 +24,7 @@ module.exports = function (app, express) {
   app.delete('/api/team/delete/:teamId', middleware.authCheck, profileController.deleteTeam);
   app.post('/api/team/addMember/:teamId/:userURL', middleware.authCheck, profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
   app.put('/api/team/joinTeam/:teamId', middleware.authCheck, profileController.joinTeam);
-  app.delete('/api/team/leaveTeam/:teamId', middleware.authCheck, profileController.leaveTeam);
+  app.delete('/api/team/leaveTeam/:teamId', middleware.authCheck, profileController.leaveTeam, notificationController.deleteNotification);
   app.delete('/api/team/removeMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.removeMember);
   app.put('/api/team/promoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.promoteMember);
   app.put('/api/team/demoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.demoteMember);
@@ -71,4 +71,8 @@ module.exports = function (app, express) {
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
+
+  //Notification Routes
+  app.get('/api/notifications', notificationController.getAllNotification);
+  app.put('/api/notifications/view/:id', notificationController.viewNotification);
 };
