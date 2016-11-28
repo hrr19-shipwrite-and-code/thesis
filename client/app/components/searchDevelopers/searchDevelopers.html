@@ -2,7 +2,8 @@
 
 
   <div class="header-container horizontal-center">
-    <h2 class='header'>Search for Developers</h2>
+    <h2 class='header' *ngIf="type === 'Member'">Search for Developers</h2>
+    <h2 class='header' *ngIf="type === 'Team'">Search for Teams</h2>
   </div>
 
   <div class="main-content">
@@ -59,7 +60,7 @@
 
           <!-- Search Button -->
         </form>
-        <button type="submit" class="btn btn-primary" (click)="getAllUsers(form.value)">Search</button>
+        <button type="submit" class="btn btn-primary" (click)="getAllProfiles(form.value)">Search</button>
       </div> <!-- sidebar -->
 
     </div> <!-- sidebar-container -->

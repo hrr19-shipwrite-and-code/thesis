@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AddProductModelDirective } from '../../directives/new-project-model.directive.js'
+import { AddProductModelDirective } from '../../directives/new-project-model.directive.js';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-
 import { ProjectAddService } from './projectAdd.services.js';
+import { ProfileService } from '../profile/profile.services.js';
 
 
 @Component({
@@ -13,15 +12,48 @@ import { ProjectAddService } from './projectAdd.services.js';
 })
 
 export class ProjectAddComponent {
-  private userInfo = localStorage.getItem('url');
+  private userUrl = localStorage.getItem('url');
   private defaultValue = 'Completed'
-  constructor(private projectService: ProjectAddService, private router: Router) {}
+  private owner = 'Member';
+  private userInfo = {};
+  private repos = {}
+  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
+
+  ngOnInit() {
+    this.getProfileInfo();
+  }
 
   addProject(data) {
-    this.projectService.createProject(data)
+    if(data.owner === 'Member'){
+      this.projectService.userCreateProject(data)
+        .subscribe(
+          data => this.router.navigateByUrl('/project/' + data.id),
+          err => console.log(err)
+        )
+    } else {
+      this.projectService.teamCreateProject(data, data.owner)
       .subscribe(
         data => this.router.navigateByUrl('/project/' + data.id),
         err => console.log(err)
       )
+    }
+  }
+
+  getProfileInfo() {
+    this.profileService.getProfileInfo(this.userUrl)
+      .subscribe(data => {
+        this.userInfo = data;
+        if(data.github){
+          let username = data.github.split('/');
+          this.getGithubProject(username[username.length-1])
+        }
+      });
+  }
+
+  getGithubProject(gitUsername) {
+    this.projectService.getGithubProject(gitUsername)
+      .subscribe(data => {
+        this.repos = data;
+      })
   }
 }

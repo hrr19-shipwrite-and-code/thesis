@@ -54,6 +54,7 @@ a:hover, a.navLink:hover {
   cursor: pointer;
 }
 
+/* Links */
 .navLink {
   margin-right: 4vw;
   font-size: 0.9em;
@@ -63,4 +64,14 @@ a:hover, a.navLink:hover {
   width: auto;
   height: auto;
   float: right;
+}
+
+/* Dropdown */
+
+.nav-dropdown {
+  margin-right: 40px;
+}
+
+.dropdown-image {
+  margin-left: 10px;
 }

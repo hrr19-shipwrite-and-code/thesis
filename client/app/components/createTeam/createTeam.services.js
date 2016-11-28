@@ -11,7 +11,7 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var angular2_jwt_1, core_1, http_1;
-    var EditProfileService;
+    var CreateTeamService;
     return {
         setters:[
             function (angular2_jwt_1_1) {
@@ -25,29 +25,25 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                 http_1 = http_1_1;
             }],
         execute: function() {
-            EditProfileService = (function () {
-                function EditProfileService(authHttp, http) {
+            CreateTeamService = (function () {
+                function CreateTeamService(authHttp, http) {
                     this.authHttp = authHttp;
                     this.http = http;
                 }
-                EditProfileService.prototype.getUserInfo = function () {
-                    return this.authHttp.get('http://localhost:1337/api/editUserInfo')
-                        .map(function (res) { return res.json(); });
-                };
-                EditProfileService.prototype.editUserInfo = function (userInfo) {
+                CreateTeamService.prototype.createTeam = function (teamInfo) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
+                    return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
                         .map(function (res) { return res.json; });
                 };
-                EditProfileService = __decorate([
+                CreateTeamService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
-                ], EditProfileService);
-                return EditProfileService;
+                ], CreateTeamService);
+                return CreateTeamService;
             }());
-            exports_1("EditProfileService", EditProfileService);
+            exports_1("CreateTeamService", CreateTeamService);
         }
     }
 });
-//# sourceMappingURL=editProfile.services.js.map
+//# sourceMappingURL=createTeam.services.js.map

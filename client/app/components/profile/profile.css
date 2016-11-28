@@ -142,3 +142,9 @@ hr {
   width: 90px;
   display: inline-flex;
 }
+
+/* Global Tag Styles */
+
+.fa {
+  color: #D9D9D9;
+}

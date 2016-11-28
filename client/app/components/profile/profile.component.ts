@@ -17,13 +17,15 @@ export class ProfileComponent {
   private clientId = localStorage.getItem('url');
   private profileInfo = {Teches: [], Team: [], Member: []};
   private newTech = '';
+  private newMember = '';
   private urlTaken = false;
   private tempUrl: string;
   private editing = {
     basic: false,
     tech: false,
     contact: false,
-    picture: false
+    picture: false,
+    member: false
   };
   private options: Object = {
     url: 'http://localhost:1337/api/user/addPicture',
@@ -34,6 +36,7 @@ export class ProfileComponent {
     authTokenPrefix: 'Bearer'
   };
   techs = [];
+  memberType = '';
 
   constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
@@ -73,6 +76,16 @@ export class ProfileComponent {
         this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
         this.getUserProjects(data.id);
         this.tempUrl = data.url;
+        if(data.type === 'Team'){
+          this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
+          for(let member of this.profileInfo.Member) {
+            if(member.url === this.clientId){
+              return this.memberType = member.TeamUsers.type;
+            }
+          }
+        } else {
+          this.memberType = '';
+        }
       });
     });
   }
@@ -89,29 +102,47 @@ export class ProfileComponent {
   }
 
   updateUserInfo(event, input, type) {
-    if (type === 'basic') {
-      localStorage.setItem('name', input.name);
-    }
-    if (input.url === this.clientId) {
+    if (input.url === this.profileInfo.url) {
       return;
     }
-    return this.profileService.updateUserProfile(input)
-      .subscribe(
-        data => {
+    if(this.profileInfo.type === 'Team'){
+      return this.profileService.updateTeamProfile(this.profileInfo.id, input)
+        .subscribe(data => {
           if (type === 'url') {
-            localStorage.setItem('url', input.url);
-            this.clientId = localStorage.getItem('url');
             this.urlTaken = false;
-            this.router.navigateByUrl('/profile/' + input.url)
+            this.router.navigateByUrl('/' + input.url);
           } else {
-          this.editForm(type)
+            this.editForm(type);
           }
         },
         err => {
           if (type === 'url') {
             this.urlTaken = true;
-          }}
-      )
+          }
+        })
+    } else {
+      if (type === 'basic') {
+        localStorage.setItem('name', input.name);
+      }
+      return this.profileService.updateUserProfile(input)
+        .subscribe(
+          data => {
+            if (type === 'url') {
+              localStorage.setItem('url', input.url);
+              this.clientId = localStorage.getItem('url');
+              this.urlTaken = false;
+              this.router.navigateByUrl('/' + input.url);
+            } else {
+              this.editForm(type);
+            }
+          },
+          err => {
+            if (type === 'url') {
+              this.urlTaken = true;
+            }}
+        )
+    }
+    
   }
 
   editForm(key) {
@@ -125,20 +156,33 @@ export class ProfileComponent {
       }
     }
     let newTech = { name: this.newTech };
-      this.profileService.addTech(newTech)
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamAddTech(this.profileInfo.id, newTech)
         .subscribe(data => {
           this.profileInfo.Teches.push(data);
         });
+    } else {
+      this.profileService.userAddTech(newTech)
+        .subscribe(data => {
+          this.profileInfo.Teches.push(data);
+        });
+    }
+    
     this.newTech = '';
     this.editing.tech = !this.editing.tech;
   }
 
-  deleteTech(event, id) {
-    console.log(id);
-    this.profileService.deleteTech(id)
-      .subscribe(data => {});
+  deleteTech(event, techId) {
+    if(this.profileInfo.type === 'Team') {
+      this.profileService.teamDeleteTech(this.profileInfo.id, techId)
+        .subscribe(data => {});
+    } else {
+      this.profileService.userDeleteTech(techId)
+        .subscribe(data => {});
+    }
+    
     for(let i = 0; i < this.profileInfo.Teches.length; i++){
-      if(this.profileInfo.Teches[i].id == Number(id)) {
+      if(this.profileInfo.Teches[i].id == Number(techId)) {
         return this.profileInfo.Teches.splice(i, 1);
       };
     };
@@ -146,7 +190,7 @@ export class ProfileComponent {
 
   //Image Upload function
   handleUpload(data): void {
-    if (data && data.response) {
+    if (data && data.response && this.profileInfo.type === 'Member') {
       data = JSON.parse(data.response);
       localStorage.setItem("picture", data.picture + '?dummy=' + Date.now());
     }
@@ -163,5 +207,87 @@ export class ProfileComponent {
     reader.readAsDataURL(input.files[0]);
   }
 
+  //Manage Team function
+  deleteTeam() {
+    let choice = prompt('Enter the name of the team you wish to delete');
+    if (choice === this.profileInfo.name) {
+      this.profileService.deleteTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.router.navigateByUrl('/' + this.clientId)
+        });
+    }
+  }
 
+  joinTeam() {
+    let response = confirm("Are you sure you want to join " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.joinTeam(this.profileInfo.id)
+        .subscribe(data => {
+          data.TeamUsers = {type: 'Member'}
+          this.memberType = 'Member';
+          this.profileInfo.Member.push(data);
+        });
+    }
+  }
+
+  leaveTeam() {
+    let response = confirm("Are you sure you want to leave " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.leaveTeam(this.profileInfo.id)
+        .subscribe(data => {
+          this.memberType = '';
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].url === this.clientId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
+          }
+        });
+    }
+  }
+
+  addMember() {
+    this.profileService.addMember(this.profileInfo.id, this.newMember)
+      .subscribe(data => {
+        data.TeamUsers = {type: 'Pending'}
+        this.profileInfo.Member.push(data);
+        this.newMember = '';
+        this.editing.member = !this.editing.member;
+      });
+  }
+
+  removeMember(userId, name) {
+    let response = confirm("Are you sure you want to remove " + name + " from " + this.profileInfo.name + "?");
+    if(response){
+      this.profileService.removeMember(this.profileInfo.id, userId)
+        .subscribe(data => {
+          for(let i = 0; i < this.profileInfo.Member.length; i++){
+            if(this.profileInfo.Member[i].id === userId){
+              return this.profileInfo.Member.splice(i, 1);
+            }
+          }
+        });
+    }
+  }
+
+  promoteMember(member) {
+    let response = confirm("Are you sure you want to promote " + member.name + " to admin?");
+    if(response){
+      this.profileService.promoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Admin';
+        })
+    }  
+  }
+
+  demoteMember(member) {
+    let response = confirm("Are you sure you want to demote " + member.name + " to member?");
+    if(response){
+      this.profileService.demoteMember(this.profileInfo.id, member.id)
+        .subscribe(data => {
+          let index = this.profileInfo.Member.indexOf(member);
+          this.profileInfo.Member[index].TeamUsers.type = 'Member';
+        })
+    }  
+  }
 }

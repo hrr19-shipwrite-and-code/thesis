@@ -54,6 +54,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editDeploy = false;
                     this.editProgress = false;
                     this.editSource = false;
+                    this.team = false;
+                    this.memberType = '';
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -65,7 +67,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.getAllTech();
-                    this.options.url = 'http://localhost:1337/api/project/upload/' + this.id;
+                    this.options.url = 'http://localhost:1337/api/project/upload/user/' + this.id;
+                    ;
                 };
                 //Service function to get the project by the route params Id
                 ProjectComponent.prototype.getProject = function (id) {
@@ -78,10 +81,21 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         data.createdAt = moment(data.createdAt).format('MMMM Do YYYY');
                         _this.determineOpenSource(data.openSource);
                         _this.project = data;
-                    }, function (err) { return _this.error = true; });
+                        if (data.Profile.Member.length > 0) {
+                            _this.options.url = 'http://localhost:1337/api/project/upload/team/' + data.Profile.id + '/' + _this.id;
+                            _this.team = true;
+                        }
+                        for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {
+                            var member = _a[_i];
+                            if (member.url === localStorage.getItem('url')) {
+                                //this.options.url = ???
+                                return _this.memberType = member.TeamUsers.type;
+                            }
+                        }
+                    }, function (err) { return _this.router.navigateByUrl('/'); });
                 };
                 ProjectComponent.prototype.gotoUser = function () {
-                    this.router.navigateByUrl('/profile/' + this.project.Profile.url);
+                    this.router.navigateByUrl('/' + this.project.Profile.url);
                 };
                 ProjectComponent.prototype.determineOpenSource = function (data) {
                     if (data) {
@@ -95,8 +109,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     var _this = this;
                     var choice = prompt('Enter the projects the title of the project you wish to delete');
                     if (choice === this.project.title) {
-                        this.projectService.deleteProject(this.id)
-                            .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        if (this.memberType === '') {
+                            this.projectService.deleteProject(this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
+                        else {
+                            this.projectService.teamDeleteProject(this.project.Profile.id, this.id)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/'); }, function (err) { return err; });
+                        }
                     }
                 };
                 //Checks if the user already likes this project
@@ -140,16 +160,30 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }
                     var newTech = { name: this.newTech, id: this.project.id };
-                    this.projectService.addTech(newTech)
-                        .subscribe(function (data) {
-                        _this.project.Teches.push(data);
-                    });
+                    if (this.memberType === '') {
+                        this.projectService.addTech(newTech)
+                            .subscribe(function (data) {
+                            _this.project.Teches.push(data);
+                        });
+                    }
+                    else {
+                        this.projectService.teamAddTech(this.project.Profile.id, newTech)
+                            .subscribe(function (data) {
+                            _this.project.Teches.push(data);
+                        });
+                    }
                     this.newTech = '';
                     this.editTech = !this.editTech;
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
-                    this.projectService.deleteTech(event.target.id, this.project.id)
-                        .subscribe(function (data) { });
+                    if (this.memberType === '') {
+                        this.projectService.deleteTech(event.target.id, this.project.id)
+                            .subscribe(function (data) { });
+                    }
+                    else {
+                        this.projectService.teamDeleteTech(this.project.Profile.id, event.target.id, this.project.id)
+                            .subscribe(function (data) { });
+                    }
                     for (var i = 0; i < this.project.Teches.length; i++) {
                         if (this.project.Teches[i].id == Number(event.target.id)) {
                             return this.project.Teches.splice(i, 1);
@@ -207,9 +241,16 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 };
                 //Set image as project thumbnail
                 ProjectComponent.prototype.updateThumbnail = function () {
-                    var data = this.picture;
-                    this.projectService.setAsThumb(this.id, data)
-                        .subscribe(function (data) { return data; }, function (err) { return err; });
+                    if (this.team) {
+                        var data = this.picture;
+                        this.projectService.setTeamThumb(this.id, this.project.Profile.id, data)
+                            .subscribe(function (data) { return data; }, function (err) { return err; });
+                    }
+                    else {
+                        var data = this.picture;
+                        this.projectService.setAsThumb(this.id, data)
+                            .subscribe(function (data) { return data; }, function (err) { return err; });
+                    }
                 };
                 //Function to make thumbnail the large image
                 ProjectComponent.prototype.setMainImage = function (img) {
@@ -218,19 +259,36 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 //Delete image from database and page
                 ProjectComponent.prototype.deleteImage = function (id) {
                     var _this = this;
-                    this.projectService.deleteImage(id)
-                        .subscribe(function (data) {
-                        for (var i = 0; i < _this.project.Images.length; i++) {
-                            var img = _this.project.Images[i];
-                            if (img.id === id) {
-                                _this.project.Images.splice(i, i + 1);
-                                _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
-                                if (_this.picture.url === '/client/app/assets/thumbnail.png') {
-                                    _this.updateThumbnail();
+                    if (this.team) {
+                        this.projectService.deleteTeamImage(id, this.id, this.project.Profile.id)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.project.Images.length; i++) {
+                                var img = _this.project.Images[i];
+                                if (img.id === id) {
+                                    _this.project.Images.splice(i, i + 1);
+                                    _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
+                                    if (_this.picture.url === '/client/app/assets/thumbnail.png') {
+                                        _this.updateThumbnail();
+                                    }
                                 }
                             }
-                        }
-                    }, function (err) { return err; });
+                        }, function (err) { return err; });
+                    }
+                    else {
+                        this.projectService.deleteImage(id, this.id)
+                            .subscribe(function (data) {
+                            for (var i = 0; i < _this.project.Images.length; i++) {
+                                var img = _this.project.Images[i];
+                                if (img.id === id) {
+                                    _this.project.Images.splice(i, i + 1);
+                                    _this.picture = _this.project.Images[0] || { url: '/client/app/assets/thumbnail.png' };
+                                    if (_this.picture.url === '/client/app/assets/thumbnail.png') {
+                                        _this.updateThumbnail();
+                                    }
+                                }
+                            }
+                        }, function (err) { return err; });
+                    }
                 };
                 //Checks whether to hide certain buttons
                 ProjectComponent.prototype.checkForImages = function () {
@@ -245,9 +303,14 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.determineOpenSource(this.project.contribute);
                     }
                     this.project[type] = input[type];
-                    //this.project.descripiton = input.descripiton;
-                    this.projectService.editDescription(this.id, input)
-                        .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    if (this.memberType === '') {
+                        this.projectService.editDescription(this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
+                    else {
+                        this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+                            .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
+                    }
                 };
                 ProjectComponent.prototype.editingProject = function (type) {
                     if (type === 'tech') {

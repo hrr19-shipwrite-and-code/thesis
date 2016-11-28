@@ -11,6 +11,7 @@
   <div class='links'>
     <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
     <a routerLink="/developers" routerLinkActive="active" class="navLink">Developers</a>
+    <a routerLink="/teams" routerLinkActive="active" class="navLink">Teams</a>
   </div>
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
@@ -49,12 +50,16 @@
 
       </div>
       <div class="nav-dropdown-links">
-        <div routerLink="/profile/{{auth.checkUrl()}}" class="navLink">
+        <div routerLink="/{{auth.checkUrl()}}" class="navLink">
           <span>Profile</span>
         </div>
         <hr>
         <div routerLink="/addproject" class="navLink">
           <span>Add Project</span>
+        </div>
+        <hr>
+        <div routerLink="/createteam" class="navLink">
+          <span>Create Team</span>
         </div>
         <hr>
         <div (click)="auth.logout()" class="navLink">

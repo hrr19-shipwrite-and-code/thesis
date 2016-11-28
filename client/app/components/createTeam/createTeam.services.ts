@@ -5,18 +5,13 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 
 
 @Injectable()
-export class EditProfileService {
+export class CreateTeamService {
   constructor(private authHttp: AuthHttp, private http: Http) {}
 
-  getUserInfo(){
-    return this.authHttp.get('http://localhost:1337/api/editUserInfo')
-    .map(res => res.json())
-  }
-
-  editUserInfo(userInfo){
+  createTeam(teamInfo){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.put('http://localhost:1337/api/user/edit', JSON.stringify(userInfo), options)
+    return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
       .map(res => res.json);
   }
 }

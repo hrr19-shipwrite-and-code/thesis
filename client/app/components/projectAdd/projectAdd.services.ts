@@ -5,14 +5,27 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ProjectAddService {
   postProject
-  constructor (private authHttp: AuthHttp) {}
+  constructor (private authHttp: AuthHttp, private http: Http) {}
 
-  createProject(project) {
+  userCreateProject(project) {
    let headers = new Headers({ 'Content-Type': 'application/json' });
    let options = new RequestOptions({ headers: headers });
-   const url = 'http://localhost:1337/api/project/create'
+   const url = 'http://localhost:1337/api/project/userCreate'
    return this.authHttp.post(url, JSON.stringify(project), options)
     .map(res => res.json())
+  }
+
+  teamCreateProject(project, teamId) {
+   let headers = new Headers({ 'Content-Type': 'application/json' });
+   let options = new RequestOptions({ headers: headers });
+   const url = 'http://localhost:1337/api/project/teamCreate/' + teamId
+   return this.authHttp.post(url, JSON.stringify(project), options)
+    .map(res => res.json())
+  }
+
+  getGithubProject(gitUsername) {
+    return this.http.get('http://api.github.com/users/' + gitUsername + '/repos')
+      .map(res => res.json())
   }
 
 }

@@ -3,10 +3,10 @@
 
   <div class="profile-details">
     <div class="profile-picture-viewport horizontal-center vertical-center">
-      <a routerLink="/profile/{{user.url}}"><img src="{{user.picture}}" class='profile-picture' /></a>
+      <a routerLink="/{{user.url}}"><img src="{{user.picture}}" class='profile-picture' /></a>
     </div>
 
-    <a routerLink="/profile/{{user.url}}"><h5 class='user-name'>{{user.name}}</h5></a>
+    <a routerLink="/{{user.url}}"><h5 class='user-name'>{{user.name}}</h5></a>
     <p class='user-name'>{{user.location}}</p>
     <p class='description'>
       {{user.bio}}
@@ -22,8 +22,14 @@
       <!-- <div class="left-gradient"></div> -->
 
       <div class="thumbnail-placeholder" *ngFor="let project of user.Projects">
-        <a routerLink="/project/{{project.id}}"><img src="{{project.thumbnail}}"></a>
-      </div>
+        <a routerLink="/project/{{project.id}}">
+          <div class="image-container">
+            <div class="image-wrapper">
+              <img src="{{project.thumbnail}}" class="thumbnail-image">
+            </div> <!-- Image Wrapper -->
+          </div> <!-- Image Container -->
+        </a>
+      </div> <!-- Thumbnail Placeholder -->
 
       <!-- <div class="right-gradient"></div> -->
 

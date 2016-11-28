@@ -11,7 +11,7 @@ import { AgmCoreModule } from "angular2-google-maps/core";
 import { NavComponent } from '../nav/nav.component.js';
 
 import { ProfileComponent } from '../profile/profile.component.js';
-import { EditProfileComponent } from '../editProfile/editProfile.component.js';
+import { CreateTeamComponent } from '../createTeam/createTeam.component.js';
 import { ProjectComponent } from '../project/project.component.js';
 import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
@@ -28,6 +28,7 @@ import { TechHoverDirective } from '../../directives/tech-hover.directive.js';
 import { AddProductModelDirective } from '../../directives/new-project-model.directive.js';
 
 import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
+import { ProfileService } from '../profile/profile.services.js';
 
 
 @NgModule({
@@ -47,15 +48,13 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
     HomeComponent,
     NavComponent,
     ProfileComponent,
-    EditProfileComponent,
+    CreateTeamComponent,
     ProjectComponent,
     BrowseComponent,
     ProjectAddComponent,
     SearchDevelopersComponent,
     ProfilePreviewComponent,
-
     ProjectThumbnailComponent,
-    //UPLOAD_DIRECTIVES,
     HoverDirective,
     TechHoverDirective,
     AddProductModelDirective,
@@ -64,7 +63,8 @@ import { ProjectAddService } from '../projectAdd/projectAdd.services.js';
   bootstrap:    [ AppComponent ],
   providers: [
     AUTH_PROVIDERS,
-    ProjectAddService
+    ProjectAddService,
+    ProfileService
   ]
 })
 

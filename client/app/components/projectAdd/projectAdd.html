@@ -3,12 +3,26 @@
 
   <div class="main-content shadow horizontal-center">
     <h4>Add Project</h4>
-
+    <form>
+      <p>Import from Github:</p>
+      <select>
+      </select>
+    </form>
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
       <div class="form-group">
         <p class='title-label'>Title:</p>
         <input type="text" name="title" class='form-control' placeholder='Enter your project title' ngModel required>
+      </div>
+
+       <div class="form-group">
+        <p class='title-label'>Owner:</p>
+        <select class="form-control" name="owner" [(ngModel)]="owner">
+          <option value="Member">{{userInfo.name}}</option>
+          <ng-container *ngFor="let team of userInfo.Team">
+            <option *ngIf="team.TeamUsers.type === 'Owner' || team.TeamUsers.type === 'Admin'" value="{{team.id}}"><span>{{team.name}}</span></option>
+          </ng-container>
+        </select>
       </div>
 
       <div class="form-group">

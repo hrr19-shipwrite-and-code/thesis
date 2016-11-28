@@ -13,14 +13,17 @@ export class AuthService {
     additionalSignUpFields: [{
       name: "name",
       placeholder: "Enter full name",
-    }]
+    }],
+    auth: {
+      redirect: false,
+    }
   }
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
 
 
   //Store profile object in auth class
 
-  constructor(private authHttp: AuthHttp, private router: Router) {
+  constructor(private authHttp: AuthHttp, private router: Router, private http: Http) {
 
     // Add callback for the Lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
@@ -28,13 +31,18 @@ export class AuthService {
 
       // Fetch profile information
       this.lock.getProfile(authResult.idToken, (error, profile) => {
-        if (error) {
-          // Handle error
-          alert(error);
-          return;
-        }
-        console.log(profile);
-        this.findOrCreateUser(profile)
+        //Get additional github information
+        if(profile.url){
+          this.http.get(profile.url)
+          .map(res => res.json())
+          .subscribe(data => {
+            profile.bio = data.bio;
+            profile.blog = data.blog;
+            this.findOrCreateUser(profile)
+          })  
+        } else {
+          this.findOrCreateUser(profile)
+        } 
       });
     });
   };
@@ -45,10 +53,10 @@ export class AuthService {
     this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
       .map(res => res.json())
       .subscribe( data => {
-        console.log(data)
         localStorage.setItem('url', data.url);
         localStorage.setItem('name', data.name);
         localStorage.setItem('picture', data.picture);
+        setTimeout(() => location.reload(), 1000);
       })
   }
 

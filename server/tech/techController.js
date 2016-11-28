@@ -5,14 +5,13 @@ const Profile = require('../profiles/profileSchema.js');
 const Project = require('../projects/projectSchema.js');
 
 module.exports = {
-  profileAddTech: (req, res, next) => {
+  userAddTech: (req, res, next) => {
     const authId = req.user.sub;
     const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Profile.findOne({where: {authId: authId}})
           .then((profile) => {
-            //console.log(tech);
             profile.addTech(tech)
               .then(() => {
                 res.send(tech);
@@ -25,7 +24,7 @@ module.exports = {
       });
   },
 
-  profileRemoveTech: (req, res, next) => {
+  userRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
     const techId = req.params.techId;
     Tech.findOne({where: {id: techId}})
@@ -43,15 +42,52 @@ module.exports = {
       })
   },
 
+  teamAddTech: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const techName = req.body.name;
+    Tech.findOrCreate({where: {name: techName}})
+      .spread((tech) => {
+        Profile.findOne({where: {id: teamId}})
+          .then((profile) => {
+            profile.addTech(tech)
+              .then(() => {
+                res.send(tech);
+              })
+              .catch((err) => {
+                res.sendStatus(404);
+              });
+          });
+      });
+  },
+
+  teamRemoveTech: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const techId = req.params.techId;
+    Tech.findOne({where: {id: techId}})
+      .then((tech) => {
+        Profile.findOne({where: {id: teamId}})
+          .then((profile) => {
+            profile.removeTech(tech)
+              .then(() => {
+                res.sendStatus(200);
+              })
+              .catch((err) => {
+                res.sendStatus(401);
+              })
+          })
+      })
+  },
+
   projectAddTech: (req, res, next) => {
     const authId = req.user.sub;
+    const find = req.team ? {id: req.params.teamId} : {authId: authId};
     const id = req.body.id;
     const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Project.findOne({
           where: {id: id},
-          include: [{model: Profile, where: {authId: authId}}]
+          include: [{model: Profile, where: find}]
         })
           .then((project) => {
             project.addTech(tech)
@@ -68,13 +104,14 @@ module.exports = {
 
   projectRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
+    const find = req.team ? {id: req.params.teamId} : {authId: authId};
     const id = req.params.projectId;
     const techId = req.params.techId;
     Tech.findOne({
       where: {id: techId},
       include: [{
         model: Project,
-        include: [{model: Profile, where: {authId: authId}}]
+        include: [{model: Profile, where: find}]
       }]
     })
       .then((tech) => {

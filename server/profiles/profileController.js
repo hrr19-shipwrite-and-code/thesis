@@ -19,7 +19,9 @@ module.exports = {
           picture: req.body.picture,
           hire: req.body.hireable || false,
           github: req.body.html_url || null,
-          linkedin: req.body.publicProfileUrl || null
+          linkedin: req.body.publicProfileUrl || null,
+          blog: req.body.blog || null,
+          bio: req.body.bio || null
         }
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
@@ -48,13 +50,13 @@ module.exports = {
         model: Profile,
         as: 'Member',
         attributes: ['id', 'name', 'url'],
-        through: {attributes: []}
+        through: {attributes: ['type']}
       },
       {
         model: Profile,
         as: 'Team',
         attributes: ['id', 'name', 'url'],
-        through: {attributes: []}
+        through: {where: {type: {$not: 'Pending'}}}
       },
       {
         model: Project
@@ -69,12 +71,10 @@ module.exports = {
       });
   },
 
-  getAllUser: (req, res, next) => {
+  getAllProfile: (req, res, next) => {
     let filter = {
       where: {
-        type: {
-          $eq: 'Member'
-        },
+        type: req.body.type,
         $and: []
       },
       include: [{
@@ -128,17 +128,19 @@ module.exports = {
   },
 
   createTeam: (req, res, next) => {
-    const user = req.body.user;
-    const team = req.body.team;
+    const authId = req.user.sub;
     const teamInfo = {
       name: req.body.name,
-      url: team,
+      url: req.body.url,
       email: req.body.email,
-      type: 'team'
+      location: req.body.location,
+      hire: req.body.hire || false,
+      bio: req.body.bio,
+      type: 'Team'
     }
-    Profile.findOne({where: {url: user}})
+    Profile.findOne({where: {authId: authId}})
       .then((user) => {
-        user.createTeam(teamInfo, {admin: true})
+        user.createTeam(teamInfo, {type: 'Owner'})
           .then(() => {
             res.sendStatus(201);
           })
@@ -150,10 +152,10 @@ module.exports = {
   },
 
   editTeamInfo: (req, res, next) => {
-    const url = req.body.url;
-    Profile.update({email: req.body.email}, {where: {url: url}})
+    const teamId = req.params.teamId;
+    Profile.update(req.body, {where: {id: teamId}})
       .then(() => {
-        res.sendStatus(201);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err)
@@ -162,70 +164,174 @@ module.exports = {
   },
 
   deleteTeam: (req, res,next) => {
-    const url = req.body.url;
-    Profile.destroy({where: {url: url}})
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(() => {
-        res.sendStatus(404);
-      })
+    const teamId = req.params.teamId;
+    const user = req.user.sub;
+    Profile.findOne({
+      where: {
+        authId: user,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type = "Owner")', user]]
+      }
+    })
+      .then((user) => {
+        if(user){
+          Profile.destroy({where: {id: teamId}})
+            .then((team) => {
+              res.json(team);
+            })
+            .catch((err) => {
+              console.log(err)
+              res.sendStatus(404);
+            })
+        } else {
+          res.sendStatus(401)
+        }
+      })     
   },
 
-  addMember: (req, res, next) => {
-    const team = req.body.team;
-    const user = req.body.user;
-    Profile.findOne({where: {url: user}})
+  joinTeam: (req, res, next) => {
+    const authId = req.user.sub;
+    const teamId = req.params.teamId;
+    Profile.findOne({
+      where: {authId: authId},
+      attributes: ['id', 'name', 'url']
+    })
       .then((user) => {
-        Profile.findOne({where: {url: team}})
-          .then((team) => {
-            team.addMember(user)
-              .then(() => {
-                res.sendStatus(200);
-              })
-              .catch((err) => {
-                res.sendStatus(400);
-              });
-          });
-      });
-  },
-
-  removeMember: (req, res, next) => {
-    const team = req.body.team;
-    const user = req.body.user;
-    Profile.findOne({where: {url: user}})
-      .then((user) => {
-        Profile.findOne({where: {url: team}})
-          .then((team) => {
-            team.removeMember(user)
-              .then(() => {
-                res.sendStatus(200);
-              })
-              .catch((err) => {
-                res.sendStatus(400);
-              });
+        TeamUser.update({type: 'Member'}, {
+          where: {teamId: teamId, userId: user.id, type: 'Pending'}
+        })
+          .then((change) => {
+            if(change[0] !== 0) {
+              res.json(user);
+            } else {
+              res.sendStatus(401);
+            }
           })
       })
   },
 
-  promoteMember: (req, res, next) => {
-    const user = req.body.user;
-    const team = req.body.team;
-    TeamUser.findOne({where: {userId: user, teamId: team, admin: true}, attributes: ['userId', 'teamId', "admin"]})
+  memberTypeCheck: (req, res, next) => {
+    const sender = req.user.sub;
+    const team = req.params.teamId;
+    Profile.findOne({
+      where: {
+        id: team,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles on TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Owner", "Admin"))', sender]]
+      }
+    })
+      .then((team) => {
+        if(team){
+          req.team = team;
+          next() 
+        } else{
+          res.sendStatus(401)
+        }
+      })
+  },
+
+  addMember: (req, res, next) => {
+    const receiver = req.params.userURL;
+    const team = req.team;
+    
+    team.getMember({where: {url: receiver, type: 'Member'}})
+      .then((member) => {
+        if(member.length === 0){
+          Profile.findOne({where: {url: receiver, type: 'Member'}})
+            .then((memberInfo) => {
+              req.userInfo = memberInfo;
+              team.addMember(memberInfo.id, {type: 'Pending'})
+                .then(() => {
+                  next();
+                })  
+            })
+          
+        } else {
+          res.sendStatus(400);
+        } 
+      })  
+  },
+
+  removeMember: (req, res, next) => {
+    const receiver = req.params.userId;
+    const team = req.team;
+    //check if member can be removed (not owner)
+    Profile.findOne({
+      where: {
+        id: receiver,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE userId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', receiver]]
+      }
+    })
       .then((user) => {
-        res.json(user);
+        if(user){
+          team.removeMember(user)
+          .then(() => {
+            res.sendStatus(200);
+          })
+          .catch((err) => {
+            res.sendStatus(400);
+          });
+        } else {
+          res.sendStatus(401);
+        }
+    })
+  },
+
+  leaveTeam: (req, res, next) => {
+    const authId = req.user.sub;
+    const team = req.params.teamId;
+
+    Profile.findOne({
+      where: {
+        authId: authId,
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', authId]]
+      },
+    })
+      .then((user) => {
+        if(user){
+          user.removeTeam(team)
+            .then(() => {
+              req.user.id = user.id;
+              next();
+            })
+            .catch((err) => {
+              res.sendStatus(401);
+            });
+        } else {
+          res.sendStatus(400);
+        } 
+      });
+  },
+
+  promoteMember: (req, res, next) => {
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+    
+    TeamUser.update({type: 'Admin'}, {
+      where: {teamId: team, userId: receiver, type: {$not: 'Owner'}}
+    })
+      .then(() => {
+        res.sendStatus(200)
       })
       .catch((err) => {
-        console.log(err)
         res.sendStatus(400);
-      })
+      });
   },
 
   demoteMember: (req, res, next) => {
-
+    const receiver = req.params.userId;
+    const team = req.params.teamId;
+    
+    TeamUser.update({type: 'Member'}, {
+      where: {teamId: team, userId: receiver, type: {$not: 'Owner'}}
+    })
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .catch((err) => {
+        res.sendStatus(400);
+      });
   },
 
-  addPicture: (req, res, next) => {
+  addUserPicture: (req, res, next) => {
     const authId = req.user.sub
     const URL = '/client/uploads/profile/' + authId;
     Profile.findOne({where: {authId: authId}})
@@ -234,6 +340,18 @@ module.exports = {
           .then((update) => {
             res.send(update);
           });
+      });
+  },
+
+  addTeamPicture: (req, res, next) => {
+    const teamId = req.params.teamId;
+    const URL = '/client/uploads/profile/' + teamId;
+    Profile.findOne({where: {id: teamId}})
+      .then((profile) => {
+        profile.update({ picture: URL})
+          .then((update) => {
+            res.send(update);
+          })
       });
   }
 };

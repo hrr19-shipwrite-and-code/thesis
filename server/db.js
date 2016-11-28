@@ -5,6 +5,7 @@ const Project = require ('./projects/projectSchema.js');
 const Image = require('./projects/imageSchema.js');
 const Comment = require('./comments/commentSchema.js');
 const Like = require('./likes/likeSchema.js');
+const Notification = require('./notifications/notificationSchema.js');
 const Tech = require('./tech/techSchema.js').Tech;
 const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
@@ -28,6 +29,13 @@ Profile.sync()
     Profile.belongsToMany(Profile, {as: 'Member', foreignKey: 'teamId', through: TeamUser });
     Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
     TeamUser.sync();
+
+    Profile.hasMany(Notification, {foreignKey: 'SenderId'});
+    Notification.belongsTo(Profile, {as: 'Sender', foreignKey: 'SenderId'});
+    Profile.hasMany(Notification, {foreignKey: 'ReceiverId'});
+    Notification.belongsTo(Profile, {as: 'Receiver', foreignKey: 'ReceiverId'});
+    Notification.sync();
+
   });
 
 Tech.sync()
