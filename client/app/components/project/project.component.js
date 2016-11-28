@@ -160,16 +160,30 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         }
                     }
                     var newTech = { name: this.newTech, id: this.project.id };
-                    this.projectService.addTech(newTech)
-                        .subscribe(function (data) {
-                        _this.project.Teches.push(data);
-                    });
+                    if (this.memberType === '') {
+                        this.projectService.addTech(newTech)
+                            .subscribe(function (data) {
+                            _this.project.Teches.push(data);
+                        });
+                    }
+                    else {
+                        this.projectService.teamAddTech(this.project.Profile.id, newTech)
+                            .subscribe(function (data) {
+                            _this.project.Teches.push(data);
+                        });
+                    }
                     this.newTech = '';
                     this.editTech = !this.editTech;
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
-                    this.projectService.deleteTech(event.target.id, this.project.id)
-                        .subscribe(function (data) { });
+                    if (this.memberType === '') {
+                        this.projectService.deleteTech(event.target.id, this.project.id)
+                            .subscribe(function (data) { });
+                    }
+                    else {
+                        this.projectService.teamDeleteTech(this.project.Profile.id, event.target.id, this.project.id)
+                            .subscribe(function (data) { });
+                    }
                     for (var i = 0; i < this.project.Teches.length; i++) {
                         if (this.project.Teches[i].id == Number(event.target.id)) {
                             return this.project.Teches.splice(i, 1);

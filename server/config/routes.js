@@ -36,6 +36,8 @@ module.exports = function (app, express) {
   app.delete('/api/team/removeTech/:teamId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.teamRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
   app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
+  app.post('/api/project/teamAddTech/:teamId', middleware.authCheck, profileController.memberTypeCheck, techController.projectAddTech);
+  app.delete('/api/project/teamRemoveTech/:teamId/:projectId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);
 
   //User Project Routes

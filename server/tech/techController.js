@@ -80,13 +80,14 @@ module.exports = {
 
   projectAddTech: (req, res, next) => {
     const authId = req.user.sub;
+    const find = req.team ? {id: req.params.teamId} : {authId: authId};
     const id = req.body.id;
     const techName = req.body.name;
     Tech.findOrCreate({where: {name: techName}})
       .spread((tech) => {
         Project.findOne({
           where: {id: id},
-          include: [{model: Profile, where: {authId: authId}}]
+          include: [{model: Profile, where: find}]
         })
           .then((project) => {
             project.addTech(tech)
@@ -103,13 +104,14 @@ module.exports = {
 
   projectRemoveTech: (req, res, next) => {
     const authId = req.user.sub;
+    const find = req.team ? {id: req.params.teamId} : {authId: authId};
     const id = req.params.projectId;
     const techId = req.params.techId;
     Tech.findOne({
       where: {id: techId},
       include: [{
         model: Project,
-        include: [{model: Profile, where: {authId: authId}}]
+        include: [{model: Profile, where: find}]
       }]
     })
       .then((tech) => {

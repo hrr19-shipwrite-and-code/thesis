@@ -109,15 +109,15 @@ export class ProjectService {
       .map(res => res)
   }
 
-  addTech(tech) {
+  teamAddTech(teamId, tech) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.post('http://localhost:1337/api/project/addTech', JSON.stringify(tech), options)
+    return this.authHttp.post('http://localhost:1337/api/project/teamAddTech/' + teamId, JSON.stringify(tech), options)
       .map(res => res.json());
   }
 
-  deleteTech(techId, projectId) {
-    return this.authHttp.delete('http://localhost:1337/api/project/removeTech/' + projectId + '/' + techId)
+  teamDeleteTech(teamId, techId, projectId) {
+    return this.authHttp.delete('http://localhost:1337/api/project/teamRemoveTech/' + teamId + '/' + projectId + '/' + techId)
       .map(res => res);
   }
 
