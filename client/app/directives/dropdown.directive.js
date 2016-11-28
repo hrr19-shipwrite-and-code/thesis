@@ -24,6 +24,12 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.renderer = renderer;
                     this.hidden = true;
                 }
+                DropdownDirective.prototype.hide = function () {
+                    console.log('=-=-=-=-=-=-=-=-=-=-=');
+                    if (!this.hidden) {
+                        this.showHide();
+                    }
+                };
                 DropdownDirective.prototype.showHide = function () {
                     if (this.hidden) {
                         this.renderer.setElementClass(this.el.nativeElement, 'hide-dropdown', false);
@@ -37,7 +43,8 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     core_1.Directive({
                         selector: '[dropdown]',
                         host: {
-                            '(click)': 'showHide()'
+                            '(click)': 'showHide()',
+                            '(onblur)': 'showHide()'
                         },
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer])

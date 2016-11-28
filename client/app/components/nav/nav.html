@@ -15,11 +15,33 @@
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
+  <!--Notifications-->
+  <div class="notification">
+    <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
+    <div class="notification-inside" *ngIf="notificationShow">
+      <div class="space">
+
+      </div>
+      <div class="notifications">
+        <div *ngFor="let notification of notifications; let i = index" class="note">
+          <!--sender reciver type of notification-->
+          <span>You have been invited to join {{ notification.name }}</span>
+          <br>
+          <i class="fa fa-check" aria-hidden="true"></i>
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <hr *ngIf="i < notifications.length - 1">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--Navbar Dropdown-->
   <div class="nav-dropdown" *ngIf="auth.authenticated()">
-    <span>{{ name }}</span>
-    <img [src]="picture" class="dropdown-image">
-    <div class="nav-dropdown-inside hide-dropdown" dropdown>
+    <div id="profile">
+      <span id="profile">{{ name }}</span>
+      <img [src]="picture" class="dropdown-image" id="profile">
+    </div>
+    <div class="nav-dropdown-inside" *ngIf="profileShow">
       <div class="space">
 
       </div>

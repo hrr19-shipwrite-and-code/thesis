@@ -3,7 +3,8 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
 @Directive({
   selector: '[dropdown]',
   host: {
-    '(click)': 'showHide()'
+    '(click)': 'showHide()',
+    '(onblur)': 'showHide()'
   },
 
 })
@@ -13,6 +14,13 @@ export class DropdownDirective {
 
   constructor(private el: ElementRef, private renderer: Renderer) {
 
+  }
+
+  hide() {
+    console.log('=-=-=-=-=-=-=-=-=-=-=')
+    if (!this.hidden ) {
+      this.showHide();      
+    }
   }
 
   showHide() {
