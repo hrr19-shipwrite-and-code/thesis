@@ -19,6 +19,7 @@ import { HomeComponent }   from '../home/home.component.js';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
 import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDevelopers.component.js';
 import { ProfilePreviewComponent } from '../profilePreview/profilePreview.component.js';
+import { PageNotFoundComponent }   from '../pageNotFound/pageNotFound.component.js';
 
 import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail.component.js';
 
@@ -55,6 +56,7 @@ import { ProfileService } from '../profile/profile.services.js';
     SearchDevelopersComponent,
     ProfilePreviewComponent,
     ProjectThumbnailComponent,
+    PageNotFoundComponent,
     HoverDirective,
     TechHoverDirective,
     AddProductModelDirective,
