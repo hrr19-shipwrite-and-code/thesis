@@ -37,7 +37,26 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 }
                 NavComponent.prototype.ngOnInit = function () {
                     this.checkAgain();
-                    this.notifications = this.nav.getNotifications();
+                    this.checkNotifications();
+                };
+                NavComponent.prototype.checkNotifications = function () {
+                    var _this = this;
+                    this.nav.getNotifications()
+                        .subscribe(function (data) {
+                        _this.notifications = data;
+                        _this.numberOfNotifications = _this.notificationCount();
+                    });
+                    setInterval(function () {
+                        _this.checkNotifications();
+                    }, 300000);
+                };
+                NavComponent.prototype.notificationCount = function () {
+                    var count = 0;
+                    this.notifications.filter(function (note) {
+                        if (!note.viewed)
+                            count++;
+                    });
+                    return count;
                 };
                 NavComponent.prototype.checkAgain = function () {
                     if (localStorage.getItem('name') === null) {
@@ -52,10 +71,15 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     }
                 };
                 NavComponent.prototype.handleClick = function (e) {
+                    var _this = this;
                     var className = e.target.className.split(' ')[0];
                     if (e.target.id === 'notification' && className !== 'inside') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;
+                        this.nav.markAsRead()
+                            .subscribe(function (data) {
+                            _this.checkNotifications();
+                        });
                     }
                     else if (e.target.id === 'profile' && className !== 'inside') {
                         this.profileShow = !this.profileShow;

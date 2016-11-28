@@ -17,6 +17,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 export class NavComponent {
   notificationShow = false;
   profileShow = false;
+  numberOfNotifications;
   name;
   picture;
   notifications;
@@ -24,8 +25,27 @@ export class NavComponent {
   constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService) {}
 
   ngOnInit() {
-    this.checkAgain()
-    this.notifications = this.nav.getNotifications()
+    this.checkAgain();
+    this.checkNotifications();
+  }
+
+  checkNotifications(){
+    this.nav.getNotifications()
+      .subscribe( data => {
+        this.notifications = data;
+        this.numberOfNotifications = this.notificationCount();
+      })
+    setInterval(() =>{
+      this.checkNotifications();
+    }, 300000)
+  }
+
+  notificationCount() {
+    let count = 0;
+    this.notifications.filter((note) => {
+      if(!note.viewed) count++;
+    })
+    return count;
   }
 
   checkAgain() {
@@ -45,6 +65,10 @@ export class NavComponent {
     if (e.target.id === 'notification' && className !== 'inside') {
       this.notificationShow = !this.notificationShow;
       this.profileShow = false;
+      this.nav.markAsRead()
+        .subscribe( data => {
+          this.checkNotifications();
+        })
     } else if (e.target.id === 'profile' && className !== 'inside') {
       this.profileShow = !this.profileShow;
       this.notificationShow = false; 

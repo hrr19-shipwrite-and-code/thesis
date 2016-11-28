@@ -73,6 +73,6 @@ module.exports = function (app, express) {
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
 
   //Notification Routes
-  app.get('/api/notifications', notificationController.getAllNotification);
-  app.put('/api/notifications/view/:id', notificationController.viewNotification);
+  app.get('/api/notifications', middleware.authCheck, notificationController.getAllNotification);
+  app.put('/api/notifications/view/', middleware.authCheck, notificationController.viewNotification);
 };
