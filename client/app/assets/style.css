@@ -204,7 +204,7 @@ input:checked + .slider:before {
 .filter-bar-input {
   margin-top: 5px;
   display: inline-block;
-  max-width: 18%;
+  max-width: 16.8%;
 }
 
 .filter-bar select {
