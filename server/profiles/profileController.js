@@ -280,14 +280,15 @@ module.exports = {
     Profile.findOne({
       where: {
         authId: authId,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member"))', authId]]
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', authId]]
       },
     })
       .then((user) => {
         if(user){
           user.removeTeam(team)
             .then(() => {
-              res.sendStatus(200);
+              req.user.id = user.id;
+              next();
             })
             .catch((err) => {
               res.sendStatus(401);
