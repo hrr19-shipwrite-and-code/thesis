@@ -122,10 +122,10 @@ module.exports = {
 
   uploadProjectImage: (req, res, next) => {
     const id = req.params.projectId;
-    const find = req.team ? {where: {id: req.params.teamId}}: {where: {authId: req.user.sub}}
-    Profile.find(find)
+    Profile.find({where: {authId: req.user.sub}})
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
+        console.log(profile)
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
@@ -135,14 +135,33 @@ module.exports = {
           });
       })
       .catch((err) => {
-        res.sendStatus(401);
+        res.sendStatus(404);
+      });
+  },
+
+  uploadTeamProjectImage: (req, res, next) => {
+    const id = req.params.projectId;
+    Profile.find({where: {id: req.params.teamId}})
+      .then((profile) =>{
+        const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
+        console.log(profile)
+        Project.find({where: {id: id, ProfileId: profile.id}})
+          .then((project) => {
+            project.createImage({ url: URL})
+              .then((image) => {
+                res.send(image);
+              });
+          });
+      })
+      .catch((err) => {
+        res.sendStatus(404);
       });
   },
 
   updateProjectThumbnail: (req, res, next) => {
     const thumb = req.body.url;
     const id = req.params.projectId;
-    const userId = req.user.sub
+    const userId = req.user.sub;
     Project.find({where: {id: id}, include: [{model: Profile, attributes: ['authId']}]})
       .then((project) => {
         if (project.Profile.authId === userId) {
@@ -154,24 +173,88 @@ module.exports = {
               res.sendStatus(404);
             });
         }
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
+  },
+
+  updateTeamProjectThumbnail: (req, res, next) => {
+    const thumb = req.body.url;
+    const id = req.params.projectId;
+    Project.find({where: {id: id}, include: [{model: Profile, attributes: ['id']}]})
+      .then((project) => {
+        if (req.team.id === project.Profile.id) {
+          Project.update({thumbnail: thumb}, {where: {id: id}})
+            .then(() => {
+              res.sendStatus(200);
+            })
+            .catch((err) => {
+              res.sendStatus(404);
+            });
+        }
+      })
+      .catch((err) => {
+        res.sendStatus(404);
       });
   },
 
   deleteProjectImage: (req, res, next ) => {
-    //todo: authcheck needed!
     const id = req.params.imageId;
-    Image.findById(id)
-      .then((image) => {
-        let url = image.url;
-        fse.remove(url, () => {
-          Image.destroy({where: {id: id}})
-            .then(() => {
-              res.sendStatus(200);
+    const projectId = req.params.projectId;
+    const userId = req.user.sub;
+    Project.find({where: {id: projectId}, include: [{model: Profile, attributes: ['authId']}]})
+      .then((project) => {
+        if (project.Profile.authId === userId) {
+          Image.findById(id)
+            .then((image) => {
+              let url = image.url;
+              fse.remove(url, () => {
+                Image.destroy({where: {id: id}})
+                .then(() => {
+                  res.sendStatus(200);
+                })
+                .catch(() => {
+                  res.sendStatus(404);
+                });
+              });
             })
-            .catch(() => {
-              res.sendStatus(404);
+            .catch((err) => {
+            res.sendStatus(404);
             });
-        });
+        }
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
+  },
+
+  deleteTeamProjectImage: (req, res, next ) => {
+    const id = req.params.imageId;
+    const projectId = req.params.projectId;
+    Project.find({where: {id: projectId}, include: [{model: Profile, attributes: ['id']}]})
+      .then((project) => {
+        if (req.team.id === project.Profile.id) {
+          Image.findById(id)
+            .then((image) => {
+              let url = image.url;
+              fse.remove(url, () => {
+                Image.destroy({where: {id: id}})
+                .then(() => {
+                  res.sendStatus(200);
+                })
+                .catch(() => {
+                  res.sendStatus(404);
+                });
+              });
+            })
+            .catch((err) => {
+            res.sendStatus(404);
+            });
+        }
+      })
+      .catch((err) => {
+        res.sendStatus(404);
       });
   },
 
