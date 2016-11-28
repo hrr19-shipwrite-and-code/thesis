@@ -52,15 +52,17 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     }
                 };
                 NavComponent.prototype.handleClick = function (e) {
-                    if (e.target.id === 'notification') {
+                    var className = e.target.className.split(' ')[0];
+                    console.log(className);
+                    if (e.target.id === 'notification' && className !== 'inside') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;
                     }
-                    else if (e.target.id === 'profile') {
+                    else if (e.target.id === 'profile' && className !== 'inside') {
                         this.profileShow = !this.profileShow;
                         this.notificationShow = false;
                     }
-                    else {
+                    else if (className !== 'inside') {
                         this.notificationShow = false;
                         this.profileShow = false;
                     }

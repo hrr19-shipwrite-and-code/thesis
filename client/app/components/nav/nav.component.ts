@@ -41,13 +41,15 @@ export class NavComponent {
   }
 
   handleClick(e) {
-    if (e.target.id === 'notification') {
+    let className = e.target.className.split(' ')[0];
+    console.log(className)
+    if (e.target.id === 'notification' && className !== 'inside') {
       this.notificationShow = !this.notificationShow;
       this.profileShow = false;
-    } else if (e.target.id === 'profile') {
+    } else if (e.target.id === 'profile' && className !== 'inside') {
       this.profileShow = !this.profileShow;
       this.notificationShow = false; 
-    } else {  
+    } else if (className !== 'inside') {  
       this.notificationShow = false;
       this.profileShow = false;
     }

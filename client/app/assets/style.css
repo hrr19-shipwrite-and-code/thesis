@@ -298,3 +298,16 @@ input:checked + .slider:before {
 .note {
   padding: 5px;
 }
+
+.notification-number {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 15px;
+  text-align: center;
+  top: -17px;
+  right: -31px;
+}

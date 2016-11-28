@@ -18,18 +18,21 @@
   <!--Notifications-->
   <div class="notification">
     <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
-    <div class="notification-inside" *ngIf="notificationShow">
+    <div class="notification-number">
+      5
+    </div>
+    <div class="inside notification-inside" *ngIf="notificationShow">
       <div class="space">
 
       </div>
       <div class="notifications">
-        <div *ngFor="let notification of notifications; let i = index" class="note">
+        <div *ngFor="let notification of notifications; let i = index" class="inside note">
           <!--sender reciver type of notification-->
-          <span>You have been invited to join {{ notification.name }}</span>
+          <span class="inside">You have been invited to join {{ notification.name }}</span>
           <br>
-          <i class="fa fa-check" aria-hidden="true"></i>
-          <i class="fa fa-times" aria-hidden="true"></i>
-          <hr *ngIf="i < notifications.length - 1">
+          <i class="inside fa fa-check" aria-hidden="true"></i>
+          <i class="inside fa fa-times" aria-hidden="true"></i>
+          <hr *ngIf="i < notifications.length - 1" class="inside">
         </div>
       </div>
     </div>
