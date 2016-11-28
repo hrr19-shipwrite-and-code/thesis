@@ -67,7 +67,7 @@
       </div>
 
       <!-- User Teams if single User -->
-      <div *ngIf="profileInfo.Team.length">
+      <div class="connect" *ngIf="profileInfo.Team.length">
         <h4>TEAMS</h4>
         <div>
           <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
@@ -75,7 +75,7 @@
       </div>
 
       <!-- Teams members if team profile -->
-      <div *ngIf="profileInfo.Member.length">
+      <div class="connect" *ngIf="profileInfo.Member.length">
         <h4>MEMBERS</h4>
         <div>
           <div *ngFor='let member of profileInfo.Member'>
@@ -138,8 +138,8 @@
       </div>
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'> 
-        <h4>sushi url</h4>
-        <span *ngIf="urlTaken">URL Unavailable!</span>
+        <h4>sushi username</h4>
+        <span *ngIf="urlTaken">Username Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
           http://sushi.com/<input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL"><br>
           <button class="btn btn-primary btn-sm">Update</button>
