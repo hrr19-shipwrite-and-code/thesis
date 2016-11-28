@@ -41,7 +41,6 @@ export class AuthService {
             this.findOrCreateUser(profile)
           })  
         } else {
-          console.log(profile)
           this.findOrCreateUser(profile)
         } 
       });
@@ -57,7 +56,7 @@ export class AuthService {
         localStorage.setItem('url', data.url);
         localStorage.setItem('name', data.name);
         localStorage.setItem('picture', data.picture);
-        //setTimeout(() => location.reload(), 1000);
+        setTimeout(() => location.reload(), 1000);
       })
   }
 

@@ -62,7 +62,6 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                                 });
                             }
                             else {
-                                console.log(profile);
                                 _this.findOrCreateUser(profile);
                             }
                         });
@@ -78,7 +77,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                         localStorage.setItem('url', data.url);
                         localStorage.setItem('name', data.name);
                         localStorage.setItem('picture', data.picture);
-                        //setTimeout(() => location.reload(), 1000);
+                        setTimeout(function () { return location.reload(); }, 1000);
                     });
                 };
                 AuthService.prototype.login = function () {
