@@ -16,7 +16,7 @@
         <option value=0>No</option>
       </select>
       <button type="submit" class="btn btn-primary">Apply</button>
-      <button type="button" class="btn btn-danger">Clear</button>
+      <button type="button" class="btn btn-danger" (click)="filter($event, {})">Clear</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
