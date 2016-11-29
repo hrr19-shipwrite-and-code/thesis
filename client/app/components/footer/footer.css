@@ -18,3 +18,13 @@ a:hover, a.navLink:hover {
   color: salmon;
   cursor: pointer;
 }
+
+.top {
+  color: #F4F4F4;
+  text-decoration: none;
+}
+
+.top:hover {
+  color: salmon;
+  cursor: pointer;
+}

@@ -21,6 +21,9 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             FooterComponent = (function () {
                 function FooterComponent() {
                 }
+                FooterComponent.prototype.gotoTop = function () {
+                    return window.scrollTo(0, 0);
+                };
                 FooterComponent = __decorate([
                     core_1.Component({
                         selector: 'footer',
