@@ -20,7 +20,6 @@ export class ProjectAddComponent {
   private title = '';
   private github = '';
   private description = '';
-  private username = 'default';
   private haveGithub = null;
   private selected = {};
   constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}

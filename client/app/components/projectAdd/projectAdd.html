@@ -6,7 +6,7 @@
     <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
       <p>Import from Github:</p>
       <span>Owner: </span>
-      <select name="username" [(ngModel)]="username" (change)="handleChange($event)" required>
+      <select name="username" ngModel="default" (change)="handleChange($event)" required>
         <option value="default" disabled="">-- Select One --</option>
         <option value="Member">{{userInfo.name}}</option>
         <option *ngFor="let team of userInfo.Team; let i = index" value="{{i}}">{{team.name}}</option>
@@ -17,7 +17,7 @@
       
       <div *ngIf="repos.length > 0">
         <span>Repository: </span>
-        <select name="repo" ngModel required>
+        <select name="repo" ngModel=0 required>
           <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
         </select>
       </div>

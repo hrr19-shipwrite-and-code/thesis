@@ -40,7 +40,6 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.title = '';
                     this.github = '';
                     this.description = '';
-                    this.username = 'default';
                     this.haveGithub = null;
                     this.selected = {};
                 }
