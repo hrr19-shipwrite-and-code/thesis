@@ -15,7 +15,7 @@
         <option value=1>Yes</option>
         <option value=0>No</option>
       </select>
-      <button type="submit" class="btn btn-primary">Apply</button>
+      <button type="submit" class="btn btn-primary apply-btn">Apply</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
@@ -24,9 +24,9 @@
   </div>
   <div class="sort">
     <span (click)="sort('date')">Recent</span>
-     | 
+     |
     <span (click)="sort('likes')">Likes</span>
-     | 
+     |
     <span (click)="sort('views')">Views</span>
   </div>
 
@@ -37,4 +37,3 @@
   </div> <!-- thumbnail-wrapper -->
 
 </div> <!-- container -->
-

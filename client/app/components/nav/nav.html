@@ -18,7 +18,7 @@
 
   <!--Navbar Dropdown-->
   <div class="nav-dropdown" *ngIf="auth.authenticated()">
-    <span>{{ name }}</span>
+    <span class="name">{{ name }}</span>
     <img [src]="picture" class="dropdown-image">
     <div class="nav-dropdown-inside hide-dropdown" dropdown>
       <div class="space">

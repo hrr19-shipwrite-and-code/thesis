@@ -7,13 +7,6 @@
   flex-direction: column;
 }
 
-
-
-/* full-page container */
-.container {
-}
-
-
 .thumbnail-wrapper {
   /*border: 2px solid lightgreen;*/
   width: 100%;
@@ -23,4 +16,13 @@
   width: 1065px;
   padding: 0;
   /*border: 2px solid salmon;*/
+}
+
+/* Filter Bar */
+.filter-btn {
+  cursor: pointer;
+}
+
+.apply-btn, .apply-btn:active {
+  outline: none;
 }

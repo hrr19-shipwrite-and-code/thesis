@@ -4,14 +4,21 @@
     <div class='sidebar horizontalCenter shadow'>
 
       <div class='topInfo horizontalCenter'>
+        <!-- Profile Photo -->
         <div class='profilePhoto horizontalCenter'>
           <img class="profilePhoto" src="{{profileInfo.picture}}"/>
         </div>
-          <input type="file"
-            *ngIf="editing.picture"
-            ngFileSelect
-            [options]="options"
-            (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
+        <!-- Change Profile Photo Button -->
+        <!-- <div class="form-group">
+          <label class="btn btn-default btn-file"> -->
+            <input type="file"
+              *ngIf="editing.picture"
+              ngFileSelect
+              [options]="options"
+              (onUpload)="handleUpload($event); handleChange(input)" name="profilePhoto" #input>
+            <!-- </label>
+        </div> -->
+
         <div class="edit">
         <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="editForm('picture')" class="fa fa-pencil" aria-hidden="true" title="Edit Basic Information"></i>
         </div>
@@ -86,7 +93,7 @@
               <!-- Member Type Icons -->
               <span *ngIf='member.TeamUsers.type === "Owner"'><i class="fa fa-star" aria-hidden="true" title="Owner"></i></span>
               <span *ngIf='member.TeamUsers.type === "Admin"'><i class="fa fa-user" aria-hidden="true" title="Admin"></i></span>
-              
+
               <!-- Edit Member -->
               <span *ngIf='member.TeamUsers.type === "Admin" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="demoteMember(member)"><i class="fa fa-level-down" aria-hidden="true" title="Demote"></i></span>
               <span *ngIf='member.TeamUsers.type === "Member" && (memberType === "Owner" || memberType === "Admin") && member.url !== clientId' (click)="promoteMember(member)"><i class="fa fa-level-up" aria-hidden="true" title="Promote"></i></span>
@@ -125,7 +132,7 @@
           <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'contact')">
           <input type="text" name="personal" class="form-control" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
           <input type="text" name="blog" class="form-control" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
-          <input type="text" name="github" class="form-control" [(ngModel)]="profileInfo.github" placeholder="Github url...">  
+          <input type="text" name="github" class="form-control" [(ngModel)]="profileInfo.github" placeholder="Github url...">
           <input type="text" name="linkedin" class="form-control" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
           <input type="text" name="twitter" class="form-control" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
           <input type="text" name="facebook" class="form-control" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
@@ -137,7 +144,7 @@
         </div>
       </div>
       <!-- User URL Edit -->
-      <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'> 
+      <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
         <h4>sushi username</h4>
         <span *ngIf="urlTaken">Username Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">

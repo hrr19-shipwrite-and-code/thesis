@@ -59,6 +59,8 @@
 .userName {
   margin-bottom: 5px;
   display: inline;
+  font-size: 1.5em;
+  margin-bottom: 10px;
 }
 
 .bio {
@@ -86,6 +88,35 @@
 .follow:focus {
   outline: none;
 }
+
+/* Change Photo Button */
+
+
+/*
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  color: #888B8D;
+  background-color: white;
+  border: 1px solid #D9D9D9;
+  margin-top: 10px;
+}
+
+.btn-file input[type=file] {
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+
+  cursor: inherit;
+  display: block;
+}*/
+
 
 /* connect: header and links */
 .connect {
