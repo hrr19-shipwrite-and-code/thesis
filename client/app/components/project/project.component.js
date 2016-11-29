@@ -92,7 +92,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                                 return _this.memberType = member.TeamUsers.type;
                             }
                         }
-                    }, function (err) { return _this.router.navigateByUrl('/'); });
+                    }, function (err) { return _this.router.navigateByUrl('/notfound'); });
                 };
                 ProjectComponent.prototype.gotoUser = function () {
                     this.router.navigateByUrl('/' + this.project.Profile.url);
