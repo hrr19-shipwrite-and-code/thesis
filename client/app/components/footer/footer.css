@@ -1,0 +1,20 @@
+.footer {
+  background-color: black;
+  flex: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+h4, a, p, a.navLink {
+  color: #F4F4F4;
+  text-decoration: none;
+}
+
+a:hover, a.navLink:hover {
+  color: salmon;
+  cursor: pointer;
+}
