@@ -34,19 +34,21 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.router = router;
                     this.userUrl = localStorage.getItem('url');
                     this.defaultValue = 'Completed';
-                    this.owner = 'Member';
+                    this.owner = '';
                     this.userInfo = {};
                     this.repos = [];
                     this.title = '';
                     this.github = '';
                     this.description = '';
+                    this.haveGithub = null;
+                    this.selected = {};
                 }
                 ProjectAddComponent.prototype.ngOnInit = function () {
                     this.getProfileInfo();
                 };
                 ProjectAddComponent.prototype.addProject = function (data) {
                     var _this = this;
-                    if (data.owner === 'Member') {
+                    if (data.owner === this.userInfo.id) {
                         this.projectService.userCreateProject(data)
                             .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
                     }
@@ -60,10 +62,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.profileService.getProfileInfo(this.userUrl)
                         .subscribe(function (data) {
                         _this.userInfo = data;
-                        if (data.github) {
-                            var username = data.github.split('/');
-                            _this.getGithubProject(username[username.length - 1]);
-                        }
+                        _this.owner = data.id;
                     });
                 };
                 ProjectAddComponent.prototype.getGithubProject = function (gitUsername) {
@@ -71,15 +70,35 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.projectService.getGithubProject(gitUsername)
                         .subscribe(function (data) {
                         _this.repos = data;
+                        _this.haveGithub = true;
                     });
+                };
+                ProjectAddComponent.prototype.handleChange = function (e) {
+                    var check;
+                    if (e.target.value === 'Member') {
+                        check = this.userInfo.github;
+                        this.selected = this.userInfo;
+                    }
+                    else {
+                        check = this.userInfo.Team[e.target.value].github;
+                        this.selected = this.userInfo.Team[e.target.value];
+                    }
+                    if (check) {
+                        check = check.split('/');
+                        this.getGithubProject(check[check.length - 1]);
+                    }
+                    else {
+                        this.repos = [];
+                        this.haveGithub = false;
+                    }
                 };
                 ProjectAddComponent.prototype.handleChooseRepo = function (e, repoIndex) {
                     e.preventDefault();
                     var repo = this.repos[repoIndex];
-                    console.log(repo);
                     this.github = repo.html_url;
                     this.title = repo.name;
                     this.description = repo.description;
+                    this.owner = this.selected.id;
                 };
                 ProjectAddComponent = __decorate([
                     core_1.Component({
