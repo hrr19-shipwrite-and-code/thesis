@@ -1,0 +1,29 @@
+.aboutus{
+  align-items: center;
+}
+
+.member {
+  display: inline-block;
+  margin-right: 13px;
+  margin-left: 13px;
+  margin-top: 50px;
+  padding-right: 20px;
+}
+
+.pic {
+  width: 170px;
+  border-radius: 170px;
+}
+
+.about-title {
+  text-align: center
+}
+
+.aboutus-link {
+  text-decoration: none;
+  color: inherit
+}
+
+i {
+  padding: 5px;
+}
