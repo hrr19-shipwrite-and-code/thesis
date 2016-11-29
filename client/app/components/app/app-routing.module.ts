@@ -9,10 +9,12 @@ import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
 import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDevelopers.component.js';
+import { PageNotFoundComponent }   from '../pageNotFound/pageNotFound.component.js';
 
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'notfound', component: PageNotFoundComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'addproject', component: ProjectAddComponent},
   { path: 'project/:id', component: ProjectComponent },
