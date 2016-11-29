@@ -16,9 +16,12 @@ module.exports = {
               })
               .catch((err) => {
                 res.sendStatus(404);
-              }) 
-          })
+              }); 
+          });
       })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
   },
 
   //get all notification by userId

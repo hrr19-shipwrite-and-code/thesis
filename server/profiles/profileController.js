@@ -2,6 +2,8 @@ const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const Project = require('../projects/projectSchema.js');
 const TeamUser = require('./teamUserSchema.js');
+const Like = require('../likes/likeSchema.js');
+const Comment = require('../comments/commentSchema');
 const multer = require('multer');
 
 module.exports = {
@@ -83,7 +85,8 @@ module.exports = {
       },
       {
         model: Project,
-        attributes: ['id', 'thumbnail']
+        attributes: ['id', 'thumbnail', 'title', 'views', 'description'],
+        include: [{model: Comment}, {model: Like}]
       }
       ]
     };
@@ -100,10 +103,16 @@ module.exports = {
 
     Profile.findAll(filter)
       .then((users) => {
+        users = JSON.parse(JSON.stringify(users));
+        users.forEach((user) => {
+          user.Projects.forEach((proj) => {
+            proj.comments = proj.Comments.length;
+            proj.Likes = proj.Likes.length;
+          });
+        });
         res.json(users);
       })
       .catch((err) => {
-        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -243,13 +252,18 @@ module.exports = {
               team.addMember(memberInfo.id, {type: 'Pending'})
                 .then(() => {
                   next();
-                })  
+                })
+                .catch((err) => {
+                  res.sendStatus(404);
+                });  
             })
-          
+            .catch((err) => {
+              res.sendStatus(404);
+            });        
         } else {
           res.sendStatus(400);
         } 
-      })  
+      }); 
   },
 
   removeMember: (req, res, next) => {
