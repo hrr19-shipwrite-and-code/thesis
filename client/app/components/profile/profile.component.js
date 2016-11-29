@@ -92,7 +92,10 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.route.params.subscribe(function (params) {
                         _this.profileService.getProfileInfo(params['id'])
                             .subscribe(function (data) {
-                            console.log(data);
+                            if (data === null) {
+                                _this.router.navigateByUrl('/notfound');
+                            }
+                            ;
                             _this.profileInfo = data;
                             _this.profileInfo.createdAt = moment(_this.profileInfo.createdAt).format('MMMM Do YYYY');
                             _this.profileInfo.picture = _this.profileInfo.picture + '?dummy=' + Date.now();
@@ -110,7 +113,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             else {
                                 _this.memberType = '';
                             }
-                        });
+                        }, function (err) { return _this.router.navigateByUrl('/notfound'); });
                     });
                 };
                 ProfileComponent.prototype.getUserProjects = function (userId) {

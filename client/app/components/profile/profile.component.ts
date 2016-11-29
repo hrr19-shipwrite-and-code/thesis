@@ -69,24 +69,28 @@ export class ProfileComponent {
   getUserInfo() {
     this.route.params.subscribe((params) => {
       this.profileService.getProfileInfo(params['id'])
-      .subscribe( data => {
-        console.log(data);
-        this.profileInfo = data;
-        this.profileInfo.createdAt = moment(this.profileInfo.createdAt).format('MMMM Do YYYY')
-        this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
-        this.getUserProjects(data.id);
-        this.tempUrl = data.url;
-        if(data.type === 'Team'){
-          this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
-          for(let member of this.profileInfo.Member) {
-            if(member.url === this.clientId){
-              return this.memberType = member.TeamUsers.type;
+        .subscribe( data => {
+          if (data === null) {
+            this.router.navigateByUrl('/notfound');
+          };
+          this.profileInfo = data;
+          this.profileInfo.createdAt = moment(this.profileInfo.createdAt).format('MMMM Do YYYY')
+          this.profileInfo.picture = this.profileInfo.picture + '?dummy=' + Date.now();
+          this.getUserProjects(data.id);
+          this.tempUrl = data.url;
+          if(data.type === 'Team'){
+            this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
+            for(let member of this.profileInfo.Member) {
+              if(member.url === this.clientId){
+                return this.memberType = member.TeamUsers.type;
+              }
             }
+          } else {
+            this.memberType = '';
           }
-        } else {
-          this.memberType = '';
-        }
-      });
+        },
+        err => this.router.navigateByUrl('/notfound')
+        )
     });
   }
 
