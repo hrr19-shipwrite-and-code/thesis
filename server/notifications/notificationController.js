@@ -56,7 +56,7 @@ module.exports = {
     const userId = req.user.id
     Notification.destroy({where: {SenderId: teamId, ReceiverId: userId}})
       .then(() => {
-        res.sendStatus(200);
+        res.json(req.user.info);
       })
   }
 

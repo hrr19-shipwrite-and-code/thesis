@@ -204,7 +204,7 @@ input:checked + .slider:before {
 .filter-bar-input {
   margin-top: 5px;
   display: inline-block;
-  max-width: 18%;
+  max-width: 16.8%;
 }
 
 .filter-bar select {
@@ -233,8 +233,9 @@ input:checked + .slider:before {
 
 .nav-dropdown-inside {
   position: absolute;
-  top: -12px;
+  top: -13px;
   height: 277px;
+  width: 100%;
 }
 
 .nav-dropdown-links {
@@ -258,7 +259,7 @@ input:checked + .slider:before {
 }
 
 .space {
-  height: 69px;
+  height: 70px;
 }
 
 .hide-dropdown {
@@ -270,4 +271,43 @@ input:checked + .slider:before {
 .signIn {
   position: absolute;
   right: 0;
+}
+
+.notification {
+  position: absolute;
+  left: 80vw;
+}
+
+.notifications {
+  background-color: white;
+  border: 1px solid rgb(209, 214, 217);
+}
+
+.notification-icon {
+  position: absolute;
+  top: -9px;
+  z-index: 200;
+}
+
+.notification-inside {
+  position: absolute;
+  top: -36px;
+  width: 200px;
+}
+
+.note {
+  padding: 5px;
+}
+
+.notification-number {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 15px;
+  text-align: center;
+  top: -17px;
+  right: -31px;
 }

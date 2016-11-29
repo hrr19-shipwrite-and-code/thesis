@@ -16,11 +16,36 @@
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
+  <!--Notifications-->
+  <div class="notification">
+    <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
+    <div class="notification-number">
+      {{ numberOfNotifications }}
+    </div>
+    <div class="inside notification-inside" *ngIf="notificationShow">
+      <div class="space">
+
+      </div>
+      <div class="notifications">
+        <div *ngFor="let notification of notifications; let i = index" class="inside note">
+          <!--sender reciver type of notification-->
+          <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
+          <br>
+          <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
+          <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
+          <hr *ngIf="i < notifications.length - 1" class="inside">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--Navbar Dropdown-->
   <div class="nav-dropdown" *ngIf="auth.authenticated()">
-    <span>{{ name }}</span>
-    <img [src]="picture" class="dropdown-image">
-    <div class="nav-dropdown-inside hide-dropdown" dropdown>
+    <div id="profile">
+      <span id="profile">{{ name }}</span>
+      <img [src]="picture" class="dropdown-image" id="profile">
+    </div>
+    <div class="nav-dropdown-inside" *ngIf="profileShow">
       <div class="space">
 
       </div>
