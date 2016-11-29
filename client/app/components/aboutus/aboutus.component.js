@@ -11,28 +11,28 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var AppComponent;
+    var AboutUsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
+            AboutUsComponent = (function () {
+                function AboutUsComponent() {
                 }
-                AppComponent = __decorate([
+                AboutUsComponent = __decorate([
                     core_1.Component({
-                        selector: 'sushi',
-                        templateUrl: './client/app/components/app/app.html',
-                        styleUrls: ['./client/app/components/app/app.css'],
+                        selector: 'aboutus',
+                        templateUrl: './client/app/components/aboutus/aboutus.html',
+                        styleUrls: ['./client/app/components/aboutus/aboutus.css'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], AboutUsComponent);
+                return AboutUsComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("AboutUsComponent", AboutUsComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=aboutus.component.js.map

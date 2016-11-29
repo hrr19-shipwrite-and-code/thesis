@@ -11,28 +11,31 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var AppComponent;
+    var FooterComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
+            FooterComponent = (function () {
+                function FooterComponent() {
                 }
-                AppComponent = __decorate([
+                FooterComponent.prototype.gotoTop = function () {
+                    return window.scrollTo(0, 0);
+                };
+                FooterComponent = __decorate([
                     core_1.Component({
-                        selector: 'sushi',
-                        templateUrl: './client/app/components/app/app.html',
-                        styleUrls: ['./client/app/components/app/app.css'],
+                        selector: 'footer',
+                        templateUrl: './client/app/components/footer/footer.html',
+                        styleUrls: ['./client/app/components/footer/footer.css'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], FooterComponent);
+                return FooterComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("FooterComponent", FooterComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=footer.component.js.map
