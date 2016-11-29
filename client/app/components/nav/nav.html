@@ -29,10 +29,10 @@
       <div class="notifications">
         <div *ngFor="let notification of notifications; let i = index" class="inside note">
           <!--sender reciver type of notification-->
-          <span class="inside">You have been invited to join {{ notification.Sender.name }}</span>
+          <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
           <br>
-          <i class="inside fa fa-check" aria-hidden="true"></i>
-          <i class="inside fa fa-times" aria-hidden="true"></i>
+          <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
+          <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
           <hr *ngIf="i < notifications.length - 1" class="inside">
         </div>
       </div>

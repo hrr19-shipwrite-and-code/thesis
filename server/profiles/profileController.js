@@ -201,7 +201,9 @@ module.exports = {
         })
           .then((change) => {
             if(change[0] !== 0) {
-              res.json(user);
+              req.user.id = user.id;
+              req.user.info = user;
+              next();
             } else {
               res.sendStatus(401);
             }

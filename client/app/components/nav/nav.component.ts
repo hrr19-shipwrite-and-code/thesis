@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { NavService } from './nav.services';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
+import { ProfileService }   from '../profile/profile.services.js';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 @Component({
@@ -22,30 +23,11 @@ export class NavComponent {
   picture;
   notifications;
   url;
-  constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService) {}
+  constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService, private profileService: ProfileService) {}
 
   ngOnInit() {
     this.checkAgain();
     this.checkNotifications();
-  }
-
-  checkNotifications(){
-    this.nav.getNotifications()
-      .subscribe( data => {
-        this.notifications = data;
-        this.numberOfNotifications = this.notificationCount();
-      })
-    setInterval(() =>{
-      this.checkNotifications();
-    }, 300000)
-  }
-
-  notificationCount() {
-    let count = 0;
-    this.notifications.filter((note) => {
-      if(!note.viewed) count++;
-    })
-    return count;
   }
 
   checkAgain() {
@@ -58,6 +40,26 @@ export class NavComponent {
       this.name = localStorage.getItem('name');
       this.picture = localStorage.getItem('picture');
     }
+  }
+
+  checkNotifications(){
+    this.nav.getNotifications()
+      .subscribe( data => {
+        this.notifications = data;
+        this.numberOfNotifications = this.notificationCount();
+        console.log(data)
+      })
+    setInterval(() =>{
+      this.checkNotifications();
+    }, 300000)
+  }
+
+  notificationCount() {
+    let count = 0;
+    this.notifications.filter((note) => {
+      if(!note.viewed) count++;
+    })
+    return count;
   }
 
   handleClick(e) {
@@ -76,5 +78,21 @@ export class NavComponent {
       this.notificationShow = false;
       this.profileShow = false;
     }
+  }
+
+  joinTeam(notification, index) {
+    this.profileService.joinTeam(notification.SenderId)
+      .subscribe(data => {
+        data.TeamUsers = {type: 'Member'}
+        this.notifications.splice(index, 1)
+      });
+  }
+
+  decline(notification, index) {
+    console.log(notification)
+    this.nav.decline(notification.SenderId)
+      .subscribe(data => {
+        this.notifications.splice(index, 1)
+      })
   }
 }

@@ -17,4 +17,11 @@ export class NavService {
     return this.authHttp.put('http://localhost:1337/api/notifications/view/', {}, options)
       .map(res => res)
   }
+
+  decline(id) {
+    console.log(id)
+    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + id)
+      .map(res => res)
+  }
+
 }

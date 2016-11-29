@@ -39,6 +39,11 @@ System.register(['angular2-jwt', '@angular/http', '@angular/core'], function(exp
                     return this.authHttp.put('http://localhost:1337/api/notifications/view/', {}, options)
                         .map(function (res) { return res; });
                 };
+                NavService.prototype.decline = function (id) {
+                    console.log(id);
+                    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + id)
+                        .map(function (res) { return res; });
+                };
                 NavService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
