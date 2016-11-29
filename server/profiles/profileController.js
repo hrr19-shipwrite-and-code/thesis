@@ -55,7 +55,7 @@ module.exports = {
       {
         model: Profile,
         as: 'Team',
-        attributes: ['id', 'name', 'url'],
+        attributes: ['id', 'name', 'url', 'github'],
         through: {where: {type: {$not: 'Pending'}}}
       },
       {

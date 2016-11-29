@@ -5,12 +5,23 @@
     <h4>Add Project</h4>
     <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
       <p>Import from Github:</p>
-      <span *ngIf="!userInfo.github">You need to provide your github url on your profile page to use the import feature.</span>
-      <span *ngIf="repos.length === 0">You don't have any public repos on Github</span>
-      <select *ngIf="userInfo.github && repos.length > 0" name="repo" ngModel required>
-        <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
+      <span>Owner: </span>
+      <select name="username" [(ngModel)]="username" (change)="handleChange($event)" required>
+        <option value="default" disabled="">-- Select One --</option>
+        <option value="Member">{{userInfo.name}}</option>
+        <option *ngFor="let team of userInfo.Team; let i = index" value="{{i}}">{{team.name}}</option>
       </select>
-      <button type = "submit" class="btn btn-primary">Import</button>
+      
+      <span *ngIf="haveGithub === false"><br>You need to provide a github url for <a routerLink="/{{selected.url}}">{{selected.name}}</a> to use the import feature.</span>
+      <span *ngIf="haveGithub === true && repos.length === 0"><br>You don't have any public repos on Github</span>
+      
+      <div *ngIf="repos.length > 0">
+        <span>Repository: </span>
+        <select name="repo" ngModel required>
+          <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
+        </select>
+      </div>
+      <button *ngIf="repos.length > 0" name="repo" type = "submit" class="btn btn-primary">Import</button>
     </form>
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
@@ -22,7 +33,7 @@
        <div class="form-group">
         <p class='title-label'>Owner:</p>
         <select class="form-control" name="owner" [(ngModel)]="owner">
-          <option value="Member">{{userInfo.name}}</option>
+          <option value="{{userInfo.id}}">{{userInfo.name}}</option>
           <ng-container *ngFor="let team of userInfo.Team">
             <option *ngIf="team.TeamUsers.type === 'Owner' || team.TeamUsers.type === 'Admin'" value="{{team.id}}"><span>{{team.name}}</span></option>
           </ng-container>

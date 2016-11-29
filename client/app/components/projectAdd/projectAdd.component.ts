@@ -14,12 +14,15 @@ import { ProfileService } from '../profile/profile.services.js';
 export class ProjectAddComponent {
   private userUrl = localStorage.getItem('url');
   private defaultValue = 'Completed'
-  private owner = 'Member';
+  private owner = '';
   private userInfo = {};
   private repos = [];
   private title = '';
   private github = '';
   private description = '';
+  private username = 'default';
+  private haveGithub = null;
+  private selected = {};
   constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
 
   ngOnInit() {
@@ -27,7 +30,7 @@ export class ProjectAddComponent {
   }
 
   addProject(data) {
-    if(data.owner === 'Member'){
+    if(data.owner === this.userInfo.id){
       this.projectService.userCreateProject(data)
         .subscribe(
           data => this.router.navigateByUrl('/project/' + data.id),
@@ -46,10 +49,7 @@ export class ProjectAddComponent {
     this.profileService.getProfileInfo(this.userUrl)
       .subscribe(data => {
         this.userInfo = data;
-        if(data.github){
-          let username = data.github.split('/');
-          this.getGithubProject(username[username.length-1])
-        }
+        this.owner = data.id;
       });
   }
 
@@ -57,15 +57,36 @@ export class ProjectAddComponent {
     this.projectService.getGithubProject(gitUsername)
       .subscribe(data => {
         this.repos = data;
+        this.haveGithub = true;
       })
+  }
+
+  handleChange(e){
+    let check;
+    if(e.target.value === 'Member'){
+      check = this.userInfo.github;
+      this.selected = this.userInfo;
+    } else {
+      check = this.userInfo.Team[e.target.value].github;
+      this.selected = this.userInfo.Team[e.target.value];
+    }
+
+    if(check){
+      check = check.split('/')
+      this.getGithubProject(check[check.length-1]);
+    } else {
+      this.repos = [];
+      this.haveGithub = false;
+    }
+    
   }
 
   handleChooseRepo(e, repoIndex) {
     e.preventDefault();
     let repo = this.repos[repoIndex];
-    console.log(repo);
     this.github = repo.html_url;
     this.title = repo.name;
     this.description = repo.description;
+    this.owner = this.selected.id;
   }
 }
