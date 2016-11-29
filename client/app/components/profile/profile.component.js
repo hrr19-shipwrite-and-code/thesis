@@ -44,6 +44,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.newTech = '';
                     this.newMember = '';
                     this.urlTaken = false;
+                    this.errAddMember = false;
                     this.editing = {
                         basic: false,
                         tech: false,
@@ -276,7 +277,8 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         _this.profileInfo.Member.push(data);
                         _this.newMember = '';
                         _this.editing.member = !_this.editing.member;
-                    });
+                        _this.errAddMember = false;
+                    }, function (err) { return _this.errAddMember = true; });
                 };
                 ProfileComponent.prototype.removeMember = function (userId, name) {
                     var _this = this;

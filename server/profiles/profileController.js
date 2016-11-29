@@ -106,7 +106,6 @@ module.exports = {
         users = JSON.parse(JSON.stringify(users));
         users.forEach((user) => {
           user.Projects.forEach((proj) => {
-            console.log(proj);
             proj.comments = proj.Comments.length;
             proj.Likes = proj.Likes.length;
           });
@@ -114,7 +113,6 @@ module.exports = {
         res.json(users);
       })
       .catch((err) => {
-        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -254,13 +252,18 @@ module.exports = {
               team.addMember(memberInfo.id, {type: 'Pending'})
                 .then(() => {
                   next();
-                })  
+                })
+                .catch((err) => {
+                  res.sendStatus(404);
+                });  
             })
-          
+            .catch((err) => {
+              res.sendStatus(404);
+            });        
         } else {
           res.sendStatus(400);
         } 
-      })  
+      }); 
   },
 
   removeMember: (req, res, next) => {

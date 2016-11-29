@@ -20,6 +20,7 @@ export class ProfileComponent {
   private newMember = '';
   private urlTaken = false;
   private tempUrl: string;
+  private errAddMember = false;
   private editing = {
     basic: false,
     tech: false,
@@ -251,12 +252,16 @@ export class ProfileComponent {
 
   addMember() {
     this.profileService.addMember(this.profileInfo.id, this.newMember)
-      .subscribe(data => {
-        data.TeamUsers = {type: 'Pending'}
-        this.profileInfo.Member.push(data);
-        this.newMember = '';
-        this.editing.member = !this.editing.member;
-      });
+      .subscribe(
+        data => {
+          data.TeamUsers = {type: 'Pending'}
+          this.profileInfo.Member.push(data);
+          this.newMember = '';
+          this.editing.member = !this.editing.member;
+          this.errAddMember= false;
+        },
+        err => this.errAddMember = true
+      );
   }
 
   removeMember(userId, name) {
