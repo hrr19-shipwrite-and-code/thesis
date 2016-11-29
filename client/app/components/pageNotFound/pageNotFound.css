@@ -1,0 +1,22 @@
+
+.horizontal-center {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper {
+  width: 100%;
+  padding-top: 60px;
+}
+
+.header {
+  font-size: 4em;
+  color: salmon;
+}
+
+.subhead {
+  font-size: 2em;
+  color: #444444;
+}
