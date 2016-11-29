@@ -24,7 +24,8 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'sushi',
-                        templateUrl: './client/app/components/app/app.html'
+                        templateUrl: './client/app/components/app/app.html',
+                        styleUrls: ['./client/app/components/app/app.css'],
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
