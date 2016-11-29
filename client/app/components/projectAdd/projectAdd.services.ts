@@ -27,5 +27,4 @@ export class ProjectAddService {
     return this.http.get('http://api.github.com/users/' + gitUsername + '/repos')
       .map(res => res.json())
   }
-
 }

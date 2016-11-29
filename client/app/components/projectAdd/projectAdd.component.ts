@@ -16,7 +16,10 @@ export class ProjectAddComponent {
   private defaultValue = 'Completed'
   private owner = 'Member';
   private userInfo = {};
-  private repos = {}
+  private repos = [];
+  private title = '';
+  private github = '';
+  private description = '';
   constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
 
   ngOnInit() {
@@ -55,5 +58,14 @@ export class ProjectAddComponent {
       .subscribe(data => {
         this.repos = data;
       })
+  }
+
+  handleChooseRepo(e, repoIndex) {
+    e.preventDefault();
+    let repo = this.repos[repoIndex];
+    console.log(repo);
+    this.github = repo.html_url;
+    this.title = repo.name;
+    this.description = repo.description;
   }
 }

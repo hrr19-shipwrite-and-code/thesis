@@ -36,7 +36,10 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.defaultValue = 'Completed';
                     this.owner = 'Member';
                     this.userInfo = {};
-                    this.repos = {};
+                    this.repos = [];
+                    this.title = '';
+                    this.github = '';
+                    this.description = '';
                 }
                 ProjectAddComponent.prototype.ngOnInit = function () {
                     this.getProfileInfo();
@@ -69,6 +72,14 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                         .subscribe(function (data) {
                         _this.repos = data;
                     });
+                };
+                ProjectAddComponent.prototype.handleChooseRepo = function (e, repoIndex) {
+                    e.preventDefault();
+                    var repo = this.repos[repoIndex];
+                    console.log(repo);
+                    this.github = repo.html_url;
+                    this.title = repo.name;
+                    this.description = repo.description;
                 };
                 ProjectAddComponent = __decorate([
                     core_1.Component({

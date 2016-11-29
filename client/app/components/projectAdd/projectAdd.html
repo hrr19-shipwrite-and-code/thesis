@@ -3,16 +3,20 @@
 
   <div class="main-content shadow horizontal-center">
     <h4>Add Project</h4>
-    <form>
+    <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
       <p>Import from Github:</p>
-      <select>
+      <span *ngIf="!userInfo.github">You need to provide your github url on your profile page to use the import feature.</span>
+      <span *ngIf="repos.length === 0">You don't have any public repos on Github</span>
+      <select *ngIf="userInfo.github && repos.length > 0" name="repo" ngModel required>
+        <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
       </select>
+      <button type = "submit" class="btn btn-primary">Import</button>
     </form>
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
       <div class="form-group">
         <p class='title-label'>Title:</p>
-        <input type="text" name="title" class='form-control' placeholder='Enter your project title' ngModel required>
+        <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" required>
       </div>
 
        <div class="form-group">
@@ -27,12 +31,12 @@
 
       <div class="form-group">
         <p class='description-label'>Description:</p>
-        <textarea rows="4" class='form-control' name="description" ngModel required></textarea>
+        <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" required></textarea>
       </div>
 
       <div class="form-group">
         <p class='github-label'>Github:</p>
-        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' ngModel>
+        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' [(ngModel)]="github">
       </div>
 
       <div class="form-group">
