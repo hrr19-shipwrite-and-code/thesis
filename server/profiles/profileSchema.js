@@ -14,7 +14,7 @@ const Profile = db.define('Profile', {
     unique: true,
     allowNull: false,
     validate: {
-      notIn: [['browse', 'addproject', 'createteam', 'developers', 'teams', 'project']],
+      notIn: [['browse', 'addproject', 'createteam', 'developers', 'teams', 'project', 'notfound']],
       is: /^[a-zA-Z0-9_-]{1,30}$/
     },
   },

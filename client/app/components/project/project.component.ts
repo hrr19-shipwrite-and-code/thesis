@@ -78,7 +78,7 @@ export class ProjectComponent {
             }
           }
         },
-        err => this.router.navigateByUrl('/')
+        err => this.router.navigateByUrl('/notfound')
       )
   }
 

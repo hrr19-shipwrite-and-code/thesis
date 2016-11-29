@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 
 export class ProjectThumbnailComponent {
   @Input() projects
+  @Input() owner
 }

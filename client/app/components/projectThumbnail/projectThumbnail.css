@@ -49,6 +49,11 @@ h4.project-name {
   text-align: center;
 }
 
+/* Profile Info */
+.profile-image {
+  width: 30px;
+}
+
 /* Image */
 
 .project-thumbnail-img-viewport {
@@ -100,5 +105,4 @@ h4.project-name {
 
 .likes {
   padding-bottom: 5px;
-  cursor: pointer;
 }
