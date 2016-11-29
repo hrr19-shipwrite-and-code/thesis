@@ -311,3 +311,9 @@ input:checked + .slider:before {
   top: -17px;
   right: -31px;
 }
+
+.no-notification {
+  height: 50px;
+  padding-top: 10px;
+  padding-left: 25px;
+}
