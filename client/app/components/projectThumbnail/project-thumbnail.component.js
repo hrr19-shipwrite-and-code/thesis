@@ -25,6 +25,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     core_1.Input(), 
                     __metadata('design:type', Object)
                 ], ProjectThumbnailComponent.prototype, "projects", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], ProjectThumbnailComponent.prototype, "owner", void 0);
                 ProjectThumbnailComponent = __decorate([
                     core_1.Component({
                         selector: 'project-thumbnail',
