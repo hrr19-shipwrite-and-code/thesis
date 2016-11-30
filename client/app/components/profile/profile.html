@@ -56,10 +56,12 @@
 
       <!-- User Tech skills -->
       <div class='connect' *ngIf='profileInfo.Teches.length || isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
-        <h4>SKILLS</h4>
-        <ul *ngIf="profileInfo.Teches.length">
-          <li *ngFor="let tech of profileInfo.Teches">{{tech.name}} <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></li>
-        </ul>
+        <h5>SKILLS</h5>
+        <div class="tech-list" *ngIf="profileInfo.Teches.length">
+          <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
+            <span class="tech-name">{{tech.name}}</span>
+            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></span>
+        </div>
         <!-- Hidden User Tech Input -->
         <datalist id="techs">
           <option *ngFor="let tech of techs" [value]="tech.name">
@@ -73,9 +75,11 @@
         </div>
       </div>
 
+      <hr>
+
       <!-- User Teams if single User -->
       <div class="connect" *ngIf="profileInfo.Team.length">
-        <h4>TEAMS</h4>
+        <h5>TEAMS</h5>
         <div>
           <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
         </div>
@@ -83,7 +87,7 @@
 
       <!-- Teams members if team profile -->
       <div class="connect" *ngIf="profileInfo.Member.length">
-        <h4>MEMBERS</h4>
+        <h5>MEMBERS</h5>
         <div>
           <div *ngFor='let member of profileInfo.Member'>
             <div *ngIf='member.TeamUsers.type !=="Pending" || memberType === "Owner" || memberType === "Admin"'>
@@ -117,7 +121,7 @@
 
       <!-- User/Team Connections -->
       <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser() || memberType === 'Owner' || memberType === 'Admin'">
-        <h4>CONNECT</h4>
+        <h5>CONNECT</h5>
         <ul class='urls' *ngIf="!editing.contact">
           <li *ngIf="profileInfo.personal"><i class="fa fa-globe" aria-hidden="true"></i><a href='{{profileInfo.personal}}'>personal</a></li>
           <li *ngIf="profileInfo.blog"><i class="fa fa-book" aria-hidden="true"></i><a href='{{profileInfo.blog}}'>blog</a></li>
@@ -139,16 +143,23 @@
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
         </div>
-        <div class="edit">
+        <div class="edit edit-connect">
         <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
         </div>
       </div>
+
+
+
+
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
-        <h4>sushi username</h4>
-        <span *ngIf="urlTaken">Username Unavailable!</span>
+        <h5>SUSHI URL</h5>
+        <span *ngIf="urlTaken">URL Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
-          http://sushi.com/<input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL"><br>
+          <p>
+            sushi.com/
+            <input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL">
+          </p>
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>
