@@ -69,6 +69,8 @@ export class AuthService {
     localStorage.removeItem('url');
     localStorage.removeItem('name');
     localStorage.removeItem('picture');
+    clearTimeout(localStorage.getItem('timeoutId'))
+    localStorage.removeItem('timeoutId');
     this.router.navigateByUrl('/');
   }
 

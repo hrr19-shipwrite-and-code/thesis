@@ -17,7 +17,7 @@
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
   <!--Notifications-->
-  <div class="notification">
+  <div class="notification" *ngIf="auth.authenticated()">
     <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
     <div class="notification-number" *ngIf="numberOfNotifications > 0">
       {{ numberOfNotifications }}
