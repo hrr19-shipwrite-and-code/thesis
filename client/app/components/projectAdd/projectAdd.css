@@ -28,6 +28,10 @@
   flex-direction: column;*/
 }
 
+.optional {
+  color: #888B8D;
+}
+
 
 
 form {

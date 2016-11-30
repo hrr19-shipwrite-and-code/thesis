@@ -27,8 +27,7 @@ export class ProjectComponent {
   private uploadFile: any;
   private options: Object = {
     filterExtensions: true,
-    allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
-    calculateSpeed: true,
+    allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg', 'gif'],
     authToken: localStorage.getItem('id_token'),
     authTokenPrefix: 'Bearer'
   };
@@ -40,6 +39,7 @@ export class ProjectComponent {
   private editProgress = false;
   private editSource = false;
   private team = false;
+  private imgError = false;
   private memberType = '';
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
@@ -238,7 +238,12 @@ export class ProjectComponent {
       this.picture = data;
       this.project.Images.push(data);
       this.uploadFile = data;
+      this.imgError = false;
     }
+  }
+
+  imageError () {
+    this.imgError = true;
   }
 
   //Set image as project thumbnail

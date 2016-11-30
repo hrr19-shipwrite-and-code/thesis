@@ -210,13 +210,21 @@ module.exports = {
             .then((image) => {
               let url = image.url;
               fse.remove(url, () => {
-                Image.destroy({where: {id: id}})
-                .then(() => {
-                  res.sendStatus(200);
-                })
-                .catch(() => {
-                  res.sendStatus(404);
-                });
+                if (project.thumbnail === url) {
+                  Project.update({thumbnail: '/client/app/assets/thumbnail.png'}, {where: {id: projectId}})
+                    .then((proj) => {                                 
+                      Image.destroy({where: {id: id}})
+                        .then(() => {
+                          res.sendStatus(200);
+                          })
+                        .catch(() => {
+                          res.sendStatus(404);
+                        });
+                    })
+                    .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                }
               });
             })
             .catch((err) => {
@@ -239,13 +247,21 @@ module.exports = {
             .then((image) => {
               let url = image.url;
               fse.remove(url, () => {
-                Image.destroy({where: {id: id}})
-                .then(() => {
-                  res.sendStatus(200);
-                })
-                .catch(() => {
-                  res.sendStatus(404);
-                });
+                if (project.thumbnail === url) {
+                  Project.update({thumbnail: '/client/app/assets/thumbnail.png'}, {where: {id: projectId}})
+                    .then((proj) => {                                 
+                      Image.destroy({where: {id: id}})
+                        .then(() => {
+                          res.sendStatus(200);
+                          })
+                        .catch(() => {
+                          res.sendStatus(404);
+                        });
+                    })
+                    .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                }
               });
             })
             .catch((err) => {

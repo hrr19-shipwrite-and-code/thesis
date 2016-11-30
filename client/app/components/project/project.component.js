@@ -42,8 +42,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.picture = { url: '/client/app/assets/thumbnail.png' };
                     this.options = {
                         filterExtensions: true,
-                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
-                        calculateSpeed: true,
+                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg', 'gif'],
                         authToken: localStorage.getItem('id_token'),
                         authTokenPrefix: 'Bearer'
                     };
@@ -55,6 +54,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editProgress = false;
                     this.editSource = false;
                     this.team = false;
+                    this.imgError = false;
                     this.memberType = '';
                 }
                 //Runs this function everytime route accessed
@@ -238,7 +238,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.picture = data;
                         this.project.Images.push(data);
                         this.uploadFile = data;
+                        this.imgError = false;
                     }
+                };
+                ProjectComponent.prototype.imageError = function () {
+                    this.imgError = true;
                 };
                 //Set image as project thumbnail
                 ProjectComponent.prototype.updateThumbnail = function () {
