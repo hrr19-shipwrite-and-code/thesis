@@ -21,6 +21,9 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             AboutUsComponent = (function () {
                 function AboutUsComponent() {
                 }
+                AboutUsComponent.prototype.ngOnInit = function () {
+                    window.scrollTo(0, 0);
+                };
                 AboutUsComponent = __decorate([
                     core_1.Component({
                         selector: 'aboutus',
