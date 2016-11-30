@@ -288,7 +288,9 @@ module.exports = {
         {model: Comment},
         {model: Tech}
       ],
-      where: {id: {$notIn: ['']}}
+      where: {id: {$notIn: ['']}},
+      offset: req.body.offset || 0,
+      limit: 12
     }
 
     //filter

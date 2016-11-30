@@ -12,16 +12,15 @@ import { ProjectThumbnailComponent } from '../projectThumbnail/project-thumbnail
 
 export class HomeComponent {
   filterConditions = {};
+  sortType = 'default'
   filterHidden = true;
-  projects;
+  projects = [];
+  pagination = 0;
+  more = true;
   constructor(private homeService: HomeService) {}
 
   ngOnInit() {
-    this.homeService.getProjects({sort: 'default'})
-      .subscribe(
-        data => {this.projects = data; console.log(data)},
-        error => alert(error)
-      )
+    this.getProjects({sort: this.sortType});
   }
 
   filterBar() {
@@ -34,9 +33,17 @@ export class HomeComponent {
     }
   }
 
-  filter(e, filter) {
-    e.preventDefault()
-    let filterConditions = {}
+  getProjects(filterConditions) {
+    this.homeService.getProjects(filterConditions)
+      .subscribe(data => {
+        this.projects = [...this.projects,...data]
+        this.more = data.length === 4;
+      })
+  }
+
+  filter(filter) {
+    this.projects = [];
+    let filterConditions = {sort: this.sortType};
     for(let key in filter) {
       if(filter[key]) {
         if(key === 'tech'){
@@ -50,25 +57,27 @@ export class HomeComponent {
       }
     }
     this.filterConditions = filterConditions;
-    this.homeService.getProjects(filterConditions)
-      .subscribe(data => {
-        this.projects = data;
-      })
+    this.getProjects(filterConditions);
   }
 
   clearSearch(e) {
+    this.projects = [];
     document.getElementById("home-search").reset()
-    this.filter(e, {sort: 'default'})
+    this.filterConditions = {sort: 'default'};
+    this.getProjects(this.filterConditions)
   }
 
   sort(sortType) {
-    let filterConditions = this.filterConditions;
-    filterConditions.sort = sortType;
-    
-    this.homeService.getProjects(filterConditions)
-      .subscribe(data => {
-        this.projects = data;
-      })
+    this.projects = [];
+    this.sortType = sortType;
+    this.filterConditions.sort = sortType;
+    this.getProjects(this.filterConditions);
+  }
+
+  loadMore() {
+    this.pagination++;
+    this.filterConditions.offset = this.pagination*12;
+    this.getProjects(this.filterConditions);
   }
 
 }

@@ -25,12 +25,14 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                 function HomeComponent(homeService) {
                     this.homeService = homeService;
                     this.filterConditions = {};
+                    this.sortType = 'default';
                     this.filterHidden = true;
+                    this.projects = [];
+                    this.pagination = 0;
+                    this.more = true;
                 }
                 HomeComponent.prototype.ngOnInit = function () {
-                    var _this = this;
-                    this.homeService.getProjects({ sort: 'default' })
-                        .subscribe(function (data) { _this.projects = data; console.log(data); }, function (error) { return alert(error); });
+                    this.getProjects({ sort: this.sortType });
                 };
                 HomeComponent.prototype.filterBar = function () {
                     if (this.filterHidden) {
@@ -42,10 +44,17 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                         this.filterHidden = !this.filterHidden;
                     }
                 };
-                HomeComponent.prototype.filter = function (e, filter) {
+                HomeComponent.prototype.getProjects = function (filterConditions) {
                     var _this = this;
-                    e.preventDefault();
-                    var filterConditions = {};
+                    this.homeService.getProjects(filterConditions)
+                        .subscribe(function (data) {
+                        _this.projects = _this.projects.concat(data);
+                        _this.more = data.length === 4;
+                    });
+                };
+                HomeComponent.prototype.filter = function (filter) {
+                    this.projects = [];
+                    var filterConditions = { sort: this.sortType };
                     for (var key in filter) {
                         if (filter[key]) {
                             if (key === 'tech') {
@@ -60,23 +69,24 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                         }
                     }
                     this.filterConditions = filterConditions;
-                    this.homeService.getProjects(filterConditions)
-                        .subscribe(function (data) {
-                        _this.projects = data;
-                    });
+                    this.getProjects(filterConditions);
                 };
                 HomeComponent.prototype.clearSearch = function (e) {
+                    this.projects = [];
                     document.getElementById("home-search").reset();
-                    this.filter(e, { sort: 'default' });
+                    this.filterConditions = { sort: 'default' };
+                    this.getProjects(this.filterConditions);
                 };
                 HomeComponent.prototype.sort = function (sortType) {
-                    var _this = this;
-                    var filterConditions = this.filterConditions;
-                    filterConditions.sort = sortType;
-                    this.homeService.getProjects(filterConditions)
-                        .subscribe(function (data) {
-                        _this.projects = data;
-                    });
+                    this.projects = [];
+                    this.sortType = sortType;
+                    this.filterConditions.sort = sortType;
+                    this.getProjects(this.filterConditions);
+                };
+                HomeComponent.prototype.loadMore = function () {
+                    this.pagination++;
+                    this.filterConditions.offset = this.pagination * 12;
+                    this.getProjects(this.filterConditions);
                 };
                 HomeComponent = __decorate([
                     core_1.Component({
