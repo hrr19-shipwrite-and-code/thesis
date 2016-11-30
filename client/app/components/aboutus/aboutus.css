@@ -27,3 +27,11 @@
 i {
   padding: 5px;
 }
+
+.header-container {
+  width: 100%;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid rgba(68, 68, 68, 0.1);
+}
