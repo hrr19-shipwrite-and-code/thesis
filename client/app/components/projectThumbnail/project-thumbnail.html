@@ -1,4 +1,4 @@
-  <div class="project-thumbnail shadow" *ngFor="let project of projects | slice:0:15; let i = index">
+  <div class="project-thumbnail shadow" *ngFor="let project of projects; let i = index">
     <a routerLink="/project/{{project.id}}">
       <div class="project-thumbnail-hover hide horizontal-center" hover>
         <h4 class="project-name">{{project.title}}</h4>

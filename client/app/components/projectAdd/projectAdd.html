@@ -27,7 +27,7 @@
 
       <div class="form-group">
         <p class='title-label'>Title:</p>
-        <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" required>
+        <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" maxlength="75" required>
       </div>
 
        <div class="form-group">
@@ -42,16 +42,16 @@
 
       <div class="form-group">
         <p class='description-label'>Description:</p>
-        <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" required></textarea>
+        <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" maxlength="500" required></textarea>
       </div>
 
       <div class="form-group">
-        <p class='github-label'>Github:</p>
+        <p class='github-label'>Github <span class="optional">(Optional)</span>:</p>
         <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' [(ngModel)]="github">
       </div>
 
       <div class="form-group">
-        <p class='deploy-label'>Deployed App:</p>
+        <p class='deploy-label'>Deployed App <span class="optional">(Optional)</span>:</p>
         <input type="text" name="deploy" class='form-control' placeholder='mysuperawesomeapp.com' ngModel>
       </div>
 
@@ -71,7 +71,6 @@
           <div class="slider round"></div>
         </label>
       </div>
-
 
       <button type="submit" class="btn btn-primary">Submit</button>
 

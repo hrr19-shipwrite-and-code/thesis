@@ -235,6 +235,11 @@ input[name="title"] {
   color: #888B8D;
 }
 
+.image-up {
+  font-size: 12px;
+  color: #888B8D; 
+}
+
 .btn-primary, .btn-primary:active {
   background-color: salmon;
   border: none;

@@ -40,20 +40,14 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     this.profileShow = false;
                 }
                 NavComponent.prototype.ngOnInit = function () {
-                    this.checkAgain();
-                    this.checkNotifications();
+                    this.getUserInfo();
+                    if (this.auth.authenticated()) {
+                        this.checkNotifications();
+                    }
                 };
-                NavComponent.prototype.checkAgain = function () {
-                    if (localStorage.getItem('name') === null) {
-                        var that_1 = this;
-                        setTimeout(function () {
-                            that_1.checkAgain();
-                        }, 600);
-                    }
-                    else {
-                        this.name = localStorage.getItem('name');
-                        this.picture = localStorage.getItem('picture');
-                    }
+                NavComponent.prototype.getUserInfo = function () {
+                    this.name = localStorage.getItem('name');
+                    this.picture = localStorage.getItem('picture');
                 };
                 NavComponent.prototype.checkNotifications = function () {
                     var _this = this;
@@ -63,9 +57,10 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                         _this.numberOfNotifications = _this.notificationCount();
                         console.log(data);
                     });
-                    setInterval(function () {
+                    localStorage.setItem('timeoutId', setTimeout(function () {
                         _this.checkNotifications();
-                    }, 300000);
+                    }, 300000));
+                    console.log(localStorage.getItem('timeoutId'));
                 };
                 NavComponent.prototype.notificationCount = function () {
                     var count = 0;
