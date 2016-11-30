@@ -21,15 +21,7 @@
     <div class="thumbnails-container">
       <!-- <div class="left-gradient"></div> -->
 
-      <div class="thumbnail-placeholder" *ngFor="let project of user.Projects">
-        <a routerLink="/project/{{project.id}}">
-          <div class="image-container">
-            <div class="image-wrapper">
-              <img src="{{project.thumbnail}}" class="thumbnail-image">
-            </div> <!-- Image Wrapper -->
-          </div> <!-- Image Container -->
-        </a>
-      </div> <!-- Thumbnail Placeholder -->
+      <project-thumbnail [projects]="user.Projects"></project-thumbnail>
 
       <!-- <div class="right-gradient"></div> -->
 

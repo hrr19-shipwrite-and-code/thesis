@@ -16,6 +16,7 @@
         <option value=0>No</option>
       </select>
       <button type="submit" class="btn btn-primary apply-btn">Apply</button>
+      <button type="button" class="btn btn-danger" (click)="filter($event, {})">Clear</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
@@ -32,7 +33,7 @@
 
   <div class="thumbnail-wrapper horizontal-center">
     <div class="thumbnails">
-      <project-thumbnail [projects]="projects"></project-thumbnail>
+      <project-thumbnail [projects]="projects" [owner]=true></project-thumbnail>
     </div>
   </div> <!-- thumbnail-wrapper -->
 

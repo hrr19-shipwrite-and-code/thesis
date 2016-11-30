@@ -2,6 +2,8 @@ const Profile = require('./profileSchema.js');
 const Tech = require('../tech/techSchema.js').Tech;
 const Project = require('../projects/projectSchema.js');
 const TeamUser = require('./teamUserSchema.js');
+const Like = require('../likes/likeSchema.js');
+const Comment = require('../comments/commentSchema');
 const multer = require('multer');
 
 module.exports = {
@@ -19,7 +21,9 @@ module.exports = {
           picture: req.body.picture,
           hire: req.body.hireable || false,
           github: req.body.html_url || null,
-          linkedin: req.body.publicProfileUrl || null
+          linkedin: req.body.publicProfileUrl || null,
+          blog: req.body.blog || null,
+          bio: req.body.bio || null
         }
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
@@ -53,7 +57,7 @@ module.exports = {
       {
         model: Profile,
         as: 'Team',
-        attributes: ['id', 'name', 'url'],
+        attributes: ['id', 'name', 'url', 'github'],
         through: {where: {type: {$not: 'Pending'}}}
       },
       {
@@ -81,7 +85,8 @@ module.exports = {
       },
       {
         model: Project,
-        attributes: ['id', 'thumbnail']
+        attributes: ['id', 'thumbnail', 'title', 'views', 'description'],
+        include: [{model: Comment}, {model: Like}]
       }
       ]
     };
@@ -98,10 +103,16 @@ module.exports = {
 
     Profile.findAll(filter)
       .then((users) => {
+        users = JSON.parse(JSON.stringify(users));
+        users.forEach((user) => {
+          user.Projects.forEach((proj) => {
+            proj.comments = proj.Comments.length;
+            proj.Likes = proj.Likes.length;
+          });
+        });
         res.json(users);
       })
       .catch((err) => {
-        console.log(err);
         res.sendStatus(404);
       });
   },
@@ -199,7 +210,9 @@ module.exports = {
         })
           .then((change) => {
             if(change[0] !== 0) {
-              res.json(user);
+              req.user.id = user.id;
+              req.user.info = user;
+              next();
             } else {
               res.sendStatus(401);
             }
@@ -239,13 +252,18 @@ module.exports = {
               team.addMember(memberInfo.id, {type: 'Pending'})
                 .then(() => {
                   next();
-                })  
+                })
+                .catch((err) => {
+                  res.sendStatus(404);
+                });  
             })
-          
+            .catch((err) => {
+              res.sendStatus(404);
+            });        
         } else {
           res.sendStatus(400);
         } 
-      })  
+      }); 
   },
 
   removeMember: (req, res, next) => {
@@ -280,14 +298,15 @@ module.exports = {
     Profile.findOne({
       where: {
         authId: authId,
-        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member"))', authId]]
+        $and: [['EXISTS(SELECT * FROM TeamUsers LEFT JOIN Profiles ON TeamUsers.userId=Profiles.id WHERE authId = ? AND TeamUsers.type IN ("Admin", "Member", "Pending"))', authId]]
       },
     })
       .then((user) => {
         if(user){
           user.removeTeam(team)
             .then(() => {
-              res.sendStatus(200);
+              req.user.id = user.id;
+              next();
             })
             .catch((err) => {
               res.sendStatus(401);

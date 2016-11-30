@@ -16,14 +16,51 @@ module.exports = {
               })
               .catch((err) => {
                 res.sendStatus(404);
-              }) 
-          })
+              }); 
+          });
       })
+      .catch((err) => {
+        res.sendStatus(404);
+      });
   },
 
   //get all notification by userId
+  getAllNotification: (req, res, next) => {
+    const authId = req.user.sub;
+    Profile.findOne({where: {authId: authId}})
+      .then((user) => {
+        Notification.findAll({
+          where: {ReceiverId: user.id},
+          include: [{
+            model: Profile,
+            as: 'Sender',
+            attributes: ['url', 'name']
+          }]
+        })
+          .then((notifications) => {
+            res.json(notifications);
+          });
+      });
+  },
 
-  //promote member notification
+  viewNotification: (req, res, next) => {
+    const authId = req.user.sub;
+    Profile.findOne({where: {authId: authId}})
+      .then((user) => {
+        Notification.update({viewed: true}, {where: {ReceiverId: user.id}})
+          .then(() => {
+            res.sendStatus(200);
+          });
+      });
+  },
 
-  //demote member notification
+  deleteNotification: (req, res, next) => {
+    const teamId = req.params.teamId
+    const userId = req.user.id
+    Notification.destroy({where: {SenderId: teamId, ReceiverId: userId}})
+      .then(() => {
+        res.json(req.user.info);
+      })
+  }
+
 };

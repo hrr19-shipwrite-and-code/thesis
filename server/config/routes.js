@@ -23,8 +23,8 @@ module.exports = function (app, express) {
   app.put('/api/team/edit/:teamId', middleware.authCheck, profileController.memberTypeCheck, profileController.editTeamInfo);
   app.delete('/api/team/delete/:teamId', middleware.authCheck, profileController.deleteTeam);
   app.post('/api/team/addMember/:teamId/:userURL', middleware.authCheck, profileController.memberTypeCheck, profileController.addMember, notificationController.inviteMember);
-  app.put('/api/team/joinTeam/:teamId', middleware.authCheck, profileController.joinTeam);
-  app.delete('/api/team/leaveTeam/:teamId', middleware.authCheck, profileController.leaveTeam);
+  app.put('/api/team/joinTeam/:teamId', middleware.authCheck, profileController.joinTeam, notificationController.deleteNotification);
+  app.delete('/api/team/leaveTeam/:teamId', middleware.authCheck, profileController.leaveTeam, notificationController.deleteNotification);
   app.delete('/api/team/removeMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.removeMember);
   app.put('/api/team/promoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.promoteMember);
   app.put('/api/team/demoteMember/:teamId/:userId', middleware.authCheck, profileController.memberTypeCheck, profileController.demoteMember);
@@ -36,6 +36,8 @@ module.exports = function (app, express) {
   app.delete('/api/team/removeTech/:teamId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.teamRemoveTech);
   app.post('/api/project/addTech', middleware.authCheck, techController.projectAddTech);
   app.delete('/api/project/removeTech/:projectId/:techId', middleware.authCheck, techController.projectRemoveTech);
+  app.post('/api/project/teamAddTech/:teamId', middleware.authCheck, profileController.memberTypeCheck, techController.projectAddTech);
+  app.delete('/api/project/teamRemoveTech/:teamId/:projectId/:techId', middleware.authCheck, profileController.memberTypeCheck, techController.projectRemoveTech);
   app.get('/api/tech', techController.getAllTech);
 
   //User Project Routes
@@ -69,4 +71,8 @@ module.exports = function (app, express) {
   //Like routes
   app.post('/api/like/project/:projectId', middleware.authCheck, likeController.likeProject);
   app.get('/api/like/user/:projectId', middleware.authCheck, likeController.doesUserLike);
+
+  //Notification Routes
+  app.get('/api/notifications', middleware.authCheck, notificationController.getAllNotification);
+  app.put('/api/notifications/view/', middleware.authCheck, notificationController.viewNotification);
 };

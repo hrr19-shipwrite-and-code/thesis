@@ -3,18 +3,37 @@
 
   <div class="main-content shadow horizontal-center">
     <h4>Add Project</h4>
-
+    <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
+      <p>Import from Github:</p>
+      <span>Owner: </span>
+      <select name="username" ngModel="default" (change)="handleChange($event)" required>
+        <option value="default" disabled="">-- Select One --</option>
+        <option value="Member">{{userInfo.name}}</option>
+        <option *ngFor="let team of userInfo.Team; let i = index" value="{{i}}">{{team.name}}</option>
+      </select>
+      
+      <span *ngIf="haveGithub === false"><br>You need to provide a github url for <a routerLink="/{{selected.url}}">{{selected.name}}</a> to use the import feature.</span>
+      <span *ngIf="haveGithub === true && repos.length === 0"><br>You don't have any public repos on Github</span>
+      
+      <div *ngIf="repos.length > 0">
+        <span>Repository: </span>
+        <select name="repo" ngModel=0 required>
+          <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
+        </select>
+      </div>
+      <button *ngIf="repos.length > 0" name="repo" type = "submit" class="btn btn-primary">Import</button>
+    </form>
     <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
       <div class="form-group">
         <p class='title-label'>Title:</p>
-        <input type="text" name="title" class='form-control' placeholder='Enter your project title' ngModel required>
+        <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" required>
       </div>
 
        <div class="form-group">
         <p class='title-label'>Owner:</p>
         <select class="form-control" name="owner" [(ngModel)]="owner">
-          <option value="Member">{{userInfo.name}}</option>
+          <option value="{{userInfo.id}}">{{userInfo.name}}</option>
           <ng-container *ngFor="let team of userInfo.Team">
             <option *ngIf="team.TeamUsers.type === 'Owner' || team.TeamUsers.type === 'Admin'" value="{{team.id}}"><span>{{team.name}}</span></option>
           </ng-container>
@@ -23,12 +42,12 @@
 
       <div class="form-group">
         <p class='description-label'>Description:</p>
-        <textarea rows="4" class='form-control' name="description" ngModel required></textarea>
+        <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" required></textarea>
       </div>
 
       <div class="form-group">
         <p class='github-label'>Github:</p>
-        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' ngModel>
+        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' [(ngModel)]="github">
       </div>
 
       <div class="form-group">

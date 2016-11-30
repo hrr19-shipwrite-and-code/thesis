@@ -107,6 +107,9 @@
         </div>
         <div class="edit">
         <div *ngIf="editing.member">
+          <div *ngIf="errAddMember">
+            Please enter a valid username
+          </div>
           <form (ngSubmit)="addMember()">
             <input type="text" name="member" class="form-control" [(ngModel)]="newMember" placeholder="Enter username">
             <button class="btn btn-primary btn-sm">Add</button>
@@ -157,9 +160,10 @@
         <span *ngIf="urlTaken">URL Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
           <p>
-            sushi.com/
+            http://sushiii.me/
             <input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL">
           </p>
+          http://sushiii.me/<input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL"><br>
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>

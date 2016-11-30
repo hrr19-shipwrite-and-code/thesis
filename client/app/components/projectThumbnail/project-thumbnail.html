@@ -1,21 +1,27 @@
-<div *ngFor="let project of projects | slice:0:15; let i = index" class="project-thumbnail shadow">
+  <div class="project-thumbnail shadow" *ngFor="let project of projects | slice:0:15; let i = index">
+    <a routerLink="/project/{{project.id}}">
+      <div class="project-thumbnail-hover hide horizontal-center" hover>
+        <h4 class="project-name">{{project.title}}</h4>
+        <p class="project-description">{{project.description}}</p>
+      </div>
+    </a>
 
-  <a routerLink="/project/{{project.id}}">
-    <div class="project-thumbnail-hover hide horizontal-center" hover>
-      <h4 class="project-name">{{project.title}}</h4>
-      <p class="project-description">{{project.description}}</p>
+    <div class="project-thumbnail-img-viewport">
+      <div class="image-wrapper">
+        <img class="project-thumbnail-img" src="{{project.thumbnail}}">
+      </div>
     </div>
-  </a>
 
-  <div class="project-thumbnail-img-viewport">
-    <div class="image-wrapper">
-      <img class="project-thumbnail-img" src="{{project.thumbnail}}">
+    <div class="project-thumbnail-views">
+      <p class='likes'> <i class="fa fa-heart" aria-hidden="true"></i> {{project.Likes}}</p>
+      <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{project.views}}</p>
+      <p class='views'> <i class="fa fa-comment" aria-hidden="true"></i> {{project.comments}}</p>
     </div>
   </div>
 
-  <div class="project-thumbnail-views">
-    <p class='likes'> <i class="fa fa-heart" aria-hidden="true"></i> {{project.Likes}}</p>
-    <p class='views'> <i class="fa fa-eye" aria-hidden="true"></i> {{project.views}}</p>
-    <p class='views'> <i class="fa fa-comment" aria-hidden="true"></i> {{project.comments}}</p>
-  </div>
-</div>
+  <!-- Profile Picture and Name -->
+  <!-- <div *ngIf='owner===true'>
+    <a routerLink="/{{project.Profile.url}}">
+      <img src="{{project.Profile.picture}}" class="profile-image"><span>{{project.Profile.name}}</span>
+    </a>
+  </div> -->

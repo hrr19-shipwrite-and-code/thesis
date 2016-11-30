@@ -11,36 +11,31 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var ProjectThumbnailComponent;
+    var FooterComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            ProjectThumbnailComponent = (function () {
-                function ProjectThumbnailComponent() {
+            FooterComponent = (function () {
+                function FooterComponent() {
                 }
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], ProjectThumbnailComponent.prototype, "projects", void 0);
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], ProjectThumbnailComponent.prototype, "owner", void 0);
-                ProjectThumbnailComponent = __decorate([
+                FooterComponent.prototype.gotoTop = function () {
+                    return window.scrollTo(0, 0);
+                };
+                FooterComponent = __decorate([
                     core_1.Component({
-                        selector: 'project-thumbnail',
-                        templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html',
-                        styleUrls: ['./client/app/components/projectThumbnail/projectThumbnail.css'],
+                        selector: 'footer',
+                        templateUrl: './client/app/components/footer/footer.html',
+                        styleUrls: ['./client/app/components/footer/footer.css'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], ProjectThumbnailComponent);
-                return ProjectThumbnailComponent;
+                ], FooterComponent);
+                return FooterComponent;
             }());
-            exports_1("ProjectThumbnailComponent", ProjectThumbnailComponent);
+            exports_1("FooterComponent", FooterComponent);
         }
     }
 });
-//# sourceMappingURL=project-thumbnail.component.js.map
+//# sourceMappingURL=footer.component.js.map

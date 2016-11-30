@@ -12,6 +12,11 @@
   box-shadow: 0 5px 6px -6px #bdc3c7;
 }
 
+.project-wrapper {
+  border: 2px solid salmon;
+  min-width: 1000px;
+}
+
 /* Thumbnail card */
 .project-thumbnail {
   border-radius: 3px;
@@ -28,7 +33,6 @@
   background-color: rgba(255, 255, 255, 0.9);
 
   cursor: pointer;
-  /*border: 2px solid salmon;*/
   z-index: 1;
 
   width: 96%;
@@ -47,6 +51,11 @@ h4.project-name {
   font-size: 0.9em;
   color: #444444;
   text-align: center;
+}
+
+/* Profile Info */
+.profile-image {
+  width: 30px;
 }
 
 /* Image */
@@ -100,5 +109,4 @@ h4.project-name {
 
 .likes {
   padding-bottom: 5px;
-  cursor: pointer;
 }

@@ -11,36 +11,28 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var ProjectThumbnailComponent;
+    var AboutUsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            ProjectThumbnailComponent = (function () {
-                function ProjectThumbnailComponent() {
+            AboutUsComponent = (function () {
+                function AboutUsComponent() {
                 }
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], ProjectThumbnailComponent.prototype, "projects", void 0);
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], ProjectThumbnailComponent.prototype, "owner", void 0);
-                ProjectThumbnailComponent = __decorate([
+                AboutUsComponent = __decorate([
                     core_1.Component({
-                        selector: 'project-thumbnail',
-                        templateUrl: './client/app/components/projectThumbnail/project-thumbnail.html',
-                        styleUrls: ['./client/app/components/projectThumbnail/projectThumbnail.css'],
+                        selector: 'aboutus',
+                        templateUrl: './client/app/components/aboutus/aboutus.html',
+                        styleUrls: ['./client/app/components/aboutus/aboutus.css'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], ProjectThumbnailComponent);
-                return ProjectThumbnailComponent;
+                ], AboutUsComponent);
+                return AboutUsComponent;
             }());
-            exports_1("ProjectThumbnailComponent", ProjectThumbnailComponent);
+            exports_1("AboutUsComponent", AboutUsComponent);
         }
     }
 });
-//# sourceMappingURL=project-thumbnail.component.js.map
+//# sourceMappingURL=aboutus.component.js.map

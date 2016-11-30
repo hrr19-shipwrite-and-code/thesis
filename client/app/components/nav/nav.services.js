@@ -1,4 +1,4 @@
-System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exports_1, context_1) {
+System.register(['angular2-jwt', '@angular/http', '@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,51 +10,48 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exp
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var http_1, angular2_jwt_1, core_1;
-    var ProjectAddService;
+    var angular2_jwt_1, http_1, core_1;
+    var NavService;
     return {
         setters:[
-            function (http_1_1) {
-                http_1 = http_1_1;
-            },
             function (angular2_jwt_1_1) {
                 angular2_jwt_1 = angular2_jwt_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            ProjectAddService = (function () {
-                function ProjectAddService(authHttp, http) {
+            NavService = (function () {
+                function NavService(authHttp, http) {
                     this.authHttp = authHttp;
                     this.http = http;
                 }
-                ProjectAddService.prototype.userCreateProject = function (project) {
+                NavService.prototype.getNotifications = function () {
+                    return this.authHttp.get('http://localhost:1337/api/notifications')
+                        .map(function (res) { return res.json(); });
+                };
+                NavService.prototype.markAsRead = function () {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/project/userCreate';
-                    return this.authHttp.post(url, JSON.stringify(project), options)
-                        .map(function (res) { return res.json(); });
+                    return this.authHttp.put('http://localhost:1337/api/notifications/view/', {}, options)
+                        .map(function (res) { return res; });
                 };
-                ProjectAddService.prototype.teamCreateProject = function (project, teamId) {
-                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-                    var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/project/teamCreate/' + teamId;
-                    return this.authHttp.post(url, JSON.stringify(project), options)
-                        .map(function (res) { return res.json(); });
+                NavService.prototype.decline = function (id) {
+                    console.log(id);
+                    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + id)
+                        .map(function (res) { return res; });
                 };
-                ProjectAddService.prototype.getGithubProject = function (gitUsername) {
-                    return this.http.get('http://api.github.com/users/' + gitUsername + '/repos')
-                        .map(function (res) { return res.json(); });
-                };
-                ProjectAddService = __decorate([
+                NavService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])
-                ], ProjectAddService);
-                return ProjectAddService;
+                ], NavService);
+                return NavService;
             }());
-            exports_1("ProjectAddService", ProjectAddService);
+            exports_1("NavService", NavService);
         }
     }
 });
-//# sourceMappingURL=projectAdd.services.js.map
+//# sourceMappingURL=nav.services.js.map

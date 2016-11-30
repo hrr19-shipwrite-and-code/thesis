@@ -1,4 +1,4 @@
-System.register(['@angular/core', '../auth/auth.service', '../projectAdd/projectAdd.component.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '../auth/auth.service', './nav.services', '../projectAdd/projectAdd.component.js', '../profile/profile.services.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '../auth/auth.service', '../projectAdd/project
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, auth_service_1, projectAdd_component_js_1;
+    var core_1, auth_service_1, nav_services_1, projectAdd_component_js_1, profile_services_js_1;
     var NavComponent;
     return {
         setters:[
@@ -20,17 +20,28 @@ System.register(['@angular/core', '../auth/auth.service', '../projectAdd/project
             function (auth_service_1_1) {
                 auth_service_1 = auth_service_1_1;
             },
+            function (nav_services_1_1) {
+                nav_services_1 = nav_services_1_1;
+            },
             function (projectAdd_component_js_1_1) {
                 projectAdd_component_js_1 = projectAdd_component_js_1_1;
+            },
+            function (profile_services_js_1_1) {
+                profile_services_js_1 = profile_services_js_1_1;
             }],
         execute: function() {
             NavComponent = (function () {
-                function NavComponent(auth, add) {
+                function NavComponent(auth, add, nav, profileService) {
                     this.auth = auth;
                     this.add = add;
+                    this.nav = nav;
+                    this.profileService = profileService;
+                    this.notificationShow = false;
+                    this.profileShow = false;
                 }
                 NavComponent.prototype.ngOnInit = function () {
                     this.checkAgain();
+                    this.checkNotifications();
                 };
                 NavComponent.prototype.checkAgain = function () {
                     if (localStorage.getItem('name') === null) {
@@ -44,17 +55,76 @@ System.register(['@angular/core', '../auth/auth.service', '../projectAdd/project
                         this.picture = localStorage.getItem('picture');
                     }
                 };
+                NavComponent.prototype.checkNotifications = function () {
+                    var _this = this;
+                    this.nav.getNotifications()
+                        .subscribe(function (data) {
+                        _this.notifications = data;
+                        _this.numberOfNotifications = _this.notificationCount();
+                        console.log(data);
+                    });
+                    setInterval(function () {
+                        _this.checkNotifications();
+                    }, 300000);
+                };
+                NavComponent.prototype.notificationCount = function () {
+                    var count = 0;
+                    this.notifications.filter(function (note) {
+                        if (!note.viewed)
+                            count++;
+                    });
+                    return count;
+                };
+                NavComponent.prototype.handleClick = function (e) {
+                    var _this = this;
+                    var className = e.target.className.split(' ')[0];
+                    if (e.target.id === 'notification' && className !== 'inside') {
+                        this.notificationShow = !this.notificationShow;
+                        this.profileShow = false;
+                        this.nav.markAsRead()
+                            .subscribe(function (data) {
+                            _this.checkNotifications();
+                        });
+                    }
+                    else if (e.target.id === 'profile' && className !== 'inside') {
+                        this.profileShow = !this.profileShow;
+                        this.notificationShow = false;
+                    }
+                    else if (className !== 'inside') {
+                        this.notificationShow = false;
+                        this.profileShow = false;
+                    }
+                };
+                NavComponent.prototype.joinTeam = function (notification, index) {
+                    var _this = this;
+                    this.profileService.joinTeam(notification.SenderId)
+                        .subscribe(function (data) {
+                        data.TeamUsers = { type: 'Member' };
+                        _this.notifications.splice(index, 1);
+                    });
+                };
+                NavComponent.prototype.decline = function (notification, index) {
+                    var _this = this;
+                    console.log(notification);
+                    this.nav.decline(notification.SenderId)
+                        .subscribe(function (data) {
+                        _this.notifications.splice(index, 1);
+                    });
+                };
                 NavComponent = __decorate([
                     core_1.Component({
                         selector: 'nav',
                         templateUrl: './client/app/components/nav/nav.html',
                         styleUrls: ['./client/app/components/nav/nav.css'],
-                        providers: [auth_service_1.AuthService, projectAdd_component_js_1.ProjectAddComponent]
+                        providers: [auth_service_1.AuthService, projectAdd_component_js_1.ProjectAddComponent, nav_services_1.NavService],
+                        host: {
+                            '(window:click)': 'handleClick($event)'
+                        }
                     }), 
-                    __metadata('design:paramtypes', [auth_service_1.AuthService, (typeof (_a = typeof projectAdd_component_js_1.ProjectAddComponent !== 'undefined' && projectAdd_component_js_1.ProjectAddComponent) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [auth_service_1.AuthService, (typeof (_a = typeof projectAdd_component_js_1.ProjectAddComponent !== 'undefined' && projectAdd_component_js_1.ProjectAddComponent) === 'function' && _a) || Object, nav_services_1.NavService, (typeof (_b = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _b) || Object])
                 ], NavComponent);
                 return NavComponent;
-                var _a;
+                var _a, _b;
             }());
             exports_1("NavComponent", NavComponent);
         }
