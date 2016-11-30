@@ -42,6 +42,7 @@ export class ProfileComponent {
   constructor(private projectService: ProjectService, private profileService: ProfileService, private route: ActivatedRoute, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router) {}
 
   ngOnInit() {
+    window.scrollTo(0,0)
     this.getUserInfo();
     this.getTechs();
   }

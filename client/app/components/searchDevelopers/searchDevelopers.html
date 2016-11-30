@@ -11,7 +11,7 @@
     <div class="sidebar-container">
       <div class="sidebar horizontal-center shadow">
 
-        <form class="search-for-devs" #form="ngForm">
+        <form id="search-form" class="search-for-devs" #form="ngForm">
           <!--
           <fieldset class="form-group">
             <legend>Sort</legend>
@@ -62,7 +62,7 @@
         </form>
         <button type="submit" class="btn btn-primary" (click)="getAllProfiles(form.value)">Search</button>
         <br>
-        <button type="button" class="btn btn-danger" (click)="getAllProfiles({})">Clear</button>
+        <button type="button" class="btn btn-danger" (click)="clearSearch()">Clear</button>
       </div> <!-- sidebar -->
 
     </div> <!-- sidebar-container -->

@@ -21,6 +21,9 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             ProjectThumbnailComponent = (function () {
                 function ProjectThumbnailComponent() {
                 }
+                ProjectThumbnailComponent.prototype.momentize = function (date) {
+                    return moment(date).format('MMMM Do YYYY');
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)
