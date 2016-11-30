@@ -65,6 +65,10 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                         _this.projects = data;
                     });
                 };
+                HomeComponent.prototype.clearSearch = function (e) {
+                    document.getElementById("home-search").reset();
+                    this.filter(e, { sort: 'default' });
+                };
                 HomeComponent.prototype.sort = function (sortType) {
                     var _this = this;
                     var filterConditions = this.filterConditions;
