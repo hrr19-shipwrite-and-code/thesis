@@ -96,6 +96,6 @@ export class SearchDevelopersComponent implements OnInit{
     this.filterConditions.offset = (page-1)*6;
     this.router.navigate([path],{ queryParams: this.filterConditions});
     this.getAllProfiles();
-    window.scrollTo(0,0)
+    window.scrollTo(0,0);
   }
 }

@@ -16,7 +16,7 @@ export class HomeComponent {
   filterHidden = true;
   projects = [];
   pagination = 0;
-  more = true;
+  count;
   constructor(private homeService: HomeService) {}
 
   ngOnInit() {
@@ -36,8 +36,8 @@ export class HomeComponent {
   getProjects(filterConditions) {
     this.homeService.getProjects(filterConditions)
       .subscribe(data => {
-        this.projects = [...this.projects,...data]
-        this.more = data.length === 12;
+        this.projects = [...this.projects,...data.rows]
+        this.count = data.count
       })
   }
 

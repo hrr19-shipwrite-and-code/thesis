@@ -37,7 +37,7 @@
     </div>
   </div> <!-- thumbnail-wrapper -->
 
-  <div class="btn btn-primary" *ngIf="more" (click)="loadMore()">Load More</div>
-  <div *ngIf="!more">There are no more projects! Try searching for something else.</div>
+  <div class="btn btn-primary" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
+  <div *ngIf="count <= (pagination+1)*12">There are no more projects! Try searching for something else.</div>
 
 </div> <!-- container -->

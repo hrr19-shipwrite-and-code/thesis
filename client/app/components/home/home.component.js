@@ -29,7 +29,6 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     this.filterHidden = true;
                     this.projects = [];
                     this.pagination = 0;
-                    this.more = true;
                 }
                 HomeComponent.prototype.ngOnInit = function () {
                     this.getProjects({ sort: this.sortType });
@@ -48,8 +47,8 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     var _this = this;
                     this.homeService.getProjects(filterConditions)
                         .subscribe(function (data) {
-                        _this.projects = _this.projects.concat(data);
-                        _this.more = data.length === 12;
+                        _this.projects = _this.projects.concat(data.rows);
+                        _this.count = data.count;
                     });
                 };
                 HomeComponent.prototype.filter = function (filter) {
