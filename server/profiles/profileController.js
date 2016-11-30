@@ -87,8 +87,10 @@ module.exports = {
         model: Project,
         attributes: ['id', 'thumbnail', 'title', 'views', 'description'],
         include: [{model: Comment}, {model: Like}]
-      }
-      ]
+      }],
+      limit: 6,
+      offset: Number(req.body.offset) || 0,
+      distinct: true
     };
 
     //filters
@@ -101,16 +103,17 @@ module.exports = {
       });
     }
 
-    Profile.findAll(filter)
-      .then((users) => {
-        users = JSON.parse(JSON.stringify(users));
+    Profile.findAndCountAll(filter)
+      .then((result) => {
+        result = JSON.parse(JSON.stringify(result));
+        let users = result.rows
         users.forEach((user) => {
           user.Projects.forEach((proj) => {
             proj.comments = proj.Comments.length;
             proj.Likes = proj.Likes.length;
           });
         });
-        res.json(users);
+        res.json(result);
       })
       .catch((err) => {
         res.sendStatus(404);

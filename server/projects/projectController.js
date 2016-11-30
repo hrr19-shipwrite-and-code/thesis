@@ -288,7 +288,10 @@ module.exports = {
         {model: Comment},
         {model: Tech}
       ],
-      where: {id: {$notIn: ['']}}
+      where: {id: {$notIn: ['']}},
+      offset: req.body.offset || 0,
+      limit: 12,
+      distinct: true
     }
 
     //filter
@@ -304,14 +307,15 @@ module.exports = {
     req.body.sort === 'views' ? filter.order = [['views', 'DESC']] : false;
 
 
-    Project.findAll(filter)
-      .then((projects) => {
-        projects = JSON.parse(JSON.stringify(projects));
+    Project.findAndCountAll(filter)
+      .then((result) => {
+        result = JSON.parse(JSON.stringify(result));
+        let projects = result.rows
         for (let project of projects) {
           project.Likes = project.Likes.length;
           project.comments = project.Comments.length;
         }
-        res.send(projects);
+        res.send(result);
       })
       .catch((err) =>{
         console.log(err)

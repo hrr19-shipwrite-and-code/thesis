@@ -1,6 +1,6 @@
 <div class="container">
   <div class="filter-bar filter-bar-hide" id="filter-bar">
-    <form id="home-search" #form="ngForm" (ngSubmit)="filter($event, form.value)">
+    <form id="home-search" #form="ngForm" (ngSubmit)="filter(form.value)">
       <input type="text" name="tech" placeholder="Filter by tech" class="filter-bar-input form-control" ngModel>
       <input type="text" name="title" placeholder="Filter by title" class="filter-bar-input form-control" ngModel>
       <input type="text" name="user" placeholder="Filter by user" class="filter-bar-input form-control" ngModel>
@@ -36,5 +36,8 @@
       <project-thumbnail [projects]="projects" [owner]=true></project-thumbnail>
     </div>
   </div> <!-- thumbnail-wrapper -->
+
+  <div class="btn btn-primary" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
+  <div *ngIf="count <= (pagination+1)*12">There are no more projects! Try searching for something else.</div>
 
 </div> <!-- container -->
