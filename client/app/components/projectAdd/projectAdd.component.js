@@ -100,6 +100,9 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.description = repo.description;
                     this.owner = this.selected.id;
                 };
+                ProjectAddComponent.prototype.trimmer = function () {
+                    this.title = this.title.trim();
+                };
                 ProjectAddComponent = __decorate([
                     core_1.Component({
                         selector: 'project-add',

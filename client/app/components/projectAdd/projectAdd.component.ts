@@ -88,4 +88,9 @@ export class ProjectAddComponent {
     this.description = repo.description;
     this.owner = this.selected.id;
   }
+
+  trimmer() {
+    this.title = this.title.trim();
+  }
+
 }
