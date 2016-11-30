@@ -8,22 +8,22 @@
     <form #form="ngForm">
       <div class="form-group">
         <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your team name" ngModel name="name" required>
+        <input type="text" class="form-control" placeholder="Enter your team name" ngModel name="name" maxlength="50" required>
       </div>
 
       <div class="form-group">
         <p class='email-label'>URL:</p>
-        <input type="text" class="form-control" placeholder="Enter team URL" ngModel name="url" required>
+        <input type="text" class="form-control" placeholder="Enter team URL" ngModel name="url" maxlength="30" required>
       </div>
 
       <div class="form-group">
         <p class='email-label'>Email:</p>
-        <input type="text" class="form-control" placeholder="Enter team email" ngModel name="email" required>
+        <input type="text" class="form-control" placeholder="Enter team email" ngModel name="email" maxlength="255" required>
       </div>
 
       <div class="form-group">
         <p class='location-label'>Location (optional):</p>
-        <input type="text" class="form-control" placeholder="Enter your team location" id="location" [(ngModel)]="location" name="location" onkeypress="return event.keyCode!=13">
+        <input type="text" class="form-control" placeholder="Enter your team location" id="location" [(ngModel)]="location" name="location" maxlength="50" onkeypress="return event.keyCode!=13">
       </div>
 
       <div class="form-group">
@@ -36,7 +36,7 @@
 
       <div class="form-group">
         <p class='bio-label'>Bio (optional):</p>
-        <textarea class="form-control" rows="3" placeholder="Enter your team bio" ngModel name="bio"></textarea>
+        <textarea class="form-control" rows="3" placeholder="Enter your team bio" ngModel name="bio" maxlength="255"></textarea>
       </div>
       <button class="btn btn-primary" (click)="createTeam(form.value)">Save</button>
     </form>

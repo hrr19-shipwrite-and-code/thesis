@@ -75,7 +75,6 @@ export class HomeComponent {
     this.pagination = 0;
     this.filterConditions.offset = 0;
     this.filterConditions.sort = sortType;
-    console.log(this.filterConditions)
     this.getProjects(this.filterConditions);
   }
 
