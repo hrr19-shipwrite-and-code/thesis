@@ -60,7 +60,8 @@
         <div class="tech-list" *ngIf="profileInfo.Teches.length">
           <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
             <span class="tech-name">{{tech.name}}</span>
-            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span></span>
+            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span>
+          </span> <!-- tech-list-item -->
         </div>
         <!-- Hidden User Tech Input -->
         <datalist id="techs">
@@ -120,8 +121,6 @@
         </div>
       </div>
 
-      <hr>
-
       <!-- User/Team Connections -->
       <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser() || memberType === 'Owner' || memberType === 'Admin'">
         <h5>CONNECT</h5>
@@ -132,7 +131,7 @@
           <li *ngIf="profileInfo.linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i><a href='{{profileInfo.linkedin}}'>linkedin</a></li>
           <li *ngIf="profileInfo.twitter"><i class="fa fa-twitter" aria-hidden="true"></i><a href='{{profileInfo.twitter}}'>twitter</a></li>
           <li *ngIf="profileInfo.facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i><a href='{{profileInfo.facebook}}'>facebook</a></li>
-          <li *ngIf="profileInfo.createdAt">Member since: {{profileInfo.createdAt}}</li>
+          <!-- <li *ngIf="profileInfo.createdAt">Member since: {{profileInfo.createdAt}}</li> -->
         </ul>
         <!-- User/Team Connection edit forms -->
         <div *ngIf="editing.contact">
@@ -152,7 +151,7 @@
       </div>
 
 
-
+      <hr class="divider">
 
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
