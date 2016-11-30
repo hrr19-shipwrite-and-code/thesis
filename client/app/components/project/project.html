@@ -43,8 +43,10 @@
                 style="display: none"
                 ngFileSelect
                 [options]="options"
-                (onUpload)="handleUpload($event)">
+                (onUpload)="handleUpload($event)"
+                (onUploadRejected)="imageError()">
               </label>
+              <span *ngIf="imgError" class="image-up">Must be a png, jpg, jpeg, or gif file.</span>
             </div>
           </div> <!-- Image Uploads -->
 
