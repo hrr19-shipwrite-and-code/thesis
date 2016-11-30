@@ -56,6 +56,7 @@ export class HomeComponent {
         }
       }
     }
+    this.pagination = 0;
     this.filterConditions = filterConditions;
     this.getProjects(filterConditions);
   }
@@ -64,13 +65,17 @@ export class HomeComponent {
     this.projects = [];
     document.getElementById("home-search").reset()
     this.filterConditions = {sort: 'default'};
+    this.pagination = 0;
     this.getProjects(this.filterConditions)
   }
 
   sort(sortType) {
     this.projects = [];
     this.sortType = sortType;
+    this.pagination = 0;
+    this.filterConditions.offset = 0;
     this.filterConditions.sort = sortType;
+    console.log(this.filterConditions)
     this.getProjects(this.filterConditions);
   }
 

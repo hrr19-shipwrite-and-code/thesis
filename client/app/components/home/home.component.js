@@ -67,6 +67,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                             }
                         }
                     }
+                    this.pagination = 0;
                     this.filterConditions = filterConditions;
                     this.getProjects(filterConditions);
                 };
@@ -74,12 +75,16 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     this.projects = [];
                     document.getElementById("home-search").reset();
                     this.filterConditions = { sort: 'default' };
+                    this.pagination = 0;
                     this.getProjects(this.filterConditions);
                 };
                 HomeComponent.prototype.sort = function (sortType) {
                     this.projects = [];
                     this.sortType = sortType;
+                    this.pagination = 0;
+                    this.filterConditions.offset = 0;
                     this.filterConditions.sort = sortType;
+                    console.log(this.filterConditions);
                     this.getProjects(this.filterConditions);
                 };
                 HomeComponent.prototype.loadMore = function () {
