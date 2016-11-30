@@ -1,6 +1,6 @@
 <div class="container">
   <div class="filter-bar filter-bar-hide" id="filter-bar">
-    <form #form="ngForm" (ngSubmit)="filter($event, form.value)">
+    <form id="home-search" #form="ngForm" (ngSubmit)="filter($event, form.value)">
       <input type="text" name="tech" placeholder="Filter by tech" class="filter-bar-input form-control" ngModel>
       <input type="text" name="title" placeholder="Filter by title" class="filter-bar-input form-control" ngModel>
       <input type="text" name="user" placeholder="Filter by user" class="filter-bar-input form-control" ngModel>
@@ -16,7 +16,7 @@
         <option value=0>No</option>
       </select>
       <button type="submit" class="btn btn-primary">Apply</button>
-      <button type="button" class="btn btn-danger" (click)="filter($event, {})">Clear</button>
+      <button type="button" class="btn btn-danger" (click)="clearSearch($event)">Clear</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
@@ -25,9 +25,9 @@
   </div>
   <div class="sort">
     <span (click)="sort('date')">Recent</span>
-     | 
+     |
     <span (click)="sort('likes')">Likes</span>
-     | 
+     |
     <span (click)="sort('views')">Views</span>
   </div>
 
@@ -38,4 +38,3 @@
   </div> <!-- thumbnail-wrapper -->
 
 </div> <!-- container -->
-

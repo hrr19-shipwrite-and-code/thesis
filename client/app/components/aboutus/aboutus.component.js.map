@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"aboutus.component.js","sourceRoot":"","sources":["aboutus.component.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;YAQA;gBAAA;gBACA,CAAC;gBAPD;oBAAC,gBAAS,CAAC;wBACT,QAAQ,EAAE,SAAS;wBACnB,WAAW,EAAE,8CAA8C;wBAC3D,SAAS,EAAE,CAAC,6CAA6C,CAAC;qBAC3D,CAAC;;oCAAA;gBAGF,uBAAC;YAAD,CAAC,AADD,IACC;YADD,+CACC,CAAA"}
+=======
+{"version":3,"file":"aboutus.component.js","sourceRoot":"","sources":["aboutus.component.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;YAQA;gBAAA;gBAKA,CAAC;gBAHC,mCAAQ,GAAR;oBACE,MAAM,CAAC,QAAQ,CAAC,CAAC,EAAC,CAAC,CAAC,CAAA;gBACtB,CAAC;gBAVH;oBAAC,gBAAS,CAAC;wBACT,QAAQ,EAAE,SAAS;wBACnB,WAAW,EAAE,8CAA8C;wBAC3D,SAAS,EAAE,CAAC,6CAA6C,CAAC;qBAC3D,CAAC;;oCAAA;gBAOF,uBAAC;YAAD,CAAC,AALD,IAKC;YALD,+CAKC,CAAA"}
+>>>>>>> upstream

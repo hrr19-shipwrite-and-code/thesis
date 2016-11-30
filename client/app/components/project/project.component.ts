@@ -49,6 +49,7 @@ export class ProjectComponent {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
     });
+    window.scrollTo(0,0)
     this.getProject(this.id);
     this.getComment(this.id);
     this.doesUserLike(this.id);

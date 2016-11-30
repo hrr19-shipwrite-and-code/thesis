@@ -64,6 +64,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.memberType = '';
                 }
                 ProfileComponent.prototype.ngOnInit = function () {
+                    window.scrollTo(0, 0);
                     this.getUserInfo();
                     this.getTechs();
                 };

@@ -70,8 +70,14 @@ a:hover, a.navLink:hover {
 
 .nav-dropdown {
   margin-right: 40px;
+  cursor: pointer;
 }
 
 .dropdown-image {
   margin-left: 10px;
+}
+
+.name {
+  color: #888B8D;
+  font-size: 0.9em;
 }

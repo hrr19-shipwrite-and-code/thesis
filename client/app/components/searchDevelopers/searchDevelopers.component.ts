@@ -57,4 +57,9 @@ export class SearchDevelopersComponent implements OnInit{
         this.users = data;
       })
   }
+
+  clearSearch() {
+    document.getElementById('search-form').reset();
+    this.getAllProfiles({type: this.type});
+  }
 }

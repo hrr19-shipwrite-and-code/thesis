@@ -6,13 +6,15 @@
       <a routerLink="/{{user.url}}"><img src="{{user.picture}}" class='profile-picture' /></a>
     </div>
 
-    <a routerLink="/{{user.url}}"><h5 class='user-name'>{{user.name}}</h5></a>
-    <p class='user-name'>{{user.location}}</p>
+    <a routerLink="/{{user.url}}" class='user-name'><h5>{{user.name}}</h5></a>
+    <p class='user-location'>{{user.location}}</p>
     <p class='description'>
       {{user.bio}}
     </p>
     <p class='tech'>
-      <span *ngFor="let tech of user.Teches"> {{tech.name}}</span>
+      <span *ngFor="let tech of user.Teches | slice:0:10; let i = index"> {{tech.name}}
+        <span *ngIf="i !== user.Teches.length - 1">, </span>
+      </span>
     </p>
   </div> <!-- profile-details -->
 

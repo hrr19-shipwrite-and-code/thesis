@@ -56,6 +56,11 @@ export class HomeComponent {
       })
   }
 
+  clearSearch(e) {
+    document.getElementById("home-search").reset()
+    this.filter(e, {sort: 'default'})
+  }
+
   sort(sortType) {
     let filterConditions = this.filterConditions;
     filterConditions.sort = sortType;
