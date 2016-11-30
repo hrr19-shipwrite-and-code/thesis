@@ -9,4 +9,7 @@ import { Component, Input } from '@angular/core';
 export class ProjectThumbnailComponent {
   @Input() projects
   @Input() owner
+  momentize(date) {
+    return moment(date).format('MMMM Do YYYY');
+  }
 }
