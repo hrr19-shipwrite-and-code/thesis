@@ -1,5 +1,4 @@
-<div *ngFor="let project of projects | slice:0:15; let i = index">
-  <div class="project-thumbnail shadow">
+  <div class="project-thumbnail shadow" *ngFor="let project of projects | slice:0:15; let i = index">
     <a routerLink="/project/{{project.id}}">
       <div class="project-thumbnail-hover hide horizontal-center" hover>
         <h4 class="project-name">{{project.title}}</h4>
@@ -21,9 +20,10 @@
       <p class='views'> <i class="fa fa-comment" aria-hidden="true"></i> {{project.comments}}</p>
     </div>
   </div>
-  <div *ngIf='owner===true'>
+
+  <!-- Profile Picture and Name -->
+  <!-- <div *ngIf='owner===true'>
     <a routerLink="/{{project.Profile.url}}">
       <img src="{{project.Profile.picture}}" class="profile-image"><span>{{project.Profile.name}}</span>
     </a>
-  </div>
-<div>
+  </div> -->

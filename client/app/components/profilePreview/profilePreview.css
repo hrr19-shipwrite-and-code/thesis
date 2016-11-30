@@ -56,6 +56,12 @@
   color: #888B8D;
 }
 
+/* User Name */
+.user-name, .user-name:visited {
+  text-decoration: none;
+  color: #444444;
+}
+
 /* Thumbnail Scrolling */
 
 .thumbnails-container {
