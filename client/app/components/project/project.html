@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class='header'>
         <form #editTitleInput="ngForm" class="title" *ngIf="editTitle" (ngSubmit)="editProject($event, editTitleInput.value, 'title')">
-          <input type="text" name="title" class="form-control" [(ngModel)]="project.title">
+          <input type="text" name="title" class="form-control" [(ngModel)]="project.title" maxlength="75" required>
           <button class="btn btn-primary btn-sm">Edit</button>
         </form>
         <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
@@ -64,7 +64,7 @@
             <div *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"'>
               <div *ngIf="editDescrip">
                 <form #editDescriptionInput="ngForm" (ngSubmit)="editProject($event, editDescriptionInput.value, 'description')" >
-                  <textarea name="description" rows="4" [(ngModel)]="project.description" class="form-control"></textarea>
+                  <textarea name="description" rows="4" [(ngModel)]="project.description" class="form-control" maxlength="500" required></textarea>
                   <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
               </div>
