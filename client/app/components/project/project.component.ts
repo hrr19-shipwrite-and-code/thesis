@@ -314,7 +314,6 @@ export class ProjectComponent {
     return this.project.Images.length > 0
   }
 
-
   editProject(event, input, type){
     if (type !== 'progress' && type !== 'contribute') {
       event.preventDefault();
@@ -336,8 +335,11 @@ export class ProjectComponent {
           data => this.editingProject(type),
           err => err
         )
-    }
-   
+    }  
+  }
+
+  trimTitle() {
+    this.project.title = this.project.title.trim();
   }
 
 

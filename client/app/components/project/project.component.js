@@ -317,6 +317,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                             .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
                     }
                 };
+                ProjectComponent.prototype.trimTitle = function () {
+                    this.project.title = this.project.title.trim();
+                };
                 ProjectComponent.prototype.editingProject = function (type) {
                     if (type === 'tech') {
                         return this.editTech = !this.editTech;

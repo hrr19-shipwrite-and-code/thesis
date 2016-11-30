@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class='header'>
         <form #editTitleInput="ngForm" class="title" *ngIf="editTitle" (ngSubmit)="editProject($event, editTitleInput.value, 'title')">
-          <input type="text" name="title" class="form-control" [(ngModel)]="project.title" maxlength="75" required>
+          <input type="text" name="title" class="form-control" [(ngModel)]="project.title" maxlength="75" (change)="trimTitle()" required>
           <button class="btn btn-primary btn-sm">Edit</button>
         </form>
         <h3 *ngIf="!editTitle" class='title'>{{project.title}}</h3>
