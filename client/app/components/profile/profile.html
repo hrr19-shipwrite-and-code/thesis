@@ -160,10 +160,9 @@
         <span *ngIf="urlTaken">URL Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
           <p>
-            http://sushiii.me/
+            sushiii.me/
             <input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL">
           </p>
-          http://sushiii.me/<input type="text" class="form-control userUrl" name="url" [(ngModel)]="tempUrl" placeholder="sushi URL"><br>
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>
