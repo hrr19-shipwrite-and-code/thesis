@@ -19,7 +19,7 @@
   <!--Notifications-->
   <div class="notification">
     <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
-    <div class="notification-number">
+    <div class="notification-number" *ngIf="numberOfNotifications > 0">
       {{ numberOfNotifications }}
     </div>
     <div class="inside notification-inside" *ngIf="notificationShow">
