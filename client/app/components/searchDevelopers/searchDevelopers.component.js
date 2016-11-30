@@ -71,6 +71,10 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         _this.users = data;
                     });
                 };
+                SearchDevelopersComponent.prototype.clearSearch = function () {
+                    document.getElementById('search-form').reset();
+                    this.getAllProfiles({ type: this.type });
+                };
                 SearchDevelopersComponent = __decorate([
                     core_1.Component({
                         selector: 'searchDevelopers',
