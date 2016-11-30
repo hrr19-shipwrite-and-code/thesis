@@ -112,7 +112,7 @@
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.deploy.length === 0'>Add deploy link</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
-                <input type="text" name="deploy" class="form-control" [(ngModel)]="project.deploy">
+                <input type="text" name="deploy" class="form-control" placeholder="yourwebsite.com" [(ngModel)]="project.deploy">
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
@@ -123,7 +123,7 @@
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.github.length === 0'>Add a github</span>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
-                <input type="text" name="github" class="form-control" [(ngModel)]="project.github">
+                <input type="text" name="github" class="form-control" placeholder="github.com/lukeskywalker" [(ngModel)]="project.github">
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
             </div>
