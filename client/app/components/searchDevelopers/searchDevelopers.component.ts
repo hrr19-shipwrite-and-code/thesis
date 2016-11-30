@@ -21,6 +21,10 @@ export class SearchDevelopersComponent implements OnInit{
   hire = false;
   name;
   type;
+  currentPage = 1;
+  count;
+  page = [];
+  filterConditions = {};
   constructor(private searchDevelopersServices: SearchDevelopersServices, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private router: Router, private loc: Location) {}
 
   ngOnInit() {
@@ -32,7 +36,7 @@ export class SearchDevelopersComponent implements OnInit{
       if(filter[0] === 'tech' || filter[0] === 'location') {
         filter[1] = filter[1].split('%2C').join(', ');
       }
-      this[filter[0]] = filter[1]
+      filter[0] !== 'users' ? this[filter[0]] = filter[1] : false;
     }
 
     this.type = url === '/teams' ? 'Team' : 'Member';
@@ -53,7 +57,7 @@ export class SearchDevelopersComponent implements OnInit{
   }
 
   getAllProfiles(filter) {
-    let filterConditions = {};
+    let filterConditions = this.currentPage != 1 ? {offset: (this.currentPage-1)*6} : {};
     for(let key in filter) {
       if(filter[key]) {
         if(key === 'tech' || key === 'location'){
@@ -67,22 +71,31 @@ export class SearchDevelopersComponent implements OnInit{
         }
       }
     }
+
     let path = this.type === 'Member' ? '/developers' : '/teams'
     this.router.navigate([path],{ queryParams: filterConditions})
-
+    this.filterConditions = filterConditions
     filterConditions.type = this.type;
-
-    //this.loc.go(url)
-
 
     this.searchDevelopersServices.getAllProfiles(filterConditions)
       .subscribe(data => {
-        this.users = data;
+        this.users = data.rows;
+        this.count = data.count;
+        this.page = data.count/6 >= 5 ? Array(5).fill().map((x,i)=>i+1) : Array(Math.ceil(data.count/6)).fill().map((x,i)=>i+1);
       })
   }
 
   clearSearch() {
     document.getElementById('search-form').reset();
     this.getAllProfiles();
+  }
+
+  selectPage(page) {
+    this.currentPage = page;
+    let path = this.type === 'Member' ? '/developers' : '/teams'
+    this.filterConditions.offset = (page-1)*6;
+    this.router.navigate([path],{ queryParams: this.filterConditions});
+    this.getAllProfiles();
+    window.scrollTo(0,0)
   }
 }

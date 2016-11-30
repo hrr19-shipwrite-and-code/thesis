@@ -38,6 +38,9 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                     this.router = router;
                     this.loc = loc;
                     this.hire = false;
+                    this.currentPage = 1;
+                    this.page = [];
+                    this.filterConditions = {};
                 }
                 SearchDevelopersComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -49,7 +52,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         if (filter[0] === 'tech' || filter[0] === 'location') {
                             filter[1] = filter[1].split('%2C').join(', ');
                         }
-                        this[filter[0]] = filter[1];
+                        filter[0] !== 'users' ? this[filter[0]] = filter[1] : false;
                     }
                     this.type = url === '/teams' ? 'Team' : 'Member';
                     this.getAllProfiles({ location: this.location, tech: this.tech, hire: this.hire, name: this.name });
@@ -67,7 +70,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                 };
                 SearchDevelopersComponent.prototype.getAllProfiles = function (filter) {
                     var _this = this;
-                    var filterConditions = {};
+                    var filterConditions = this.currentPage != 1 ? { offset: (this.currentPage - 1) * 6 } : {};
                     for (var key in filter) {
                         if (filter[key]) {
                             if (key === 'tech' || key === 'location') {
@@ -84,16 +87,26 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                     }
                     var path = this.type === 'Member' ? '/developers' : '/teams';
                     this.router.navigate([path], { queryParams: filterConditions });
+                    this.filterConditions = filterConditions;
                     filterConditions.type = this.type;
-                    //this.loc.go(url)
                     this.searchDevelopersServices.getAllProfiles(filterConditions)
                         .subscribe(function (data) {
-                        _this.users = data;
+                        _this.users = data.rows;
+                        _this.count = data.count;
+                        _this.page = data.count / 6 >= 5 ? Array(5).fill().map(function (x, i) { return i + 1; }) : Array(Math.ceil(data.count / 6)).fill().map(function (x, i) { return i + 1; });
                     });
                 };
                 SearchDevelopersComponent.prototype.clearSearch = function () {
                     document.getElementById('search-form').reset();
                     this.getAllProfiles();
+                };
+                SearchDevelopersComponent.prototype.selectPage = function (page) {
+                    this.currentPage = page;
+                    var path = this.type === 'Member' ? '/developers' : '/teams';
+                    this.filterConditions.offset = (page - 1) * 6;
+                    this.router.navigate([path], { queryParams: this.filterConditions });
+                    this.getAllProfiles();
+                    window.scrollTo(0, 0);
                 };
                 SearchDevelopersComponent = __decorate([
                     core_1.Component({

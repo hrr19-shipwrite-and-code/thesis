@@ -37,7 +37,7 @@ export class HomeComponent {
     this.homeService.getProjects(filterConditions)
       .subscribe(data => {
         this.projects = [...this.projects,...data]
-        this.more = data.length === 4;
+        this.more = data.length === 12;
       })
   }
 

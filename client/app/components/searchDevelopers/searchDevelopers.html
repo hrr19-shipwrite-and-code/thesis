@@ -73,7 +73,13 @@
 
   </div> <!-- main-content -->
 
-
+  <div class="pages" *ngIf="page.length > 1">
+    <span>Page: </span>
+    <span *ngFor="let number of page" (click)="selectPage(number)">
+      <span *ngIf="currentPage != number"> {{number}}</span>
+      <u *ngIf="currentPage == number"><strong> {{number}}</strong></u>
+    </span>
+  </div>
 
 
 

@@ -49,7 +49,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     this.homeService.getProjects(filterConditions)
                         .subscribe(function (data) {
                         _this.projects = _this.projects.concat(data);
-                        _this.more = data.length === 4;
+                        _this.more = data.length === 12;
                     });
                 };
                 HomeComponent.prototype.filter = function (filter) {
