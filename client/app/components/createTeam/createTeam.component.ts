@@ -14,6 +14,8 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
 export class CreateTeamComponent implements OnInit{
 
   location = '';
+  name = '';
+  notValidEmail = false;
 
   constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
 
@@ -32,11 +34,19 @@ export class CreateTeamComponent implements OnInit{
     });
   }
 
+  trimmer() {
+    this.name = this.name.trim();
+  }
+
   createTeam(teamInfo) {
-    console.log(teamInfo)
-    this.createTeamService.createTeam(teamInfo)
-      .subscribe( data => {
-        this.router.navigateByUrl('/' + teamInfo.url);
-       });
+    if(!validator.isEmail(teamInfo.email)){
+      this.notValidEmail = true;
+    } else {
+      this.createTeamService.createTeam(teamInfo)
+        .subscribe( data => {
+          this.router.navigateByUrl('/' + teamInfo.url);
+         });
+    }
+    
   }
 }
