@@ -1,4 +1,4 @@
-System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-google-maps/core', '@angular/router'], function(exports_1, context_1) {
+System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-google-maps/core', '@angular/router', '@angular/common'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, searchDevelopers_services_js_1, core_2, router_1;
+    var core_1, searchDevelopers_services_js_1, core_2, router_1, common_1;
     var SearchDevelopersComponent;
     return {
         setters:[
@@ -25,19 +25,34 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             }],
         execute: function() {
             SearchDevelopersComponent = (function () {
-                function SearchDevelopersComponent(searchDevelopersServices, mapsAPILoader, zone, router) {
+                function SearchDevelopersComponent(searchDevelopersServices, mapsAPILoader, zone, router, loc) {
                     this.searchDevelopersServices = searchDevelopersServices;
                     this.mapsAPILoader = mapsAPILoader;
                     this.zone = zone;
                     this.router = router;
+                    this.loc = loc;
+                    this.hire = false;
                 }
                 SearchDevelopersComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.type = this.router.url === '/teams' ? 'Team' : 'Member';
-                    this.getAllProfiles({ type: this.type });
+                    var split = this.router.url.split('?');
+                    var url = split[0];
+                    var search = split[1] ? split[1].split('&') : [];
+                    for (var i = 0; i < search.length; i++) {
+                        var filter = search[i].split('=');
+                        if (filter[0] === 'tech' || filter[0] === 'location') {
+                            filter[1] = filter[1].split('%2C').join(', ');
+                        }
+                        this[filter[0]] = filter[1];
+                    }
+                    this.type = url === '/teams' ? 'Team' : 'Member';
+                    this.getAllProfiles({ location: this.location, tech: this.tech, hire: this.hire, name: this.name });
                     this.mapsAPILoader.load().then(function () {
                         var input = document.getElementById('location');
                         var autocomplete = new google.maps.places.Autocomplete(input, {
@@ -52,11 +67,12 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                 };
                 SearchDevelopersComponent.prototype.getAllProfiles = function (filter) {
                     var _this = this;
-                    var filterConditions = { type: this.type };
+                    var filterConditions = {};
                     for (var key in filter) {
                         if (filter[key]) {
                             if (key === 'tech' || key === 'location') {
-                                filterConditions[key] = filter[key].split(',');
+                                var techList = filter[key].split(',');
+                                filterConditions[key] = techList;
                                 for (var i = 0; i < filterConditions[key].length; i++) {
                                     filterConditions[key][i] = filterConditions[key][i].trim();
                                 }
@@ -66,6 +82,10 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                             }
                         }
                     }
+                    var path = this.type === 'Member' ? '/developers' : '/teams';
+                    this.router.navigate([path], { queryParams: filterConditions });
+                    filterConditions.type = this.type;
+                    //this.loc.go(url)
                     this.searchDevelopersServices.getAllProfiles(filterConditions)
                         .subscribe(function (data) {
                         _this.users = data;
@@ -73,7 +93,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                 };
                 SearchDevelopersComponent.prototype.clearSearch = function () {
                     document.getElementById('search-form').reset();
-                    this.getAllProfiles({ type: this.type });
+                    this.getAllProfiles();
                 };
                 SearchDevelopersComponent = __decorate([
                     core_1.Component({
@@ -82,7 +102,7 @@ System.register(['@angular/core', './searchDevelopers.services.js', 'angular2-go
                         styleUrls: ['./client/app/components/searchDevelopers/searchDevelopers.css'],
                         providers: [searchDevelopers_services_js_1.SearchDevelopersServices]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone, router_1.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof searchDevelopers_services_js_1.SearchDevelopersServices !== 'undefined' && searchDevelopers_services_js_1.SearchDevelopersServices) === 'function' && _a) || Object, core_2.MapsAPILoader, core_1.NgZone, router_1.Router, common_1.Location])
                 ], SearchDevelopersComponent);
                 return SearchDevelopersComponent;
                 var _a;

@@ -32,14 +32,14 @@
 
           <fieldset class="form-group">
             <legend>Name</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" ngModel>
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" [(ngModel)]="name">
           </fieldset>
 
           <!-- Hire checkbox -->
           <fieldset class="form-check">
             <legend>Hire</legend>
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" name="hire" ngModel>
+              <input type="checkbox" class="form-check-input" name="hire" [(ngModel)]="hire">
               For Hire
             </label>
           </fieldset> <!-- Hire checkbox -->
@@ -55,7 +55,7 @@
 
           <fieldset class="form-group">
             <legend>Tech</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. React, Node, MongoDB" name="tech" ngModel>
+            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. React, Node, MongoDB" name="tech" [(ngModel)]="tech">
           </fieldset>
 
           <!-- Search Button -->
