@@ -8,8 +8,11 @@
 
     <a routerLink="/{{user.url}}" class='user-name'><h5>{{user.name}}</h5></a>
     <p class='user-location'>{{user.location}}</p>
-    <p class='description'>
+    <p class='description' *ngIf="user.bio === null || user.bio.length <= 50">
       {{user.bio}}
+    </p>
+    <p class='description' *ngIf="user.bio.length > 50">
+      {{user.bio.substr(0, 47) + '...'}}
     </p>
     <p class='tech'>
       <span *ngFor="let tech of user.Teches | slice:0:10; let i = index"> {{tech.name}}
