@@ -37,7 +37,7 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                         .map(function (res) { return res.json; });
                 };
                 CreateTeamService.prototype.checkUrl = function (url) {
-                    return this.http.get('http://localhost:1337/api/profile/checkUrl/' + url)
+                    return this.http.get('http://138.68.23.255:1337/api/profile/checkUrl/' + url)
                         .map(function (res) { return res.json; });
                 };
                 CreateTeamService = __decorate([
