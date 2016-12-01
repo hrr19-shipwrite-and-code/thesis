@@ -8,7 +8,7 @@
   position: relative;
   margin: 0 auto;
   width: 75vw;
-  min-width: 500px;
+  min-width: 700px;
   background-color: white;
   border-radius: 5px;
   padding: 50px 80px;
@@ -20,9 +20,9 @@
 
 .half-form {
   position: relative;
-  width: 45%;
+  width: 35%;
   display: inline-block;
-  margin-right: 4%;
+  margin-right: 3%;
 }
 
 .wrapper {

@@ -20,12 +20,12 @@
           <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
         </select>
       </div>
+
+      <button *ngIf="repos.length > 0" name="repo" type = "submit" class="btn btn-primary">Import</button>
     </div>
 
     <span *ngIf="haveGithub === false"><br>You need to provide a github url for <a routerLink="/{{selected.url}}">{{selected.name}}</a> to use the import feature.</span>
     <span *ngIf="haveGithub === true && repos.length === 0"><br>You don't have any public repos on Github</span>
-
-    <button *ngIf="repos.length > 0" name="repo" type = "submit" class="btn btn-primary">Import</button>
   </form> <!-- Import project from Github -->
 
   <hr>
@@ -82,7 +82,9 @@
       <div class="error" *ngIf="deployErr">*Please enter a valid Url!</div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Create Project</button>
 
   </form> <!-- Add project form -->
 
