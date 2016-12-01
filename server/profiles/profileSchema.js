@@ -36,7 +36,10 @@ const Profile = db.define('Profile', {
     noUpdate: true
   },
   location: Sequelize.STRING(50),
-  bio: Sequelize.TEXT('long'),
+  bio: {
+    type: Sequelize.TEXT('long'),
+    defaultValue: ''
+  },
   hire: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
