@@ -72,11 +72,9 @@ h4.project-name {
   width: 215px;
   height: 150px;
   overflow: hidden;
-  padding: 0px;
-
   position: relative;
 
-  /*border: 2px solid salmon;*/
+  border: 2px solid salmon;
 }
 
 .image-wrapper {
@@ -85,7 +83,7 @@ h4.project-name {
   padding: 0px;
 
   position: absolute;
-  /*border: 2px solid lightgreen;*/
+  border: 2px solid lightgreen;
 
   display: flex;
   flex-direction: row;
@@ -94,12 +92,10 @@ h4.project-name {
 }
 
 .project-thumbnail-img {
-  min-width: 210px;
-  min-height: 147px;
-  margin: 0px;
-  /*border: 2px solid purple;*/
-
-  /*position: absolute;*/
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border: 2px solid purple;
 }
 
 /* Social */
