@@ -16,7 +16,14 @@ export class AuthService {
     }],
     auth: {
       redirect: false,
-    }
+    },
+    theme: {
+      logo: './client/app/assets/sushi.png',
+      primaryColor: 'salmon'
+    },
+    languageDictionary: {
+      title: "sushiii"
+    },
   }
   lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
 
