@@ -2,13 +2,14 @@ import { OnInit, Component, NgZone } from '@angular/core';
 import { CreateTeamService } from './createTeam.services.js';
 import { Router } from '@angular/router';
 import { MapsAPILoader } from 'angular2-google-maps/core';
+import { AuthService } from '../auth/auth.service.js';
 
 
 @Component({
   selector: 'createTeam',
   templateUrl: './client/app/components/createTeam/createTeam.html',
   styleUrls: ['./client/app/components/createTeam/createTeam.css'],
-  providers: [CreateTeamService]
+  providers: [CreateTeamService, AuthService]
 })
 
 export class CreateTeamComponent implements OnInit{
@@ -18,10 +19,10 @@ export class CreateTeamComponent implements OnInit{
   notValidEmail = false;
   urlTaken = false;
 
-  constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
+  constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private auth: AuthService) {}
 
   ngOnInit() {
-
+    this.isAuth();
     this.mapsAPILoader.load().then(() => {
       let input = document.getElementById('location')
       let autocomplete = new google.maps.places.Autocomplete(input, {
@@ -33,6 +34,13 @@ export class CreateTeamComponent implements OnInit{
         });
       });
     });
+
+  }
+
+  isAuth() {
+    if (!this.auth.authenticated()) {
+      this.router.navigateByUrl('/');
+    }
   }
 
   trimmer() {

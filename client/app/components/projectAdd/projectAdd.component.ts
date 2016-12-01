@@ -3,12 +3,14 @@ import { AddProductModelDirective } from '../../directives/new-project-model.dir
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectAddService } from './projectAdd.services.js';
 import { ProfileService } from '../profile/profile.services.js';
+import { AuthService } from '../auth/auth.service.js';
 
 
 @Component({
   selector: 'project-add',
   templateUrl: './client/app/components/projectAdd/projectAdd.html',
   styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
+  providers: [AuthService]
 })
 
 export class ProjectAddComponent {
@@ -24,15 +26,24 @@ export class ProjectAddComponent {
   private deployErr = false;
   private haveGithub = null;
   private selected = {};
-  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
+  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router, private auth: AuthService) {
+  }
 
   ngOnInit() {
+    this.authCheck();
     this.getProfileInfo();
   }
 
+  authCheck() {
+    if (!this.auth.authenticated()) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
   urlChecker(url, type) {
+    let options = {require_protocol: true};
     if (url.length > 0) {
-      if (!validator.isURL(url)) {
+      if (!validator.isURL(url, options)) {
         if (type === 'github') {
           this.githubErr = true;
         } else if (type === 'deploy') {
