@@ -56,6 +56,8 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.team = false;
                     this.imgError = false;
                     this.memberType = '';
+                    this.githubErr = false;
+                    this.deployErr = false;
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -299,13 +301,57 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 ProjectComponent.prototype.checkForImages = function () {
                     return this.project.Images.length > 0;
                 };
+                ProjectComponent.prototype.urlChecker = function (url, type) {
+                    if (url.length > 0) {
+                        if (!validator.isURL(url)) {
+                            if (type === 'github') {
+                                this.githubErr = true;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = true;
+                            }
+                        }
+                        else {
+                            if (type === 'github') {
+                                this.githubErr = false;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = false;
+                            }
+                        }
+                    }
+                    else {
+                        if (type === 'github') {
+                            this.githubErr = false;
+                        }
+                        else if (type === 'deploy') {
+                            this.deployErr = false;
+                        }
+                    }
+                };
                 ProjectComponent.prototype.editProject = function (event, input, type) {
                     var _this = this;
+                    if (type === 'github') {
+                        this.urlChecker(input.github, type);
+                    }
+                    else if (type === 'deploy') {
+                        this.urlChecker(input.deploy, type);
+                    }
                     if (type !== 'progress' && type !== 'contribute') {
                         event.preventDefault();
                     }
                     if (type === 'contribute') {
                         this.determineOpenSource(this.project.contribute);
+                    }
+                    if (type === 'github') {
+                        if (this.githubErr) {
+                            return;
+                        }
+                    }
+                    if (type === 'deploy') {
+                        if (this.deployErr) {
+                            return;
+                        }
                     }
                     this.project[type] = input[type];
                     if (this.memberType === '') {

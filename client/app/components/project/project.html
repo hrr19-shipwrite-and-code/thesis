@@ -111,6 +111,7 @@
               <!-- Deploy Info/Form -->
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.deploy.length === 0'>Add deploy link</span>
+              <span class="error" *ngIf="deployErr">Please enter a valid URL</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
                 <input type="text" name="deploy" class="form-control" placeholder="yourwebsite.com" [(ngModel)]="project.deploy">
                 <button class="btn btn-primary btn-sm">Edit</button>
@@ -121,6 +122,7 @@
               <!-- GitHub Info/Form -->
               <span *ngIf="project.github && !editGithub"><a href={{project.github}}>GitHub</a></span>
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.github.length === 0'>Add a github</span>
+              <span class="error" *ngIf="githubErr">Please enter a valid URL</span>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
                 <input type="text" name="github" class="form-control" placeholder="github.com/lukeskywalker" [(ngModel)]="project.github">

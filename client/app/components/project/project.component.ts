@@ -41,6 +41,8 @@ export class ProjectComponent {
   private team = false;
   private imgError = false;
   private memberType = '';
+  private githubErr = false;
+  private deployErr = false;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
 
@@ -314,28 +316,66 @@ export class ProjectComponent {
     return this.project.Images.length > 0
   }
 
+  urlChecker(url, type) {
+    if (url.length > 0) {
+      if (!validator.isURL(url)) {
+        if (type === 'github') {
+          this.githubErr = true;
+        } else if (type === 'deploy') {
+          this.deployErr = true;
+        }
+      } else {
+        if (type === 'github') {
+          this.githubErr = false;  
+        } else if (type === 'deploy') {
+          this.deployErr = false;
+        }
+      }
+    } else {
+        if (type === 'github') {
+          this.githubErr = false;  
+        } else if (type === 'deploy') {
+          this.deployErr = false;
+        }
+    }
+  }
+
   editProject(event, input, type){
+    if (type === 'github') {
+      this.urlChecker(input.github, type);
+    } else if (type === 'deploy') {
+      this.urlChecker(input.deploy, type)
+    }
     if (type !== 'progress' && type !== 'contribute') {
       event.preventDefault();
     }
     if (type === 'contribute') {
       this.determineOpenSource(this.project.contribute);
     }
+    if (type === 'github') {
+      if (this.githubErr) {
+        return
+      }
+    }
+    if (type === 'deploy') {
+      if (this.deployErr) {
+        return;
+      }
+    }
     this.project[type] = input[type]
-
-    if(this.memberType === '') {
-      this.projectService.editDescription(this.id, input)
-        .subscribe(
-          data => this.editingProject(type),
-          err => err
-        )
-    } else {
-      this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
-        .subscribe(
-          data => this.editingProject(type),
-          err => err
-        )
-    }  
+      if(this.memberType === '') {
+        this.projectService.editDescription(this.id, input)
+          .subscribe(
+            data => this.editingProject(type),
+            err => err
+          )
+      } else {
+        this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
+          .subscribe(
+            data => this.editingProject(type),
+            err => err
+          )
+      }  
   }
 
   trimTitle() {
