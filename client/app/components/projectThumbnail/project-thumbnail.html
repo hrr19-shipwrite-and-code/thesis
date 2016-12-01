@@ -4,7 +4,7 @@
         <h4 class="project-name">{{project.title}}</h4>
         <p *ngIf="project.description.length <= 80" class="project-description">{{project.description}}</p>
         <p *ngIf="project.description.length > 80" class="project-description">{{project.description.substr(0,77) + '...'}}</p>
-        <p class="project-description smaller">{{momentize(project.createdAt)}}</p>
+        <p class="project-date smaller">{{momentize(project.createdAt)}}</p>
       </div>
     </a>
 
