@@ -271,3 +271,8 @@ input[name="title"] {
   cursor: inherit;
   display: block;
 }
+
+.error {
+  font-size: 12px;
+  color: red;
+}
