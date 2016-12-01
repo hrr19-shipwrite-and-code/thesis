@@ -29,6 +29,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     this.filterHidden = true;
                     this.projects = [];
                     this.pagination = 0;
+                    this.clearResults = false;
                 }
                 HomeComponent.prototype.ngOnInit = function () {
                     this.getProjects({ sort: this.sortType });
@@ -52,6 +53,7 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                     });
                 };
                 HomeComponent.prototype.filter = function (filter) {
+                    this.clearResults = true;
                     this.projects = [];
                     var filterConditions = { sort: this.sortType };
                     for (var key in filter) {
@@ -67,18 +69,25 @@ System.register(['@angular/core', './home.services.js'], function(exports_1, con
                             }
                         }
                     }
+                    this.pagination = 0;
                     this.filterConditions = filterConditions;
                     this.getProjects(filterConditions);
                 };
                 HomeComponent.prototype.clearSearch = function (e) {
-                    this.projects = [];
                     document.getElementById("home-search").reset();
-                    this.filterConditions = { sort: 'default' };
-                    this.getProjects(this.filterConditions);
+                    if (this.clearResults || this.pagination > 0) {
+                        this.projects = [];
+                        this.filterConditions = { sort: 'default' };
+                        this.pagination = 0;
+                        this.getProjects(this.filterConditions);
+                        this.clearResults = false;
+                    }
                 };
                 HomeComponent.prototype.sort = function (sortType) {
                     this.projects = [];
                     this.sortType = sortType;
+                    this.pagination = 0;
+                    this.filterConditions.offset = 0;
                     this.filterConditions.sort = sortType;
                     this.getProjects(this.filterConditions);
                 };

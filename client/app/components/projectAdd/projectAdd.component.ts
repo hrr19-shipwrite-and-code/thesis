@@ -3,12 +3,14 @@ import { AddProductModelDirective } from '../../directives/new-project-model.dir
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectAddService } from './projectAdd.services.js';
 import { ProfileService } from '../profile/profile.services.js';
+import { AuthService } from '../auth/auth.service.js';
 
 
 @Component({
   selector: 'project-add',
   templateUrl: './client/app/components/projectAdd/projectAdd.html',
   styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
+  providers: [AuthService]
 })
 
 export class ProjectAddComponent {
@@ -20,27 +22,66 @@ export class ProjectAddComponent {
   private title = '';
   private github = '';
   private description = '';
+  private githubErr = false;
+  private deployErr = false;
   private haveGithub = null;
   private selected = {};
-  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
+  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router, private auth: AuthService) {
+  }
 
   ngOnInit() {
+    this.authCheck();
     this.getProfileInfo();
   }
 
+  authCheck() {
+    if (!this.auth.authenticated()) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
+  urlChecker(url, type) {
+    let options = {require_protocol: true};
+    if (url.length > 0) {
+      if (!validator.isURL(url, options)) {
+        if (type === 'github') {
+          this.githubErr = true;
+        } else if (type === 'deploy') {
+          this.deployErr = true;
+        }
+      } else {
+        if (type === 'github') {
+          this.githubErr = false;  
+        } else if (type === 'deploy') {
+          this.deployErr = false;
+        }
+      }
+    } else {
+        if (type === 'github') {
+          this.githubErr = false;  
+        } else if (type === 'deploy') {
+          this.deployErr = false;
+        }
+    }
+  }
+
   addProject(data) {
-    if(data.owner === this.userInfo.id){
-      this.projectService.userCreateProject(data)
+    this.urlChecker(data.github, 'github');
+    this.urlChecker(data.deploy, 'deploy')
+    if (!this.githubErr && !this.deployErr) {
+      if(data.owner === this.userInfo.id) {
+        this.projectService.userCreateProject(data)
+          .subscribe(
+            data => this.router.navigateByUrl('/project/' + data.id),
+            err => console.log(err)
+          )
+      } else {
+        this.projectService.teamCreateProject(data, data.owner)
         .subscribe(
           data => this.router.navigateByUrl('/project/' + data.id),
           err => console.log(err)
         )
-    } else {
-      this.projectService.teamCreateProject(data, data.owner)
-      .subscribe(
-        data => this.router.navigateByUrl('/project/' + data.id),
-        err => console.log(err)
-      )
+      }
     }
   }
 
@@ -88,4 +129,10 @@ export class ProjectAddComponent {
     this.description = repo.description;
     this.owner = this.selected.id;
   }
+
+  trimmer() {
+    this.title = this.title.trim();
+  }
+
+
 }

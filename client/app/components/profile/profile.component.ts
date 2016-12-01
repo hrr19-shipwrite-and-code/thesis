@@ -21,6 +21,7 @@ export class ProfileComponent {
   private urlTaken = false;
   private tempUrl: string;
   private errAddMember = false;
+  private invalidUrl = false;
   private editing = {
     basic: false,
     tech: false,
@@ -45,13 +46,6 @@ export class ProfileComponent {
     window.scrollTo(0,0)
     this.getUserInfo();
     this.getTechs();
-  }
-
-  getTechs() {
-    this.projectService.getTech()
-      .subscribe( data => {
-        this.techs = data;
-      })
   }
 
   googleLocation() {
@@ -107,7 +101,23 @@ export class ProfileComponent {
     return this.profileInfo.url === this.clientId;
   }
 
-  updateUserInfo(event, input, type) {
+  trimmer() {
+    this.profileInfo.name = this.profileInfo.name.trim();
+  }
+
+  checkUrl(input, type) {
+    let options = {require_protocol: true};
+    for(let url in input){
+      console.log(input[url])
+      if(input[url] && !validator.isURL(input[url], options)){
+        return this.invalidUrl = true;
+      }
+    }
+    this.invalidUrl = false;
+    this.updateUserInfo(input, type);
+  }
+
+  updateUserInfo(input, type) {
     if (input.url === this.profileInfo.url) {
       return;
     }
@@ -153,6 +163,14 @@ export class ProfileComponent {
 
   editForm(key) {
     this.editing[key] = !this.editing[key];
+  }
+
+  //Tech function
+  getTechs() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
   }
 
   addTech() {

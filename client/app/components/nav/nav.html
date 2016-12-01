@@ -5,7 +5,7 @@
   </div>
 
   <div class="brand-container">
-    <h4 class='sushi-brand'><a routerLink="/" class="navLink">sushi</a></h4>
+    <h4 class='sushi-brand'><a routerLink="/" class="navLink">sushiii</a></h4>
   </div>
 
   <div class='links'>
@@ -27,6 +27,7 @@
 
       </div>
       <div class="notifications">
+        <div *ngIf="notifications.length === 0">You don't have any notifications!</div>
         <div *ngFor="let notification of notifications; let i = index" class="inside note">
           <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
           <br>
@@ -48,7 +49,7 @@
       <span id="profile">{{ name }}</span>
       <img [src]="picture" class="dropdown-image" id="profile">
     </div>
-    <div class="nav-dropdown-inside hide-dropdown" dropdown>
+    <div class="nav-dropdown-inside" *ngIf="profileShow" dropdown>
 
       <div class="space">
 
