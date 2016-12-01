@@ -9,6 +9,8 @@ const middleware = require('./middleware.js');
 
 module.exports = function (app, express) {
 
+  app.get('/api/profile/checkUrl/:url', profileController.checkUrl);
+
   //User Routes
   app.get('/api/profile/:profileUrl', profileController.getProfile);
   app.post('/api/user/create', middleware.authCheck, profileController.createUser);

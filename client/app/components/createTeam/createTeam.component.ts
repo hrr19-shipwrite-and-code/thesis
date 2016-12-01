@@ -16,6 +16,7 @@ export class CreateTeamComponent implements OnInit{
   location = '';
   name = '';
   notValidEmail = false;
+  urlTaken = false;
 
   constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone) {}
 
@@ -38,10 +39,24 @@ export class CreateTeamComponent implements OnInit{
     this.name = this.name.trim();
   }
 
+  checkUrl(e) {
+    this.createTeamService.checkUrl(e.target.value)
+      .subscribe(
+        data => { this.urlTaken = false }, 
+        err => { this.urlTaken = true }
+      )
+  }
+
+  checkEmail(e) {
+    if(!validator.isEmail(e.target.value)){
+      return this.notValidEmail = true;
+    }
+    this.notValidEmail = false;
+  }
+
   createTeam(teamInfo) {
-    if(!validator.isEmail(teamInfo.email)){
-      this.notValidEmail = true;
-    } else {
+    if(!this.urlTaken && !this.notValidEmail && this.name !== ''){
+      this.notValidEmail = false;
       this.createTeamService.createTeam(teamInfo)
         .subscribe( data => {
           this.router.navigateByUrl('/' + teamInfo.url);
