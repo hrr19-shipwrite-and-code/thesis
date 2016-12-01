@@ -193,7 +193,6 @@ export class ProfileComponent {
     }
     
     this.newTech = '';
-    this.editing.tech = !this.editing.tech;
   }
 
   deleteTech(event, techId) {
