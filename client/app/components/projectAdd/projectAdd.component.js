@@ -40,21 +40,55 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.title = '';
                     this.github = '';
                     this.description = '';
+                    this.githubErr = false;
+                    this.deployErr = false;
                     this.haveGithub = null;
                     this.selected = {};
                 }
                 ProjectAddComponent.prototype.ngOnInit = function () {
                     this.getProfileInfo();
                 };
-                ProjectAddComponent.prototype.addProject = function (data) {
-                    var _this = this;
-                    if (data.owner === this.userInfo.id) {
-                        this.projectService.userCreateProject(data)
-                            .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
+                ProjectAddComponent.prototype.urlChecker = function (url, type) {
+                    if (url.length > 0) {
+                        if (!validator.isURL(url)) {
+                            if (type === 'github') {
+                                this.githubErr = true;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = true;
+                            }
+                        }
+                        else {
+                            if (type === 'github') {
+                                this.githubErr = false;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = false;
+                            }
+                        }
                     }
                     else {
-                        this.projectService.teamCreateProject(data, data.owner)
-                            .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
+                        if (type === 'github') {
+                            this.githubErr = false;
+                        }
+                        else if (type === 'deploy') {
+                            this.deployErr = false;
+                        }
+                    }
+                };
+                ProjectAddComponent.prototype.addProject = function (data) {
+                    var _this = this;
+                    this.urlChecker(data.github, 'github');
+                    this.urlChecker(data.deploy, 'deploy');
+                    if (!this.githubErr && !this.deployErr) {
+                        if (data.owner === this.userInfo.id) {
+                            this.projectService.userCreateProject(data)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
+                        }
+                        else {
+                            this.projectService.teamCreateProject(data, data.owner)
+                                .subscribe(function (data) { return _this.router.navigateByUrl('/project/' + data.id); }, function (err) { return console.log(err); });
+                        }
                     }
                 };
                 ProjectAddComponent.prototype.getProfileInfo = function () {
