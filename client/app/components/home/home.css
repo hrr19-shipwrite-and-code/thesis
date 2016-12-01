@@ -33,3 +33,15 @@
 .load {
   position: center;
 }
+
+.btn-primary {
+  color: rgb(250, 128, 114);
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.btn-primary:hover {
+  color: rgb(250, 128, 114);
+  background-color: #F4F4F4;
+  border: none;
+}

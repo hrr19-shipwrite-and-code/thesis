@@ -32,8 +32,8 @@
           <!--sender reciver type of notification-->
           <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
           <br>
-          <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
-          <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
+          <button class="btn btn-primary btn-sm" (click)="joinTeam(notification, index)">Accept</button>
+          <button class="btn btn-primary btn-sm" (click)="decline(notification, index)">Decline</button>
           <hr *ngIf="i < notifications.length - 1" class="inside">
         </div>
       </div>

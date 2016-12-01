@@ -24,6 +24,7 @@ module.exports = {
           deploy: req.body.deploy,
           progress: req.body.status,
           contribute: req.body.openSourse,
+          thumbnail: '/client/app/assets/thumbnail.png'
           })
           .then((project) => {
             mkdirp('./client/uploads/' + project.id, (err) => {
@@ -130,6 +131,13 @@ module.exports = {
           .then((project) => {
             project.createImage({ url: URL})
               .then((image) => {
+                project = JSON.parse(JSON.stringify(project));
+                if (project.thumbnail === '/client/app/assets/thumbnail.png') {
+                  Project.update({thumbnail: URL}, {where: {id: id}})
+                    .then(() => {
+                        res.send(image);
+                    });
+                }
                 res.send(image);
               });
           });
@@ -149,6 +157,13 @@ module.exports = {
           .then((project) => {
             project.createImage({ url: URL})
               .then((image) => {
+                project = JSON.parse(JSON.stringify(project));
+                if (project.thumbnail === '/client/app/assets/thumbnail.png') {
+                  Project.update({thumbnail: URL}, {where: {id: id}})
+                    .then(() => {
+                        res.send(image);
+                    });
+                }
                 res.send(image);
               });
           });
@@ -224,6 +239,14 @@ module.exports = {
                     .catch((err) => {
                       res.sendStatus(404);
                     });
+                } else {
+                  Image.destroy({where: {id: id}})
+                    .then(() => {
+                      res.sendStatus(200);
+                      })
+                    .catch(() => {
+                      res.sendStatus(404);
+                    });
                 }
               });
             })
@@ -259,6 +282,14 @@ module.exports = {
                         });
                     })
                     .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                } else {
+                  Image.destroy({where: {id: id}})
+                    .then(() => {
+                      res.sendStatus(200);
+                      })
+                    .catch(() => {
                       res.sendStatus(404);
                     });
                 }
