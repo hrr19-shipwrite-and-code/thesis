@@ -27,6 +27,7 @@
 
       </div>
       <div class="notifications">
+        <div *ngIf="notifications.length === 0">You don't have any notifications!</div>
         <div *ngFor="let notification of notifications; let i = index" class="inside note">
           <!--sender reciver type of notification-->
           <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
@@ -45,7 +46,7 @@
       <span id="profile">{{ name }}</span>
       <img [src]="picture" class="dropdown-image" id="profile">
     </div>
-    <div class="nav-dropdown-inside hide-dropdown" dropdown>
+    <div class="nav-dropdown-inside" *ngIf="profileShow" dropdown>
 
       <div class="space">
 

@@ -49,12 +49,12 @@ const Profile = db.define('Profile', {
   },
 
   //elsewhere
-  facebook: Sequelize.STRING,
-  twitter: Sequelize.STRING,
-  personal: Sequelize.STRING,
-  blog: Sequelize.STRING,
-  github: Sequelize.STRING,
-  linkedin: Sequelize.STRING
+  facebook: Sequelize.STRING(150),
+  twitter: Sequelize.STRING(150),
+  personal: Sequelize.STRING(150),
+  blog: Sequelize.STRING(150),
+  github: Sequelize.STRING(150),
+  linkedin: Sequelize.STRING(150)
 });
 
 module.exports = Profile;

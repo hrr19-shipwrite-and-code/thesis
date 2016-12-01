@@ -139,6 +139,18 @@ module.exports = {
       });
   },
 
+  checkUrl: (req, res, next) => {
+    const url = req.params.url;
+    Profile.findAll({where: {url: url}})
+      .then((found) => {
+        if(found.length){
+          res.sendStatus(400);
+        } else {
+          res.sendStatus(200);
+        }
+      })
+  },
+
   createTeam: (req, res, next) => {
     const authId = req.user.sub;
     const teamInfo = {
