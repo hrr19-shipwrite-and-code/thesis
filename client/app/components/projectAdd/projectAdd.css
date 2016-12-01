@@ -28,6 +28,10 @@
   flex-direction: column;*/
 }
 
+.optional {
+  color: #888B8D;
+}
+
 
 
 form {
@@ -43,4 +47,9 @@ p {
   background-color: salmon;
   border: none;
   outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
 }

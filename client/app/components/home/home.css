@@ -24,3 +24,12 @@
 .apply-btn, .apply-btn:active {
   outline: none;
 }
+
+.bottom {
+  color: #888B8D;
+  text-align: center;
+}
+
+.load {
+  position: center;
+}

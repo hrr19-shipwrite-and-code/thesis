@@ -88,6 +88,8 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                     localStorage.removeItem('url');
                     localStorage.removeItem('name');
                     localStorage.removeItem('picture');
+                    clearTimeout(localStorage.getItem('timeoutId'));
+                    localStorage.removeItem('timeoutId');
                     this.router.navigateByUrl('/');
                 };
                 AuthService.prototype.authenticated = function () {

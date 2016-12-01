@@ -210,13 +210,21 @@ module.exports = {
             .then((image) => {
               let url = image.url;
               fse.remove(url, () => {
-                Image.destroy({where: {id: id}})
-                .then(() => {
-                  res.sendStatus(200);
-                })
-                .catch(() => {
-                  res.sendStatus(404);
-                });
+                if (project.thumbnail === url) {
+                  Project.update({thumbnail: '/client/app/assets/thumbnail.png'}, {where: {id: projectId}})
+                    .then((proj) => {                                 
+                      Image.destroy({where: {id: id}})
+                        .then(() => {
+                          res.sendStatus(200);
+                          })
+                        .catch(() => {
+                          res.sendStatus(404);
+                        });
+                    })
+                    .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                }
               });
             })
             .catch((err) => {
@@ -239,13 +247,21 @@ module.exports = {
             .then((image) => {
               let url = image.url;
               fse.remove(url, () => {
-                Image.destroy({where: {id: id}})
-                .then(() => {
-                  res.sendStatus(200);
-                })
-                .catch(() => {
-                  res.sendStatus(404);
-                });
+                if (project.thumbnail === url) {
+                  Project.update({thumbnail: '/client/app/assets/thumbnail.png'}, {where: {id: projectId}})
+                    .then((proj) => {                                 
+                      Image.destroy({where: {id: id}})
+                        .then(() => {
+                          res.sendStatus(200);
+                          })
+                        .catch(() => {
+                          res.sendStatus(404);
+                        });
+                    })
+                    .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                }
               });
             })
             .catch((err) => {
@@ -288,7 +304,10 @@ module.exports = {
         {model: Comment},
         {model: Tech}
       ],
-      where: {id: {$notIn: ['']}}
+      where: {id: {$notIn: ['']}},
+      offset: req.body.offset || 0,
+      limit: 12,
+      distinct: true
     }
 
     //filter
@@ -304,14 +323,15 @@ module.exports = {
     req.body.sort === 'views' ? filter.order = [['views', 'DESC']] : false;
 
 
-    Project.findAll(filter)
-      .then((projects) => {
-        projects = JSON.parse(JSON.stringify(projects));
+    Project.findAndCountAll(filter)
+      .then((result) => {
+        result = JSON.parse(JSON.stringify(result));
+        let projects = result.rows
         for (let project of projects) {
           project.Likes = project.Likes.length;
           project.comments = project.Comments.length;
         }
-        res.send(projects);
+        res.send(result);
       })
       .catch((err) =>{
         console.log(err)

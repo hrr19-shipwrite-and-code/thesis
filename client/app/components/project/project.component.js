@@ -42,8 +42,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.picture = { url: '/client/app/assets/thumbnail.png' };
                     this.options = {
                         filterExtensions: true,
-                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
-                        calculateSpeed: true,
+                        allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg', 'gif'],
                         authToken: localStorage.getItem('id_token'),
                         authTokenPrefix: 'Bearer'
                     };
@@ -55,7 +54,10 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.editProgress = false;
                     this.editSource = false;
                     this.team = false;
+                    this.imgError = false;
                     this.memberType = '';
+                    this.githubErr = false;
+                    this.deployErr = false;
                 }
                 //Runs this function everytime route accessed
                 ProjectComponent.prototype.ngOnInit = function () {
@@ -238,7 +240,11 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.picture = data;
                         this.project.Images.push(data);
                         this.uploadFile = data;
+                        this.imgError = false;
                     }
+                };
+                ProjectComponent.prototype.imageError = function () {
+                    this.imgError = true;
                 };
                 //Set image as project thumbnail
                 ProjectComponent.prototype.updateThumbnail = function () {
@@ -295,13 +301,57 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                 ProjectComponent.prototype.checkForImages = function () {
                     return this.project.Images.length > 0;
                 };
+                ProjectComponent.prototype.urlChecker = function (url, type) {
+                    if (url.length > 0) {
+                        if (!validator.isURL(url)) {
+                            if (type === 'github') {
+                                this.githubErr = true;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = true;
+                            }
+                        }
+                        else {
+                            if (type === 'github') {
+                                this.githubErr = false;
+                            }
+                            else if (type === 'deploy') {
+                                this.deployErr = false;
+                            }
+                        }
+                    }
+                    else {
+                        if (type === 'github') {
+                            this.githubErr = false;
+                        }
+                        else if (type === 'deploy') {
+                            this.deployErr = false;
+                        }
+                    }
+                };
                 ProjectComponent.prototype.editProject = function (event, input, type) {
                     var _this = this;
+                    if (type === 'github') {
+                        this.urlChecker(input.github, type);
+                    }
+                    else if (type === 'deploy') {
+                        this.urlChecker(input.deploy, type);
+                    }
                     if (type !== 'progress' && type !== 'contribute') {
                         event.preventDefault();
                     }
                     if (type === 'contribute') {
                         this.determineOpenSource(this.project.contribute);
+                    }
+                    if (type === 'github') {
+                        if (this.githubErr) {
+                            return;
+                        }
+                    }
+                    if (type === 'deploy') {
+                        if (this.deployErr) {
+                            return;
+                        }
                     }
                     this.project[type] = input[type];
                     if (this.memberType === '') {
@@ -312,6 +362,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         this.projectService.teamEditDescription(this.project.Profile.id, this.id, input)
                             .subscribe(function (data) { return _this.editingProject(type); }, function (err) { return err; });
                     }
+                };
+                ProjectComponent.prototype.trimTitle = function () {
+                    this.project.title = this.project.title.trim();
                 };
                 ProjectComponent.prototype.editingProject = function (type) {
                     if (type === 'tech') {

@@ -9,7 +9,7 @@
   </div>
 
   <div class='links'>
-    <a routerLink="/" routerLinkActive="active" class="navLink">Home</a>
+    <a routerLink="/" routerLinkActive="active" class="navLink">Projects</a>
     <a routerLink="/developers" routerLinkActive="active" class="navLink">Developers</a>
     <a routerLink="/teams" routerLinkActive="active" class="navLink">Teams</a>
   </div>
@@ -17,16 +17,14 @@
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
   <!-- <div class="right-side"> -->
-
-    <!-- Notifications -->
-    <div class="notification">
+  <!--Notifications-->
+    <div class="notification" *ngIf="auth.authenticated()">
       <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
       <div class="notification-number" *ngIf="numberOfNotifications > 0">
         {{ numberOfNotifications }}
       </div>
       <div class="inside notification-inside" *ngIf="notificationShow">
         <div class="space">
-
         </div>
         <div class="notifications">
           <div *ngFor="let notification of notifications; let i = index" class="inside note">

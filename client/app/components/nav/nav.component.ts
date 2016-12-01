@@ -26,20 +26,15 @@ export class NavComponent {
   constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService, private profileService: ProfileService) {}
 
   ngOnInit() {
-    this.checkAgain();
-    this.checkNotifications();
+    this.getUserInfo();
+    if(this.auth.authenticated()){
+      this.checkNotifications();
+    }
   }
 
-  checkAgain() {
-    if (localStorage.getItem('name') === null) {
-      let that = this;
-      setTimeout(function() {
-        that.checkAgain()
-      }, 600);
-    } else {
-      this.name = localStorage.getItem('name');
-      this.picture = localStorage.getItem('picture');
-    }
+  getUserInfo() {
+    this.name = localStorage.getItem('name');
+    this.picture = localStorage.getItem('picture');
   }
 
   checkNotifications(){
@@ -49,9 +44,10 @@ export class NavComponent {
         this.numberOfNotifications = this.notificationCount();
         console.log(data)
       })
-    setInterval(() =>{
+    localStorage.setItem('timeoutId', setTimeout(() =>{
       this.checkNotifications();
-    }, 300000)
+    }, 300000)) 
+    console.log(localStorage.getItem('timeoutId'))
   }
 
   notificationCount() {

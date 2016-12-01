@@ -3,14 +3,14 @@ const db = new Sequelize('sushi', 'root', '');
 
 const Profile = db.define('Profile', {
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: false,
     validate: {
       notIn: [['', ' ']]
     }
   },
   url: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     unique: true,
     allowNull: false,
     validate: {
@@ -35,7 +35,7 @@ const Profile = db.define('Profile', {
     unique: true,
     noUpdate: true
   },
-  location: Sequelize.STRING,
+  location: Sequelize.STRING(50),
   bio: Sequelize.TEXT('long'),
   hire: {
     type: Sequelize.BOOLEAN,
