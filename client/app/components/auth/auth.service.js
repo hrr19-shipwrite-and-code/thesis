@@ -45,7 +45,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                             redirect: false,
                         }
                     };
-                    this.lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
+                    this.lock = new Auth0Lock('mHw2LCJA0uxSEE1mQcQJxCitXZPtt5dw', 'sushiii.auth0.com', this.options);
                     // Add callback for the Lock `authenticated` event
                     this.lock.on("authenticated", function (authResult) {
                         localStorage.setItem('id_token', authResult.idToken);

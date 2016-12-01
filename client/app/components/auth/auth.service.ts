@@ -18,7 +18,7 @@ export class AuthService {
       redirect: false,
     }
   }
-  lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
+  lock = new Auth0Lock('mHw2LCJA0uxSEE1mQcQJxCitXZPtt5dw', 'sushiii.auth0.com', this.options);
 
 
   //Store profile object in auth class
