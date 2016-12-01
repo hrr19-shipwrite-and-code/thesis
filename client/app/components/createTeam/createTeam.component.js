@@ -41,6 +41,7 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                     this.name = '';
                     this.notValidEmail = false;
                     this.urlTaken = false;
+                    this.urlInvalid = false;
                 }
                 CreateTeamComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -67,11 +68,17 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                 };
                 CreateTeamComponent.prototype.checkUrl = function (e) {
                     var _this = this;
-                    this.createTeamService.checkUrl(e.target.value)
+                    var url = e.target.value;
+                    if (!/^[a-zA-Z0-9_-]{1,30}$/.test(url) && url.length > 0) {
+                        return this.urlInvalid = true;
+                    }
+                    this.urlInvalid = false;
+                    this.createTeamService.checkUrl(url)
                         .subscribe(function (data) { _this.urlTaken = false; }, function (err) { _this.urlTaken = true; });
                 };
                 CreateTeamComponent.prototype.checkEmail = function (e) {
-                    if (!validator.isEmail(e.target.value)) {
+                    var email = e.target.value;
+                    if (!validator.isEmail(email) && email.length > 0) {
                         return this.notValidEmail = true;
                     }
                     this.notValidEmail = false;

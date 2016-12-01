@@ -18,6 +18,7 @@ export class CreateTeamComponent implements OnInit{
   name = '';
   notValidEmail = false;
   urlTaken = false;
+  urlInvalid = false;
 
   constructor(private createTeamService: CreateTeamService, private router: Router, private mapsAPILoader: MapsAPILoader, private zone: NgZone, private auth: AuthService) {}
 
@@ -48,7 +49,13 @@ export class CreateTeamComponent implements OnInit{
   }
 
   checkUrl(e) {
-    this.createTeamService.checkUrl(e.target.value)
+    const url = e.target.value
+    if(!/^[a-zA-Z0-9_-]{1,30}$/.test(url) && url.length > 0){
+      return this.urlInvalid = true;
+    }
+    this.urlInvalid = false;
+
+    this.createTeamService.checkUrl(url)
       .subscribe(
         data => { this.urlTaken = false }, 
         err => { this.urlTaken = true }
@@ -56,7 +63,8 @@ export class CreateTeamComponent implements OnInit{
   }
 
   checkEmail(e) {
-    if(!validator.isEmail(e.target.value)){
+    let email = e.target.value
+    if(!validator.isEmail(email) && email.length > 0){
       return this.notValidEmail = true;
     }
     this.notValidEmail = false;

@@ -1,11 +1,3 @@
-/* A couple of utility classes for re-use */
-.horizontal-center {
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
 .shadow {
   -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
   -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
@@ -17,20 +9,51 @@
 }
 
 .main-content {
+  position: relative;
+  margin: 0 auto;
   width: 75vw;
+  min-width: 700px;
   background-color: white;
   border-radius: 5px;
+  padding: 50px 80px;
+}
 
-  padding: 30px;
+.error {
+  color: red;
+  font-size: 12px;
+}
 
-  /*display: flex;
-  justify-content: space-around;
-  flex-direction: column;*/
+.half-form {
+  position: relative;
+  width: 35%;
+  display: inline-block;
+  margin-right: 3%;
+}
+
+.optional {
+  color: #888B8D;
+}
+
+.form-control{
+  resize: none;
+}
+
+.form-control:focus {
+  border:1px solid salmon;
 }
 
 form {
-  width: 40vw;
+  position: relative;
   margin-top: 20px;
+}
+
+h4 {
+  margin-bottom: -3%;
+}
+
+hr {
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 p {
