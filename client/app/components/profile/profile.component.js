@@ -45,6 +45,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.newMember = '';
                     this.urlTaken = false;
                     this.errAddMember = false;
+                    this.invalidUrl = false;
                     this.editing = {
                         basic: false,
                         tech: false,
@@ -124,7 +125,17 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.trimmer = function () {
                     this.profileInfo.name = this.profileInfo.name.trim();
                 };
-                ProfileComponent.prototype.updateUserInfo = function (event, input, type) {
+                ProfileComponent.prototype.checkUrl = function (input, type) {
+                    for (var url in input) {
+                        console.log(input[url]);
+                        if (input[url] && !validator.isURL(input[url])) {
+                            return this.invalidUrl = true;
+                        }
+                    }
+                    this.invalidUrl = false;
+                    this.updateUserInfo(input, type);
+                };
+                ProfileComponent.prototype.updateUserInfo = function (input, type) {
                     var _this = this;
                     if (input.url === this.profileInfo.url) {
                         return;

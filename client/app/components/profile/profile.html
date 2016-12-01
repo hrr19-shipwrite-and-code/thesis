@@ -34,7 +34,7 @@
         </div>
         <!-- Edit basic profile info -->
         <div *ngIf="editing.basic">
-        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'basic')" onkeypress="return event.keyCode!=13">
+        <form #editBasic="ngForm" (ngSubmit)="updateUserInfo(editBasic.value, 'basic')" onkeypress="return event.keyCode!=13">
           <input type="text" name="name" class="form-control" maxlength="50" [(ngModel)]="profileInfo.name" placeholder="Full Name" (change)="trimmer()" required>
           <input id="location" (focus)="googleLocation()" class="form-control" maxlength="50" [(ngModel)]="profileInfo.location" placeholder="Enter your location" name="location">
           <textarea type="text" name="bio" class="form-control" maxlength="255" [(ngModel)]="profileInfo.bio" placeholder="Short Bio..."></textarea>
@@ -135,15 +135,16 @@
         </ul>
         <!-- User/Team Connection edit forms -->
         <div *ngIf="editing.contact">
-          <form #editBasic="ngForm" (ngSubmit)="updateUserInfo($event, editBasic.value, 'contact')">
-          <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
-          <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
-          <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="Github url...">
-          <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
-          <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
-          <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
-          <button class="btn btn-primary btn-sm">Update</button>
-        </form>
+          <span *ngIf="invalidUrl">Please enter a valid URL!</span>
+          <form #editBasic="ngForm" (ngSubmit)="checkUrl(editBasic.value, 'contact')">
+            <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
+            <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
+            <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="Github url...">
+            <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
+            <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
+            <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
+            <button class="btn btn-primary btn-sm">Update</button>
+          </form>
         </div>
         <div class="edit edit-connect">
         <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="editForm('contact')" class="fa fa-pencil" aria-hidden="true" title="Edit Connections"></i>
@@ -157,7 +158,7 @@
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
         <h5>SUSHI URL</h5>
         <span *ngIf="urlTaken">URL Unavailable!</span>
-        <form #editUrl="ngForm" (ngSubmit)="updateUserInfo($event, editUrl.value, 'url')">
+        <form #editUrl="ngForm" (ngSubmit)="updateUserInfo(editUrl.value, 'url')">
           <p>
             sushiii.me/
             <input type="text" class="form-control userUrl" name="url" maxlength="30" [(ngModel)]="tempUrl" placeholder="sushi URL">

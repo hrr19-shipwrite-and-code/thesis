@@ -21,6 +21,7 @@ export class ProfileComponent {
   private urlTaken = false;
   private tempUrl: string;
   private errAddMember = false;
+  private invalidUrl = false;
   private editing = {
     basic: false,
     tech: false,
@@ -104,7 +105,18 @@ export class ProfileComponent {
     this.profileInfo.name = this.profileInfo.name.trim();
   }
 
-  updateUserInfo(event, input, type) {
+  checkUrl(input, type) {
+    for(let url in input){
+      console.log(input[url])
+      if(input[url] && !validator.isURL(input[url])){
+        return this.invalidUrl = true;
+      }
+    }
+    this.invalidUrl = false;
+    this.updateUserInfo(input, type);
+  }
+
+  updateUserInfo(input, type) {
     if (input.url === this.profileInfo.url) {
       return;
     }
