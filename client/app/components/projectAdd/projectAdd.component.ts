@@ -41,8 +41,9 @@ export class ProjectAddComponent {
   }
 
   urlChecker(url, type) {
+    let options = {require_protocol: true};
     if (url.length > 0) {
-      if (!validator.isURL(url)) {
+      if (!validator.isURL(url, options)) {
         if (type === 'github') {
           this.githubErr = true;
         } else if (type === 'deploy') {

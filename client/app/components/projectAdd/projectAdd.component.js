@@ -59,8 +59,9 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     }
                 };
                 ProjectAddComponent.prototype.urlChecker = function (url, type) {
+                    var options = { require_protocol: true };
                     if (url.length > 0) {
-                        if (!validator.isURL(url)) {
+                        if (!validator.isURL(url, options)) {
                             if (type === 'github') {
                                 this.githubErr = true;
                             }

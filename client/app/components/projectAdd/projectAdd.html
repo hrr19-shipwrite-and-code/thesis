@@ -47,12 +47,12 @@
 
       <div class="form-group">
         <p class='github-label'>Github <span class="optional">(Optional)</span>: <span class="error" *ngIf="githubErr">Please enter a valid URL</span></p>
-        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' [(ngModel)]="github">
+        <input type="text" name="github" class='form-control' placeholder='http://github.com/lukeskywalker' [(ngModel)]="github">
       </div>
 
       <div class="form-group">
         <p class='deploy-label'>Deployed App <span class="optional">(Optional)</span>: <span class="error" *ngIf="deployErr">Please enter a valid URL</span></p> 
-        <input type="text" name="deploy" class='form-control' placeholder='mysuperawesomeapp.com' ngModel>
+        <input type="text" name="deploy" class='form-control' placeholder='http://mysuperawesomeapp.com' ngModel>
       </div>
 
       <div class="form-group">
