@@ -53,7 +53,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         member: false
                     };
                     this.options = {
-                        url: 'http://localhost:1337/api/user/addPicture',
+                        url: 'http://138.68.23.255:1337/api/user/addPicture',
                         filterExtensions: true,
                         allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
                         calculateSpeed: true,
@@ -104,7 +104,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
                             if (data.type === 'Team') {
-                                _this.options.url = 'http://localhost:1337/api/team/addPicture/' + _this.profileInfo.id;
+                                _this.options.url = 'http://138.68.23.255:1337/api/team/addPicture/' + _this.profileInfo.id;
                                 for (var _i = 0, _a = _this.profileInfo.Member; _i < _a.length; _i++) {
                                     var member = _a[_i];
                                     if (member.url === _this.clientId) {

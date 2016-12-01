@@ -9,7 +9,7 @@ const Notification = require('./notifications/notificationSchema.js');
 const Tech = require('./tech/techSchema.js').Tech;
 const ProfileTech = require('./tech/techSchema.js').ProfileTech;
 const ProjectTech = require('./tech/techSchema.js').ProjectTech;
-const TeamUser = require('./profiles/TeamUserSchema.js');
+const TeamUser = require('./profiles/teamUserSchema.js');
 
 //Creates Profile/team foreign id on project
 Profile.hasMany(Project);

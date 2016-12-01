@@ -68,7 +68,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     this.getComment(this.id);
                     this.doesUserLike(this.id);
                     this.getAllTech();
-                    this.options.url = 'http://localhost:1337/api/project/upload/user/' + this.id;
+                    this.options.url = 'http://138.68.23.255:1337/api/project/upload/user/' + this.id;
                     ;
                 };
                 //Service function to get the project by the route params Id
@@ -83,7 +83,7 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         _this.determineOpenSource(data.openSource);
                         _this.project = data;
                         if (data.Profile.Member.length > 0) {
-                            _this.options.url = 'http://localhost:1337/api/project/upload/team/' + data.Profile.id + '/' + _this.id;
+                            _this.options.url = 'http://138.68.23.255:1337/api/project/upload/team/' + data.Profile.id + '/' + _this.id;
                             _this.team = true;
                         }
                         for (var _i = 0, _a = data.Profile.Member; _i < _a.length; _i++) {

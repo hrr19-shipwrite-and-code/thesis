@@ -30,18 +30,18 @@ System.register(['angular2-jwt', '@angular/http', '@angular/core'], function(exp
                     this.http = http;
                 }
                 NavService.prototype.getNotifications = function () {
-                    return this.authHttp.get('http://localhost:1337/api/notifications')
+                    return this.authHttp.get('http://138.68.23.255:1337/api/notifications')
                         .map(function (res) { return res.json(); });
                 };
                 NavService.prototype.markAsRead = function () {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/notifications/view/', {}, options)
+                    return this.authHttp.put('http://138.68.23.255:1337/api/notifications/view/', {}, options)
                         .map(function (res) { return res; });
                 };
                 NavService.prototype.decline = function (id) {
                     console.log(id);
-                    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + id)
+                    return this.authHttp.delete('http://138.68.23.255:1337/api/team/leaveTeam/' + id)
                         .map(function (res) { return res; });
                 };
                 NavService = __decorate([

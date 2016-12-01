@@ -28,7 +28,7 @@ System.register(['@angular/http', '@angular/core'], function(exports_1, context_
                 SearchDevelopersServices.prototype.getAllProfiles = function (filter) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/profile/getAll';
+                    var url = 'http://138.68.23.255:1337/api/profile/getAll';
                     return this.http.post(url, JSON.stringify(filter), options)
                         .map(function (res) { return res.json(); });
                 };

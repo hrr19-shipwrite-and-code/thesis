@@ -8,7 +8,7 @@ import { BrowseComponent } from '../browse/browse.component.js';
 import { AppComponent }   from './app.component.js';
 import { HomeComponent }   from '../home/home.component.js';
 import { ProjectAddComponent }   from '../projectAdd/projectAdd.component.js';
-import { SearchDevelopersComponent }   from '../SearchDevelopers/SearchDevelopers.component.js';
+import { SearchDevelopersComponent }   from '../searchDevelopers/searchDevelopers.component.js';
 import { PageNotFoundComponent }   from '../pageNotFound/pageNotFound.component.js';
 import { AboutUsComponent } from '../aboutus/aboutus.component.js';
 
