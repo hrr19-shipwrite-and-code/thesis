@@ -68,13 +68,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.getUserInfo();
                     this.getTechs();
                 };
-                ProfileComponent.prototype.getTechs = function () {
-                    var _this = this;
-                    this.projectService.getTech()
-                        .subscribe(function (data) {
-                        _this.techs = data;
-                    });
-                };
                 ProfileComponent.prototype.googleLocation = function () {
                     var _this = this;
                     this.mapsAPILoader.load().then(function () {
@@ -128,6 +121,9 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.isCurrentUser = function () {
                     return this.profileInfo.url === this.clientId;
                 };
+                ProfileComponent.prototype.trimmer = function () {
+                    this.profileInfo.name = this.profileInfo.name.trim();
+                };
                 ProfileComponent.prototype.updateUserInfo = function (event, input, type) {
                     var _this = this;
                     if (input.url === this.profileInfo.url) {
@@ -173,6 +169,14 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 };
                 ProfileComponent.prototype.editForm = function (key) {
                     this.editing[key] = !this.editing[key];
+                };
+                //Tech function
+                ProfileComponent.prototype.getTechs = function () {
+                    var _this = this;
+                    this.projectService.getTech()
+                        .subscribe(function (data) {
+                        _this.techs = data;
+                    });
                 };
                 ProfileComponent.prototype.addTech = function () {
                     var _this = this;

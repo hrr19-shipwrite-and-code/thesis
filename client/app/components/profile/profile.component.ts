@@ -47,13 +47,6 @@ export class ProfileComponent {
     this.getTechs();
   }
 
-  getTechs() {
-    this.projectService.getTech()
-      .subscribe( data => {
-        this.techs = data;
-      })
-  }
-
   googleLocation() {
     this.mapsAPILoader.load().then(() => {
       let input = document.getElementById('location')
@@ -107,6 +100,10 @@ export class ProfileComponent {
     return this.profileInfo.url === this.clientId;
   }
 
+  trimmer() {
+    this.profileInfo.name = this.profileInfo.name.trim();
+  }
+
   updateUserInfo(event, input, type) {
     if (input.url === this.profileInfo.url) {
       return;
@@ -153,6 +150,14 @@ export class ProfileComponent {
 
   editForm(key) {
     this.editing[key] = !this.editing[key];
+  }
+
+  //Tech function
+  getTechs() {
+    this.projectService.getTech()
+      .subscribe( data => {
+        this.techs = data;
+      })
   }
 
   addTech() {
