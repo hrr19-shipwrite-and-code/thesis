@@ -126,9 +126,10 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.profileInfo.name = this.profileInfo.name.trim();
                 };
                 ProfileComponent.prototype.checkUrl = function (input, type) {
+                    var options = { require_protocol: true };
                     for (var url in input) {
                         console.log(input[url]);
-                        if (input[url] && !validator.isURL(input[url])) {
+                        if (input[url] && !validator.isURL(input[url], options)) {
                             return this.invalidUrl = true;
                         }
                     }
