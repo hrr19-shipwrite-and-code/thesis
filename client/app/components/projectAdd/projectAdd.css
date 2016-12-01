@@ -1,41 +1,39 @@
-/* A couple of utility classes for re-use */
-.horizontal-center {
-  display: -webkit-flex;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
 .shadow {
   -webkit-box-shadow: 0 5px 6px -6px #bdc3c7;
   -moz-box-shadow: 0 5px 6px -6px #bdc3c7;
   box-shadow: 0 5px 6px -6px #bdc3c7;
 }
 
-.container {
-  color: #444444;
-}
-
 .main-content {
+  position: relative;
+  margin: 0 auto;
   width: 75vw;
+  min-width: 500px;
   background-color: white;
   border-radius: 5px;
-
-  padding: 30px;
-
-  /*display: flex;
-  justify-content: space-around;
-  flex-direction: column;*/
+  padding: 50px 80px;
 }
 
 .optional {
   color: #888B8D;
 }
 
+.half-form {
+  position: relative;
+  width: 45%;
+  display: inline-block;
+  margin-right: 4%;
+}
 
+.wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
 
 form {
-  width: 40vw;
+  position: relative;
   margin-top: 20px;
 }
 
@@ -43,10 +41,36 @@ p {
   margin-bottom: 5px;
 }
 
+a {
+  color: salmon;
+}
+
+hr {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+h4 {
+  margin-bottom: -3%;
+}
+
+.break {
+  border: black solid 1px;
+}
+
+
 .btn, .btn:active {
   background-color: salmon;
   border: none;
   outline: none;
+}
+
+.form-control:focus {
+  border:1px solid salmon;
+}
+
+.form-control{
+  resize: none;
 }
 
 .error {
