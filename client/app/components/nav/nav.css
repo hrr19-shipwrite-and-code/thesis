@@ -81,3 +81,19 @@ a:hover, a.navLink:hover {
   color: #888B8D;
   font-size: 0.9em;
 }
+
+.btn-primary, .btn-primary:active {
+  background-color: salmon;
+  border: none;
+  outline: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.notifications {
+  color: rgb(136, 139, 141);
+}
+
+a {
+  color: #373a3c
+}
