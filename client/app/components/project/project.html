@@ -84,6 +84,7 @@
 
           <!-- Displaying Tech and add tech icon -->
           <div>Technology:</div>
+          <div *ngIf="project.Teches.length === 0">No tech stack information provided.</div>
           <div *ngFor="let tech of project.Teches" class='tech'>
             {{tech.name}}
             <span><i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i></span>
