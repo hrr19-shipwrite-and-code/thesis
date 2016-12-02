@@ -31,6 +31,6 @@ export class BrowseComponent {
       let index = this.filteredTech.indexOf(tech);
       this.filteredTech.splice(index, index + 1);
     }
-    console.log(this.filteredTech)
+    //console.log(this.filteredTech)
   }
 }

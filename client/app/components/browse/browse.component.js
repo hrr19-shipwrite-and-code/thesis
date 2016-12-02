@@ -50,7 +50,7 @@ System.register(['@angular/core', '../project/project.services.js', './browse.se
                         var index = this.filteredTech.indexOf(tech);
                         this.filteredTech.splice(index, index + 1);
                     }
-                    console.log(this.filteredTech);
+                    //console.log(this.filteredTech)
                 };
                 BrowseComponent = __decorate([
                     core_1.Component({

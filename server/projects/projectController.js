@@ -126,7 +126,7 @@ module.exports = {
     Profile.find({where: {authId: req.user.sub}})
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
-        console.log(profile)
+        //console.log(profile)
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
@@ -152,7 +152,7 @@ module.exports = {
     Profile.find({where: {id: req.params.teamId}})
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
-        console.log(profile)
+        //console.log(profile)
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
