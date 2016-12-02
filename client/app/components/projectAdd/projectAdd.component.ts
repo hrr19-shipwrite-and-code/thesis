@@ -69,7 +69,7 @@ export class ProjectAddComponent {
 
   addProject(data) {
     this.urlChecker(data.github, 'github');
-    this.urlChecker(data.deploy, 'deploy')
+    this.urlChecker(data.deploy, 'deploy');
     if (!this.githubErr && !this.deployErr) {
       if(data.owner === this.userInfo.id) {
         this.projectService.userCreateProject(data)
@@ -129,7 +129,7 @@ export class ProjectAddComponent {
     this.github = repo.html_url;
     this.deploy = repo.homepage || '';
     this.title = repo.name;
-    this.description = repo.description;
+    this.description = repo.description || '';
     this.owner = this.selected.id;
     this.openSource = true;
   }

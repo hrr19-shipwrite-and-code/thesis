@@ -145,7 +145,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.github = repo.html_url;
                     this.deploy = repo.homepage || '';
                     this.title = repo.name;
-                    this.description = repo.description;
+                    this.description = repo.description || '';
                     this.owner = this.selected.id;
                     this.openSource = true;
                 };
