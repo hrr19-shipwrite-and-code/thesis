@@ -34,21 +34,39 @@
   text-align: center;
   width: 250px;
   margin-right: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.profile-picture-viewport {
-  width: 80px;
-  height: 80px;
-  border-radius: 100px;
+
+
+.profile-photo-viewport {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
   overflow: hidden;
-
-  margin: 0 auto;
-  margin-bottom: 7px;
+  position: relative;
 }
 
-.profile-picture {
+.profile-photo-wrapper {
   width: 100%;
-  height: auto;
+  height: 100%;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-photo {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .tech {
