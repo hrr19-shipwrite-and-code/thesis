@@ -21,9 +21,25 @@
   cursor: pointer;
 }
 
+/* Filter Bar */
+
 .apply-btn, .apply-btn:active {
   outline: none;
+
+  color: white;
+  background-color: #477EC7;
+  border: 1px solid #477EC7;
 }
+
+.clear-btn, .clear-btn:active {
+  outline: none;
+
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+}
+
+/* Footer */
 
 .bottom {
   color: #888B8D;
@@ -34,14 +50,13 @@
   position: center;
 }
 
-.btn-primary {
-  color: rgb(250, 128, 114);
-  background-color: #FFFFFF;
-  border: none;
-}
+/* Button for Loading more projects */
 
-.btn-primary:hover {
-  color: rgb(250, 128, 114);
-  background-color: #F4F4F4;
-  border: none;
+.load-more-btn, .load-more-btn:active {
+  margin-bottom: 20px;
+  margin-top: 10px;
+
+  color: salmon;
+  background-color: transparent;
+  border: 1px solid salmon;
 }

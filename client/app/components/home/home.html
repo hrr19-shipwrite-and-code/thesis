@@ -15,8 +15,9 @@
         <option value=1>Yes</option>
         <option value=0>No</option>
       </select>
-      <button type="submit" class="btn btn-primary">Apply</button>
-      <button type="button" class="btn btn-primary" (click)="clearSearch($event)">Clear</button>
+
+      <button type="submit" class="btn btn-primary apply-btn">Apply</button>
+      <button type="button" class="btn btn-primary clear-btn" (click)="clearSearch($event)">Clear</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
@@ -38,7 +39,7 @@
   </div> <!-- thumbnail-wrapper -->
 
   <div class="bottom">
-  <div class="btn btn-primary" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
+  <div class="btn btn-primary load-more-btn" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
   <div *ngIf="count <= (pagination+1)*12">• • • • •</div>
   </div>
 
