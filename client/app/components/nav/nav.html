@@ -26,7 +26,7 @@
       <div id="inside" class="notification-inside" *ngIf="notificationShow">
         <div class="space"></div>
         <div id="inside" class="notifications">
-          <div id="inside" *ngIf="notifications.length === 0">You have no notifications</div>
+          <div id="inside" *ngIf="notifications.length === 0" class="note">You have no notifications</div>
           <div id="inside" *ngFor="let notification of notifications; let i = index" class="note">
 
             <!--sender reciver type of notification-->

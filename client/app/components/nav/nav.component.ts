@@ -57,7 +57,6 @@ export class NavComponent {
   }
 
   handleClick(e) {
-    console.log(e.target.id)
     if (e.target.id === 'notification') {
       this.notificationShow = !this.notificationShow;
       this.profileShow = false;

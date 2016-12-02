@@ -71,7 +71,6 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.handleClick = function (e) {
                     var _this = this;
-                    console.log(e.target.id);
                     if (e.target.id === 'notification') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;
