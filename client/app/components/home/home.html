@@ -4,13 +4,13 @@
       <input type="text" name="tech" placeholder="Filter by tech" class="filter-bar-input form-control" ngModel>
       <input type="text" name="title" placeholder="Filter by title" class="filter-bar-input form-control" ngModel>
       <input type="text" name="user" placeholder="Filter by user" class="filter-bar-input form-control" ngModel>
-      <select class="form-control filter-bar-input" name="status" ngModel>
+      <select class="form-control filter-bar-input filter-bar-input-dropdown" name="status" ngModel>
         <option value="">Status</option>
         <option value="Completed">Completed</option>
         <option value="In Progress">In Progress</option>
-        <option value="Abandonded">Abandonded</option>
+        <option value="Abandoned">Abandoned</option>
       </select>
-      <select class="form-control filter-bar-input" name="openSource" ngModel>
+      <select class="form-control filter-bar-input filter-bar-input-dropdown" name="openSource" ngModel>
         <option value="">Open Source</option>
         <option value=1>Yes</option>
         <option value=0>No</option>
@@ -20,7 +20,7 @@
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
-    <p class="filter-txt">Filter</p>
+    <p class="filter-txt">Search</p>
 
   </div>
   <div class="sort">
