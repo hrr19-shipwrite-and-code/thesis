@@ -84,6 +84,8 @@
 
           <!-- Displaying Tech and add tech icon -->
           <div>Technology:</div>
+
+          <div *ngIf="project.Teches.length === 0">No tech stack information provided.</div>
           <div class="tech-list">
 
             <span class="tech-list-item"  *ngFor="let tech of project.Teches">
@@ -91,6 +93,7 @@
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' id={{tech.id}} (click)="deleteTech($event)" class="fa fa-times" aria-hidden="true"></i>
             </span>
           </div>
+
           <div><i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' class="fa fa-plus" aria-hidden="true" (click)="editingProject('tech')" title="Add Tech"></i></div>
 
 
@@ -114,9 +117,9 @@
               <!-- Deploy Info/Form -->
               <span *ngIf="!editDeploy && project.deploy"><a href={{project.deploy}}>Visit Project</a></span>
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.deploy.length === 0'>Add deploy link</span>
-              <span class="error" *ngIf="deployErr">Please enter a valid URL</span>
               <form #editDeployInput="ngForm" class="deploy" *ngIf="editDeploy" (ngSubmit)="editProject($event, editDeployInput.value, 'deploy')">
                 <input type="text" name="deploy" class="form-control" placeholder="http://yourwebsite.com" [(ngModel)]="project.deploy">
+                <div class="error" *ngIf="deployErr">*Please enter a valid Url!</div>
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('deploy')" class="fa fa-pencil" aria-hidden="true" title="Edit Deploy Link"></i>
@@ -125,10 +128,10 @@
               <!-- GitHub Info/Form -->
               <span *ngIf="project.github && !editGithub"><a href={{project.github}}>GitHub</a></span>
               <span *ngIf='(checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin") && project.github.length === 0'>Add a github</span>
-              <span class="error" *ngIf="githubErr">Please enter a valid URL</span>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('github')" class="fa fa-pencil" aria-hidden="true" title="Edit Github Link"></i>
               <form #editGitInput="ngForm" class="github" *ngIf="editGithub" (ngSubmit)="editProject($event, editGitInput.value, 'github')">
                 <input type="text" name="github" class="form-control" placeholder="http://github.com/lukeskywalker" [(ngModel)]="project.github">
+                <div class="error" *ngIf="githubErr">*Please enter a valid Url!</div>
                 <button class="btn btn-primary btn-sm">Edit</button>
               </form>
             </div>
