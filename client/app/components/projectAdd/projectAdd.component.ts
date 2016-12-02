@@ -21,6 +21,7 @@ export class ProjectAddComponent {
   private repos = [];
   private title = '';
   private github = '';
+  private deploy = '';
   private description = '';
   private githubErr = false;
   private deployErr = false;
@@ -125,6 +126,7 @@ export class ProjectAddComponent {
     e.preventDefault();
     let repo = this.repos[repoIndex];
     this.github = repo.html_url;
+    this.deploy = repo.homepage || '';
     this.title = repo.name;
     this.description = repo.description;
     this.owner = this.selected.id;

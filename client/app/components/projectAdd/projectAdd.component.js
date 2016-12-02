@@ -43,6 +43,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.repos = [];
                     this.title = '';
                     this.github = '';
+                    this.deploy = '';
                     this.description = '';
                     this.githubErr = false;
                     this.deployErr = false;
@@ -141,6 +142,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     e.preventDefault();
                     var repo = this.repos[repoIndex];
                     this.github = repo.html_url;
+                    this.deploy = repo.homepage || '';
                     this.title = repo.name;
                     this.description = repo.description;
                     this.owner = this.selected.id;
