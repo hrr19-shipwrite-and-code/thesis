@@ -23,18 +23,17 @@
       <div class="notification-number" *ngIf="numberOfNotifications > 0">
         {{ numberOfNotifications }}
       </div>
-      <div class="inside notification-inside" *ngIf="notificationShow">
-        <div class="space">
-        </div>
-        <div class="notifications">
-          <div *ngIf="numberOfNotifications === 0">You have no notifications</div>
-          <div *ngFor="let notification of notifications; let i = index" class="inside note">
+      <div id="inside" class="notification-inside" *ngIf="notificationShow">
+        <div class="space"></div>
+        <div id="inside" class="notifications">
+          <div id="inside" *ngIf="notifications.length === 0">You have no notifications</div>
+          <div id="inside" *ngFor="let notification of notifications; let i = index" class="note">
             <!--sender reciver type of notification-->
-            <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
-            <br>
-            <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
-            <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
-            <hr *ngIf="i < notifications.length - 1" class="inside">
+            <span id="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
+            <br id="inside">
+            <i id="inside" class="fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
+            <i id="inside" class="fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
+            <hr id="inside" *ngIf="i < notifications.length - 1">
           </div>
         </div>
       </div> <!-- notification-inside -->
