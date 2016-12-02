@@ -212,7 +212,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                     this.newTech = '';
-                    this.editing.tech = !this.editing.tech;
                 };
                 ProfileComponent.prototype.deleteTech = function (event, techId) {
                     if (this.profileInfo.type === 'Team') {
