@@ -26,6 +26,7 @@ export class ProjectAddComponent {
   private githubErr = false;
   private deployErr = false;
   private haveGithub = null;
+  private openSource = false;
   private selected = {};
   constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router, private auth: AuthService) {
   }
@@ -130,6 +131,7 @@ export class ProjectAddComponent {
     this.title = repo.name;
     this.description = repo.description;
     this.owner = this.selected.id;
+    this.openSource = true;
   }
 
   trimmer() {
