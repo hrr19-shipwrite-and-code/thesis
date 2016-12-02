@@ -61,8 +61,10 @@
         <h5>SKILLS</h5>
         <div class="tech-list" *ngIf="profileInfo.Teches.length">
           <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
-            <span class="tech-name">{{tech.name}}</span>
-            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="tech-tag">
+              <span class=tech-name>{{tech.name}}</span>
+              <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times tech-x" aria-hidden="true"></i>
+            </span>
           </span> <!-- tech-list-item -->
         </div>
         <!-- Hidden User Tech Input -->
