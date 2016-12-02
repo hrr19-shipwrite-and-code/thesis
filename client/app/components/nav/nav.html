@@ -43,6 +43,13 @@
     <div class="nav-dropdown" *ngIf="auth.authenticated()">
       <div id="profile">
         <span id="profile" class="name">{{ name }}</span>
+
+        <!-- <div class="profile-photo-viewport">
+          <div class="profile-photo-wrapper">
+            <img [src]="picture" class="dropdown-image" id="profile">
+          </div>
+        </div> -->
+        
         <img [src]="picture" class="dropdown-image" id="profile">
       </div>
       <div class="nav-dropdown-inside hide-dropdown" dropdown>
