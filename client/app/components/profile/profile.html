@@ -112,11 +112,9 @@
         </div>
         <div class="edit">
         <div *ngIf="editing.member">
-          <div *ngIf="errAddMember">
-            Please enter a valid username
-          </div>
           <form (ngSubmit)="addMember()">
             <input type="text" name="member" class="form-control" [(ngModel)]="newMember" placeholder="Enter username">
+            <div class="error" *ngIf="errAddMember">*Please enter a valid username!</div>
             <button class="btn btn-primary btn-sm">Add</button>
           </form>
         </div>
@@ -139,7 +137,7 @@
         </ul>
         <!-- User/Team Connection edit forms -->
         <div *ngIf="editing.contact">
-          <span *ngIf="invalidUrl">Please enter a valid URL!</span>
+          <div class="error" *ngIf="invalidUrl">*Please enter a valid Url!</div>
           <form #editBasic="ngForm" (ngSubmit)="checkUrl(editBasic.value, 'contact')">
             <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
             <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
@@ -161,12 +159,12 @@
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
         <h5>SUSHI URL</h5>
-        <span *ngIf="urlTaken">URL Unavailable!</span>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo(editUrl.value, 'url')">
           <p>
             sushiii.me/
             <input type="text" class="form-control userUrl" name="url" maxlength="30" [(ngModel)]="tempUrl" placeholder="sushi URL">
           </p>
+          <div class="error" *ngIf="urlTaken">*This Url is not available!</div>
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>
