@@ -276,3 +276,8 @@ a:hover {
 ul {
   list-style-type: none;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+}
