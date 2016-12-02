@@ -136,7 +136,7 @@
                 <select class="form-control" id="status-select" [(ngModel)]="project.progress" (ngModelChange)="editProject($event, {progress: project.progress}, 'progress')">
                   <option value="Completed">Completed</option>
                   <option value="In Progress">In Progress</option>
-                  <option value="Abandonded">Abandonded</option>
+                  <option value="Abandoned">Abandoned</option>
                 </select>
               </span>
               <i *ngIf='checkUser(project.Profile.url) || memberType === "Owner" || memberType === "Admin"' (click)="editingProject('progress')" class="fa fa-pencil" aria-hidden="true" title="Edit Progress"></i>

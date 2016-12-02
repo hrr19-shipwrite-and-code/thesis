@@ -43,7 +43,14 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                             }],
                         auth: {
                             redirect: false,
-                        }
+                        },
+                        theme: {
+                            logo: './client/app/assets/sushi.png',
+                            primaryColor: 'salmon'
+                        },
+                        languageDictionary: {
+                            title: "sushiii"
+                        },
                     };
                     this.lock = new Auth0Lock('mHw2LCJA0uxSEE1mQcQJxCitXZPtt5dw', 'sushiii.auth0.com', this.options);
                     // Add callback for the Lock `authenticated` event

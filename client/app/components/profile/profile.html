@@ -137,12 +137,12 @@
         <div *ngIf="editing.contact">
           <span *ngIf="invalidUrl">Please enter a valid URL!</span>
           <form #editBasic="ngForm" (ngSubmit)="checkUrl(editBasic.value, 'contact')">
-            <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
-            <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
-            <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="Github url...">
-            <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
-            <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
-            <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
+            <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="http://myWebsite.com">
+            <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="http://myBlog.com">
+            <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="http://github.com/userName">
+            <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="http://linkedin.com/userName">
+            <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="http://twitter.com/userName">
+            <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="http://facebook.com/userName">
             <button class="btn btn-primary btn-sm">Update</button>
           </form>
         </div>

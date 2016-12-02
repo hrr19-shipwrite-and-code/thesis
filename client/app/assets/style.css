@@ -148,11 +148,11 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: salmon;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px salmon;
 }
 
 input:checked + .slider:before {
@@ -205,6 +205,10 @@ input:checked + .slider:before {
   margin-top: 5px;
   display: inline-block;
   max-width: 16.8%;
+}
+
+.filter-bar-input-dropdown {
+  min-width: 11%
 }
 
 .filter-bar select {
