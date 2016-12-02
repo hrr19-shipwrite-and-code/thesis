@@ -55,12 +55,10 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                         .subscribe(function (data) {
                         _this.notifications = data;
                         _this.numberOfNotifications = _this.notificationCount();
-                        console.log(data);
                     });
                     localStorage.setItem('timeoutId', setTimeout(function () {
                         _this.checkNotifications();
                     }, 300000));
-                    console.log(localStorage.getItem('timeoutId'));
                 };
                 NavComponent.prototype.notificationCount = function () {
                     var count = 0;
@@ -100,7 +98,6 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.decline = function (notification, index) {
                     var _this = this;
-                    console.log(notification);
                     this.nav.decline(notification.SenderId)
                         .subscribe(function (data) {
                         _this.notifications.splice(index, 1);

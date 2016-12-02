@@ -42,12 +42,10 @@ export class NavComponent {
       .subscribe( data => {
         this.notifications = data;
         this.numberOfNotifications = this.notificationCount();
-        console.log(data)
       })
     localStorage.setItem('timeoutId', setTimeout(() =>{
       this.checkNotifications();
     }, 300000)) 
-    console.log(localStorage.getItem('timeoutId'))
   }
 
   notificationCount() {
@@ -85,7 +83,6 @@ export class NavComponent {
   }
 
   decline(notification, index) {
-    console.log(notification)
     this.nav.decline(notification.SenderId)
       .subscribe(data => {
         this.notifications.splice(index, 1)
