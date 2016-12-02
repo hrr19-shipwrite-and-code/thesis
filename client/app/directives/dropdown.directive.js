@@ -25,7 +25,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.hidden = true;
                 }
                 DropdownDirective.prototype.hide = function () {
-                    console.log('=-=-=-=-=-=-=-=-=-=-=');
+                    //console.log('=-=-=-=-=-=-=-=-=-=-=')
                     if (!this.hidden) {
                         this.showHide();
                     }

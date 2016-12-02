@@ -17,7 +17,7 @@ export class DropdownDirective {
   }
 
   hide() {
-    console.log('=-=-=-=-=-=-=-=-=-=-=')
+    //console.log('=-=-=-=-=-=-=-=-=-=-=')
     if (!this.hidden ) {
       this.showHide();      
     }
