@@ -54,10 +54,11 @@
         </div>
       </div> <!-- topInfo -->
 
-      <hr>
+      
 
       <!-- User Tech skills -->
       <div class='connect' *ngIf='profileInfo.Teches.length || isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
+        <hr>
         <h5>SKILLS</h5>
         <div class="tech-list" *ngIf="profileInfo.Teches.length">
           <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
@@ -80,10 +81,10 @@
         </div>
       </div>
 
-      <hr>
 
       <!-- User Teams if single User -->
       <div class="connect" *ngIf="profileInfo.Team.length">
+        <hr>
         <h5>TEAMS</h5>
         <div>
           <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
@@ -125,6 +126,7 @@
 
       <!-- User/Team Connections -->
       <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser() || memberType === 'Owner' || memberType === 'Admin'">
+        <hr>
         <h5>CONNECT</h5>
         <ul class='urls' *ngIf="!editing.contact">
           <li *ngIf="profileInfo.personal"><i class="fa fa-globe" aria-hidden="true"></i><a href='{{profileInfo.personal}}'>personal</a></li>
@@ -153,11 +155,9 @@
         </div>
       </div>
 
-
-      <hr class="divider">
-
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
+        <hr>
         <h5>SUSHI URL</h5>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo(editUrl.value, 'url')">
           <p>
