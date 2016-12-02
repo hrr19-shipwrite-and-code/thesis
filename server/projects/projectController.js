@@ -349,10 +349,12 @@ module.exports = {
     req.body.openSource !== undefined ? filter.where.contribute = {$eq: !!Number(req.body.openSource)} : false;
 
     //sort
-    req.body.sort === 'default' ? filter.where.createdAt = {$gt: new Date(new Date() - 31 * 24 * 60 * 60 * 1000)} : false;
+    if(req.body.sort === 'default') {
+      filter.where.createdAt = {$gt: new Date(new Date() - 31 * 24 * 60 * 60 * 1000)};
+      filter.order = [['views', 'DESC']];
+    }
     req.body.sort === 'date' ? filter.order = [['createdAt', 'DESC']] : false;
     req.body.sort === 'views' ? filter.order = [['views', 'DESC']] : false;
-
 
     Project.findAndCountAll(filter)
       .then((result) => {
