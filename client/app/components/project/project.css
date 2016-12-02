@@ -134,6 +134,27 @@
   justify-content: space-around;*/
 }
 
+.tech-list {
+  margin-top: 5px;
+  width: 105%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.tech-list-item {
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid salmon;
+  color: salmon;
+
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-right: 7px;
+}
+
 .tech {
   color: #888B8D;
   font-size: 0.9em;
