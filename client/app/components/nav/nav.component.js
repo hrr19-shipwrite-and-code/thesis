@@ -38,6 +38,7 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     this.profileService = profileService;
                     this.notificationShow = false;
                     this.profileShow = false;
+                    this.notifications = [];
                 }
                 NavComponent.prototype.ngOnInit = function () {
                     this.getUserInfo();

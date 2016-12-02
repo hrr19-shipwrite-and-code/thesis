@@ -21,7 +21,7 @@ export class NavComponent {
   numberOfNotifications;
   name;
   picture;
-  notifications;
+  notifications = [];
   url;
   constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService, private profileService: ProfileService) {}
 

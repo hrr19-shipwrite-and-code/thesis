@@ -17,22 +17,29 @@
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
   <!-- <div class="right-side"> -->
-  <!--Notifications-->
+   <!--Notifications-->
     <div class="notification" *ngIf="auth.authenticated()">
       <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
       <div class="notification-number" *ngIf="numberOfNotifications > 0">
         {{ numberOfNotifications }}
       </div>
-      <div class="notifications">
-        <div *ngIf="notifications.length === 0">You don't have any notifications!</div>
-        <div *ngFor="let notification of notifications; let i = index" class="inside note">
-          <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
-          <br>
-          <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
-          <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
-          <hr *ngIf="i < notifications.length - 1" class="inside">
+      <div class="inside notification-inside" *ngIf="notificationShow">
+        <div class="space">
+        </div>
+        <div class="notifications">
+          <div *ngIf="numberOfNotifications === 0" class="note">You have no notifications</div>
+          <div *ngFor="let notification of notifications; let i = index" class="inside note">
+            <!--sender reciver type of notification-->
+            <span class="inside">You have been invited to join <a routerLink="/{{notification.Sender.url}}">{{ notification.Sender.name }}</a></span>
+            <br>
+            <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
+            <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
+            <hr *ngIf="i < notifications.length - 1" class="inside">
+          </div>
+        </div>
       </div> <!-- notification-inside -->
     </div> <!-- notification -->
+
 
     <!-- Navbar Dropdown -->
     <div class="nav-dropdown" *ngIf="auth.authenticated()">
