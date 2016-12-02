@@ -176,7 +176,6 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                         });
                     }
                     this.newTech = '';
-                    this.editTech = !this.editTech;
                 };
                 ProjectComponent.prototype.deleteTech = function (event) {
                     if (this.memberType === '') {

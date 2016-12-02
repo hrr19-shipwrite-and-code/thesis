@@ -43,10 +43,12 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.repos = [];
                     this.title = '';
                     this.github = '';
+                    this.deploy = '';
                     this.description = '';
                     this.githubErr = false;
                     this.deployErr = false;
                     this.haveGithub = null;
+                    this.openSource = false;
                     this.selected = {};
                 }
                 ProjectAddComponent.prototype.ngOnInit = function () {
@@ -141,9 +143,11 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     e.preventDefault();
                     var repo = this.repos[repoIndex];
                     this.github = repo.html_url;
+                    this.deploy = repo.homepage || '';
                     this.title = repo.name;
                     this.description = repo.description;
                     this.owner = this.selected.id;
+                    this.openSource = true;
                 };
                 ProjectAddComponent.prototype.trimmer = function () {
                     this.title = this.title.trim();

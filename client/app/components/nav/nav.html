@@ -16,15 +16,12 @@
 
   <a *ngIf="!auth.authenticated()" class="navLink signIn" (click)="auth.login()">Sign In</a>
 
+  <!-- <div class="right-side"> -->
   <!--Notifications-->
-  <div class="notification" *ngIf="auth.authenticated()">
-    <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
-    <div class="notification-number" *ngIf="numberOfNotifications > 0">
-      {{ numberOfNotifications }}
-    </div>
-    <div class="inside notification-inside" *ngIf="notificationShow">
-      <div class="space">
-
+    <div class="notification" *ngIf="auth.authenticated()">
+      <i class="fa fa-bell-o fa-lg notification-icon" id="notification" aria-hidden="true"></i>
+      <div class="notification-number" *ngIf="numberOfNotifications > 0">
+        {{ numberOfNotifications }}
       </div>
       <div class="notifications">
         <div *ngIf="notifications.length === 0">You don't have any notifications!</div>
@@ -34,40 +31,47 @@
           <i class="inside fa fa-check" aria-hidden="true" (click)="joinTeam(notification, index)"></i>
           <i class="inside fa fa-times" aria-hidden="true" (click)="decline(notification, index)"></i>
           <hr *ngIf="i < notifications.length - 1" class="inside">
+      </div> <!-- notification-inside -->
+    </div> <!-- notification -->
+
+    <!-- Navbar Dropdown -->
+    <div class="nav-dropdown" *ngIf="auth.authenticated()">
+      <div id="profile">
+        <span id="profile" class="name">{{ name }}</span>
+
+        <!-- <div class="profile-photo-viewport">
+          <div class="profile-photo-wrapper">
+            <img [src]="picture" class="dropdown-image" id="profile">
+          </div>
+        </div> -->
+        
+        <img [src]="picture" class="dropdown-image" id="profile">
+      </div>
+      <div class="nav-dropdown-inside" *ngIf="profileShow" dropdown>
+
+        <div class="space">
+
+        </div>
+        <div class="nav-dropdown-links">
+          <div routerLink="/{{auth.checkUrl()}}" class="navLink">
+            <span>Profile</span>
+          </div>
+          <hr>
+          <div routerLink="/addproject" class="navLink">
+            <span>Add Project</span>
+          </div>
+          <hr>
+          <div routerLink="/createteam" class="navLink">
+            <span>Create Team</span>
+          </div>
+          <hr>
+          <div (click)="auth.logout()" class="navLink">
+            <span>Logout</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> right-side  -->
 
-  <!--Navbar Dropdown-->
-  <div class="nav-dropdown" *ngIf="auth.authenticated()">
-    <div id="profile">
-      <span id="profile">{{ name }}</span>
-      <img [src]="picture" class="dropdown-image" id="profile">
-    </div>
-    <div class="nav-dropdown-inside" *ngIf="profileShow" dropdown>
-
-      <div class="space">
-
-      </div>
-      <div class="nav-dropdown-links">
-        <div routerLink="/{{auth.checkUrl()}}" class="navLink">
-          <span>Profile</span>
-        </div>
-        <hr>
-        <div routerLink="/addproject" class="navLink">
-          <span>Add Project</span>
-        </div>
-        <hr>
-        <div routerLink="/createteam" class="navLink">
-          <span>Create Team</span>
-        </div>
-        <hr>
-        <div (click)="auth.logout()" class="navLink">
-          <span>Logout</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>

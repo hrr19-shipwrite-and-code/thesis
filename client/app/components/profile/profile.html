@@ -1,12 +1,14 @@
 
 <div class='container'>
   <div class="sidebar-container">
-    <div class='sidebar horizontalCenter shadow'>
+    <div class='sidebar horizontal-center shadow'>
 
-      <div class='topInfo horizontalCenter'>
+      <div class='topInfo horizontal-center'>
         <!-- Profile Photo -->
-        <div class='profilePhoto horizontalCenter'>
-          <img class="profilePhoto" src="{{profileInfo.picture}}"/>
+        <div class='profile-photo-viewport'>
+          <div class="profile-photo-wrapper">
+            <img class="profile-photo" src="{{profileInfo.picture}}"/>
+          </div>
         </div>
         <!-- Change Profile Photo Button -->
         <!-- <div class="form-group">
@@ -59,8 +61,10 @@
         <h5>SKILLS</h5>
         <div class="tech-list" *ngIf="profileInfo.Teches.length">
           <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
-            <span class="tech-name">{{tech.name}}</span>
-            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="tech-tag">
+              <span class=tech-name>{{tech.name}}</span>
+              <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times tech-x" aria-hidden="true"></i>
+            </span>
           </span> <!-- tech-list-item -->
         </div>
         <!-- Hidden User Tech Input -->

@@ -27,7 +27,7 @@ const Project = db.define('Project', {
   },
   progress: {
     type: Sequelize.ENUM,
-    values: ['Completed', 'In Progress', 'Abandonded'],
+    values: ['Completed', 'In Progress', 'Abandoned'],
     defaultValue: 'In Progress'
   }
 });

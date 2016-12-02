@@ -128,7 +128,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                 ProfileComponent.prototype.checkUrl = function (input, type) {
                     var options = { require_protocol: true };
                     for (var url in input) {
-                        console.log(input[url]);
+                        //console.log(input[url])
                         if (input[url] && !validator.isURL(input[url], options)) {
                             return this.invalidUrl = true;
                         }
@@ -212,7 +212,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                     this.newTech = '';
-                    this.editing.tech = !this.editing.tech;
                 };
                 ProfileComponent.prototype.deleteTech = function (event, techId) {
                     if (this.profileInfo.type === 'Team') {

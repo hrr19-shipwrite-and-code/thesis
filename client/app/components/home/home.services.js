@@ -27,7 +27,7 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                     this.http = http;
                 }
                 HomeService.prototype.getProjects = function (filter) {
-                    console.log(filter);
+                    //console.log(filter)
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http.post('http://138.68.23.255:1337/api/project/getAll', filter, options)

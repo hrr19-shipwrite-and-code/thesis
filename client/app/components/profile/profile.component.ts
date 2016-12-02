@@ -108,7 +108,7 @@ export class ProfileComponent {
   checkUrl(input, type) {
     let options = {require_protocol: true};
     for(let url in input){
-      console.log(input[url])
+      //console.log(input[url])
       if(input[url] && !validator.isURL(input[url], options)){
         return this.invalidUrl = true;
       }
@@ -193,7 +193,6 @@ export class ProfileComponent {
     }
     
     this.newTech = '';
-    this.editing.tech = !this.editing.tech;
   }
 
   deleteTech(event, techId) {

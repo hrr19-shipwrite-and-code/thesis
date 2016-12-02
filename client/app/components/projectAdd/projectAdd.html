@@ -53,10 +53,12 @@
       <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" maxlength="500"></textarea>
     </div>
 
+    <hr>
+
     <div class="form-group">
       <p class='deploy-label'>Open Source</p>
       <label class="switch">
-        <input type="checkbox" name="contribute" ngModel>
+        <input type="checkbox" name="contribute" [(ngModel)]="openSource">
         <div class="slider round"></div>
       </label>
     </div>
@@ -78,7 +80,7 @@
 
     <div class="form-group">
       <p class='deploy-label'>Deployed App <span class="optional">(Optional)</span></p> 
-      <input type="text" name="deploy" class='form-control' placeholder='https://mysuperawesomeapp.com' ngModel>
+      <input type="text" name="deploy" class='form-control' placeholder='https://mysuperawesomeapp.com' [(ngModel)]="deploy">
       <div class="error" *ngIf="deployErr">*Please enter a valid Url!</div>
     </div>
 

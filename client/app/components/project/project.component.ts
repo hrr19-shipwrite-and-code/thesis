@@ -173,7 +173,6 @@ export class ProjectComponent {
     }
     
     this.newTech = '';
-    this.editTech = !this.editTech;
   }
 
   deleteTech(event) {

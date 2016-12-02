@@ -32,7 +32,8 @@
 
           <fieldset class="form-group">
             <legend>Name</legend>
-            <input type="text" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" [(ngModel)]="name">
+            <input type="text" *ngIf="type === 'Member'" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. Mike Hughes" name="name" [(ngModel)]="name">
+            <input type="text" *ngIf="type === 'Team'" class="form-control" id="tech" aria-describedby="searchByTech" placeholder="e.g. sushiii" name="name" [(ngModel)]="name">
           </fieldset>
 
           <!-- Hire checkbox -->
