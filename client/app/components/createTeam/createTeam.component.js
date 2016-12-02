@@ -1,4 +1,4 @@
-System.register(['@angular/core', './createTeam.services.js', '@angular/router', 'angular2-google-maps/core'], function(exports_1, context_1) {
+System.register(['@angular/core', './createTeam.services.js', '@angular/router', 'angular2-google-maps/core', '../auth/auth.service.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, createTeam_services_js_1, router_1, core_2;
+    var core_1, createTeam_services_js_1, router_1, core_2, auth_service_js_1;
     var CreateTeamComponent;
     return {
         setters:[
@@ -25,20 +25,27 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
             },
             function (core_2_1) {
                 core_2 = core_2_1;
+            },
+            function (auth_service_js_1_1) {
+                auth_service_js_1 = auth_service_js_1_1;
             }],
         execute: function() {
             CreateTeamComponent = (function () {
-                function CreateTeamComponent(createTeamService, router, mapsAPILoader, zone) {
+                function CreateTeamComponent(createTeamService, router, mapsAPILoader, zone, auth) {
                     this.createTeamService = createTeamService;
                     this.router = router;
                     this.mapsAPILoader = mapsAPILoader;
                     this.zone = zone;
+                    this.auth = auth;
                     this.location = '';
                     this.name = '';
                     this.notValidEmail = false;
+                    this.urlTaken = false;
+                    this.urlInvalid = false;
                 }
                 CreateTeamComponent.prototype.ngOnInit = function () {
                     var _this = this;
+                    this.isAuth();
                     this.mapsAPILoader.load().then(function () {
                         var input = document.getElementById('location');
                         var autocomplete = new google.maps.places.Autocomplete(input, {
@@ -51,15 +58,35 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                         });
                     });
                 };
+                CreateTeamComponent.prototype.isAuth = function () {
+                    if (!this.auth.authenticated()) {
+                        this.router.navigateByUrl('/');
+                    }
+                };
                 CreateTeamComponent.prototype.trimmer = function () {
                     this.name = this.name.trim();
                 };
+                CreateTeamComponent.prototype.checkUrl = function (e) {
+                    var _this = this;
+                    var url = e.target.value;
+                    if (!/^[a-zA-Z0-9_-]{1,30}$/.test(url) && url.length > 0) {
+                        return this.urlInvalid = true;
+                    }
+                    this.urlInvalid = false;
+                    this.createTeamService.checkUrl(url)
+                        .subscribe(function (data) { _this.urlTaken = false; }, function (err) { _this.urlTaken = true; });
+                };
+                CreateTeamComponent.prototype.checkEmail = function (e) {
+                    var email = e.target.value;
+                    if (!validator.isEmail(email) && email.length > 0) {
+                        return this.notValidEmail = true;
+                    }
+                    this.notValidEmail = false;
+                };
                 CreateTeamComponent.prototype.createTeam = function (teamInfo) {
                     var _this = this;
-                    if (!validator.isEmail(teamInfo.email)) {
-                        this.notValidEmail = true;
-                    }
-                    else {
+                    if (!this.urlTaken && !this.notValidEmail && this.name !== '') {
+                        this.notValidEmail = false;
                         this.createTeamService.createTeam(teamInfo)
                             .subscribe(function (data) {
                             _this.router.navigateByUrl('/' + teamInfo.url);
@@ -71,12 +98,12 @@ System.register(['@angular/core', './createTeam.services.js', '@angular/router',
                         selector: 'createTeam',
                         templateUrl: './client/app/components/createTeam/createTeam.html',
                         styleUrls: ['./client/app/components/createTeam/createTeam.css'],
-                        providers: [createTeam_services_js_1.CreateTeamService]
+                        providers: [createTeam_services_js_1.CreateTeamService, auth_service_js_1.AuthService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof createTeam_services_js_1.CreateTeamService !== 'undefined' && createTeam_services_js_1.CreateTeamService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof createTeam_services_js_1.CreateTeamService !== 'undefined' && createTeam_services_js_1.CreateTeamService) === 'function' && _a) || Object, router_1.Router, core_2.MapsAPILoader, core_1.NgZone, (typeof (_b = typeof auth_service_js_1.AuthService !== 'undefined' && auth_service_js_1.AuthService) === 'function' && _b) || Object])
                 ], CreateTeamComponent);
                 return CreateTeamComponent;
-                var _a;
+                var _a, _b;
             }());
             exports_1("CreateTeamComponent", CreateTeamComponent);
         }

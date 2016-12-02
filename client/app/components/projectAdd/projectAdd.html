@@ -1,81 +1,91 @@
+<div class="main-content shadow">
+  <h4>Add Project</h4>
+  <hr>
+  <!-- Import project from Github -->
+  <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
+    <p>Import from Github <span class="optional">(optional)</span></p>
+    <div class="wrapper">
+      <div class="half-form">
+        <div>Owner</div>
+        <select class="form-control" name="username" ngModel="default" (change)="handleChange($event)" required>
+          <option value="default" disabled="">-- Select One --</option>
+          <option value="Member">{{userInfo.name}}</option>
+          <option *ngFor="let team of userInfo.Team; let i = index" value="{{i}}">{{team.name}}</option>
+        </select>
+      </div>
 
-<div class="container horizontal-center">
-
-  <div class="main-content shadow horizontal-center">
-    <h4>Add Project</h4>
-    <form #import="ngForm" (ngSubmit)="handleChooseRepo($event, import.value.repo)">
-      <p>Import from Github:</p>
-      <span>Owner: </span>
-      <select name="username" ngModel="default" (change)="handleChange($event)" required>
-        <option value="default" disabled="">-- Select One --</option>
-        <option value="Member">{{userInfo.name}}</option>
-        <option *ngFor="let team of userInfo.Team; let i = index" value="{{i}}">{{team.name}}</option>
-      </select>
-      
-      <span *ngIf="haveGithub === false"><br>You need to provide a github url for <a routerLink="/{{selected.url}}">{{selected.name}}</a> to use the import feature.</span>
-      <span *ngIf="haveGithub === true && repos.length === 0"><br>You don't have any public repos on Github</span>
-      
-      <div *ngIf="repos.length > 0">
-        <span>Repository: </span>
-        <select name="repo" ngModel=0 required>
+      <div class="half-form" *ngIf="repos.length > 0">
+        <div>Repository</div>
+        <select class="form-control" name="repo" ngModel=0 required>
           <option *ngFor="let repo of repos; let i = index" value="{{i}}">{{repo.name}}</option>
         </select>
       </div>
+
       <button *ngIf="repos.length > 0" name="repo" type = "submit" class="btn btn-primary">Import</button>
-    </form>
-    <form #form="ngForm" (ngSubmit)="addProject(form.value)">
+    </div>
 
-      <div class="form-group">
-        <p class='title-label'>Title:</p>
-        <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" maxlength="75" (change)="trimmer(title)" required>
-      </div>
+    <span *ngIf="haveGithub === false"><br>You need to provide a github url for <a routerLink="/{{selected.url}}">{{selected.name}}</a> to use the import feature.</span>
+    <span *ngIf="haveGithub === true && repos.length === 0"><br>You don't have any public repos on Github</span>
+  </form> <!-- Import project from Github -->
 
-       <div class="form-group">
-        <p class='title-label'>Owner:</p>
-        <select class="form-control" name="owner" [(ngModel)]="owner">
-          <option value="{{userInfo.id}}">{{userInfo.name}}</option>
-          <ng-container *ngFor="let team of userInfo.Team">
-            <option *ngIf="team.TeamUsers.type === 'Owner' || team.TeamUsers.type === 'Admin'" value="{{team.id}}"><span>{{team.name}}</span></option>
-          </ng-container>
-        </select>
-      </div>
+  <hr>
 
-      <div class="form-group">
-        <p class='description-label'>Description:</p>
-        <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" maxlength="500" required></textarea>
-      </div>
+  <!-- Add project form -->
+  <form #form="ngForm" (ngSubmit)="addProject(form.value)">
 
-      <div class="form-group">
-        <p class='github-label'>Github <span class="optional">(Optional)</span>: <span class="error" *ngIf="githubErr">Please enter a valid URL</span></p>
-        <input type="text" name="github" class='form-control' placeholder='github.com/lukeskywalker' [(ngModel)]="github">
-      </div>
+     <div class="form-group">
+      <p class='title-label'>Owner</p>
+      <select class="form-control" name="owner" [(ngModel)]="owner">
+        <option value="{{userInfo.id}}">{{userInfo.name}}</option>
+        <ng-container *ngFor="let team of userInfo.Team">
+          <option *ngIf="team.TeamUsers.type === 'Owner' || team.TeamUsers.type === 'Admin'" value="{{team.id}}"><span>{{team.name}}</span></option>
+        </ng-container>
+      </select>
+    </div>
 
-      <div class="form-group">
-        <p class='deploy-label'>Deployed App <span class="optional">(Optional)</span>: <span class="error" *ngIf="deployErr">Please enter a valid URL</span></p> 
-        <input type="text" name="deploy" class='form-control' placeholder='mysuperawesomeapp.com' ngModel>
-      </div>
+    <div class="form-group">
+      <p class='title-label'>Title</p>
+      <input type="text" name="title" class='form-control' placeholder='Enter your project title' [(ngModel)]="title" maxlength="75" (change)="trimmer(title)" required>
+    </div>
 
-      <div class="form-group">
-        <label for="status-select">Status:</label>
-        <select class="form-control" id="status-select" name="status" [(ngModel)]="defaultValue">
-          <option value="Completed">Completed</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Abandonded">Abandonded</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <p class='description-label'>Description</p>
+      <textarea rows="4" class='form-control' name="description" [(ngModel)]="description" maxlength="500" required></textarea>
+    </div>
 
-      <div class="form-group">
-        <p class='deploy-label'>Open Source:</p>
-        <label class="switch">
-          <input type="checkbox" name="contribute" ngModel>
-          <div class="slider round"></div>
-        </label>
-      </div>
+    <div class="form-group">
+      <p class='deploy-label'>Open Source</p>
+      <label class="switch">
+        <input type="checkbox" name="contribute" ngModel>
+        <div class="slider round"></div>
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label for="status-select">Status</label>
+      <select class="form-control" id="status-select" name="status" [(ngModel)]="defaultValue">
+        <option value="Completed">Completed</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Abandonded">Abandonded</option>
+      </select>
+    </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+      <p class='github-label'>Github <span class="optional">(Optional)</span></p>
+      <input type="text" name="github" class='form-control' placeholder='https://github.com/lukeskywalker' [(ngModel)]="github">
+      <div class="error" *ngIf="githubErr">*Please enter a valid Url!</div>
+    </div>
 
-    </form>
+    <div class="form-group">
+      <p class='deploy-label'>Deployed App <span class="optional">(Optional)</span></p> 
+      <input type="text" name="deploy" class='form-control' placeholder='https://mysuperawesomeapp.com' ngModel>
+      <div class="error" *ngIf="deployErr">*Please enter a valid Url!</div>
+    </div>
 
-  </div> <!-- main content -->
+    <hr>
 
-</div> <!-- container -->
+    <button type="submit" class="btn btn-primary">Create Project</button>
+
+  </form> <!-- Add project form -->
+
+</div> <!-- main content -->

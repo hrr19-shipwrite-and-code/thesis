@@ -36,6 +36,10 @@ System.register(['angular2-jwt', 'rxjs/add/operator/map', '@angular/core', '@ang
                     return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
                         .map(function (res) { return res.json; });
                 };
+                CreateTeamService.prototype.checkUrl = function (url) {
+                    return this.http.get('http://localhost:1337/api/profile/checkUrl/' + url)
+                        .map(function (res) { return res.json; });
+                };
                 CreateTeamService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp, http_1.Http])

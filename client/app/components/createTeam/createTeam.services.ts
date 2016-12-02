@@ -14,4 +14,9 @@ export class CreateTeamService {
     return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
       .map(res => res.json);
   }
+
+  checkUrl(url) {
+  	return this.http.get('http://localhost:1337/api/profile/checkUrl/' + url)
+      .map(res => res.json);
+  }
 }

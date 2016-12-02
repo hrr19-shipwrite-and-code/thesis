@@ -302,8 +302,9 @@ System.register(['@angular/core', './project.services.js', '@angular/router', '.
                     return this.project.Images.length > 0;
                 };
                 ProjectComponent.prototype.urlChecker = function (url, type) {
+                    var options = { require_protocol: true };
                     if (url.length > 0) {
-                        if (!validator.isURL(url)) {
+                        if (!validator.isURL(url, options)) {
                             if (type === 'github') {
                                 this.githubErr = true;
                             }

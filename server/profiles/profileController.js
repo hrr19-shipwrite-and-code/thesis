@@ -23,8 +23,8 @@ module.exports = {
           github: req.body.html_url || null,
           linkedin: req.body.publicProfileUrl || null,
           blog: req.body.blog || null,
-          bio: req.body.bio || null
-        }
+          bio: req.body.bio || ''
+        };
 
         Profile.findOrCreate({where: {authId: authId}, defaults: userInfo})
           .spread((profile) => {
@@ -33,8 +33,8 @@ module.exports = {
           .catch((err) => {
             console.log(err)
             res.sendStatus(400);
-          })
-      })
+          });
+      });
 
   },
 
@@ -139,6 +139,18 @@ module.exports = {
       });
   },
 
+  checkUrl: (req, res, next) => {
+    const url = req.params.url;
+    Profile.findAll({where: {url: url}})
+      .then((found) => {
+        if(found.length){
+          res.sendStatus(400);
+        } else {
+          res.sendStatus(200);
+        }
+      })
+  },
+
   createTeam: (req, res, next) => {
     const authId = req.user.sub;
     const teamInfo = {
@@ -172,7 +184,7 @@ module.exports = {
       .catch((err) => {
         console.log(err)
         res.sendStatus(404);
-      })
+      });
   },
 
   deleteTeam: (req, res,next) => {
@@ -195,9 +207,9 @@ module.exports = {
               res.sendStatus(404);
             })
         } else {
-          res.sendStatus(401)
+          res.sendStatus(401);
         }
-      })     
+      });     
   },
 
   joinTeam: (req, res, next) => {
@@ -219,8 +231,8 @@ module.exports = {
             } else {
               res.sendStatus(401);
             }
-          })
-      })
+          });
+      });
   },
 
   memberTypeCheck: (req, res, next) => {
@@ -237,9 +249,9 @@ module.exports = {
           req.team = team;
           next() 
         } else{
-          res.sendStatus(401)
+          res.sendStatus(401);
         }
-      })
+      });
   },
 
   addMember: (req, res, next) => {
@@ -291,7 +303,7 @@ module.exports = {
         } else {
           res.sendStatus(401);
         }
-    })
+    });
   },
 
   leaveTeam: (req, res, next) => {
