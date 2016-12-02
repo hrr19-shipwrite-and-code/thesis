@@ -12,7 +12,7 @@ const ProjectTech = require('./tech/techSchema.js').ProjectTech;
 const TeamUser = require('./profiles/TeamUserSchema.js');
 
 //Creates Profile/team foreign id on project
-Profile.hasMany(Project);
+Profile.hasMany(Project, { onDelete: 'cascade' });
 Project.belongsTo(Profile);
 
 //Creating tech/project foreign keys for ProjectTech table
