@@ -253,9 +253,8 @@ input[name="title"] {
 .btn-file {
   position: relative;
   overflow: hidden;
-  color: #888B8D;
-  background-color: white;
-  border: 1px solid #D9D9D9;
+  color: white;
+  background-color: salmon;
   margin-top: 10px;
 }
 

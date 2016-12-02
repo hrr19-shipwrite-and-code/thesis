@@ -72,8 +72,8 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.handleClick = function (e) {
                     var _this = this;
-                    var className = e.target.className.split(' ')[0];
-                    if (e.target.id === 'notification' && className !== 'inside') {
+                    console.log(e.target.id);
+                    if (e.target.id === 'notification') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;
                         this.nav.markAsRead()
@@ -81,11 +81,11 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                             _this.checkNotifications();
                         });
                     }
-                    else if (e.target.id === 'profile' && className !== 'inside') {
+                    else if (e.target.id === 'profile') {
                         this.profileShow = !this.profileShow;
                         this.notificationShow = false;
                     }
-                    else if (className !== 'inside') {
+                    else if (e.target.id !== 'inside') {
                         this.notificationShow = false;
                         this.profileShow = false;
                     }
