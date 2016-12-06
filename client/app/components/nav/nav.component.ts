@@ -45,7 +45,7 @@ export class NavComponent {
       })
     localStorage.setItem('timeoutId', setTimeout(() =>{
       this.checkNotifications();
-    }, 300000)) 
+    }, 3000)) 
   }
 
   notificationCount() {

@@ -59,7 +59,7 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     });
                     localStorage.setItem('timeoutId', setTimeout(function () {
                         _this.checkNotifications();
-                    }, 300000));
+                    }, 3000));
                 };
                 NavComponent.prototype.notificationCount = function () {
                     var count = 0;
