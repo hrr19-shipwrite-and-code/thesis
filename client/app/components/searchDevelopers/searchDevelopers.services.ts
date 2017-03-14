@@ -8,7 +8,7 @@ export class SearchDevelopersServices {
   getAllProfiles(filter) {
    let headers = new Headers({ 'Content-Type': 'application/json' });
    let options = new RequestOptions({ headers: headers });
-   const url = 'http://localhost:1337/api/profile/getAll'
+   const url = 'http://174.138.71.230:1337/api/profile/getAll'
    return this.http.post(url, JSON.stringify(filter), options)
     .map(res => res.json())
   }

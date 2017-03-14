@@ -57,7 +57,7 @@ export class AuthService {
   findOrCreateUser(profile) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
+    this.authHttp.post('http://174.138.71.230:1337/api/user/create', JSON.stringify(profile), options)
       .map(res => res.json())
       .subscribe( data => {
         localStorage.setItem('url', data.url);

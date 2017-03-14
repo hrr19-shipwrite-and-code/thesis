@@ -56,7 +56,7 @@ export class ProjectComponent {
     this.getComment(this.id);
     this.doesUserLike(this.id);
     this.getAllTech();
-    this.options.url = 'http://localhost:1337/api/project/upload/user/' + this.id;);
+    this.options.url = 'http://174.138.71.230:1337/api/project/upload/user/' + this.id;);
   }
 
   //Service function to get the project by the route params Id
@@ -71,7 +71,7 @@ export class ProjectComponent {
           this.determineOpenSource(data.openSource);
           this.project = data
           if (data.Profile.Member.length > 0) {
-            this.options.url = 'http://localhost:1337/api/project/upload/team/' + data.Profile.id + '/' + this.id;
+            this.options.url = 'http://174.138.71.230:1337/api/project/upload/team/' + data.Profile.id + '/' + this.id;
             this.team = true;
           }
           for(let member of data.Profile.Member){

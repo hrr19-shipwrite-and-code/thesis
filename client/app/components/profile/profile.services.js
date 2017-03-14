@@ -31,79 +31,79 @@ System.register(['angular2-jwt', '@angular/http', 'rxjs/add/operator/map', '@ang
                     this.http = http;
                 }
                 ProfileService.prototype.getProfileInfo = function (url) {
-                    return this.http.get('http://localhost:1337/api/profile/' + url)
+                    return this.http.get('http://174.138.71.230:1337/api/profile/' + url)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.getProjects = function (userId) {
-                    return this.http.get('http://localhost:1337/api/project/user/' + userId)
+                    return this.http.get('http://174.138.71.230:1337/api/project/user/' + userId)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.updateUserProfile = function (data) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/user/edit', data, options)
+                    return this.authHttp.put('http://174.138.71.230:1337/api/user/edit', data, options)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.userAddTech = function (tech) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.post('http://localhost:1337/api/user/addTech', JSON.stringify(tech), options)
+                    return this.authHttp.post('http://174.138.71.230:1337/api/user/addTech', JSON.stringify(tech), options)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.userDeleteTech = function (techId) {
-                    return this.authHttp.delete('http://localhost:1337/api/user/removeTech/' + techId)
+                    return this.authHttp.delete('http://174.138.71.230:1337/api/user/removeTech/' + techId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.teamAddTech = function (teamId, tech) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.post('http://localhost:1337/api/team/addTech/' + teamId, JSON.stringify(tech), options)
+                    return this.authHttp.post('http://174.138.71.230:1337/api/team/addTech/' + teamId, JSON.stringify(tech), options)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.teamDeleteTech = function (teamId, techId) {
-                    return this.authHttp.delete('http://localhost:1337/api/team/removeTech/' + teamId + '/' + techId)
+                    return this.authHttp.delete('http://174.138.71.230:1337/api/team/removeTech/' + teamId + '/' + techId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.updateTeamProfile = function (teamId, data) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/team/edit/' + teamId, data, options)
+                    return this.authHttp.put('http://174.138.71.230:1337/api/team/edit/' + teamId, data, options)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.deleteTeam = function (teamId) {
-                    return this.authHttp.delete('http://localhost:1337/api/team/delete/' + teamId)
+                    return this.authHttp.delete('http://174.138.71.230:1337/api/team/delete/' + teamId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.joinTeam = function (teamId) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/team/joinTeam/' + teamId, {}, options)
+                    return this.authHttp.put('http://174.138.71.230:1337/api/team/joinTeam/' + teamId, {}, options)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.leaveTeam = function (teamId) {
-                    return this.authHttp.delete('http://localhost:1337/api/team/leaveTeam/' + teamId)
+                    return this.authHttp.delete('http://174.138.71.230:1337/api/team/leaveTeam/' + teamId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.addMember = function (teamId, memberURL) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.post('http://localhost:1337/api/team/addMember/' + teamId + '/' + memberURL, {}, options)
+                    return this.authHttp.post('http://174.138.71.230:1337/api/team/addMember/' + teamId + '/' + memberURL, {}, options)
                         .map(function (res) { return res.json(); });
                 };
                 ProfileService.prototype.removeMember = function (teamId, userId) {
-                    return this.authHttp.delete('http://localhost:1337/api/team/removeMember/' + teamId + '/' + userId)
+                    return this.authHttp.delete('http://174.138.71.230:1337/api/team/removeMember/' + teamId + '/' + userId)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.promoteMember = function (teamId, userId) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/team/promoteMember/' + teamId + '/' + userId, {}, options)
+                    return this.authHttp.put('http://174.138.71.230:1337/api/team/promoteMember/' + teamId + '/' + userId, {}, options)
                         .map(function (res) { return res; });
                 };
                 ProfileService.prototype.demoteMember = function (teamId, userId) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.authHttp.put('http://localhost:1337/api/team/demoteMember/' + teamId + '/' + userId, {}, options)
+                    return this.authHttp.put('http://174.138.71.230:1337/api/team/demoteMember/' + teamId + '/' + userId, {}, options)
                         .map(function (res) { return res; });
                 };
                 ProfileService = __decorate([

@@ -30,7 +30,7 @@ System.register(['@angular/http', '@angular/core', 'rxjs/add/operator/map'], fun
                     //console.log(filter)
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.http.post('http://localhost:1337/api/project/getAll', filter, options)
+                    return this.http.post('http://174.138.71.230:1337/api/project/getAll', filter, options)
                         .map(function (res) { return res.json(); });
                 };
                 HomeService = __decorate([

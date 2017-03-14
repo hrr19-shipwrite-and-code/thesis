@@ -30,7 +30,7 @@ export class ProfileComponent {
     member: false
   };
   private options: Object = {
-    url: 'http://localhost:1337/api/user/addPicture',
+    url: 'http://174.138.71.230:1337/api/user/addPicture',
     filterExtensions: true,
     allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
     calculateSpeed: true,
@@ -75,7 +75,7 @@ export class ProfileComponent {
           this.getUserProjects(data.id);
           this.tempUrl = data.url;
           if(data.type === 'Team'){
-            this.options.url = 'http://localhost:1337/api/team/addPicture/' + this.profileInfo.id;
+            this.options.url = 'http://174.138.71.230:1337/api/team/addPicture/' + this.profileInfo.id;
             for(let member of this.profileInfo.Member) {
               if(member.url === this.clientId){
                 return this.memberType = member.TeamUsers.type;

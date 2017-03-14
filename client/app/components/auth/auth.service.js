@@ -78,7 +78,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                 AuthService.prototype.findOrCreateUser = function (profile) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
+                    this.authHttp.post('http://174.138.71.230:1337/api/user/create', JSON.stringify(profile), options)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
                         localStorage.setItem('url', data.url);
