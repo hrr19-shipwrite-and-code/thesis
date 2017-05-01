@@ -1,49 +1,48 @@
+<div class="main-content shadow">
+  <h4>Create Team</h4>
+  <hr>
+  <form #form="ngForm">
+    <div class="form-group">
+      <p class='name-label'>Name</p>
+      <input type="text" class="form-control" placeholder="Enter your team name" [(ngModel)]="name" name="name" maxlength="50" (change)="trimmer()" required>
+    </div>
 
-<div class="container horizontal-center">
-
-
-  <div class="main-content shadow horizontal-center">
-    <h4>Create Team</h4>
-
-    <form #form="ngForm">
-      <div class="form-group">
-        <p class='name-label'>Name:</p>
-        <input type="text" class="form-control" placeholder="Enter your team name" [(ngModel)]="name" name="name" maxlength="50" (change)="trimmer()" required>
-      </div>
-
-      <div class="form-group">
-        <p class='email-label'>URL:</p>
-        <span *ngIf="urlTaken">*This URL is already taken!<br></span>
-        <span>sushiii.me/ </span>
+    <div class="form-group">
+      <p class='email-label'>URL</p>
+      <span>sushiii.me/ </span>
+      <div class="half-form">
         <input type="text" class="form-control" placeholder="Enter team URL" ngModel name="url" maxlength="30" (change)="checkUrl($event)" required>
       </div>
+      <div class="error" *ngIf="urlTaken">*This Url is already taken!<br></div>
+      <div class="error" *ngIf="urlInvalid">*Please only include a-z, 0-9, -, _ in your Url!<br></div>
+    </div>
 
-      <div class="form-group">
-        <p class='email-label'>Email:</p>
-        <span *ngIf="notValidEmail">*Please enter a valid email!</span>
-        <input type="text" class="form-control" placeholder="Enter team email" ngModel name="email" maxlength="255" (change)="checkEmail($event)" required>
-      </div>
+    <div class="form-group">
+      <p class='email-label'>Email:</p>
+      <input type="text" class="form-control" placeholder="Enter team email" ngModel name="email" maxlength="255" (change)="checkEmail($event)" required>
+      <div class="error" *ngIf="notValidEmail">*Please enter a valid email!</div>
+    </div>
 
-      <div class="form-group">
-        <p class='location-label'>Location (optional):</p>
-        <input type="text" class="form-control" placeholder="Enter your team location" id="location" [(ngModel)]="location" name="location" maxlength="50" onkeypress="return event.keyCode!=13">
-      </div>
+    <hr>
 
-      <div class="form-group">
-        <p class='location-label'>Hire:</p>
-        <label class="switch">
-          <input type="checkbox" ngModel name="hire">
-          <div class="slider round"></div>
-        </label>
-      </div>
+    <div class="form-group">
+      <p class='location-label'>Hire</p>
+      <label class="switch">
+        <input type="checkbox" ngModel name="hire">
+        <div class="slider round"></div>
+      </label>
+    </div>
 
-      <div class="form-group">
-        <p class='bio-label'>Bio (optional):</p>
-        <textarea class="form-control" rows="3" placeholder="Enter your team bio" ngModel name="bio" maxlength="255"></textarea>
-      </div>
-      <button class="btn btn-primary" (click)="createTeam(form.value)">Save</button>
-    </form>
-  </div>
+    <div class="form-group">
+      <p class='location-label'>Location <span class="optional">(optional)</span></p>
+      <input type="text" class="form-control" placeholder="Enter your team location" id="location" [(ngModel)]="location" name="location" maxlength="50" onkeypress="return event.keyCode!=13">
+    </div>
 
-
-</div> <!-- container -->
+    <div class="form-group">
+      <p class='bio-label'>Bio <span class="optional">(optional)</span></p>
+      <textarea class="form-control" rows="3" placeholder="Enter your team bio" ngModel name="bio" maxlength="255"></textarea>
+    </div>
+    <hr>
+    <button class="btn btn-primary" (click)="createTeam(form.value)">Create Team</button>
+  </form>
+</div>

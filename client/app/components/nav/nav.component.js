@@ -38,6 +38,7 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                     this.profileService = profileService;
                     this.notificationShow = false;
                     this.profileShow = false;
+                    this.notifications = [];
                 }
                 NavComponent.prototype.ngOnInit = function () {
                     this.getUserInfo();
@@ -55,12 +56,10 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                         .subscribe(function (data) {
                         _this.notifications = data;
                         _this.numberOfNotifications = _this.notificationCount();
-                        console.log(data);
                     });
                     localStorage.setItem('timeoutId', setTimeout(function () {
                         _this.checkNotifications();
-                    }, 300000));
-                    console.log(localStorage.getItem('timeoutId'));
+                    }, 3000));
                 };
                 NavComponent.prototype.notificationCount = function () {
                     var count = 0;
@@ -72,8 +71,7 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.handleClick = function (e) {
                     var _this = this;
-                    var className = e.target.className.split(' ')[0];
-                    if (e.target.id === 'notification' && className !== 'inside') {
+                    if (e.target.id === 'notification') {
                         this.notificationShow = !this.notificationShow;
                         this.profileShow = false;
                         this.nav.markAsRead()
@@ -81,11 +79,11 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                             _this.checkNotifications();
                         });
                     }
-                    else if (e.target.id === 'profile' && className !== 'inside') {
+                    else if (e.target.id === 'profile') {
                         this.profileShow = !this.profileShow;
                         this.notificationShow = false;
                     }
-                    else if (className !== 'inside') {
+                    else if (e.target.id !== 'inside') {
                         this.notificationShow = false;
                         this.profileShow = false;
                     }
@@ -100,7 +98,6 @@ System.register(['@angular/core', '../auth/auth.service', './nav.services', '../
                 };
                 NavComponent.prototype.decline = function (notification, index) {
                     var _this = this;
-                    console.log(notification);
                     this.nav.decline(notification.SenderId)
                         .subscribe(function (data) {
                         _this.notifications.splice(index, 1);

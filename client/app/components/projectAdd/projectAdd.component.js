@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', './projectAdd.services.js', '../profile/profile.services.js'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', './projectAdd.services.js', '../profile/profile.services.js', '../auth/auth.service.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, projectAdd_services_js_1, profile_services_js_1;
+    var core_1, router_1, projectAdd_services_js_1, profile_services_js_1, auth_service_js_1;
     var ProjectAddComponent;
     return {
         setters:[
@@ -25,13 +25,17 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
             },
             function (profile_services_js_1_1) {
                 profile_services_js_1 = profile_services_js_1_1;
+            },
+            function (auth_service_js_1_1) {
+                auth_service_js_1 = auth_service_js_1_1;
             }],
         execute: function() {
             ProjectAddComponent = (function () {
-                function ProjectAddComponent(projectService, profileService, router) {
+                function ProjectAddComponent(projectService, profileService, router, auth) {
                     this.projectService = projectService;
                     this.profileService = profileService;
                     this.router = router;
+                    this.auth = auth;
                     this.userUrl = localStorage.getItem('url');
                     this.defaultValue = 'Completed';
                     this.owner = '';
@@ -39,18 +43,27 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     this.repos = [];
                     this.title = '';
                     this.github = '';
+                    this.deploy = '';
                     this.description = '';
                     this.githubErr = false;
                     this.deployErr = false;
                     this.haveGithub = null;
+                    this.openSource = false;
                     this.selected = {};
                 }
                 ProjectAddComponent.prototype.ngOnInit = function () {
+                    this.authCheck();
                     this.getProfileInfo();
                 };
+                ProjectAddComponent.prototype.authCheck = function () {
+                    if (!this.auth.authenticated()) {
+                        this.router.navigateByUrl('/');
+                    }
+                };
                 ProjectAddComponent.prototype.urlChecker = function (url, type) {
+                    var options = { require_protocol: true };
                     if (url.length > 0) {
-                        if (!validator.isURL(url)) {
+                        if (!validator.isURL(url, options)) {
                             if (type === 'github') {
                                 this.githubErr = true;
                             }
@@ -130,9 +143,11 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                     e.preventDefault();
                     var repo = this.repos[repoIndex];
                     this.github = repo.html_url;
+                    this.deploy = repo.homepage || '';
                     this.title = repo.name;
-                    this.description = repo.description;
+                    this.description = repo.description || '';
                     this.owner = this.selected.id;
+                    this.openSource = true;
                 };
                 ProjectAddComponent.prototype.trimmer = function () {
                     this.title = this.title.trim();
@@ -142,11 +157,12 @@ System.register(['@angular/core', '@angular/router', './projectAdd.services.js',
                         selector: 'project-add',
                         templateUrl: './client/app/components/projectAdd/projectAdd.html',
                         styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
+                        providers: [auth_service_js_1.AuthService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof projectAdd_services_js_1.ProjectAddService !== 'undefined' && projectAdd_services_js_1.ProjectAddService) === 'function' && _a) || Object, (typeof (_b = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _b) || Object, router_1.Router])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof projectAdd_services_js_1.ProjectAddService !== 'undefined' && projectAdd_services_js_1.ProjectAddService) === 'function' && _a) || Object, (typeof (_b = typeof profile_services_js_1.ProfileService !== 'undefined' && profile_services_js_1.ProfileService) === 'function' && _b) || Object, router_1.Router, (typeof (_c = typeof auth_service_js_1.AuthService !== 'undefined' && auth_service_js_1.AuthService) === 'function' && _c) || Object])
                 ], ProjectAddComponent);
                 return ProjectAddComponent;
-                var _a, _b;
+                var _a, _b, _c;
             }());
             exports_1("ProjectAddComponent", ProjectAddComponent);
         }

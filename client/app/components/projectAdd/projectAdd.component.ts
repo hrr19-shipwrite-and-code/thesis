@@ -3,12 +3,14 @@ import { AddProductModelDirective } from '../../directives/new-project-model.dir
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectAddService } from './projectAdd.services.js';
 import { ProfileService } from '../profile/profile.services.js';
+import { AuthService } from '../auth/auth.service.js';
 
 
 @Component({
   selector: 'project-add',
   templateUrl: './client/app/components/projectAdd/projectAdd.html',
   styleUrls: ['./client/app/components/projectAdd/projectAdd.css'],
+  providers: [AuthService]
 })
 
 export class ProjectAddComponent {
@@ -19,20 +21,31 @@ export class ProjectAddComponent {
   private repos = [];
   private title = '';
   private github = '';
+  private deploy = '';
   private description = '';
   private githubErr = false;
   private deployErr = false;
   private haveGithub = null;
+  private openSource = false;
   private selected = {};
-  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router) {}
+  constructor(private projectService: ProjectAddService, private profileService: ProfileService, private router: Router, private auth: AuthService) {
+  }
 
   ngOnInit() {
+    this.authCheck();
     this.getProfileInfo();
   }
 
+  authCheck() {
+    if (!this.auth.authenticated()) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
   urlChecker(url, type) {
+    let options = {require_protocol: true};
     if (url.length > 0) {
-      if (!validator.isURL(url)) {
+      if (!validator.isURL(url, options)) {
         if (type === 'github') {
           this.githubErr = true;
         } else if (type === 'deploy') {
@@ -56,7 +69,7 @@ export class ProjectAddComponent {
 
   addProject(data) {
     this.urlChecker(data.github, 'github');
-    this.urlChecker(data.deploy, 'deploy')
+    this.urlChecker(data.deploy, 'deploy');
     if (!this.githubErr && !this.deployErr) {
       if(data.owner === this.userInfo.id) {
         this.projectService.userCreateProject(data)
@@ -114,9 +127,11 @@ export class ProjectAddComponent {
     e.preventDefault();
     let repo = this.repos[repoIndex];
     this.github = repo.html_url;
+    this.deploy = repo.homepage || '';
     this.title = repo.name;
-    this.description = repo.description;
+    this.description = repo.description || '';
     this.owner = this.selected.id;
+    this.openSource = true;
   }
 
   trimmer() {

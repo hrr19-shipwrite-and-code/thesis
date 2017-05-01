@@ -54,7 +54,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         member: false
                     };
                     this.options = {
-                        url: 'http://localhost:1337/api/user/addPicture',
+                        url: 'http://138.68.23.255:1337/api/user/addPicture',
                         filterExtensions: true,
                         allowedExtensions: ['image/png', 'image/jpeg', 'image/jpg'],
                         calculateSpeed: true,
@@ -98,7 +98,7 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                             _this.getUserProjects(data.id);
                             _this.tempUrl = data.url;
                             if (data.type === 'Team') {
-                                _this.options.url = 'http://localhost:1337/api/team/addPicture/' + _this.profileInfo.id;
+                                _this.options.url = 'http://138.68.23.255:1337/api/team/addPicture/' + _this.profileInfo.id;
                                 for (var _i = 0, _a = _this.profileInfo.Member; _i < _a.length; _i++) {
                                     var member = _a[_i];
                                     if (member.url === _this.clientId) {
@@ -126,9 +126,10 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                     this.profileInfo.name = this.profileInfo.name.trim();
                 };
                 ProfileComponent.prototype.checkUrl = function (input, type) {
+                    var options = { require_protocol: true };
                     for (var url in input) {
-                        console.log(input[url]);
-                        if (input[url] && !validator.isURL(input[url])) {
+                        //console.log(input[url])
+                        if (input[url] && !validator.isURL(input[url], options)) {
                             return this.invalidUrl = true;
                         }
                     }
@@ -211,7 +212,6 @@ System.register(['@angular/core', './profile.services.js', '../project/project.s
                         });
                     }
                     this.newTech = '';
-                    this.editing.tech = !this.editing.tech;
                 };
                 ProfileComponent.prototype.deleteTech = function (event, techId) {
                     if (this.profileInfo.type === 'Team') {

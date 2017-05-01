@@ -32,14 +32,14 @@ System.register(['@angular/http', 'angular2-jwt', '@angular/core'], function(exp
                 ProjectAddService.prototype.userCreateProject = function (project) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/project/userCreate';
+                    var url = 'http://138.68.23.255:1337/api/project/userCreate';
                     return this.authHttp.post(url, JSON.stringify(project), options)
                         .map(function (res) { return res.json(); });
                 };
                 ProjectAddService.prototype.teamCreateProject = function (project, teamId) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = 'http://localhost:1337/api/project/teamCreate/' + teamId;
+                    var url = 'http://138.68.23.255:1337/api/project/teamCreate/' + teamId;
                     return this.authHttp.post(url, JSON.stringify(project), options)
                         .map(function (res) { return res.json(); });
                 };

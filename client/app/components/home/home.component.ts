@@ -17,6 +17,7 @@ export class HomeComponent {
   projects = [];
   pagination = 0;
   count;
+  clearResults = false;
   constructor(private homeService: HomeService) {}
 
   ngOnInit() {
@@ -42,6 +43,7 @@ export class HomeComponent {
   }
 
   filter(filter) {
+    this.clearResults = true;
     this.projects = [];
     let filterConditions = {sort: this.sortType};
     for(let key in filter) {
@@ -62,11 +64,14 @@ export class HomeComponent {
   }
 
   clearSearch(e) {
-    this.projects = [];
     document.getElementById("home-search").reset()
-    this.filterConditions = {sort: 'default'};
-    this.pagination = 0;
-    this.getProjects(this.filterConditions)
+    if (this.clearResults || this.pagination > 0) {
+      this.projects = [];
+      this.filterConditions = {sort: 'default'};
+      this.pagination = 0;
+      this.getProjects(this.filterConditions)
+      this.clearResults = false;
+    }
   }
 
   sort(sortType) {

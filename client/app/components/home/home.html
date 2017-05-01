@@ -4,30 +4,31 @@
       <input type="text" name="tech" placeholder="Filter by tech" class="filter-bar-input form-control" ngModel>
       <input type="text" name="title" placeholder="Filter by title" class="filter-bar-input form-control" ngModel>
       <input type="text" name="user" placeholder="Filter by user" class="filter-bar-input form-control" ngModel>
-      <select class="form-control filter-bar-input" name="status" ngModel>
+      <select class="form-control filter-bar-input filter-bar-input-dropdown" name="status" ngModel>
         <option value="">Status</option>
         <option value="Completed">Completed</option>
         <option value="In Progress">In Progress</option>
-        <option value="Abandonded">Abandonded</option>
+        <option value="Abandoned">Abandoned</option>
       </select>
-      <select class="form-control filter-bar-input" name="openSource" ngModel>
+      <select class="form-control filter-bar-input filter-bar-input-dropdown" name="openSource" ngModel>
         <option value="">Open Source</option>
         <option value=1>Yes</option>
         <option value=0>No</option>
       </select>
-      <button type="submit" class="btn btn-primary">Apply</button>
-      <button type="button" class="btn btn-danger" (click)="clearSearch($event)">Clear</button>
+
+      <button type="submit" class="btn btn-primary apply-btn">Apply</button>
+      <button type="button" class="btn btn-primary clear-btn" (click)="clearSearch($event)">Clear</button>
     </form>
   </div>
   <div class="filter-btn" (click)="filterBar()">
-    <p class="filter-txt">Filter</p>
+    <p class="filter-txt">Search</p>
 
   </div>
   <div class="sort">
     <span (click)="sort('date')">Recent</span>
      |
-    <span (click)="sort('likes')">Likes</span>
-     |
+    <!--<span (click)="sort('likes')">Likes</span>
+     |-->
     <span (click)="sort('views')">Views</span>
   </div>
 
@@ -38,7 +39,7 @@
   </div> <!-- thumbnail-wrapper -->
 
   <div class="bottom">
-  <div class="btn btn-primary" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
+  <div class="btn btn-primary load-more-btn" *ngIf="count > (pagination+1)*12" (click)="loadMore()">Load More</div>
   <div *ngIf="count <= (pagination+1)*12">• • • • •</div>
   </div>
 

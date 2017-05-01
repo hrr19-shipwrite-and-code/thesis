@@ -12,7 +12,7 @@ const ProjectTech = require('./tech/techSchema.js').ProjectTech;
 const TeamUser = require('./profiles/teamUserSchema.js');
 
 //Creates Profile/team foreign id on project
-Profile.hasMany(Project);
+Profile.hasMany(Project, { onDelete: 'cascade' });
 Project.belongsTo(Profile);
 
 //Creating tech/project foreign keys for ProjectTech table
@@ -30,9 +30,9 @@ Profile.sync()
     Profile.belongsToMany(Profile, {as: 'Team', foreignKey: 'userId', through: TeamUser });
     TeamUser.sync();
 
-    Profile.hasMany(Notification, {foreignKey: 'SenderId'});
+    Profile.hasMany(Notification, {foreignKey: 'SenderId', onDelete: 'cascade'});
     Notification.belongsTo(Profile, {as: 'Sender', foreignKey: 'SenderId'});
-    Profile.hasMany(Notification, {foreignKey: 'ReceiverId'});
+    Profile.hasMany(Notification, {foreignKey: 'ReceiverId', onDelete: 'cascade'});
     Notification.belongsTo(Profile, {as: 'Receiver', foreignKey: 'ReceiverId'});
     Notification.sync();
 
@@ -45,20 +45,20 @@ Tech.sync()
 
         //Creates Images table
         Image.belongsTo(Project);
-        Project.hasMany(Image);
+        Project.hasMany(Image, { onDelete: 'cascade' });
         Image.sync();
 
         //Creates Comment table
-        Profile.hasMany(Comment);
+        Profile.hasMany(Comment, { onDelete: 'cascade' });
         Comment.belongsTo(Profile);
-        Project.hasMany(Comment);
+        Project.hasMany(Comment, { onDelete: 'cascade' });
         Comment.belongsTo(Project);
         Comment.sync();
 
         //Creates Like table
-        Profile.hasMany(Like);
+        Profile.hasMany(Like, { onDelete: 'cascade' });
         Like.belongsTo(Profile);
-        Project.hasMany(Like);
+        Project.hasMany(Like, { onDelete: 'cascade' });
         Like.belongsTo(Project);
         Like.sync();
 

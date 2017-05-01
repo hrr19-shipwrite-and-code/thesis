@@ -1,5 +1,6 @@
+const sql = require('../../secret/sql.js');
 const Sequelize = require('sequelize');
-const db = new Sequelize('sushi', 'root', '');
+const db = new Sequelize('sushi', 'root', sql.password);
 
 const Profile = db.define('Profile', {
   name: {

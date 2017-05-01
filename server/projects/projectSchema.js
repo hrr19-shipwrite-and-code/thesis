@@ -1,5 +1,6 @@
+const sql = require('../../secret/sql.js');
 const Sequelize = require('sequelize');
-const db = new Sequelize('sushi', 'root', '');
+const db = new Sequelize('sushi', 'root', sql.password);
 
 const Project = db.define('Project', {
   title: {
@@ -26,7 +27,7 @@ const Project = db.define('Project', {
   },
   progress: {
     type: Sequelize.ENUM,
-    values: ['Completed', 'In Progress', 'Abandonded'],
+    values: ['Completed', 'In Progress', 'Abandoned'],
     defaultValue: 'In Progress'
   }
 });

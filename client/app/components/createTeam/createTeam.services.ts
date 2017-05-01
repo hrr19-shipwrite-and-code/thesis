@@ -11,12 +11,12 @@ export class CreateTeamService {
   createTeam(teamInfo){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.authHttp.post('http://localhost:1337/api/team/create', JSON.stringify(teamInfo), options)
+    return this.authHttp.post('http://138.68.23.255:1337/api/team/create', JSON.stringify(teamInfo), options)
       .map(res => res.json);
   }
 
   checkUrl(url) {
-  	return this.http.get('http://localhost:1337/api/profile/checkUrl/' + url)
+  	return this.http.get('http://138.68.23.255:1337/api/profile/checkUrl/' + url)
       .map(res => res.json);
   }
 }

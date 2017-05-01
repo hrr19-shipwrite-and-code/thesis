@@ -52,7 +52,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                             title: "sushiii"
                         },
                     };
-                    this.lock = new Auth0Lock('wtgfH9yCpAyHiTrupNH3xXsMPh0WfxYR', 'nanciee.auth0.com', this.options);
+                    this.lock = new Auth0Lock('mHw2LCJA0uxSEE1mQcQJxCitXZPtt5dw', 'sushiii.auth0.com', this.options);
                     // Add callback for the Lock `authenticated` event
                     this.lock.on("authenticated", function (authResult) {
                         localStorage.setItem('id_token', authResult.idToken);
@@ -78,7 +78,7 @@ System.register(['@angular/core', 'angular2-jwt', '@angular/http', '@angular/rou
                 AuthService.prototype.findOrCreateUser = function (profile) {
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.authHttp.post('http://localhost:1337/api/user/create', JSON.stringify(profile), options)
+                    this.authHttp.post('http://138.68.23.255:1337/api/user/create', JSON.stringify(profile), options)
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
                         localStorage.setItem('url', data.url);

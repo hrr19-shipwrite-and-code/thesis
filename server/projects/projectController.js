@@ -24,6 +24,7 @@ module.exports = {
           deploy: req.body.deploy,
           progress: req.body.status,
           contribute: req.body.openSourse,
+          thumbnail: '/client/app/assets/thumbnail.png'
           })
           .then((project) => {
             mkdirp('./client/uploads/' + project.id, (err) => {
@@ -33,6 +34,7 @@ module.exports = {
           });
       })
       .catch((err) => {
+        console.log(err)
         res.sendStatus(404);
       });
   },
@@ -125,11 +127,18 @@ module.exports = {
     Profile.find({where: {authId: req.user.sub}})
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
-        console.log(profile)
+        //console.log(profile)
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
               .then((image) => {
+                project = JSON.parse(JSON.stringify(project));
+                if (project.thumbnail === '/client/app/assets/thumbnail.png') {
+                  Project.update({thumbnail: URL}, {where: {id: id}})
+                    .then(() => {
+                        res.send(image);
+                    });
+                }
                 res.send(image);
               });
           });
@@ -144,11 +153,18 @@ module.exports = {
     Profile.find({where: {id: req.params.teamId}})
       .then((profile) =>{
         const URL = 'client/uploads/' + id + '/' + req.files[0].filename;
-        console.log(profile)
+        //console.log(profile)
         Project.find({where: {id: id, ProfileId: profile.id}})
           .then((project) => {
             project.createImage({ url: URL})
               .then((image) => {
+                project = JSON.parse(JSON.stringify(project));
+                if (project.thumbnail === '/client/app/assets/thumbnail.png') {
+                  Project.update({thumbnail: URL}, {where: {id: id}})
+                    .then(() => {
+                        res.send(image);
+                    });
+                }
                 res.send(image);
               });
           });
@@ -224,6 +240,14 @@ module.exports = {
                     .catch((err) => {
                       res.sendStatus(404);
                     });
+                } else {
+                  Image.destroy({where: {id: id}})
+                    .then(() => {
+                      res.sendStatus(200);
+                      })
+                    .catch(() => {
+                      res.sendStatus(404);
+                    });
                 }
               });
             })
@@ -259,6 +283,14 @@ module.exports = {
                         });
                     })
                     .catch((err) => {
+                      res.sendStatus(404);
+                    });
+                } else {
+                  Image.destroy({where: {id: id}})
+                    .then(() => {
+                      res.sendStatus(200);
+                      })
+                    .catch(() => {
                       res.sendStatus(404);
                     });
                 }
@@ -318,10 +350,12 @@ module.exports = {
     req.body.openSource !== undefined ? filter.where.contribute = {$eq: !!Number(req.body.openSource)} : false;
 
     //sort
-    req.body.sort === 'default' ? filter.where.createdAt = {$gt: new Date(new Date() - 31 * 24 * 60 * 60 * 1000)} : false;
+    if(req.body.sort === 'default') {
+      filter.where.createdAt = {$gt: new Date(new Date() - 31 * 24 * 60 * 60 * 1000)};
+      filter.order = [['views', 'DESC']];
+    }
     req.body.sort === 'date' ? filter.order = [['createdAt', 'DESC']] : false;
     req.body.sort === 'views' ? filter.order = [['views', 'DESC']] : false;
-
 
     Project.findAndCountAll(filter)
       .then((result) => {

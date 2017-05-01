@@ -1,12 +1,14 @@
 
 <div class='container'>
   <div class="sidebar-container">
-    <div class='sidebar horizontalCenter shadow'>
+    <div class='sidebar horizontal-center shadow'>
 
-      <div class='topInfo horizontalCenter'>
+      <div class='topInfo horizontal-center'>
         <!-- Profile Photo -->
-        <div class='profilePhoto horizontalCenter'>
-          <img class="profilePhoto" src="{{profileInfo.picture}}"/>
+        <div class='profile-photo-viewport'>
+          <div class="profile-photo-wrapper">
+            <img class="profile-photo" src="{{profileInfo.picture}}"/>
+          </div>
         </div>
         <!-- Change Profile Photo Button -->
         <!-- <div class="form-group">
@@ -52,15 +54,18 @@
         </div>
       </div> <!-- topInfo -->
 
-      <hr>
+      
 
       <!-- User Tech skills -->
       <div class='connect' *ngIf='profileInfo.Teches.length || isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
+        <hr>
         <h5>SKILLS</h5>
         <div class="tech-list" *ngIf="profileInfo.Teches.length">
           <span class="tech-list-item" *ngFor="let tech of profileInfo.Teches">
-            <span class="tech-name">{{tech.name}}</span>
-            <span><i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="tech-tag">
+              <span class="tech-name">{{tech.name}}</span>
+              <i *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"' (click)="deleteTech($event, tech.id)" class="fa fa-times tech-x" aria-hidden="true"></i>
+            </span>
           </span> <!-- tech-list-item -->
         </div>
         <!-- Hidden User Tech Input -->
@@ -76,10 +81,10 @@
         </div>
       </div>
 
-      <hr>
 
       <!-- User Teams if single User -->
       <div class="connect" *ngIf="profileInfo.Team.length">
+        <hr>
         <h5>TEAMS</h5>
         <div>
           <div *ngFor="let team of profileInfo.Team"><a routerLink="/{{team.url}}">{{team.name}}</a></div>
@@ -88,6 +93,7 @@
 
       <!-- Teams members if team profile -->
       <div class="connect" *ngIf="profileInfo.Member.length">
+        <hr>
         <h5>MEMBERS</h5>
         <div>
           <div *ngFor='let member of profileInfo.Member'>
@@ -108,11 +114,9 @@
         </div>
         <div class="edit">
         <div *ngIf="editing.member">
-          <div *ngIf="errAddMember">
-            Please enter a valid username
-          </div>
           <form (ngSubmit)="addMember()">
             <input type="text" name="member" class="form-control" [(ngModel)]="newMember" placeholder="Enter username">
+            <div class="error" *ngIf="errAddMember">*Please enter a valid username!</div>
             <button class="btn btn-primary btn-sm">Add</button>
           </form>
         </div>
@@ -123,6 +127,7 @@
 
       <!-- User/Team Connections -->
       <div class='connect' *ngIf="profileInfo.facebook || profileInfo.twitter || profileInfo.personal || profileInfo.blog || profileInfo.github || profileInfo.linkedin || isCurrentUser() || memberType === 'Owner' || memberType === 'Admin'">
+        <hr>
         <h5>CONNECT</h5>
         <ul class='urls' *ngIf="!editing.contact">
           <li *ngIf="profileInfo.personal"><i class="fa fa-globe" aria-hidden="true"></i><a href='{{profileInfo.personal}}'>personal</a></li>
@@ -135,14 +140,14 @@
         </ul>
         <!-- User/Team Connection edit forms -->
         <div *ngIf="editing.contact">
-          <span *ngIf="invalidUrl">Please enter a valid URL!</span>
+          <div class="error" *ngIf="invalidUrl">*Please enter a valid Url!</div>
           <form #editBasic="ngForm" (ngSubmit)="checkUrl(editBasic.value, 'contact')">
-            <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="Personal website url...">
-            <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="Personal Blog url...">
-            <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="Github url...">
-            <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="LinkedIn url...">
-            <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="Twitter url...">
-            <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="Facebook url...">
+            <input type="text" name="personal" class="form-control" maxlength="150" [(ngModel)]="profileInfo.personal" placeholder="http://myWebsite.com">
+            <input type="text" name="blog" class="form-control" maxlength="150" [(ngModel)]="profileInfo.blog" placeholder="http://myBlog.com">
+            <input type="text" name="github" class="form-control" maxlength="150" [(ngModel)]="profileInfo.github" placeholder="http://github.com/userName">
+            <input type="text" name="linkedin" class="form-control" maxlength="150" [(ngModel)]="profileInfo.linkedin" placeholder="http://linkedin.com/userName">
+            <input type="text" name="twitter" class="form-control" maxlength="150" [(ngModel)]="profileInfo.twitter" placeholder="http://twitter.com/userName">
+            <input type="text" name="facebook" class="form-control" maxlength="150" [(ngModel)]="profileInfo.facebook" placeholder="http://facebook.com/userName">
             <button class="btn btn-primary btn-sm">Update</button>
           </form>
         </div>
@@ -151,18 +156,16 @@
         </div>
       </div>
 
-
-      <hr class="divider">
-
       <!-- User URL Edit -->
       <div class="connect" *ngIf='isCurrentUser() || memberType === "Owner" || memberType === "Admin"'>
-        <h5>SUSHI URL</h5>
-        <span *ngIf="urlTaken">URL Unavailable!</span>
+        <hr>
+        <h5>SUSHIII URL</h5>
         <form #editUrl="ngForm" (ngSubmit)="updateUserInfo(editUrl.value, 'url')">
           <p>
             sushiii.me/
             <input type="text" class="form-control userUrl" name="url" maxlength="30" [(ngModel)]="tempUrl" placeholder="sushi URL">
           </p>
+          <div class="error" *ngIf="urlTaken">*This Url is not available!</div>
           <button class="btn btn-primary btn-sm">Update</button>
         </form>
       </div>

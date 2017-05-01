@@ -20,6 +20,4 @@ app.use((req, res, next) => {
 
 require('./config/routes.js')(app, express);
 
-app.listen(port, () => {
-  console.log('Listening on port: ' + port);
-});
+app.listen(port, '138.68.23.255');

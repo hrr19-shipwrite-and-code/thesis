@@ -21,7 +21,7 @@ export class NavComponent {
   numberOfNotifications;
   name;
   picture;
-  notifications;
+  notifications = [];
   url;
   constructor(private auth: AuthService, private add: ProjectAddComponent, private nav: NavService, private profileService: ProfileService) {}
 
@@ -42,12 +42,10 @@ export class NavComponent {
       .subscribe( data => {
         this.notifications = data;
         this.numberOfNotifications = this.notificationCount();
-        console.log(data)
       })
     localStorage.setItem('timeoutId', setTimeout(() =>{
       this.checkNotifications();
-    }, 300000)) 
-    console.log(localStorage.getItem('timeoutId'))
+    }, 3000)) 
   }
 
   notificationCount() {
@@ -59,18 +57,17 @@ export class NavComponent {
   }
 
   handleClick(e) {
-    let className = e.target.className.split(' ')[0];
-    if (e.target.id === 'notification' && className !== 'inside') {
+    if (e.target.id === 'notification') {
       this.notificationShow = !this.notificationShow;
       this.profileShow = false;
       this.nav.markAsRead()
         .subscribe( data => {
           this.checkNotifications();
         })
-    } else if (e.target.id === 'profile' && className !== 'inside') {
+    } else if (e.target.id === 'profile') {
       this.profileShow = !this.profileShow;
       this.notificationShow = false; 
-    } else if (className !== 'inside') {  
+    } else if (e.target.id !== 'inside') {  
       this.notificationShow = false;
       this.profileShow = false;
     }
@@ -85,7 +82,6 @@ export class NavComponent {
   }
 
   decline(notification, index) {
-    console.log(notification)
     this.nav.decline(notification.SenderId)
       .subscribe(data => {
         this.notifications.splice(index, 1)
